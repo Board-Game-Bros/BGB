@@ -179,7 +179,9 @@ footer {
 .torch-btn img {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 4px #f7d987);
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0 6px #f7d987);
 }
 
 /* ===================== MASONRY GRID FOR WEEKLY EVENTS ===================== */
