@@ -29,38 +29,77 @@ header {
   filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5));
 }
 
-/* ===================== NAVIGATION ===================== */
+/* ===================== NAVIGATION (Medieval Deep Wood + Scroll + Embossed) ===================== */
 nav {
-  background: url('assets/misc/wood_texture.jpg');
+  background: url('assets/misc/dark_wood_texture.jpg');  /* 深木纹背景（你需要放这张图） */
   background-size: cover;
   display: flex;
   justify-content: center;
-  gap: 25px;
-  padding: 14px;
-  border-bottom: 5px solid #3a2d1a;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  transition: position 0.3s ease;
+  gap: 35px;
+  padding: 18px 0;
+  border-bottom: 10px solid #2a1f12;
+  border-top: 10px solid #2a1f12;
+  position: relative;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
 }
 
+/* Scroll edges (卷轴上下边缘) */
+nav::before,
+nav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 18px;
+  background: url('assets/misc/scroll_edge.png') repeat-x;
+  opacity: 0.9;
+}
+
+nav::before {
+  top: -18px;
+}
+
+nav::after {
+  bottom: -18px;
+}
+
+/* Embossed medieval text */
+nav a {
+  color: #f7e6b0;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 20px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+
+  /* 压印雕刻效果 */
+  text-shadow:
+    0 1px 0 #000000,
+    0 -1px 0 #3d2d16,
+    2px 2px 3px rgba(0,0,0,0.6),
+    -2px -2px 3px rgba(255,255,255,0.2);
+}
+
+/* Golden hover glow */
+nav a:hover {
+  background: rgba(255, 215, 100, 0.25);
+  box-shadow: 0 0 12px rgba(255, 204, 80, 0.55);
+  color: #fff6d5;
+  text-shadow:
+    0 0 8px rgba(255, 230, 160, 0.9),
+    0 0 20px rgba(255, 200, 120, 0.7),
+    0 0 30px rgba(255, 180, 80, 0.5);
+}
+
+/* Sticky nav保持深木纹 */
 nav.sticky {
   position: fixed;
   top: 0;
   width: 100%;
-  left: 0;
   z-index: 999;
-}
-
-nav a {
-  color: #f1e4c0;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 6px 10px;
-  border-radius: 4px;
-}
-
-nav a:hover {
-  background: rgba(255, 230, 180, 0.3);
+  background: url('assets/misc/dark_wood_texture.jpg');
+  background-size: cover;
 }
 
 /* ===================== CONTAINER (Scroll/Medieval Look) ===================== */
@@ -210,4 +249,3 @@ footer {
     columns: 1;
   }
 }
-
