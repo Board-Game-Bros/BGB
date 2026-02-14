@@ -152,7 +152,7 @@ nav.sticky {
 /* ===================== GAME CARD 优化 ===================== */
 .game-card {
   padding: 0 !important; 
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   height: auto;          /* 确保高度自动 */
@@ -169,7 +169,7 @@ nav.sticky {
   width: 100%;
   height: auto;          /* 必须是 auto，删除任何 px 数值 */
   display: block;
-  object-fit: fill;      /* 让图片物理性地充满容器宽度 */
+  /* object-fit: contain;      /* 让图片物理性地充满容器宽度 */
   border: none;
 }
 
