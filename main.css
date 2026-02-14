@@ -151,6 +151,8 @@ nav.sticky {
 .game-card {
   padding: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .cover-link {
@@ -165,14 +167,15 @@ nav.sticky {
   height: 220px;
   object-fit: cover;
   display: block;
-  border: 3px solid #3a2d1a;
-  border-radius: 6px;
+  border: none;
+  border-bottom: 3px solid #3a2d1a;
 }
 
-/* 横幅封面：不裁切 + 高度自适应（边框跟着图片走） */
+/* 横幅封面（针对 Arkham 这种长条图） */
 .game-cover.wide-cover {
-  height: auto;
-  object-fit: contain;
+  height: auto; 
+  aspect-ratio: 16 / 9; /* 或者根据你的图片比例调整 */
+  object-fit: cover;
 }
 
 .game-card h3 {
