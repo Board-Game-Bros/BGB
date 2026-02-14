@@ -295,3 +295,9 @@ footer {
 .subnav a:hover {
   transform: translateY(-1px);
 }
+
+.wide-cover {
+  object-fit: contain;
+  background: rgba(0,0,0,0.12);
+}
+
