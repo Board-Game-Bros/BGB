@@ -145,6 +145,7 @@ nav.sticky {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 18px;
+  align-items: start; /* 核心：防止卡片被强制拉伸高度 */
 }
 
 /* ===================== GAME CARD (Library covers) ===================== */
@@ -154,7 +155,8 @@ nav.sticky {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: fit-content; /* 确保容器高度根据内容自适应 */
+  height: auto;          /* 确保高度自动 */
+  align-self: start;    /* 在 grid 中靠顶对齐 */
 }
 
 .cover-link {
@@ -163,18 +165,18 @@ nav.sticky {
   color: inherit;
 }
 
-/* 默认封面：统一高度 + 填满（适合竖版盒图） */
 .game-cover {
   width: 100%;
-  height: auto;       /* 取消 220px 的固定高度，改为自动 */
+  height: auto;          /* 必须是 auto，删除任何 px 数值 */
   display: block;
-  object-fit: contain; /* 确保图片完整显示 */
+  object-fit: fill;      /* 让图片物理性地充满容器宽度 */
   border: none;
 }
 
-/*  Arkham 这种横版图特殊处理 */
+/* 针对 Arkham 这种超宽图的特殊处理 */
 .game-cover.wide-cover {
-  border-bottom: 3px solid #3a2d1a; /* 增加一条底部分割线，区分图片和文字 */
+  aspect-ratio: auto;    /* 不强制比例，由原图决定 */
+  border-bottom: 3px solid #3a2d1a; 
 }
 
 .game-card h3 {
