@@ -249,3 +249,32 @@ footer {
     columns: 1;
   }
 }
+
+.game-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.cover-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.game-cover {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.game-card h3 {
+  margin: 12px 14px 4px;
+}
+
+.game-card p {
+  margin: 0 14px 14px;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
