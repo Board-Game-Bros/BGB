@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: "Cinzel", serif;
-  background: #e9dfc4 url('assets/misc/parchment_texture.jpg');
+  background: #e9dfc4 url("assets/misc/parchment_texture.jpg");
   background-size: cover;
   color: #3a2d1a;
   opacity: 0;
@@ -20,18 +20,18 @@ header {
   padding: 20px;
   text-align: center;
   border-bottom: 6px solid #2a1f12;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .logo {
   height: 120px;
   margin-bottom: 10px;
-  filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.5));
 }
 
 /* ===================== NAVIGATION (Medieval Deep Wood + Scroll + Embossed) ===================== */
 nav {
-  background: url('assets/misc/dark_wood_texture.jpg');  /* 深木纹背景（你需要放这张图） */
+  background: url("assets/misc/dark_wood_texture.jpg");
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -40,7 +40,7 @@ nav {
   border-bottom: 10px solid #2a1f12;
   border-top: 10px solid #2a1f12;
   position: relative;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 /* Scroll edges (卷轴上下边缘) */
@@ -51,7 +51,7 @@ nav::after {
   left: 0;
   width: 100%;
   height: 18px;
-  background: url('assets/misc/scroll_edge.png') repeat-x;
+  background: url("assets/misc/scroll_edge.png") repeat-x;
   opacity: 0.9;
 }
 
@@ -72,16 +72,13 @@ nav a {
   padding: 6px 14px;
   border-radius: 6px;
   transition: all 0.25s ease;
-
-  /* 压印雕刻效果 */
   text-shadow:
     0 1px 0 #000000,
     0 -1px 0 #3d2d16,
-    2px 2px 3px rgba(0,0,0,0.6),
-    -2px -2px 3px rgba(255,255,255,0.2);
+    2px 2px 3px rgba(0, 0, 0, 0.6),
+    -2px -2px 3px rgba(255, 255, 255, 0.2);
 }
 
-/* Golden hover glow */
 nav a:hover {
   background: rgba(255, 215, 100, 0.25);
   box-shadow: 0 0 12px rgba(255, 204, 80, 0.55);
@@ -92,13 +89,12 @@ nav a:hover {
     0 0 30px rgba(255, 180, 80, 0.5);
 }
 
-/* Sticky nav保持深木纹 */
 nav.sticky {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 999;
-  background: url('assets/misc/dark_wood_texture.jpg');
+  background: url("assets/misc/dark_wood_texture.jpg");
   background-size: cover;
 }
 
@@ -111,18 +107,17 @@ nav.sticky {
   background: rgba(255, 243, 219, 0.92);
   border: 5px solid #3a2d1a;
   border-radius: 14px;
-  box-shadow: 0 0 25px rgba(0,0,0,0.35);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(2px);
   position: relative;
 }
 
-/* Scroll edges */
 .container::before,
 .container::after {
   content: "";
   display: block;
   height: 20px;
-  background: url('assets/misc/scroll_edge.png') repeat-x;
+  background: url("assets/misc/scroll_edge.png") repeat-x;
   opacity: 0.9;
 }
 
@@ -132,7 +127,7 @@ nav.sticky {
   border-bottom: 4px solid #3a2d1a;
   padding-bottom: 6px;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 3px rgba(0,0,0,0.4);
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
 }
 
 /* ===================== CARDS ===================== */
@@ -142,7 +137,7 @@ nav.sticky {
   margin: 14px 0;
   border: 3px solid #3a2d1a;
   border-radius: 8px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* ===================== GRID ===================== */
@@ -152,12 +147,45 @@ nav.sticky {
   gap: 18px;
 }
 
+/* ===================== GAME CARD (Library covers) ===================== */
+.game-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.cover-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 默认封面：统一高度 + 填满（适合竖版盒图） */
 .game-cover {
   width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
   border: 3px solid #3a2d1a;
   border-radius: 6px;
 }
 
+/* 横幅封面：不裁切 + 高度自适应（边框跟着图片走） */
+.game-cover.wide-cover {
+  height: auto;
+  object-fit: contain;
+}
+
+.game-card h3 {
+  margin: 12px 14px 4px;
+}
+
+.game-card p {
+  margin: 0 14px 14px;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
+/* ===================== EVENT PHOTOS ===================== */
 .event-photo {
   width: 100%;
   border: 3px solid #3a2d1a;
@@ -165,9 +193,28 @@ nav.sticky {
   border-radius: 6px;
 }
 
+/* ===================== SUBNAV (Arkham page sections) ===================== */
+.subnav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 14px 0 22px;
+}
+
+.subnav a {
+  padding: 8px 14px;
+  border-radius: 14px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.subnav a:hover {
+  transform: translateY(-1px);
+}
+
 /* ===================== DARK MODE (Torch Mode) ===================== */
 body.torch-mode {
-  background: #2e2214 url('assets/misc/dark_parchment.jpg');
+  background: #2e2214 url("assets/misc/dark_parchment.jpg");
   background-size: cover;
   color: #f7e7c3;
   transition: background 0.4s ease;
@@ -191,7 +238,7 @@ footer {
   text-align: center;
   margin-top: 40px;
   border-top: 5px solid #2a1f12;
-  box-shadow: 0 -5px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 -5px 12px rgba(0, 0, 0, 0.25);
 }
 
 /* ===================== TORCH MODE BUTTON ===================== */
@@ -249,55 +296,3 @@ footer {
     columns: 1;
   }
 }
-
-.game-card {
-  padding: 0;
-  overflow: hidden;
-}
-
-.cover-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-
-.game-cover {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
-}
-
-.game-card h3 {
-  margin: 12px 14px 4px;
-}
-
-.game-card p {
-  margin: 0 14px 14px;
-  opacity: 0.8;
-  font-size: 0.95rem;
-}
-
-.subnav {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 14px 0 22px;
-}
-
-.subnav a {
-  padding: 8px 14px;
-  border-radius: 14px;
-  text-decoration: none;
-  border: 1px solid rgba(255,255,255,0.15);
-}
-
-.subnav a:hover {
-  transform: translateY(-1px);
-}
-
-.wide-cover {
-  object-fit: contain;
-  background: rgba(0,0,0,0.12);
-}
-
