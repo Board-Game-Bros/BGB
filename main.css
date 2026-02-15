@@ -344,37 +344,39 @@ nav.sticky {
     opacity 0.2s ease;
 }
 
-/* 关键：frame 负责圆角 + 阴影，但阴影需要“露”出来 */
-.campaign-preview-frame{
+/* 1. 关键修改：移除 overflow: hidden，改用其他方式裁切图片 */
+.campaign-preview-frame {
   position: relative;
   display: inline-block;
   border-radius: 16px;
-  overflow: hidden;     /* 裁切图片圆角 */
+  /* overflow: hidden;  <-- 删除这一行，否则阴影会被切掉 */
   background: #f2e6c9;
-  margin: 6px;          /* 给阴影留点呼吸，不然紧贴 container 边看不出来 */
+  margin: 6px;
+  margin-bottom: 25px; /* 额外留点空间给下方的深阴影 */
 }
 
-/* 阴影层放到下面，不挡点击 */
-.campaign-preview-frame::before{
+/* 2. 确保阴影能够显示，同时不干扰点击 */
+.campaign-preview-frame::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  z-index: 0;           /* 明确在底层 */
+  z-index: -1; /* 改为 -1，彻底放到背景层，确保不挡住点击 */
   pointer-events: none;
   box-shadow:
     0 0 0 2px #3a2d1a,
     0 18px 40px rgba(0,0,0,0.35);
 }
 
-/* 图片在上层，点击就是点到 <a> 里的内容 */
-.campaign-preview-img{
+/* 3. 在图片上直接加圆角，补偿消失的 overflow: hidden */
+.campaign-preview-img {
   position: relative;
-  z-index: 1;           /* 盖过 ::before */
+  z-index: 1;
   width: 100%;
   max-width: 450px;
   display: block;
   border: none;
+  border-radius: 16px; /* <-- 在这里直接给图片加圆角 */
 }
 
 .campaign-subtitle-wrapper:hover .campaign-preview-img{
