@@ -280,9 +280,11 @@ nav.sticky {
 
 .campaign-subtitle-wrapper {
   position: relative;
-  display: inline-block; /* 限制宽度，方便鼠标悬停判断 */
+  display: inline-block; 
   margin-bottom: 20px;
-  cursor: help; /* 鼠标变成问号，提示有隐藏信息 */
+  cursor: help;
+  /* 确保父级清除浮动，并作为定位基准 */
+  vertical-align: top; 
 }
 
 .campaign-subtitle {
@@ -302,32 +304,30 @@ nav.sticky {
   margin-top: 4px;
 }
 
-/* 修改前：campaign-preview-img 的初始状态 */
 .campaign-preview-img {
   position: absolute;
-  top: 110%;
+  top: 100%; /* 改为 100% 紧贴文字底部 */
   left: 0;
   width: 300px;
-  z-index: 100;
+  z-index: 999; /* 提高层级，确保在卡片上方 */
   border: 5px solid #3a2d1a;
   border-radius: 4px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   
-  /* 核心修改：确保它被完全隐藏 */
+  /* 核心修复：移除 display:none，改用 visibility 控制渲染状态 */
+  display: block; /* 始终保持 block，但用可见度控制 */
   opacity: 0;
-  visibility: hidden;
-  display: none; /* 增加这一行，确保它不撑开文字下方的空间 */
-  transform: translateY(10px);
-  transition: all 0.4s ease;
+  visibility: hidden; 
+  transform: translateY(15px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
   pointer-events: none;
 }
 
-/* 修改前：鼠标悬停状态 */
+/* 悬停状态：只控制 opacity, visibility 和 transform */
 .campaign-subtitle-wrapper:hover .campaign-preview-img {
   opacity: 1;
   visibility: visible;
-  display: block; /* 增加这一行，悬停时才渲染 */
-  transform: translateY(0);
+  transform: translateY(5px);
 }
 
 /* 针对后续添加更多战役组的间隔 */
