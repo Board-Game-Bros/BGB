@@ -295,14 +295,17 @@ nav.sticky {
 /* 使用 Grid 布局来实现动态高度避让 */
 .campaign-subtitle-wrapper {
   display: grid;
-  grid-template-rows: auto 0fr;
+  /* 初始状态：第一行自动，第二行高度为 0 */
+  grid-template-rows: auto 0fr; 
   transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 20px;
   cursor: pointer;
+  overflow: hidden; /* 确保内容隐藏 */
 }
 
+/* 悬停状态：第二行变为 1fr (撑开) */
 .campaign-subtitle-wrapper:hover {
-  grid-template-rows: auto 1fr; /* 悬停时展开空间 */
+  grid-template-rows: auto 1fr;
 }
 
 .campaign-subtitle {
@@ -328,32 +331,29 @@ nav.sticky {
   display: block;
   opacity: 0.7;
   margin-top: 4px;
-  grid-row: 1; /* 保持在第一行 */
+  /* 删除 grid-row: 1; 靠 HTML 结构自动排布 */
 }
 
 /* 预览图样式优化 */
 .campaign-preview-img {
-  grid-row: 2;
-  overflow: hidden;
   width: 100%;
   max-width: 450px;
-  margin-top: 20px;
+  margin-top: 15px; /* 留出一点间距 */
+  margin-bottom: 10px;
   border-radius: 10px;
-  
-  /* 给图片加一个华丽的相框感 */
   border: 6px solid #f2e6c9;
   box-shadow: 
-    0 0 0 2px #3a2d1a, /* 外黑圈 */
+    0 0 0 2px #3a2d1a, 
     0 15px 35px rgba(0,0,0,0.4);
     
   opacity: 0;
-  transform: translateY(-10px) scale(0.98);
+  transform: translateY(-20px); /* 初始位移大一点，回弹感更强 */
   transition: all 0.5s ease;
 }
 
 .campaign-subtitle-wrapper:hover .campaign-preview-img {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
 }
 
 /* 针对后续添加更多战役组的间隔 */
