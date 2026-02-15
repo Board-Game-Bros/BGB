@@ -334,21 +334,24 @@ nav.sticky {
   /* 删除 grid-row: 1; 靠 HTML 结构自动排布 */
 }
 
+.campaign-preview-container {
+  min-height: 0;   /* 关键：允许 Grid 行收缩到 0 */
+  overflow: hidden; /* 关键：隐藏收缩时的图片 */
+}
+
 /* 预览图样式优化 */
 .campaign-preview-img {
   width: 100%;
   max-width: 450px;
-  margin-top: 15px; /* 留出一点间距 */
+  margin-top: 15px;
   margin-bottom: 10px;
   border-radius: 10px;
   border: 6px solid #f2e6c9;
-  box-shadow: 
-    0 0 0 2px #3a2d1a, 
-    0 15px 35px rgba(0,0,0,0.4);
+  box-shadow: 0 0 0 2px #3a2d1a, 0 15px 35px rgba(0,0,0,0.4);
     
   opacity: 0;
-  transform: translateY(-20px); /* 初始位移大一点，回弹感更强 */
-  transition: all 0.5s ease;
+  transform: translateY(-20px); 
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 添加回弹曲线 */
 }
 
 .campaign-subtitle-wrapper:hover .campaign-preview-img {
