@@ -344,12 +344,21 @@ nav.sticky {
     opacity 0.2s ease;
 }
 
-/* 预览图样式优化 */
 .campaign-preview-frame{
+  position: relative;
   display: inline-block;
   border-radius: 16px;
-  overflow: hidden; /* 阴影会跟着圆角裁切 */
-  
+  overflow: hidden;            /* 只负责裁剪图片内容 */
+  background: #f2e6c9;         /* 给个底色，阴影更自然 */
+}
+
+/* 阴影画在伪元素上，圆角 100% 生效 */
+.campaign-preview-frame::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
   box-shadow:
     0 0 0 2px #3a2d1a,
     0 18px 40px rgba(0,0,0,0.35);
