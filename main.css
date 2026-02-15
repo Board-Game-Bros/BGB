@@ -271,20 +271,27 @@ nav.sticky {
 }
 
 /* ===================== CAMPAIGN SUBTITLE STYLE ===================== */
-
 .campaign-group {
   margin-top: 30px;
-  border-left: 4px double #3a2d1a; /* 左侧装饰线，区分不同战役组 */
-  padding-left: 20px;
+  background: rgba(58, 45, 26, 0.05); /* 淡淡的底色增强容器感 */
+  border: 2px solid #3a2d1a;
+  border-radius: 14px; /* 圆角过度 */
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* 柔和阴影 */
+  transition: all 0.3s ease;
 }
 
+/* 使用 Grid 布局来实现动态高度避让 */
 .campaign-subtitle-wrapper {
-  position: relative;
-  display: inline-block; 
+  display: grid;
+  grid-template-rows: auto 0fr; /* 默认图片行高度为 0 */
+  transition: grid-template-rows 0.4s ease;
   margin-bottom: 20px;
-  cursor: help;
-  /* 确保父级清除浮动，并作为定位基准 */
-  vertical-align: top; 
+  cursor: pointer;
+}
+
+.campaign-subtitle-wrapper:hover {
+  grid-template-rows: auto 1fr; /* 悬停时展开空间 */
 }
 
 .campaign-subtitle {
@@ -293,7 +300,11 @@ nav.sticky {
   font-weight: 900;
   color: #3a2d1a;
   margin: 0;
-  text-decoration: underline wavy #e6c27a; /* 波浪下划线装饰 */
+  /* 去掉波浪线，改为渐变文字效果 */
+  background: linear-gradient(to bottom, #3a2d1a 0%, #634e32 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .campaign-meta {
@@ -302,32 +313,29 @@ nav.sticky {
   display: block;
   opacity: 0.7;
   margin-top: 4px;
+  grid-row: 1; /* 保持在第一行 */
 }
 
+/* 预览图样式优化 */
 .campaign-preview-img {
-  position: absolute;
-  top: 100%; /* 改为 100% 紧贴文字底部 */
-  left: 0;
-  width: 300px;
-  z-index: 999; /* 提高层级，确保在卡片上方 */
-  border: 5px solid #3a2d1a;
-  border-radius: 4px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  grid-row: 2; /* 放在第二行 */
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px; /* 限制宽度防止过大 */
+  margin-top: 15px;
+  border-radius: 8px;
+  border: 1px solid #e6c27a; /* 金色细边框代替黑色粗边框 */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 10px rgba(230, 194, 122, 0.2);
   
-  /* 核心修复：移除 display:none，改用 visibility 控制渲染状态 */
-  display: block; /* 始终保持 block，但用可见度控制 */
+  /* 配合 Grid 动画 */
   opacity: 0;
-  visibility: hidden; 
-  transform: translateY(15px);
-  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-  pointer-events: none;
+  transform: scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* 悬停状态：只控制 opacity, visibility 和 transform */
 .campaign-subtitle-wrapper:hover .campaign-preview-img {
   opacity: 1;
-  visibility: visible;
-  transform: translateY(5px);
+  transform: scale(1);
 }
 
 /* 针对后续添加更多战役组的间隔 */
