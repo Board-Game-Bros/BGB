@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 /* ===================== GLOBAL STYLE ===================== */
 body {
   margin: 0;
@@ -273,19 +275,28 @@ nav.sticky {
 /* ===================== CAMPAIGN SUBTITLE STYLE ===================== */
 .campaign-group {
   margin-top: 30px;
-  background: rgba(58, 45, 26, 0.05); /* 淡淡的底色增强容器感 */
-  border: 2px solid #3a2d1a;
-  border-radius: 14px; /* 圆角过度 */
-  padding: 25px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* 柔和阴影 */
+  background: rgba(255, 248, 230, 0.4); /* 羊皮纸色微透 */
+  
+  /* 增强边框质感：模拟双层凹凸金属/木质边框 */
+  border: 4px solid #3a2d1a;
+  outline: 1px solid #e6c27a; /* 金色细边线 */
+  outline-offset: -3px;
+  
+  border-radius: 14px;
+  padding: 30px;
+  
+  /* 深度阴影，让容器有“沉”在桌面上的感觉 */
+  box-shadow: 
+    inset 0 0 15px rgba(0,0,0,0.1),
+    0 10px 30px rgba(0, 0, 0, 0.25);
+  
   transition: all 0.3s ease;
 }
-
 /* 使用 Grid 布局来实现动态高度避让 */
 .campaign-subtitle-wrapper {
   display: grid;
-  grid-template-rows: auto 0fr; /* 默认图片行高度为 0 */
-  transition: grid-template-rows 0.4s ease;
+  grid-template-rows: auto 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 20px;
   cursor: pointer;
 }
@@ -295,16 +306,20 @@ nav.sticky {
 }
 
 .campaign-subtitle {
-  font-family: "Cinzel", serif;
-  font-size: 1.8rem;
-  font-weight: 900;
-  color: #3a2d1a;
+  font-family: 'Great Vibes', cursive; /* 使用引入的花体字 */
+  font-size: 2.8rem; /* 花体字通常较细，需要加大字号 */
+  font-weight: 400;
+  color: #2a1f12;
   margin: 0;
-  /* 去掉波浪线，改为渐变文字效果 */
-  background: linear-gradient(to bottom, #3a2d1a 0%, #634e32 100%);
+  letter-spacing: 1px;
+  
+  /* 渐变色：让文字看起来像是有深度的墨水或烫金 */
+  background: linear-gradient(145deg, #3a2d1a, #5c4a33);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  display: inline-block;
+  
+  /* 淡淡的文字阴影提升辨识度 */
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
 }
 
 .campaign-meta {
@@ -318,24 +333,27 @@ nav.sticky {
 
 /* 预览图样式优化 */
 .campaign-preview-img {
-  grid-row: 2; /* 放在第二行 */
+  grid-row: 2;
   overflow: hidden;
   width: 100%;
-  max-width: 400px; /* 限制宽度防止过大 */
-  margin-top: 15px;
-  border-radius: 8px;
-  border: 1px solid #e6c27a; /* 金色细边框代替黑色粗边框 */
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3), 0 0 10px rgba(230, 194, 122, 0.2);
+  max-width: 450px;
+  margin-top: 20px;
+  border-radius: 10px;
   
-  /* 配合 Grid 动画 */
+  /* 给图片加一个华丽的相框感 */
+  border: 6px solid #f2e6c9;
+  box-shadow: 
+    0 0 0 2px #3a2d1a, /* 外黑圈 */
+    0 15px 35px rgba(0,0,0,0.4);
+    
   opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(-10px) scale(0.98);
+  transition: all 0.5s ease;
 }
 
 .campaign-subtitle-wrapper:hover .campaign-preview-img {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0) scale(1);
 }
 
 /* 针对后续添加更多战役组的间隔 */
