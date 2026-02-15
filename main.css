@@ -302,28 +302,31 @@ nav.sticky {
   margin-top: 4px;
 }
 
-/* 战役预览图初始状态：隐藏 */
+/* 修改前：campaign-preview-img 的初始状态 */
 .campaign-preview-img {
   position: absolute;
-  top: 110%; /* 出现在文字下方 */
+  top: 110%;
   left: 0;
-  width: 300px; /* 预览图宽度 */
+  width: 300px;
   z-index: 100;
   border: 5px solid #3a2d1a;
   border-radius: 4px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   
+  /* 核心修改：确保它被完全隐藏 */
   opacity: 0;
   visibility: hidden;
+  display: none; /* 增加这一行，确保它不撑开文字下方的空间 */
   transform: translateY(10px);
   transition: all 0.4s ease;
-  pointer-events: none; /* 防止图片遮挡鼠标 */
+  pointer-events: none;
 }
 
-/* 鼠标悬停副标题时，显示图片 */
+/* 修改前：鼠标悬停状态 */
 .campaign-subtitle-wrapper:hover .campaign-preview-img {
   opacity: 1;
   visibility: visible;
+  display: block; /* 增加这一行，悬停时才渲染 */
   transform: translateY(0);
 }
 
