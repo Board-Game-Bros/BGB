@@ -334,16 +334,10 @@ nav.sticky {
 
 .campaign-preview-container {
   max-height: 0;
-  /* overflow: hidden; <-- 关键：删除这行或改为 clip，否则阴影出不来 */
-  overflow: clip; /* 现代浏览器支持，只切内容不切阴影，或者直接删掉 */
+  overflow: hidden; /* 这里恢复 hidden，因为不再需要显示外扩散阴影 */
   opacity: 0;
   padding: 0;
-  transition: 
-    max-height 0.55s cubic-bezier(0.2, 0.9, 0.2, 1),
-    opacity 0.2s ease;
-  
-  /* 确保不阻挡点击，只有在展开时才允许交互 */
-  pointer-events: none; 
+  transition: max-height 0.55s ease, opacity 0.3s ease;
 }
 
 /* 1. 关键修改：移除 overflow: hidden，改用其他方式裁切图片 */
@@ -351,33 +345,33 @@ nav.sticky {
   position: relative;
   display: inline-block;
   border-radius: 16px;
+  border: 2px solid #3a2d1a; /* 用简单的边框代替阴影，更符合羊皮纸风格 */
+  overflow: hidden;          /* 这样图片圆角会自然剪裁 */
   background: #f2e6c9;
-  margin: 10px 10px 40px 10px; /* 增加底部 margin 确保长阴影有空间显示 */
-  z-index: 1; /* 给 frame 一个基础层级 */
 }
 
 .campaign-preview-frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  z-index: -1; /* 确保在图片下方 */
-  pointer-events: none;
-  /* 强化阴影效果 */
-  box-shadow:
-    0 0 0 2px #3a2d1a,
-    0 20px 50px rgba(0,0,0,0.45); 
+  display: none; /* 彻底禁用之前的阴影伪元素 */
 }
 
-/* 3. 在图片上直接加圆角，补偿消失的 overflow: hidden */
+/* 4. 确保图片和链接区域 100% 可点击 */
+.campaign-preview-link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .campaign-preview-img {
-  position: relative;
-  z-index: 2; /* 图片层级最高 */
   width: 100%;
   max-width: 450px;
   display: block;
-  border-radius: 16px;
-  cursor: pointer;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+/* 悬停时给图片一个小反馈，证明它是可以点击的 */
+.campaign-preview-link:hover .campaign-preview-img {
+  transform: scale(1.02);
 }
 
 .campaign-subtitle-wrapper:hover .campaign-preview-img{
