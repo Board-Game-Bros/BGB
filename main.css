@@ -344,28 +344,33 @@ nav.sticky {
     opacity 0.2s ease;
 }
 
+/* 关键：frame 负责圆角 + 阴影，但阴影需要“露”出来 */
 .campaign-preview-frame{
   position: relative;
   display: inline-block;
   border-radius: 16px;
-  overflow: hidden;            /* 只负责裁剪图片内容 */
-  background: #f2e6c9;         /* 给个底色，阴影更自然 */
+  overflow: hidden;     /* 裁切图片圆角 */
+  background: #f2e6c9;
+  margin: 6px;          /* 给阴影留点呼吸，不然紧贴 container 边看不出来 */
 }
 
-/* 阴影画在伪元素上，圆角 100% 生效 */
+/* 阴影层放到下面，不挡点击 */
 .campaign-preview-frame::before{
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
+  z-index: 0;           /* 明确在底层 */
   pointer-events: none;
   box-shadow:
     0 0 0 2px #3a2d1a,
     0 18px 40px rgba(0,0,0,0.35);
 }
 
-/* 图片本体只负责显示，不要阴影 */
+/* 图片在上层，点击就是点到 <a> 里的内容 */
 .campaign-preview-img{
+  position: relative;
+  z-index: 1;           /* 盖过 ::before */
   width: 100%;
   max-width: 450px;
   display: block;
