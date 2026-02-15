@@ -171,7 +171,6 @@ nav.sticky {
   width: 100%;
   height: auto;          /* 必须是 auto，删除任何 px 数值 */
   display: block;
-  /* object-fit: contain;      /* 让图片物理性地充满容器宽度 */
   border: none;
 }
 
@@ -292,20 +291,19 @@ nav.sticky {
   
   transition: all 0.3s ease;
 }
-/* 使用 Grid 布局来实现动态高度避让 */
-.campaign-subtitle-wrapper {
-  display: grid;
-  /* 初始状态：第一行自动，第二行高度为 0 */
-  grid-template-rows: auto 0fr; 
-  transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+.campaign-subtitle-wrapper{
+  display: block;              /* 不用 grid 折叠 */
   margin-bottom: 20px;
   cursor: pointer;
-  overflow: hidden; /* 确保内容隐藏 */
 }
 
 /* 悬停状态：第二行变为 1fr (撑开) */
-.campaign-subtitle-wrapper:hover {
-  grid-template-rows: auto 1fr;
+.campaign-subtitle-wrapper:hover .campaign-preview-container{
+  max-height: 900px;   /* 够大就行，确保能容纳图 */
+  opacity: 1;
+  padding-top: 15px;
+  padding-bottom: 10px;
 }
 
 .campaign-subtitle {
@@ -334,29 +332,39 @@ nav.sticky {
   /* 删除 grid-row: 1; 靠 HTML 结构自动排布 */
 }
 
-.campaign-preview-container {
-  min-height: 0;   /* 关键：允许 Grid 行收缩到 0 */
-  overflow: hidden; /* 关键：隐藏收缩时的图片 */
+.campaign-preview-container{
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition:
+    max-height 0.55s cubic-bezier(0.2, 0.9, 0.2, 1),
+    padding 0.55s cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 0.2s ease;
 }
 
 /* 预览图样式优化 */
-.campaign-preview-img {
+.campaign-preview-img{
   width: 100%;
   max-width: 450px;
-  margin-top: 15px;
-  margin-bottom: 10px;
+  display: block;
+
+  margin: 0;          /* 去掉 margin，避免折叠/占位的怪问题 */
   border-radius: 10px;
   border: 6px solid #f2e6c9;
   box-shadow: 0 0 0 2px #3a2d1a, 0 15px 35px rgba(0,0,0,0.4);
-    
+
+  transform: translateY(-14px) scale(0.98);
   opacity: 0;
-  transform: translateY(-20px); 
-  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 添加回弹曲线 */
+  transition:
+    transform 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.25s ease;
 }
 
-.campaign-subtitle-wrapper:hover .campaign-preview-img {
+.campaign-subtitle-wrapper:hover .campaign-preview-img{
+  transform: translateY(0) scale(1);
   opacity: 1;
-  transform: translateY(0);
 }
 
 /* 针对后续添加更多战役组的间隔 */
