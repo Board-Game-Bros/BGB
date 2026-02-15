@@ -345,21 +345,22 @@ nav.sticky {
 }
 
 /* 预览图样式优化 */
+.campaign-preview-frame{
+  display: inline-block;
+  border-radius: 16px;
+  overflow: hidden; /* 阴影会跟着圆角裁切 */
+  
+  box-shadow:
+    0 0 0 2px #3a2d1a,
+    0 18px 40px rgba(0,0,0,0.35);
+}
+
+/* 图片本体只负责显示，不要阴影 */
 .campaign-preview-img{
   width: 100%;
   max-width: 450px;
   display: block;
-
-  margin: 0;          /* 去掉 margin，避免折叠/占位的怪问题 */
-  border-radius: 10px;
-  border: 6px solid #f2e6c9;
-  box-shadow: 0 0 0 2px #3a2d1a, 0 15px 35px rgba(0,0,0,0.4);
-
-  transform: translateY(-14px) scale(0.98);
-  opacity: 0;
-  transition:
-    transform 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    opacity 0.25s ease;
+  border: none;
 }
 
 .campaign-subtitle-wrapper:hover .campaign-preview-img{
