@@ -270,6 +270,68 @@ nav.sticky {
   margin-top: 5px;
 }
 
+/* ===================== CAMPAIGN SUBTITLE STYLE ===================== */
+
+.campaign-group {
+  margin-top: 30px;
+  border-left: 4px double #3a2d1a; /* 左侧装饰线，区分不同战役组 */
+  padding-left: 20px;
+}
+
+.campaign-subtitle-wrapper {
+  position: relative;
+  display: inline-block; /* 限制宽度，方便鼠标悬停判断 */
+  margin-bottom: 20px;
+  cursor: help; /* 鼠标变成问号，提示有隐藏信息 */
+}
+
+.campaign-subtitle {
+  font-family: "Cinzel", serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #3a2d1a;
+  margin: 0;
+  text-decoration: underline wavy #e6c27a; /* 波浪下划线装饰 */
+}
+
+.campaign-meta {
+  font-family: "Cinzel", serif;
+  font-size: 0.9rem;
+  display: block;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+/* 战役预览图初始状态：隐藏 */
+.campaign-preview-img {
+  position: absolute;
+  top: 110%; /* 出现在文字下方 */
+  left: 0;
+  width: 300px; /* 预览图宽度 */
+  z-index: 100;
+  border: 5px solid #3a2d1a;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+  pointer-events: none; /* 防止图片遮挡鼠标 */
+}
+
+/* 鼠标悬停副标题时，显示图片 */
+.campaign-subtitle-wrapper:hover .campaign-preview-img {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 针对后续添加更多战役组的间隔 */
+.campaign-group + .campaign-group {
+  margin-top: 50px;
+}
+
 /* ===================== EVENT PHOTOS ===================== */
 .event-photo {
   width: 100%;
