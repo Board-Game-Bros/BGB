@@ -110,71 +110,103 @@
           
             <ul class="session-status cn" lang="zh">
           
-              <!-- 巨神柱状态：改成右上角那种表格 -->
+              <!-- 巨神柱状态 -->
               <li>
-                <b>巨神柱状态:</b>
-                <div class="menhir-table-wrap">
+                <span class="tg-pill tg-title-pill">巨神柱状态:</span>
+          
+                <div class="menhir-table-wrap tg-stack">
                   <table class="menhir-table">
                     <thead>
                       <tr>
-                        <th></th>
-                        <th>Location</th>
-                        <th>Dial Value</th>
+                        <th><span class="tg-pill menhir-cell menhir-head"></span></th>
+                        <th><span class="tg-pill menhir-cell menhir-head">Location</span></th>
+                        <th><span class="tg-pill menhir-cell menhir-head">Dial Value</span></th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th>Menhir #1</th>
-                        <td>115</td>
-                        <td>1</td>
+                        <th><span class="tg-pill menhir-cell menhir-rowhead">Menhir #1</span></th>
+                        <td><span class="tg-pill menhir-cell">115</span></td>
+                        <td><span class="tg-pill menhir-cell">1</span></td>
                       </tr>
                       <tr>
-                        <th>Menhir #2</th>
-                        <td>135</td>
-                        <td>1</td>
+                        <th><span class="tg-pill menhir-cell menhir-rowhead">Menhir #2</span></th>
+                        <td><span class="tg-pill menhir-cell">135</span></td>
+                        <td><span class="tg-pill menhir-cell">1</span></td>
                       </tr>
                       <tr>
-                        <th>Menhir #3</th>
-                        <td></td>
-                        <td></td>
+                        <th><span class="tg-pill menhir-cell menhir-rowhead">Menhir #3</span></th>
+                        <td><span class="tg-pill menhir-cell"></span></td>
+                        <td><span class="tg-pill menhir-cell"></span></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </li>
           
-              <!-- 任务：每个重起一行（不改字，只换行） -->
+              <!-- 任务 -->
               <li>
-                <b>任务:</b><br>
-                （103）找到远征英雄们<br>
-                （115）找到失踪的隐士<br>
-                （119）调查大船的秘密（后期）<br>
-                （149）去蛆林（108）找到螺旋指环<br>
-                （154）找到让两个圆桌骑士开口的办法<br>
-                （153）再向下穿过洞穴抵达最黑暗处（无视恶臭、寒冷）妮安特提及蕨海洞穴可能藏有圣杯的秘密
+                <span class="tg-pill tg-title-pill">任务:</span>
+          
+                <div class="tg-stack">
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">103</span>找到远征英雄们
+                  </span>
+          
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">115</span>找到失踪的隐士
+                  </span>
+          
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">119</span>调查大船的秘密（后期）
+                  </span>
+          
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">149</span>去蛆林（108）找到螺旋指环
+                  </span>
+          
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">154</span>找到让两个圆桌骑士开口的办法
+                  </span>
+          
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">153</span>再向下穿过洞穴抵达最黑暗处（无视恶臭、寒冷）妮安特提及蕨海洞穴可能藏有圣杯的秘密
+                  </span>
+                </div>
               </li>
           
-              <!-- 地点变化：每条重起一行（不改字，只换行） -->
+              <!-- 地点变化 -->
               <li>
-                <b>地点变化:</b><br>
-                108 -> 110<br>
-                136 -> 149<br>
-                138 -> 142
+                <span class="tg-pill tg-title-pill">地点变化:</span>
+          
+                <div class="tg-stack">
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">108</span><span class="tg-arrow">→</span><span class="tg-chip">110</span>
+                  </span>
+          
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">136</span><span class="tg-arrow">→</span><span class="tg-chip">149</span>
+                  </span>
+          
+                  <span class="tg-pill tg-item">
+                    <span class="tg-chip">138</span><span class="tg-arrow">→</span><span class="tg-chip">142</span>
+                  </span>
+                </div>
               </li>
             </ul>
           
+            <!-- 冒险笔记：去掉 bullet，每行也加边框 -->
             <div class="session-notes cn" lang="zh">
-              <h5 class="session-notes-title">冒险笔记</h5>
-              <ul class="session-notes-list">
-                <li>法埃尔：原大骑士加拉哈德（叛徒）</li>
-                <li>与妮安特的对话得知天母教（目前未知）</li>
-                <li>盘根树林知识第2部分未知（待探索）</li>
-              </ul>
+              <span class="tg-pill tg-title-pill">冒险笔记</span>
+          
+              <div class="tg-notes-lines">
+                <div class="tg-pill tg-item">法埃尔：原大骑士加拉哈德（叛徒）</div>
+                <div class="tg-pill tg-item">与妮安特的对话得知天母教（目前未知）</div>
+                <div class="tg-pill tg-item">盘根树林知识第2部分未知（待探索）</div>
+              </div>
             </div>
           </div>
-        
         </div>
-
       </div>
     </section>
 
