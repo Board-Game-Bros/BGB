@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tainted Grail: The Fall of Avalon</title>
-
   <link rel="stylesheet" href="main.css" />
 </head>
 
@@ -22,164 +21,119 @@
   <main class="container">
     <h1 class="page-title">Tainted Grail: The Fall of Avalon</h1>
 
-    <!-- Subnav Tabs -->
     <div class="subnav">
-      <a href="#campaign">Campaign</a>
+      <a href="#overview">Overview</a>
       <a href="#logs">Campaign Logs</a>
-      <a href="#notes">Notes</a>
-      <a href="#savesheets">Save Sheets</a>
     </div>
 
-    <!-- Campaign Overview -->
-    <section id="campaign">
+    <section id="overview">
       <h2 class="section-title">Campaign</h2>
 
       <div class="campaign-group">
+
+        <!-- Campaign Header -->
         <div class="campaign-subtitle-wrapper">
           <div class="subtitle-header">
             <h3 class="campaign-subtitle">The Fall of Avalon</h3>
             <span class="campaign-meta">Started on 01/11/2026</span>
           </div>
-
-          <!-- 可选：你之后放封面图的位置（如果你想做 hover 展开预览） -->
-          <!--
-          <div class="campaign-preview-container">
-            <a href="#" class="campaign-preview-link">
-              <div class="campaign-preview-frame">
-                <img src="assets/boardgames/tainted_grail_foa.png" alt="Campaign Preview" class="campaign-preview-img">
-              </div>
-            </a>
-          </div>
-          -->
         </div>
 
+        <!-- Quick Summary -->
         <div class="card">
           <h3 style="margin-top:0;">Quick Summary</h3>
           <p style="margin-bottom:0;">
-            This page tracks our campaign progress, session logs, and in-game notes for Tainted Grail: The Fall of Avalon.
-            Keep it lightweight, chronological, and screenshot-friendly.
+            Ongoing campaign journal for Tainted Grail: The Fall of Avalon.
+            This page tracks session progress, key decisions, world state, 
+            Menhir status, and important notes.
           </p>
         </div>
-      </div>
-    </section>
 
-    <!-- Campaign Logs -->
-    <section id="logs">
-      <h2 class="section-title">Campaign Logs</h2>
-
-      <div class="campaign-group">
-        <div class="card">
-          <h3 style="margin-top:0;">Session 01 — 01/11/2026</h3>
-          <p style="opacity:0.85; margin-top:-6px;">(Add location IDs, Menhir status, key decisions, and outcomes.)</p>
-
-          <ul style="margin: 0; padding-left: 18px;">
-            <li><b>Start date:</b> 01/11/2026</li>
-            <li><b>What we did:</b> …</li>
-            <li><b>Big decisions:</b> …</li>
-            <li><b>Consequences / flags to remember:</b> …</li>
-            <li><b>Next time:</b> …</li>
-          </ul>
-        </div>
-
-        <!-- 复制下面这块即可继续加 session -->
-        <div class="card">
-          <h3 style="margin-top:0;">Session 02 — (MM/DD/YYYY)</h3>
-          <p style="opacity:0.85; margin-top:-6px;">Short headline: e.g., “Menhir #1 lit, explored 115/135, new guardian unlocked”.</p>
-
-          <ul style="margin: 0; padding-left: 18px;">
-            <li><b>Locations visited:</b> …</li>
-            <li><b>Menhir / dials:</b> …</li>
-            <li><b>Quest state:</b> …</li>
-            <li><b>Resources & changes:</b> …</li>
-            <li><b>To-do:</b> …</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Notes -->
-    <section id="notes">
-      <h2 class="section-title">Notes</h2>
-
-      <div class="campaign-group">
-        <div class="card">
-          <h3 style="margin-top:0;">Rules / Reminders</h3>
-          <ul style="margin: 0; padding-left: 18px;">
-            <li>Energy / Menhir timing reminders…</li>
-            <li>Common mistakes we made…</li>
-            <li>How we interpret a tricky rule…</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3 style="margin-top:0;">Story / NPC / Keywords</h3>
-          <ul style="margin: 0; padding-left: 18px;">
-            <li><b>NPC:</b> …</li>
-            <li><b>Keyword:</b> …</li>
-            <li><b>Omen / Curse:</b> …</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3 style="margin-top:0;">Open Threads</h3>
-          <ul style="margin: 0; padding-left: 18px;">
-            <li>We promised to return to …</li>
-            <li>We still need to resolve …</li>
-            <li>Don’t forget to …</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Save Sheets -->
-    <section id="savesheets">
-      <h2 class="section-title">Save Sheets</h2>
-
-      <div class="campaign-group">
-        <div class="card">
-          <h3 style="margin-top:0;">Save Sheet Photos</h3>
-          <p style="margin-top:-6px; opacity:0.85;">
-            Put your images under something like:
-            <code>assets/tainted_grail/save_sheets/</code>
-            then update the <code>src</code> paths here.
-          </p>
-
-          <!-- 简单图片列表：每张图一张 card，截图记录会很清晰 -->
-          <div class="grid">
-            <div class="card game-card" style="padding: 12px !important;">
-              <a href="assets/tainted_grail/save_sheets/2026-01-11.jpg" target="_blank" rel="noopener" class="cover-link">
-                <img
-                  src="assets/tainted_grail/save_sheets/2026-01-11.jpg"
-                  alt="Save Sheet - 2026-01-11"
-                  class="game-cover"
-                />
-                <h3 style="margin: 10px 0 4px;">Save Sheet</h3>
-                <p style="margin: 0; opacity: 0.8;">01/11/2026</p>
-              </a>
+        <!-- Campaign Logs -->
+        <div id="logs" class="card">
+          <h3 style="margin-top:0;">Campaign Logs</h3>
+        
+          <!-- ===================== -->
+          <!-- Session 01 -->
+          <!-- ===================== -->
+          <div class="session">
+            <div class="session-header">
+              <h4 class="session-title">Session 01 — 01/11/2026</h4>
             </div>
-
-            <!-- 继续添加更多 save sheet -->
-            <div class="card game-card" style="padding: 12px !important;">
-              <a href="assets/tainted_grail/save_sheets/YYYY-MM-DD.jpg" target="_blank" rel="noopener" class="cover-link">
-                <img
-                  src="assets/tainted_grail/save_sheets/YYYY-MM-DD.jpg"
-                  alt="Save Sheet - YYYY-MM-DD"
-                  class="game-cover"
-                />
-                <h3 style="margin: 10px 0 4px;">Save Sheet</h3>
-                <p style="margin: 0; opacity: 0.8;">(Date)</p>
-              </a>
+        
+            <ul class="session-status">
+              <li><b>Menhir status:</b> ...</li>
+              <li><b>Quest progress:</b> ...</li>
+              <li><b>World changes:</b> ...</li>
+            </ul>
+        
+            <div class="session-notes">
+              <h5 class="session-notes-title">Notes</h5>
+              <ul class="session-notes-list">
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
             </div>
-
           </div>
+        
+          <!-- ===================== -->
+          <!-- Session 02 -->
+          <!-- ===================== -->
+          <div class="session">
+            <div class="session-header">
+              <h4 class="session-title">Session 02 — (MM/DD/YYYY)</h4>
+            </div>
+        
+            <ul class="session-status">
+              <li><b>Menhir status:</b></li>
+              <li><b>Quest progress:</b></li>
+              <li><b>World changes:</b></li>
+            </ul>
+        
+            <div class="session-notes">
+              <h5 class="session-notes-title">Notes</h5>
+              <ul class="session-notes-list">
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </div>
+          </div>
+        
+          <!-- ===================== -->
+          <!-- Session 03 -->
+          <!-- ===================== -->
+          <div class="session">
+            <div class="session-header">
+              <h4 class="session-title">Session 03 — 01/22/2026</h4>
+            </div>
+        
+            <ul class="session-status cn" lang="zh">
+              <li><b>巨神柱状态: #1 地点 115 圆盘数字 1; #2 地点 135 圆盘数字 1</b></li>
+              <li><b>任务:（103）找到远征英雄们 （115）找到失踪的隐士 （119）调查大船的秘密（后期）（149）去蛆林（108）找到螺旋指环 （154）找到让两个圆桌骑士开口的办法 （153）再向下穿过洞穴抵达最黑暗处（无视恶臭、寒冷）妮安特提及蕨海洞穴可能藏有圣杯的秘密</b></li>
+              <li><b>地点变化:108 -> 110; 136 -> 149; 138 -> 142</b></li>
+            </ul>
+        
+            <div class="session-notes cn" lang="zh">
+              <h5 class="session-notes-title">Notes</h5>
+              <ul class="session-notes-list">
+                <li>法埃尔：原大骑士加拉哈德（叛徒）</li>
+                <li>与妮安特的对话得知天母教（目前未知）</li>
+                <li>盘根树林知识第2部分未知（待探索）</li>
+              </ul>
+            </div>
+          </div>
+        
         </div>
+
       </div>
     </section>
 
-    <!-- Back Button -->
     <div style="margin-top: 24px;">
       <a href="library.html">← Back to Library</a>
     </div>
+
   </main>
 
   <script src="main.js"></script>
