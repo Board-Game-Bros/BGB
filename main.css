@@ -471,6 +471,53 @@ nav.sticky {
   word-break: break-word;
 }
 
+/* ===== Menhir mini-table (save-sheet style) ===== */
+
+.menhir-table-wrap {
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.menhir-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 360px;
+  max-width: 100%;
+  background: transparent;
+  border: 2px solid rgba(58, 45, 26, 0.55);
+  border-radius: 10px;
+}
+
+.menhir-table th,
+.menhir-table td {
+  padding: 8px 10px;
+  border-right: 2px solid rgba(58, 45, 26, 0.35);
+  border-bottom: 2px solid rgba(58, 45, 26, 0.35);
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.menhir-table thead th {
+  font-weight: 700;
+  background: rgba(255, 248, 230, 0.75);
+}
+
+.menhir-table tbody th {
+  font-weight: 700;
+  background: rgba(255, 248, 230, 0.60);
+}
+
+.menhir-table tr:last-child th,
+.menhir-table tr:last-child td {
+  border-bottom: none;
+}
+
+.menhir-table th:last-child,
+.menhir-table td:last-child {
+  border-right: none;
+}
+
 /* ===================== EVENT PHOTOS ===================== */
 .event-photo {
   width: 100%;
