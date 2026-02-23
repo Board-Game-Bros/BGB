@@ -471,129 +471,173 @@ nav.sticky {
   word-break: break-word;
 }
 
-/* ===== TG FoA: pill blocks / hover / subtle shadow ===== */
+/* ===================== TG FoA: BLOCK UI (no nested borders) ===================== */
 
 :root{
-  --tg-border: rgba(58, 45, 26, 0.45);
-  --tg-border-strong: rgba(58, 45, 26, 0.65);
-  --tg-fill: rgba(255, 248, 230, 0.55);
-  --tg-fill-hover: rgba(255, 248, 230, 0.78);
-  --tg-shadow: 0 1px 0 rgba(0,0,0,0.10);
+  --tg-border: rgba(58, 45, 26, 0.55);
+  --tg-border-strong: rgba(58, 45, 26, 0.75);
+  --tg-fill: rgba(233, 223, 196, 0.55);        /* 比页面背景稍深一点 */
+  --tg-fill-hover: rgba(233, 223, 196, 0.75);  /* hover 加深 */
+  --tg-shadow: 0 2px 8px rgba(0,0,0,0.10);     /* 浅浅悬浮感 */
 }
 
-.tg-pill{
+.tg-block{
+  margin-top: 12px;
+  padding: 14px;
+  border: 2px solid rgba(58, 45, 26, 0.55);
+  border-radius: 12px;
+  background: rgba(255, 248, 230, 0.40); /* block 背景 */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.tg-title{
   display: inline-block;
-  padding: 8px 12px;
+  padding: 8px 14px;
   border-radius: 12px;
   border: 2px solid var(--tg-border);
   background: var(--tg-fill);
   box-shadow: var(--tg-shadow);
-  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
+  font-weight: 800;
+  transition: background 140ms ease, border-color 140ms ease;
 }
 
-.tg-pill:hover{
+.tg-title:hover{
   background: var(--tg-fill-hover);
   border-color: var(--tg-border-strong);
 }
 
-.tg-pill:active{
-  transform: translateY(1px);
+.tg-list{
+  margin-top: 12px;
+  display: grid;
+  gap: 12px;
 }
 
-/* Bigger "title pills" (巨神柱状态/任务/地点变化/冒险笔记) */
-.tg-title-pill{
-  font-weight: 700;
+/* 任务：编号块 + 文本块（两个独立边框） */
+.tg-line{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tg-tag{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
   padding: 8px 14px;
+  border-radius: 999px;
+  border: 2px solid var(--tg-border);
+  background: var(--tg-fill);
+  box-shadow: var(--tg-shadow);
+  font-weight: 800;
+  line-height: 1;
+  transition: background 140ms ease, border-color 140ms ease;
 }
 
-/* One line item pill (任务每一条 / 地点变化每一条 / 笔记每一条) */
-.tg-item{
-  display: block;
+.tg-tag:hover{
+  background: var(--tg-fill-hover);
+  border-color: var(--tg-border-strong);
+}
+
+.tg-text{
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid var(--tg-border);
+  background: var(--tg-fill);
+  box-shadow: var(--tg-shadow);
+  transition: background 140ms ease, border-color 140ms ease;
+}
+
+.tg-text:hover{
+  background: var(--tg-fill-hover);
+  border-color: var(--tg-border-strong);
+}
+
+/* 地点变化：箭头无边框，做成更“干净”的符号 */
+.tg-move{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tg-arrow-plain{
+  display: inline-block;
+  font-weight: 900;
+  font-size: 1.2rem;
+  opacity: 0.75;
+  transform: translateY(-1px);
+}
+
+/* 冒险笔记：每行一个块（无 bullet） */
+.tg-note{
+  display: inline-block;
   width: fit-content;
   max-width: 100%;
-  margin: 8px 0 0 0;
-}
-
-.tg-stack{
-  margin-top: 10px;
-}
-
-/* Small chips (103/115/... 以及地点数字) */
-.tg-chip{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 10px;
-  border-radius: 999px;
+  padding: 10px 14px;
+  border-radius: 12px;
   border: 2px solid var(--tg-border);
-  background: rgba(255, 248, 230, 0.78);
+  background: var(--tg-fill);
   box-shadow: var(--tg-shadow);
-  font-weight: 700;
-  line-height: 1;
-  margin-right: 10px;
   transition: background 140ms ease, border-color 140ms ease;
 }
 
-.tg-chip:hover{
-  background: rgba(255, 248, 230, 0.92);
+.tg-note:hover{
+  background: var(--tg-fill-hover);
   border-color: var(--tg-border-strong);
 }
 
-/* Pretty arrow */
-.tg-arrow{
-  display: inline-flex;
+/* Menhir：网格布局（只给有文字的格子加边框） */
+.tg-menhir-grid{
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 160px 140px 140px;
+  gap: 12px 14px;
   align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 22px;
-  margin: 0 10px;
-  border-radius: 999px;
+}
+
+.tg-menhir-head,
+.tg-menhir-row,
+.tg-menhir-cell{
+  padding: 10px 14px;
+  border-radius: 12px;
   border: 2px solid var(--tg-border);
-  background: rgba(255, 248, 230, 0.62);
+  background: var(--tg-fill);
   box-shadow: var(--tg-shadow);
-  font-weight: 800;
-  line-height: 1;
   transition: background 140ms ease, border-color 140ms ease;
 }
 
-.tg-arrow:hover{
-  background: rgba(255, 248, 230, 0.85);
-  border-color: var(--tg-border-strong);
-}
-
-/* Menhir table: each cell becomes a pill, numbers centered */
-.menhir-table{
-  border-collapse: separate;
-  border-spacing: 10px 10px;
-  width: auto;
-}
-
-.menhir-table th,
-.menhir-table td{
-  border: none;
-  padding: 0;
-}
-
-.menhir-cell{
-  display: inline-block;
-  min-width: 84px;
+.tg-menhir-head{
+  font-weight: 900;
   text-align: center;
 }
 
-.menhir-rowhead{
-  min-width: 120px;
-  text-align: left;
-}
-
-.menhir-head{
-  min-width: 84px;
-  text-align: center;
+.tg-menhir-row{
   font-weight: 800;
 }
 
-/* Notes list: remove bullets (we'll stop using <ul> there) */
-.tg-notes-lines{
-  margin-top: 10px;
+.tg-menhir-cell{
+  text-align: center; /* 数字居中 */
+  font-weight: 800;
+}
+
+.tg-menhir-head:hover,
+.tg-menhir-row:hover,
+.tg-menhir-cell:hover{
+  background: var(--tg-fill-hover);
+  border-color: var(--tg-border-strong);
+}
+
+/* 小屏：Menhir 自动缩成两列更不挤 */
+@media (max-width: 600px){
+  .tg-menhir-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+  .tg-menhir-grid .tg-menhir-head:first-child{
+    display: none; /* 隐藏左上角空头 */
+  }
 }
 
 /* ===================== EVENT PHOTOS ===================== */
