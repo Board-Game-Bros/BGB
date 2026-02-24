@@ -2,6 +2,7 @@
   function initAhlcgUpgradeManager(config) {
     const options = config || {};
     const cardDir = options.cardDir || "assets/boardgames/ahlcg_cards";
+    const investigatorDir = options.investigatorDir || "assets/boardgames/ahlcg_investigators";
     const cardImageFiles = Array.isArray(options.cardImageFiles) ? options.cardImageFiles : [];
     const standardCardNames = Array.isArray(options.standardCardNames) ? options.standardCardNames : [];
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
@@ -180,6 +181,12 @@
       return cardDir + "/" + normalized + ".png";
     }
 
+    function inferInvestigatorImagePath(investigatorName) {
+      const normalized = normalizeText(investigatorName).replace(/\s+/g, "_");
+      if (!normalized) return null;
+      return investigatorDir + "/" + normalized + ".png";
+    }
+
     function buildPreviewNode(cardName) {
       const src = findMatchingImage(cardName) || inferImagePath(cardName);
       if (src) {
@@ -200,6 +207,26 @@
       const placeholder = document.createElement("div");
       placeholder.className = "card-preview card-preview-placeholder";
       placeholder.textContent = "No card image found for \"" + cardName + "\" yet.";
+      return placeholder;
+    }
+
+    function buildCustomPreviewNode(name, src, notFoundText) {
+      if (src) {
+        const img = document.createElement("img");
+        img.className = "card-preview";
+        img.src = src;
+        img.alt = name;
+        img.addEventListener("error", () => {
+          const fallback = document.createElement("div");
+          fallback.className = "card-preview card-preview-placeholder";
+          fallback.textContent = notFoundText;
+          img.replaceWith(fallback);
+        });
+        return img;
+      }
+      const placeholder = document.createElement("div");
+      placeholder.className = "card-preview card-preview-placeholder";
+      placeholder.textContent = notFoundText;
       return placeholder;
     }
 
@@ -471,8 +498,51 @@
 
     function getUpgradeCardName(upgradeList) {
       const card = upgradeList ? upgradeList.closest(".upgrade-card") : null;
+      return getCardOwnerName(card);
+    }
+
+    function getCardOwnerName(card) {
       const nameNode = card ? card.querySelector("h3") : null;
-      return nameNode ? nameNode.textContent.trim() : "";
+      if (!nameNode) return "";
+      const dataName = nameNode.getAttribute("data-investigator-name");
+      if (dataName) return dataName.trim();
+      return nameNode.textContent.trim();
+    }
+
+    function resolveInvestigatorCanonicalName(investigatorName) {
+      const base = String(investigatorName || "").trim();
+      if (!base) return "";
+      const normalizedBase = normalizeText(base);
+      const fromStandard = standardCardNames.find((name) => {
+        if (!name || !name.includes(":")) return false;
+        const head = String(name).split(":")[0].trim();
+        return normalizeText(head) === normalizedBase;
+      });
+      return fromStandard || base;
+    }
+
+    function decorateInvestigatorHeaders() {
+      document.querySelectorAll(".upgrade-card").forEach((card) => {
+        const heading = card.querySelector("h3");
+        if (!heading || heading.querySelector(".investigator-pill")) return;
+        const baseName = heading.textContent.trim();
+        const canonicalName = resolveInvestigatorCanonicalName(baseName);
+        const imagePath = inferInvestigatorImagePath(canonicalName);
+        heading.setAttribute("data-investigator-name", baseName);
+        heading.textContent = "";
+
+        const pill = document.createElement("span");
+        pill.className = "investigator-pill card-ref";
+        pill.appendChild(document.createTextNode(baseName));
+        pill.appendChild(
+          buildCustomPreviewNode(
+            canonicalName,
+            imagePath,
+            "No investigator image found for \"" + canonicalName + "\" yet."
+          )
+        );
+        heading.appendChild(pill);
+      });
     }
 
     function savePendingDelete(payload) {
@@ -975,8 +1045,7 @@
       try {
         const state = {};
         document.querySelectorAll(".upgrade-card").forEach((card) => {
-          const nameNode = card.querySelector("h3");
-          const name = nameNode ? nameNode.textContent.trim() : "";
+          const name = getCardOwnerName(card);
           const upgradeList = card.querySelector(".upgrade-list");
           if (!name || !upgradeList) return;
           state[name] = sanitizeUpgradeListForSave(upgradeList);
@@ -1005,8 +1074,7 @@
         if (!state || typeof state !== "object") return;
 
         document.querySelectorAll(".upgrade-card").forEach((card) => {
-          const nameNode = card.querySelector("h3");
-          const name = nameNode ? nameNode.textContent.trim() : "";
+          const name = getCardOwnerName(card);
           const upgradeList = card.querySelector(".upgrade-list");
           if (!name || !upgradeList) return;
           if (typeof state[name] === "string") {
@@ -1136,8 +1204,7 @@
       }
 
       const targetCard = Array.from(document.querySelectorAll(".upgrade-card")).find((card) => {
-        const nameNode = card.querySelector("h3");
-        return nameNode && nameNode.textContent.trim() === cardName;
+        return getCardOwnerName(card) === cardName;
       });
       if (!targetCard) {
         clearPendingDelete();
@@ -1228,6 +1295,7 @@
     restoreUpgradeState();
     normalizeExistingCardNames();
     setupExistingPreviewFallbacks();
+    decorateInvestigatorHeaders();
     renderEditGate();
     bindInactivityTracking();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
