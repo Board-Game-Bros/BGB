@@ -7,6 +7,9 @@
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
+    const editPassword = typeof options.editPassword === "string" ? options.editPassword : "";
+    const requireEditPassword = editPassword.length > 0;
+    const inactivityMs = Number(options.inactivityMs) > 0 ? Number(options.inactivityMs) : 120000;
 
     const cardCatalog = cardImageFiles.map((file) => ({
       file,
@@ -16,6 +19,12 @@
 
     let activeUndo = null;
     let saveTimer = null;
+    let inactivityTimer = null;
+    let inactivityBound = false;
+    let pendingRestoreDone = false;
+    let editUnlocked = !requireEditPassword;
+    let editGateButton = null;
+    let editGateStatus = null;
 
     function normalizeText(value) {
       return String(value || "")
@@ -519,6 +528,120 @@
       }
     }
 
+    function isEditEnabled() {
+      return !requireEditPassword || editUnlocked;
+    }
+
+    function stopInactivityTimer() {
+      if (inactivityTimer) {
+        window.clearTimeout(inactivityTimer);
+        inactivityTimer = null;
+      }
+    }
+
+    function lockEditMode() {
+      if (!requireEditPassword) return;
+      editUnlocked = false;
+      stopInactivityTimer();
+      clearUndo({ forceClearPending: true, skipSave: true });
+      document.querySelectorAll(".upgrade-entry-editor, .upgrade-entry-draft").forEach((node) => {
+        node.remove();
+      });
+      document.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        ensureEntryActions(entry);
+      });
+      document.querySelectorAll(".upgrade-card").forEach((card) => {
+        addToolbar(card);
+      });
+      refreshEditGateUi();
+      scheduleSaveUpgradeState();
+    }
+
+    function refreshEditGateUi() {
+      if (!requireEditPassword) return;
+      if (editGateButton) {
+        editGateButton.textContent = isEditEnabled() ? "Lock Edit" : "Edit Page";
+      }
+      if (editGateStatus) {
+        editGateStatus.textContent = isEditEnabled() ? "Edit unlocked" : "Edit locked";
+      }
+    }
+
+    function resetInactivityTimer() {
+      if (!requireEditPassword || !isEditEnabled()) return;
+      stopInactivityTimer();
+      inactivityTimer = window.setTimeout(() => {
+        lockEditMode();
+      }, inactivityMs);
+    }
+
+    function bindInactivityTracking() {
+      if (!requireEditPassword || inactivityBound) return;
+      inactivityBound = true;
+      ["pointerdown", "keydown", "touchstart", "scroll"].forEach((eventName) => {
+        window.addEventListener(eventName, () => {
+          resetInactivityTimer();
+        }, { passive: true });
+      });
+    }
+
+    function tryUnlockEditMode() {
+      if (!requireEditPassword) return true;
+      const input = window.prompt("Enter edit password:");
+      if (input === null) return false;
+      if (input !== editPassword) {
+        window.alert("Incorrect password.");
+        return false;
+      }
+      editUnlocked = true;
+      resetInactivityTimer();
+      document.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        ensureEntryActions(entry);
+      });
+      document.querySelectorAll(".upgrade-card").forEach((card) => {
+        addToolbar(card);
+      });
+      if (!pendingRestoreDone) {
+        restorePendingDelete();
+        pendingRestoreDone = true;
+      }
+      refreshEditGateUi();
+      return true;
+    }
+
+    function renderEditGate() {
+      if (!requireEditPassword) return;
+      const section = document.querySelector(rootSelector);
+      if (!section) return;
+      if (section.querySelector(".edit-gate")) return;
+
+      const gate = document.createElement("div");
+      gate.className = "edit-gate";
+      gate.innerHTML = `
+        <button type="button" class="upgrade-btn upgrade-btn-secondary" data-action="toggle-edit-lock">Edit Page</button>
+        <span class="edit-gate-status">Edit locked</span>
+      `;
+      editGateButton = gate.querySelector('[data-action="toggle-edit-lock"]');
+      editGateStatus = gate.querySelector(".edit-gate-status");
+
+      editGateButton.addEventListener("click", () => {
+        if (isEditEnabled()) {
+          lockEditMode();
+          return;
+        }
+        tryUnlockEditMode();
+      });
+
+      const title = section.querySelector(".section-title");
+      if (title && title.nextSibling) {
+        section.insertBefore(gate, title.nextSibling);
+      } else {
+        section.prepend(gate);
+      }
+
+      refreshEditGateUi();
+    }
+
     function clearUndo(opts) {
       const options = opts || {};
       const preservePending = !!options.preservePending;
@@ -541,6 +664,7 @@
     }
 
     function showUndoToast(upgradeList, entry, nextSibling, expiresAt) {
+      if (!isEditEnabled()) return;
       clearUndo({ preservePending: true, skipSave: true });
 
       const toast = document.createElement("div");
@@ -593,6 +717,7 @@
     }
 
     function attachEditor(entry) {
+      if (!isEditEnabled()) return;
       if (entry.querySelector(".upgrade-entry-editor")) return;
 
       const lists = entry.querySelectorAll(".card-list");
@@ -703,6 +828,11 @@
     }
 
     function ensureEntryActions(entry) {
+      if (!isEditEnabled()) {
+        const existing = entry.querySelector(".entry-actions");
+        if (existing) existing.remove();
+        return;
+      }
       let actions = entry.querySelector(".entry-actions");
       if (!actions) {
         actions = document.createElement("div");
@@ -813,6 +943,7 @@
     function bindNewScenarioButton(upgradeList, button) {
       if (!upgradeList || !button) return;
       button.onclick = () => {
+        if (!isEditEnabled()) return;
         const hasDraft = !!upgradeList.querySelector(".upgrade-entry-draft");
         if (hasDraft) return;
         const scenarioNum = nextScenarioNumber(upgradeList);
@@ -825,6 +956,10 @@
       const upgradeList = card.querySelector(".upgrade-list");
       if (!upgradeList) return;
       const existingToolbar = upgradeList.querySelector(".upgrade-toolbar");
+      if (!isEditEnabled()) {
+        if (existingToolbar) existingToolbar.remove();
+        return;
+      }
       if (existingToolbar) {
         const existingButton = existingToolbar.querySelector('[data-action="new-scenario"]');
         bindNewScenarioButton(upgradeList, existingButton);
@@ -1038,13 +1173,18 @@
 
     restoreUpgradeState();
     setupExistingPreviewFallbacks();
+    renderEditGate();
+    bindInactivityTracking();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
       ensureEntryActions(entry);
     });
     document.querySelectorAll(".upgrade-card").forEach((card) => {
       addToolbar(card);
     });
-    restorePendingDelete();
+    if (isEditEnabled()) {
+      restorePendingDelete();
+      pendingRestoreDone = true;
+    }
     watchUpgradeChanges();
     scheduleSaveUpgradeState();
     window.addEventListener("beforeunload", () => {

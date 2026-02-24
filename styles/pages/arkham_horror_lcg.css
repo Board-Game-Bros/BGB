@@ -282,6 +282,18 @@
   margin: 8px 0 10px;
 }
 
+.edit-gate {
+  margin: 8px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-gate-status {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
 .upgrade-btn {
   appearance: none;
   border: 1px solid #5a4427;
