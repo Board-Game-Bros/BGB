@@ -255,6 +255,16 @@
       }
     }
 
+    function serializeEntryForPendingDelete(entry) {
+      if (!entry) return "";
+      const clone = entry.cloneNode(true);
+      clone.querySelectorAll(".upgrade-entry-editor").forEach((node) => node.remove());
+      clone.querySelectorAll("[data-bound]").forEach((node) => {
+        node.removeAttribute("data-bound");
+      });
+      return clone.outerHTML;
+    }
+
     function readPendingDelete() {
       try {
         const raw = window.localStorage.getItem(pendingDeleteKey);
@@ -403,7 +413,7 @@
             : null;
           savePendingDelete({
             cardName: getUpgradeCardName(upgradeList),
-            entryHtml: entry.outerHTML,
+            entryHtml: serializeEntryForPendingDelete(entry),
             nextEntryHead: nextHead ? nextHead.textContent.trim() : "",
             expiresAt: Date.now() + 60000,
           });
@@ -667,6 +677,10 @@
         clearPendingDelete();
         return;
       }
+      entry.querySelectorAll(".upgrade-entry-editor").forEach((node) => node.remove());
+      entry.querySelectorAll("[data-bound]").forEach((node) => {
+        node.removeAttribute("data-bound");
+      });
 
       let nextSibling = null;
       const nextHeadText = String(pending.nextEntryHead || "");
