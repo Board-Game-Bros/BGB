@@ -1196,7 +1196,7 @@
 
     function normalizeExistingCardNames() {
       let changed = false;
-      document.querySelectorAll(".card-ref").forEach((cardRef) => {
+      document.querySelectorAll(".card-list .card-ref").forEach((cardRef) => {
         const currentName = getCardNameFromRef(cardRef);
         if (!currentName) return;
         const qty = extractQuantitySuffix(currentName);
@@ -1219,6 +1219,13 @@
         if (img && img.getAttribute("alt") !== normalizedBase) {
           img.setAttribute("alt", normalizedBase);
           changed = true;
+        }
+        if (img) {
+          const preferredSrc = findMatchingImage(normalizedBase) || inferImagePath(normalizedBase);
+          if (preferredSrc && img.getAttribute("src") !== preferredSrc) {
+            img.setAttribute("src", preferredSrc);
+            changed = true;
+          }
         }
       });
 
