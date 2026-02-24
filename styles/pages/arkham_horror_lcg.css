@@ -363,6 +363,7 @@
   display: flex;
   gap: 6px;
   margin-bottom: 8px;
+  position: relative;
 }
 
 .upgrade-input,
@@ -392,6 +393,42 @@
   margin: 0 0 8px;
   font-size: 0.85rem;
   opacity: 0.85;
+}
+
+.card-autocomplete {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  border: 1px solid rgba(58, 45, 26, 0.45);
+  border-radius: 8px;
+  background: rgba(255, 249, 236, 0.98);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+  z-index: 60;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.card-autocomplete-item {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(58, 45, 26, 0.15);
+  background: transparent;
+  color: #2a1f12;
+  text-align: left;
+  font: inherit;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.card-autocomplete-item:last-child {
+  border-bottom: 0;
+}
+
+.card-autocomplete-item:hover,
+.card-autocomplete-item.is-active {
+  background: linear-gradient(180deg, rgba(236, 213, 170, 0.92) 0%, rgba(218, 186, 133, 0.88) 100%);
 }
 
 .card-preview-placeholder {

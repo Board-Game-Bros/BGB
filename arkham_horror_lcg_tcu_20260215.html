@@ -398,32 +398,15 @@
   </main>
 
   <script src="scripts/main.js"></script>
+  <script src="scripts/ahlcg-standard-library.js"></script>
   <script src="scripts/ahlcg-upgrade-manager.js"></script>
   <script>
+    const ahlcgLibrary = window.AHLCG_STANDARD_NAME_LIBRARY || {};
     initAhlcgUpgradeManager({
       storageKey: "ahlcg_tcu_20260215_upgrade_state_v1",
       cardDir: "assets/boardgames/ahlcg_cards",
-      cardImageFiles: [
-        "21_or_bust.png",
-        "archaic_glyphs_guiding_stones_3.png",
-        "archaic_glyphs_untranslated.png",
-        "charisma.png",
-        "cheap_shot.png",
-        "cheap_shot_2.png",
-        "deduction.png",
-        "deduction_2.png",
-        "extra_ammunition_1.png",
-        "gatling_gun_5.png",
-        "let_god_sort_them_out.png",
-        "luger_p08.png",
-        "marksmanship_1.png",
-        "miskatonic_archaeology_funding_4.png",
-        "strange_solution.png",
-        "strange_solution_acidic_Ichor_4.png",
-        "the_black_book_campaign.png",
-        "watch_this.png",
-        "watch_this_3.png",
-      ],
+      cardImageFiles: ahlcgLibrary.cardImageFiles || [],
+      standardCardNames: ahlcgLibrary.standardCardNames || [],
     });
   </script>
 </body>

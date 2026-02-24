@@ -3,6 +3,7 @@
     const options = config || {};
     const cardDir = options.cardDir || "assets/boardgames/ahlcg_cards";
     const cardImageFiles = Array.isArray(options.cardImageFiles) ? options.cardImageFiles : [];
+    const standardCardNames = Array.isArray(options.standardCardNames) ? options.standardCardNames : [];
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
@@ -229,6 +230,171 @@
         .split(/[\n,]+/)
         .map((item) => item.trim())
         .filter(Boolean);
+    }
+
+    function toDisplayNameFromFile(fileName) {
+      let base = String(fileName || "").replace(/\.png$/i, "");
+      let level = null;
+      const levelMatch = base.match(/_(\d+)$/);
+      if (levelMatch) {
+        level = Number(levelMatch[1]);
+        base = base.slice(0, -levelMatch[0].length);
+      }
+      const name = base
+        .split("_")
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+      if (level !== null) return name + " (" + level + ")";
+      return name;
+    }
+
+    function getCardNameCatalog() {
+      const map = new Map();
+
+      standardCardNames.forEach((name) => {
+        const key = normalizeText(name);
+        if (!key) return;
+        if (!map.has(key)) {
+          map.set(key, { name, key });
+        }
+      });
+
+      cardImageFiles.forEach((file) => {
+        const name = toDisplayNameFromFile(file);
+        const key = normalizeText(name);
+        if (!key) return;
+        if (!map.has(key)) {
+          map.set(key, { name, key });
+        }
+      });
+
+      document.querySelectorAll(".card-ref").forEach((ref) => {
+        const name = getCardNameFromRef(ref);
+        const key = normalizeText(name);
+        if (!key) return;
+        if (!map.has(key)) {
+          map.set(key, { name, key });
+        }
+      });
+
+      return Array.from(map.values());
+    }
+
+    function getCardNameSuggestions(queryText, limit) {
+      const query = normalizeText(queryText);
+      if (!query) return [];
+      const cap = typeof limit === "number" ? limit : 8;
+      const catalog = getCardNameCatalog();
+
+      return catalog
+        .map((item) => {
+          const key = item.key;
+          let score = 0;
+          if (key === query) score = 100;
+          else if (key.startsWith(query)) score = 90;
+          else if (key.includes(query)) score = 75;
+          else score = Math.round(similarityScore(key, query) * 60);
+          return { ...item, score };
+        })
+        .filter((item) => item.score >= 45)
+        .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+        .slice(0, cap);
+    }
+
+    function normalizeCardNameInput(rawText) {
+      const original = String(rawText || "").trim();
+      if (!original) return "";
+      const normalized = normalizeText(original);
+      const catalog = getCardNameCatalog();
+      const exact = catalog.find((item) => item.key === normalized);
+      if (exact) return exact.name;
+      const starts = catalog.find((item) => item.key.startsWith(normalized));
+      if (starts && normalized.length >= 4) return starts.name;
+      return original;
+    }
+
+    function wireCardAutocomplete(input, onPick) {
+      if (!input || input.dataset.autocompleteBound === "1") return;
+      input.dataset.autocompleteBound = "1";
+
+      const row = input.closest(".builder-input-row");
+      if (!row) return;
+
+      const panel = document.createElement("div");
+      panel.className = "card-autocomplete";
+      panel.hidden = true;
+      row.appendChild(panel);
+
+      let current = [];
+      let activeIndex = -1;
+
+      function closePanel() {
+        panel.hidden = true;
+        panel.innerHTML = "";
+        current = [];
+        activeIndex = -1;
+      }
+
+      function pick(name) {
+        closePanel();
+        onPick(name);
+      }
+
+      function renderPanel() {
+        if (!current.length) {
+          closePanel();
+          return;
+        }
+        panel.innerHTML = "";
+        current.forEach((item, idx) => {
+          const option = document.createElement("button");
+          option.type = "button";
+          option.className = "card-autocomplete-item";
+          option.textContent = item.name;
+          if (idx === activeIndex) option.classList.add("is-active");
+          option.addEventListener("click", () => pick(item.name));
+          panel.appendChild(option);
+        });
+        panel.hidden = false;
+      }
+
+      input.addEventListener("input", () => {
+        const value = input.value.trim();
+        if (value.length < 2) {
+          closePanel();
+          return;
+        }
+        current = getCardNameSuggestions(value, 8);
+        activeIndex = current.length ? 0 : -1;
+        renderPanel();
+      });
+
+      input.addEventListener("keydown", (event) => {
+        if (panel.hidden || !current.length) return;
+        if (event.key === "ArrowDown") {
+          event.preventDefault();
+          activeIndex = (activeIndex + 1) % current.length;
+          renderPanel();
+        } else if (event.key === "ArrowUp") {
+          event.preventDefault();
+          activeIndex = (activeIndex - 1 + current.length) % current.length;
+          renderPanel();
+        } else if (event.key === "Enter") {
+          event.preventDefault();
+          if (activeIndex >= 0 && current[activeIndex]) {
+            pick(current[activeIndex].name);
+          }
+        } else if (event.key === "Escape") {
+          closePanel();
+        }
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!row.contains(event.target)) {
+          closePanel();
+        }
+      });
     }
 
     function nextScenarioNumber(upgradeList) {
@@ -535,12 +701,16 @@
         const input = builderCol.querySelector(".upgrade-input");
         const addBtn = builderCol.querySelector(".upgrade-btn");
 
-        const addCardFromInput = () => {
-          const name = input.value.trim();
+        const addCardToList = (rawName) => {
+          const name = normalizeCardNameInput(rawName);
           if (!name) return;
           listEl.appendChild(createCardListItem(name));
           input.value = "";
           input.focus();
+        };
+
+        const addCardFromInput = () => {
+          addCardToList(input.value);
         };
 
         addBtn.addEventListener("click", addCardFromInput);
@@ -550,6 +720,7 @@
             addCardFromInput();
           }
         });
+        wireCardAutocomplete(input, addCardToList);
       });
 
       entry.querySelector('[data-action="confirm-draft"]').addEventListener("click", () => {
