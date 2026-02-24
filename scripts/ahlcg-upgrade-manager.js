@@ -377,7 +377,7 @@
           return;
         }
         current = getCardNameSuggestions(value, 8);
-        activeIndex = current.length ? 0 : -1;
+        activeIndex = -1;
         renderPanel();
       });
 

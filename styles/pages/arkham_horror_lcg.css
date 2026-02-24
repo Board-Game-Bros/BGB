@@ -431,8 +431,7 @@
   background: linear-gradient(180deg, rgba(236, 213, 170, 0.92) 0%, rgba(218, 186, 133, 0.88) 100%);
 }
 
-.card-autocomplete-item:hover .card-preview,
-.card-autocomplete-item.is-active .card-preview {
+.card-autocomplete-item:hover .card-preview {
   display: block;
   left: calc(100% + 8px);
   bottom: auto;
