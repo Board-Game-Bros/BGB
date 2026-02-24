@@ -329,8 +329,15 @@
 
     function getCardNameCatalog() {
       const map = new Map();
+      const playableKeys = new Set(
+        cardImageFiles
+          .map((file) => getCatalogKey(toDisplayNameFromFile(file)))
+          .filter(Boolean)
+      );
+
+      const filteredStandard = standardCardNames.filter((name) => playableKeys.has(getCatalogKey(name)));
       const sourceNames = standardCardNames.length > 0
-        ? standardCardNames
+        ? (filteredStandard.length > 0 ? filteredStandard : standardCardNames)
         : cardImageFiles.map((file) => toDisplayNameFromFile(file));
 
       sourceNames.forEach((name) => {
