@@ -610,10 +610,14 @@ nav.sticky {
 
 /* Arrow image */
 .tg-arrow-img{
-  width: 120px;
-  height: 50px;
+  display: inline-block;
+
+  width: 120px;      /* 根据需要调大小 */
+  height: 48px;
+
   background: url("assets/misc/tg_arrow.png") center / contain no-repeat;
-  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45));
+
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
 }
 
 /* 小屏：Menhir 自动缩成两列更不挤 */
