@@ -411,6 +411,7 @@
 
 .card-autocomplete-item {
   display: block;
+  position: relative;
   width: 100%;
   border: 0;
   border-bottom: 1px solid rgba(58, 45, 26, 0.15);
@@ -429,6 +430,15 @@
 .card-autocomplete-item:hover,
 .card-autocomplete-item.is-active {
   background: linear-gradient(180deg, rgba(236, 213, 170, 0.92) 0%, rgba(218, 186, 133, 0.88) 100%);
+}
+
+.card-autocomplete-item:hover .card-preview,
+.card-autocomplete-item.is-active .card-preview {
+  display: block;
+  left: calc(100% + 8px);
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .card-preview-placeholder {

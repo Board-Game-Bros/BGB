@@ -249,11 +249,19 @@
       return name;
     }
 
+    function getCatalogKey(name) {
+      return normalizeText(name)
+        .replace(/\bcampaign\b/g, " ")
+        .replace(/\basset\b/g, " ")
+        .trim()
+        .replace(/\s+/g, " ");
+    }
+
     function getCardNameCatalog() {
       const map = new Map();
 
       standardCardNames.forEach((name) => {
-        const key = normalizeText(name);
+        const key = getCatalogKey(name);
         if (!key) return;
         if (!map.has(key)) {
           map.set(key, { name, key });
@@ -262,7 +270,7 @@
 
       cardImageFiles.forEach((file) => {
         const name = toDisplayNameFromFile(file);
-        const key = normalizeText(name);
+        const key = getCatalogKey(name);
         if (!key) return;
         if (!map.has(key)) {
           map.set(key, { name, key });
@@ -271,7 +279,7 @@
 
       document.querySelectorAll(".card-ref").forEach((ref) => {
         const name = getCardNameFromRef(ref);
-        const key = normalizeText(name);
+        const key = getCatalogKey(name);
         if (!key) return;
         if (!map.has(key)) {
           map.set(key, { name, key });
@@ -282,7 +290,7 @@
     }
 
     function getCardNameSuggestions(queryText, limit) {
-      const query = normalizeText(queryText);
+      const query = getCatalogKey(queryText);
       if (!query) return [];
       const cap = typeof limit === "number" ? limit : 8;
       const catalog = getCardNameCatalog();
@@ -305,7 +313,7 @@
     function normalizeCardNameInput(rawText) {
       const original = String(rawText || "").trim();
       if (!original) return "";
-      const normalized = normalizeText(original);
+      const normalized = getCatalogKey(original);
       const catalog = getCardNameCatalog();
       const exact = catalog.find((item) => item.key === normalized);
       if (exact) return exact.name;
@@ -351,7 +359,10 @@
           const option = document.createElement("button");
           option.type = "button";
           option.className = "card-autocomplete-item";
-          option.textContent = item.name;
+          option.appendChild(document.createTextNode(item.name));
+          const preview = buildPreviewNode(item.name);
+          preview.classList.add("card-autocomplete-preview");
+          option.appendChild(preview);
           if (idx === activeIndex) option.classList.add("is-active");
           option.addEventListener("click", () => pick(item.name));
           panel.appendChild(option);
