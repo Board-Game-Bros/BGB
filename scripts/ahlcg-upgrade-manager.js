@@ -26,7 +26,6 @@
     let editUnlocked = !requireEditPassword;
     let editGateButton = null;
     let editGateStatus = null;
-    let autocompleteFloatingPreview = null;
 
     function normalizeText(value) {
       return String(value || "")
@@ -263,22 +262,6 @@
       return placeholder;
     }
 
-    function getAutocompleteFloatingPreview() {
-      if (autocompleteFloatingPreview) return autocompleteFloatingPreview;
-      const el = document.createElement("div");
-      el.className = "card-autocomplete-floating-preview";
-      el.hidden = true;
-      document.body.appendChild(el);
-      autocompleteFloatingPreview = el;
-      return el;
-    }
-
-    function hideAutocompleteFloatingPreview() {
-      const panel = getAutocompleteFloatingPreview();
-      panel.hidden = true;
-      panel.innerHTML = "";
-    }
-
     function createCardListItem(cardName) {
       const li = document.createElement("li");
       const ref = document.createElement("span");
@@ -445,61 +428,12 @@
 
       let current = [];
       let activeIndex = -1;
-      let hoveredOption = null;
-
-      function positionAutocompletePreview(option, previewHost) {
-        if (!option || !previewHost) return;
-        const optionRect = option.getBoundingClientRect();
-        const measured = previewHost.getBoundingClientRect();
-        const previewWidth = Math.max(210, Math.round(measured.width || 210));
-        const previewHeight = Math.max(280, Math.round(measured.height || 300));
-        const margin = 8;
-        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-
-        let left = optionRect.right + margin;
-        if (left + previewWidth > viewportWidth - margin) {
-          left = optionRect.left - previewWidth - margin;
-        }
-        if (left < margin) {
-          left = margin;
-        }
-
-        let top = optionRect.top + (optionRect.height - previewHeight) / 2;
-        if (top + previewHeight > viewportHeight - margin) {
-          top = viewportHeight - previewHeight - margin;
-        }
-        if (top < margin) {
-          top = margin;
-        }
-
-        previewHost.style.left = left + "px";
-        previewHost.style.top = top + "px";
-      }
-
-      function showAutocompletePreview(option, cardName) {
-        const host = getAutocompleteFloatingPreview();
-        host.innerHTML = "";
-        const preview = buildPreviewNode(cardName);
-        preview.classList.add("card-autocomplete-preview");
-        preview.style.display = "block";
-        preview.style.position = "static";
-        preview.style.left = "";
-        preview.style.top = "";
-        preview.style.bottom = "";
-        preview.style.transform = "none";
-        host.appendChild(preview);
-        host.hidden = false;
-        positionAutocompletePreview(option, host);
-      }
 
       function closePanel() {
         panel.hidden = true;
         panel.innerHTML = "";
         current = [];
         activeIndex = -1;
-        hoveredOption = null;
-        hideAutocompleteFloatingPreview();
       }
 
       function pick(name) {
@@ -517,37 +451,16 @@
           const option = document.createElement("button");
           option.type = "button";
           option.className = "card-autocomplete-item";
-          option.setAttribute("data-card-name", item.name);
           option.appendChild(document.createTextNode(item.name));
+          const preview = buildPreviewNode(item.name);
+          preview.classList.add("card-autocomplete-preview");
+          option.appendChild(preview);
           if (idx === activeIndex) option.classList.add("is-active");
           option.addEventListener("click", () => pick(item.name));
           panel.appendChild(option);
         });
         panel.hidden = false;
       }
-
-      panel.addEventListener("mouseover", (event) => {
-        const option = event.target.closest(".card-autocomplete-item");
-        if (!option || !panel.contains(option)) return;
-        const name = option.getAttribute("data-card-name") || "";
-        hoveredOption = option;
-        showAutocompletePreview(option, name);
-      });
-
-      panel.addEventListener("mousemove", () => {
-        if (!hoveredOption) return;
-        positionAutocompletePreview(hoveredOption, getAutocompleteFloatingPreview());
-      });
-
-      panel.addEventListener("mouseleave", () => {
-        hoveredOption = null;
-        hideAutocompleteFloatingPreview();
-      });
-
-      panel.addEventListener("scroll", () => {
-        if (!hoveredOption) return;
-        positionAutocompletePreview(hoveredOption, getAutocompleteFloatingPreview());
-      });
 
       input.addEventListener("input", () => {
         const value = input.value.trim();

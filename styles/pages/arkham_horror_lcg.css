@@ -483,10 +483,7 @@
   background: rgba(255, 249, 236, 0.98);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
   z-index: 60;
-  max-height: min(320px, 48vh);
-  overflow-y: auto;
-  overflow-x: visible;
-  overscroll-behavior: contain;
+  overflow: visible;
 }
 
 .card-autocomplete-item {
@@ -514,26 +511,15 @@
 
 .card-autocomplete-item:hover .card-preview {
   display: block;
+  left: calc(100% + 8px);
   bottom: auto;
-  transform: none;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .card-autocomplete-preview {
-  z-index: 1200;
+  z-index: 61;
   pointer-events: none;
-}
-
-.card-autocomplete-floating-preview {
-  position: fixed;
-  z-index: 1300;
-  pointer-events: none;
-}
-
-.card-autocomplete-floating-preview .card-preview {
-  display: block;
-  position: static;
-  transform: none;
-  margin: 0;
 }
 
 .card-preview-placeholder {
