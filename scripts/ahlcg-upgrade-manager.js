@@ -322,7 +322,7 @@
       return original;
     }
 
-    function wireCardAutocomplete(input, onPick) {
+    function wireCardAutocomplete(input, onPick, onSubmit) {
       if (!input || input.dataset.autocompleteBound === "1") return;
       input.dataset.autocompleteBound = "1";
 
@@ -382,19 +382,20 @@
       });
 
       input.addEventListener("keydown", (event) => {
-        if (panel.hidden || !current.length) return;
-        if (event.key === "ArrowDown") {
+        if (event.key === "ArrowDown" && !panel.hidden && current.length) {
           event.preventDefault();
           activeIndex = (activeIndex + 1) % current.length;
           renderPanel();
-        } else if (event.key === "ArrowUp") {
+        } else if (event.key === "ArrowUp" && !panel.hidden && current.length) {
           event.preventDefault();
           activeIndex = (activeIndex - 1 + current.length) % current.length;
           renderPanel();
         } else if (event.key === "Enter") {
           event.preventDefault();
-          if (activeIndex >= 0 && current[activeIndex]) {
+          if (!panel.hidden && current.length && activeIndex >= 0 && current[activeIndex]) {
             pick(current[activeIndex].name);
+          } else if (typeof onSubmit === "function") {
+            onSubmit();
           }
         } else if (event.key === "Escape") {
           closePanel();
@@ -725,13 +726,7 @@
         };
 
         addBtn.addEventListener("click", addCardFromInput);
-        input.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") {
-            event.preventDefault();
-            addCardFromInput();
-          }
-        });
-        wireCardAutocomplete(input, addCardToList);
+        wireCardAutocomplete(input, addCardToList, addCardFromInput);
       });
 
       entry.querySelector('[data-action="confirm-draft"]').addEventListener("click", () => {
