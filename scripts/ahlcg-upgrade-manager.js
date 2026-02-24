@@ -306,6 +306,20 @@
 
       const undoBtn = toast.querySelector("button");
       undoBtn.addEventListener("click", () => {
+        const entryHead = entry.querySelector(".upgrade-entry-head");
+        const entryHeadText = entryHead ? entryHead.textContent.trim() : "";
+        const alreadyExists = entryHeadText
+          ? Array.from(upgradeList.querySelectorAll(".upgrade-entry")).some((item) => {
+            const head = item.querySelector(".upgrade-entry-head");
+            return head && head.textContent.trim() === entryHeadText;
+          })
+          : false;
+
+        if (alreadyExists) {
+          clearUndo();
+          return;
+        }
+
         if (nextSibling && nextSibling.parentNode === upgradeList) {
           upgradeList.insertBefore(entry, nextSibling);
         } else {
@@ -657,17 +671,6 @@
 
       let nextSibling = null;
       const nextHeadText = String(pending.nextEntryHead || "");
-      const entryHead = entry.querySelector(".upgrade-entry-head");
-      const entryHeadText = entryHead ? entryHead.textContent.trim() : "";
-      if (entryHeadText) {
-        const existing = Array.from(upgradeList.querySelectorAll(".upgrade-entry")).find((item) => {
-          const head = item.querySelector(".upgrade-entry-head");
-          return head && head.textContent.trim() === entryHeadText;
-        });
-        if (existing) {
-          existing.remove();
-        }
-      }
       if (nextHeadText) {
         nextSibling = Array.from(upgradeList.querySelectorAll(".upgrade-entry")).find((item) => {
           const head = item.querySelector(".upgrade-entry-head");
@@ -707,6 +710,9 @@
     });
     watchUpgradeChanges();
     scheduleSaveUpgradeState();
+    window.addEventListener("beforeunload", () => {
+      saveUpgradeState();
+    });
     refreshTraumaStatus();
   }
 
