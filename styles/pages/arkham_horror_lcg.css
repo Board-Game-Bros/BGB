@@ -8,12 +8,14 @@
 /* Page: arkham_horror_lcg.html */
 #campaigns,
 #story-notes,
+#campaign-log,
 #upgrade-history {
   font-family: "IM Fell English SC", serif;
 }
 
 #campaigns .section-title,
 #story-notes .section-title,
+#campaign-log .section-title,
 #upgrade-history .section-title,
 .scenario-log h3,
 .upgrade-card h3 {
@@ -151,6 +153,18 @@
 .story-note h4 + p,
 .story-note h4 + ul {
   margin-bottom: 12px;
+}
+
+.campaign-log-list {
+  margin-bottom: 14px;
+}
+
+.campaign-log-highlight {
+  background: linear-gradient(180deg, rgba(209, 172, 95, 0.9) 0%, rgba(189, 146, 69, 0.9) 100%);
+  border: 1px solid rgba(58, 45, 26, 0.55);
+  border-radius: 7px;
+  padding: 6px 10px;
+  list-style-position: inside;
 }
 
 .upgrade-grid {
