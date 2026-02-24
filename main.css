@@ -603,7 +603,7 @@ nav.sticky {
 /* Moves (use 3-column grid to avoid huge empty space) */
 .tg-move{
   display: grid;
-  grid-template-columns: max-content 120px max-content; /* 左数字 / 箭头 / 右数字 */
+  grid-template-columns: max-content max-content max-content; /* 左数字 / 箭头 / 右数字 */
   align-items: center;
   justify-content: start;   /* 不要 space-between */
   column-gap: 6px;         /* 你现在的 gap */
