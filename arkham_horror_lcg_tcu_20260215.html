@@ -748,7 +748,7 @@
           upgradeList.appendChild(draftEntry);
         });
 
-        upgradeList.prepend(toolbar);
+        upgradeList.appendChild(toolbar);
       }
 
       function clearUndo() {
@@ -781,8 +781,8 @@
         });
 
         const toolbar = upgradeList.querySelector(".upgrade-toolbar");
-        if (toolbar && toolbar.nextSibling) {
-          upgradeList.insertBefore(toast, toolbar.nextSibling);
+        if (toolbar) {
+          upgradeList.insertBefore(toast, toolbar);
         } else {
           upgradeList.prepend(toast);
         }
