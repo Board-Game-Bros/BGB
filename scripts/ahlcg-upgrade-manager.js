@@ -1301,10 +1301,40 @@
     }
 
     function parseAllXpFromCard(card) {
-      let total = 0;
+      let earned = 0;
+      let spent = 0;
+
+      function getCardQuantity(cardName) {
+        const text = String(cardName || "");
+        const match = text.match(/\(\s*x\s*(\d+)\s*\)\s*$/i);
+        if (!match) return 1;
+        const value = Number(match[1]);
+        return Number.isFinite(value) && value > 0 ? value : 1;
+      }
+
+      function getCardLevel(cardName) {
+        const text = String(cardName || "");
+        const groups = text.match(/\(([^)]*)\)/g) || [];
+        for (let i = groups.length - 1; i >= 0; i -= 1) {
+          const inner = groups[i].replace(/[()]/g, "").trim();
+          if (/^x\s*\d+$/i.test(inner)) continue;
+          const match = inner.match(/^\d+$/);
+          if (match) return Number(match[0]);
+        }
+        return 0;
+      }
+
+      function sumListLevel(listEl) {
+        if (!listEl) return 0;
+        return listCardNames(listEl).reduce((acc, name) => {
+          const qty = getCardQuantity(name);
+          const level = getCardLevel(name);
+          return acc + qty * level;
+        }, 0);
+      }
 
       card.querySelectorAll(".upgrade-entry-head").forEach((head) => {
-        total += getXpFromHead(head.textContent);
+        earned += getXpFromHead(head.textContent);
       });
 
       card.querySelectorAll(".upgrade-list > p").forEach((line) => {
@@ -1314,11 +1344,20 @@
         matches.forEach((chunk) => {
           const num = chunk.match(/[+-]\s*\d+/);
           if (!num) return;
-          total += Number(num[0].replace(/\s+/g, ""));
+          earned += Number(num[0].replace(/\s+/g, ""));
         });
       });
 
-      return total;
+      card.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        const cols = entry.querySelectorAll(".upgrade-col");
+        const removedList = cols[0] ? cols[0].querySelector(".card-list") : null;
+        const addedList = cols[1] ? cols[1].querySelector(".card-list") : null;
+        const removedLevel = sumListLevel(removedList);
+        const addedLevel = sumListLevel(addedList);
+        spent += Math.max(0, addedLevel - removedLevel);
+      });
+
+      return Math.max(0, earned - spent);
     }
 
     function refreshCurrentXp() {
