@@ -403,8 +403,9 @@
 
 .edit-card-row {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
   padding: 6px 8px;
   border: 1px solid rgba(58, 45, 26, 0.25);
   border-radius: 6px;
@@ -414,9 +415,11 @@
 }
 
 .edit-card-row > span {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow-wrap: anywhere;
+  display: block;
+  width: 100%;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .edit-card-row + .edit-card-row {
@@ -432,8 +435,7 @@
   font-size: 0.78rem;
   padding: 3px 8px;
   cursor: pointer;
-  flex: 0 0 auto;
-  margin-left: auto;
+  align-self: flex-start;
   white-space: nowrap;
 }
 
