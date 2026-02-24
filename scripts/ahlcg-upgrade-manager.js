@@ -570,29 +570,39 @@
       return entry;
     }
 
-    function addToolbar(card) {
-      const upgradeList = card.querySelector(".upgrade-list");
-      if (!upgradeList) return;
-      if (upgradeList.querySelector(".upgrade-toolbar")) return;
-
-      const toolbar = document.createElement("div");
-      toolbar.className = "upgrade-toolbar";
-      toolbar.innerHTML = '<button type="button" class="upgrade-btn" data-action="new-scenario">+ New Scenario</button>';
-
-      toolbar.querySelector('[data-action="new-scenario"]').addEventListener("click", () => {
+    function bindNewScenarioButton(upgradeList, button) {
+      if (!upgradeList || !button) return;
+      button.onclick = () => {
         const hasDraft = !!upgradeList.querySelector(".upgrade-entry-draft");
         if (hasDraft) return;
         const scenarioNum = nextScenarioNumber(upgradeList);
         const draftEntry = createScenarioDraft(scenarioNum);
         upgradeList.appendChild(draftEntry);
-      });
+      };
+    }
+
+    function addToolbar(card) {
+      const upgradeList = card.querySelector(".upgrade-list");
+      if (!upgradeList) return;
+      const existingToolbar = upgradeList.querySelector(".upgrade-toolbar");
+      if (existingToolbar) {
+        const existingButton = existingToolbar.querySelector('[data-action="new-scenario"]');
+        bindNewScenarioButton(upgradeList, existingButton);
+        return;
+      }
+
+      const toolbar = document.createElement("div");
+      toolbar.className = "upgrade-toolbar";
+      toolbar.innerHTML = '<button type="button" class="upgrade-btn" data-action="new-scenario">+ New Scenario</button>';
+      const newScenarioBtn = toolbar.querySelector('[data-action="new-scenario"]');
+      bindNewScenarioButton(upgradeList, newScenarioBtn);
 
       upgradeList.appendChild(toolbar);
     }
 
     function sanitizeUpgradeListForSave(listEl) {
       const clone = listEl.cloneNode(true);
-      clone.querySelectorAll(".upgrade-toolbar, .undo-toast, .upgrade-entry-editor").forEach((node) => {
+      clone.querySelectorAll(".upgrade-toolbar, .undo-toast, .upgrade-entry-editor, .upgrade-entry-draft").forEach((node) => {
         node.remove();
       });
       clone.querySelectorAll("[data-bound]").forEach((node) => {
