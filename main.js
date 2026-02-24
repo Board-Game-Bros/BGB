@@ -12,11 +12,55 @@ window.addEventListener("scroll", () => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener("click", function(e) {
     e.preventDefault();
-    document.querySelector(this.getAttribute("href")).scrollIntoView({
+    const target = document.querySelector(this.getAttribute("href"));
+    if (!target) return;
+    target.scrollIntoView({
       behavior: "smooth"
     });
   });
 });
+
+// 2.1 Highlight active subnav pill on click/scroll
+const setupSubnavActiveState = () => {
+  const subnavLinks = Array.from(document.querySelectorAll(".subnav a"));
+  if (!subnavLinks.length || typeof IntersectionObserver === "undefined") return;
+
+  const subnavSections = subnavLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+  if (!subnavSections.length) return;
+
+  const markActive = (targetId) => {
+    subnavLinks.forEach((link) => {
+      const isActive = link.getAttribute("href") === `#${targetId}`;
+      link.classList.toggle("is-active", isActive);
+    });
+  };
+
+  subnavLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      const targetId = link.getAttribute("href").slice(1);
+      markActive(targetId);
+    });
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible && visible.target && visible.target.id) {
+        markActive(visible.target.id);
+      }
+    },
+    { threshold: [0.35, 0.6, 0.85] }
+  );
+
+  subnavSections.forEach((section) => observer.observe(section));
+  markActive(subnavSections[0].id);
+};
+
+setupSubnavActiveState();
 
 // 3. Page Fade-in Animation
 window.onload = () => {
