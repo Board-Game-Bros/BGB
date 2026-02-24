@@ -523,6 +523,19 @@
   pointer-events: none;
 }
 
+.card-autocomplete-floating-preview {
+  position: fixed;
+  z-index: 1300;
+  pointer-events: none;
+}
+
+.card-autocomplete-floating-preview .card-preview {
+  display: block;
+  position: static;
+  transform: none;
+  margin: 0;
+}
+
 .card-preview-placeholder {
   width: 210px;
   box-sizing: border-box;

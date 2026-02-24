@@ -26,6 +26,7 @@
     let editUnlocked = !requireEditPassword;
     let editGateButton = null;
     let editGateStatus = null;
+    let autocompleteFloatingPreview = null;
 
     function normalizeText(value) {
       return String(value || "")
@@ -262,6 +263,22 @@
       return placeholder;
     }
 
+    function getAutocompleteFloatingPreview() {
+      if (autocompleteFloatingPreview) return autocompleteFloatingPreview;
+      const el = document.createElement("div");
+      el.className = "card-autocomplete-floating-preview";
+      el.hidden = true;
+      document.body.appendChild(el);
+      autocompleteFloatingPreview = el;
+      return el;
+    }
+
+    function hideAutocompleteFloatingPreview() {
+      const panel = getAutocompleteFloatingPreview();
+      panel.hidden = true;
+      panel.innerHTML = "";
+    }
+
     function createCardListItem(cardName) {
       const li = document.createElement("li");
       const ref = document.createElement("span");
@@ -429,11 +446,12 @@
       let current = [];
       let activeIndex = -1;
 
-      function positionAutocompletePreview(option, preview) {
-        if (!option || !preview) return;
+      function positionAutocompletePreview(option, previewHost) {
+        if (!option || !previewHost) return;
         const optionRect = option.getBoundingClientRect();
-        const previewWidth = 210;
-        const previewHeight = 300;
+        const measured = previewHost.getBoundingClientRect();
+        const previewWidth = Math.max(210, Math.round(measured.width || 210));
+        const previewHeight = Math.max(280, Math.round(measured.height || 300));
         const margin = 8;
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
@@ -454,8 +472,24 @@
           top = margin;
         }
 
-        preview.style.left = left + "px";
-        preview.style.top = top + "px";
+        previewHost.style.left = left + "px";
+        previewHost.style.top = top + "px";
+      }
+
+      function showAutocompletePreview(option, cardName) {
+        const host = getAutocompleteFloatingPreview();
+        host.innerHTML = "";
+        const preview = buildPreviewNode(cardName);
+        preview.classList.add("card-autocomplete-preview");
+        preview.style.display = "block";
+        preview.style.position = "static";
+        preview.style.left = "";
+        preview.style.top = "";
+        preview.style.bottom = "";
+        preview.style.transform = "none";
+        host.appendChild(preview);
+        host.hidden = false;
+        positionAutocompletePreview(option, host);
       }
 
       function closePanel() {
@@ -463,6 +497,7 @@
         panel.innerHTML = "";
         current = [];
         activeIndex = -1;
+        hideAutocompleteFloatingPreview();
       }
 
       function pick(name) {
@@ -481,20 +516,15 @@
           option.type = "button";
           option.className = "card-autocomplete-item";
           option.appendChild(document.createTextNode(item.name));
-          const preview = buildPreviewNode(item.name);
-          preview.classList.add("card-autocomplete-preview");
-          preview.style.position = "fixed";
           option.addEventListener("mouseenter", () => {
-            positionAutocompletePreview(option, preview);
-            preview.style.display = "block";
+            showAutocompletePreview(option, item.name);
           });
           option.addEventListener("mousemove", () => {
-            positionAutocompletePreview(option, preview);
+            positionAutocompletePreview(option, getAutocompleteFloatingPreview());
           });
           option.addEventListener("mouseleave", () => {
-            preview.style.display = "";
+            hideAutocompleteFloatingPreview();
           });
-          option.appendChild(preview);
           if (idx === activeIndex) option.classList.add("is-active");
           option.addEventListener("click", () => pick(item.name));
           panel.appendChild(option);
