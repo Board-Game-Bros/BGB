@@ -715,16 +715,29 @@
       }
 
       function ensureEntryActions(entry) {
-        if (entry.querySelector(".entry-actions")) return;
-        const actions = document.createElement("div");
-        actions.className = "entry-actions";
-        actions.innerHTML = `
-          <button type="button" class="upgrade-btn upgrade-btn-secondary" data-action="edit-entry">Edit</button>
-        `;
-        actions.querySelector('[data-action="edit-entry"]').addEventListener("click", () => {
-          attachEditor(entry);
-        });
-        entry.appendChild(actions);
+        let actions = entry.querySelector(".entry-actions");
+        if (!actions) {
+          actions = document.createElement("div");
+          actions.className = "entry-actions";
+          entry.appendChild(actions);
+        }
+
+        let editBtn = actions.querySelector('[data-action="edit-entry"]');
+        if (!editBtn) {
+          editBtn = document.createElement("button");
+          editBtn.type = "button";
+          editBtn.className = "upgrade-btn upgrade-btn-secondary";
+          editBtn.setAttribute("data-action", "edit-entry");
+          editBtn.textContent = "Edit";
+          actions.appendChild(editBtn);
+        }
+
+        if (editBtn.dataset.bound !== "1") {
+          editBtn.dataset.bound = "1";
+          editBtn.addEventListener("click", () => {
+            attachEditor(entry);
+          });
+        }
       }
 
       function createScenarioDraft(scenarioNumber) {
@@ -832,6 +845,9 @@
         const clone = listEl.cloneNode(true);
         clone.querySelectorAll(".upgrade-toolbar, .undo-toast, .upgrade-entry-editor").forEach((node) => {
           node.remove();
+        });
+        clone.querySelectorAll("[data-bound]").forEach((node) => {
+          node.removeAttribute("data-bound");
         });
         return clone.innerHTML;
       }
