@@ -61,7 +61,7 @@
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid #5a4427;
-  background: rgba(243, 227, 192, 0.8);
+  background: linear-gradient(180deg, rgba(232, 205, 152, 0.9) 0%, rgba(206, 171, 112, 0.88) 100%);
   font-size: 0.92rem;
 }
 
@@ -86,8 +86,8 @@
   display: inline-block;
   padding: 4px 9px;
   border-radius: 8px;
-  border: 1px solid rgba(58, 45, 26, 0.35);
-  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(58, 45, 26, 0.45);
+  background: linear-gradient(180deg, rgba(236, 213, 170, 0.82) 0%, rgba(216, 185, 133, 0.78) 100%);
   font-size: 0.9rem;
 }
 
@@ -95,8 +95,8 @@
   margin: 0;
   padding: 10px 12px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(58, 45, 26, 0.3);
+  background: linear-gradient(180deg, rgba(238, 220, 186, 0.78) 0%, rgba(222, 195, 149, 0.74) 100%);
+  border: 1px solid rgba(58, 45, 26, 0.38);
 }
 
 .story-note h4 {
@@ -155,8 +155,8 @@
   margin: 0;
   padding: 8px 10px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(58, 45, 26, 0.28);
+  background: linear-gradient(180deg, rgba(236, 214, 174, 0.76) 0%, rgba(215, 183, 131, 0.74) 100%);
+  border: 1px solid rgba(58, 45, 26, 0.36);
 }
 
 .upgrade-list p + p {
