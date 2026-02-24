@@ -188,6 +188,7 @@ def main() -> int:
     files_seen: Dict[str, int] = {}
     card_image_files: List[str] = []
     standard_names: List[str] = []
+    investigator_names: List[str] = []
 
     downloaded = 0
     missing_images = 0
@@ -197,6 +198,8 @@ def main() -> int:
         if not display:
             continue
         standard_names.append(display)
+        if card_is_investigator(card):
+            investigator_names.append(display)
 
         img_url = image_url_for_card(card)
         if not img_url:
@@ -219,7 +222,7 @@ def main() -> int:
         if args.sleep > 0:
             time.sleep(args.sleep)
 
-    write_standard_library(lib_file, card_image_files, standard_names)
+    write_standard_library(lib_file, card_image_files, standard_names + investigator_names)
 
     print(f"Downloaded images: {downloaded}")
     print(f"Missing/failed images: {missing_images}")
