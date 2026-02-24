@@ -3,8 +3,34 @@
 @import url("../modules/investigator-cards.css");
 @import url("../modules/campaign.css");
 @import url("../modules/subnav.css");
+@import url("https://fonts.googleapis.com/css2?family=Eater&family=IM+Fell+English+SC&display=swap");
 
 /* Page: arkham_horror_lcg.html */
+#campaigns,
+#story-notes,
+#upgrade-history {
+  font-family: "IM Fell English SC", serif;
+}
+
+#campaigns .section-title,
+#story-notes .section-title,
+#upgrade-history .section-title,
+.scenario-log h3,
+.upgrade-card h3 {
+  font-family: "Eater", serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+#campaigns .campaign-subtitle {
+  font-family: "Eater", serif;
+  font-size: 2.2rem;
+  background: none;
+  -webkit-text-fill-color: #2f1d12;
+  color: #2f1d12;
+  text-shadow: 1px 1px 0 rgba(255, 230, 180, 0.3);
+}
+
 .record-section {
   margin-top: 36px;
 }
@@ -23,6 +49,22 @@
   opacity: 0.85;
 }
 
+.campaign-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #5a4427;
+  background: rgba(243, 227, 192, 0.8);
+  font-size: 0.92rem;
+}
+
 .scenario-log + .scenario-log {
   margin-top: 16px;
   padding-top: 16px;
@@ -34,36 +76,27 @@
 }
 
 .record-meta {
-  display: grid;
-  gap: 6px;
-  max-width: 260px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 10px;
 }
 
-.record-meta label {
-  font-size: 0.85rem;
-  opacity: 0.8;
-}
-
-.record-field {
-  width: 100%;
-  box-sizing: border-box;
-  font-family: "Cinzel", serif;
-  color: #2a1f12;
-  background: rgba(255, 255, 255, 0.75);
-  border: 2px solid #6a5332;
+.meta-item {
+  display: inline-block;
+  padding: 4px 9px;
   border-radius: 8px;
+  border: 1px solid rgba(58, 45, 26, 0.35);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+}
+
+.story-note {
+  margin: 0;
   padding: 10px 12px;
-}
-
-.record-field:focus {
-  outline: 2px solid #a6824a;
-  outline-offset: 1px;
-}
-
-.story-field {
-  min-height: 120px;
-  resize: vertical;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(58, 45, 26, 0.3);
 }
 
 .upgrade-grid {
@@ -81,21 +114,29 @@
 
 .upgrade-card h3 {
   margin: 0 0 10px;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
 }
 
-.upgrade-field {
-  min-height: 190px;
-  margin-top: 10px;
-  resize: vertical;
+.xp-line {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.upgrade-list p {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(58, 45, 26, 0.28);
+}
+
+.upgrade-list p + p {
+  margin-top: 8px;
 }
 
 @media (max-width: 720px) {
   .record-card {
     padding: 14px;
-  }
-
-  .upgrade-field {
-    min-height: 150px;
   }
 }

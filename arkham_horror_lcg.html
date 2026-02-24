@@ -97,24 +97,28 @@
     <section id="story-notes" class="record-section">
       <h2 class="section-title">Story Notes</h2>
       <div class="record-card">
-        <p class="record-intro">Use one block per scenario to记录剧情分支、关键测试和结局影响。</p>
-
-        <div class="scenario-log">
-          <h3>Scenario 1: The Witching Hour</h3>
-          <div class="record-meta">
-            <label for="session-date-1">Play Date</label>
-            <input id="session-date-1" class="record-field" data-storage="ahlcg_session_date_1" type="text" placeholder="2026-02-24" />
-          </div>
-          <textarea id="story-note-1" class="record-field story-field" data-storage="ahlcg_story_note_1" placeholder="Story beats, resolutions, trauma, who got defeated, what interlude choice was made..."></textarea>
+        <p class="record-intro">Campaign setup is now hard coded in this page. Add new entries in order as you progress.</p>
+        <div class="campaign-status">
+          <span class="status-chip">Difficulty: Standard</span>
+          <span class="status-chip">Campaign Start: 02/15/2026</span>
         </div>
 
         <div class="scenario-log">
-          <h3>Scenario 2</h3>
+          <h3>Prologue: Disapperance at the Twilight Estate</h3>
           <div class="record-meta">
-            <label for="session-date-2">Play Date</label>
-            <input id="session-date-2" class="record-field" data-storage="ahlcg_session_date_2" type="text" placeholder="YYYY-MM-DD" />
+            <span class="meta-item">Play Date: 02/15/2026</span>
+            <span class="meta-item">Status: Completed</span>
           </div>
-          <textarea id="story-note-2" class="record-field story-field" data-storage="ahlcg_story_note_2" placeholder="Continue notes here..."></textarea>
+          <p class="story-note">Story details to be added.</p>
+        </div>
+
+        <div class="scenario-log">
+          <h3>Scenario I: The Witching Tour</h3>
+          <div class="record-meta">
+            <span class="meta-item">Play Date: 02/15/2026</span>
+            <span class="meta-item">Status: Completed</span>
+          </div>
+          <p class="story-note">Story details to be added.</p>
         </div>
       </div>
     </section>
@@ -122,24 +126,33 @@
     <section id="upgrade-history" class="record-section">
       <h2 class="section-title">Deck Upgrade History</h2>
       <div class="record-card">
-        <p class="record-intro">Track XP gain/spend after each scenario. Format建议: `S1 +5 XP, -2 Ward of Protection (0), +2 Ward of Protection (2)`</p>
+        <p class="record-intro">Hard-coded deck upgrade track. Add lines directly in HTML after each scenario.</p>
         <div class="upgrade-grid">
           <article class="upgrade-card">
             <h3>Harvey Walters</h3>
-            <input id="xp-harvey" class="record-field" data-storage="ahlcg_xp_harvey" type="text" placeholder="Current XP: 0" />
-            <textarea id="upgrade-harvey" class="record-field upgrade-field" data-storage="ahlcg_upgrade_harvey" placeholder="S1:&#10;S2:&#10;S3:"></textarea>
+            <p class="xp-line">Current XP: 0</p>
+            <div class="upgrade-list">
+              <p>Prologue: No upgrades</p>
+              <p>Scenario I: No upgrades</p>
+            </div>
           </article>
 
           <article class="upgrade-card">
             <h3>Michael McGlen</h3>
-            <input id="xp-michael" class="record-field" data-storage="ahlcg_xp_michael" type="text" placeholder="Current XP: 0" />
-            <textarea id="upgrade-michael" class="record-field upgrade-field" data-storage="ahlcg_upgrade_michael" placeholder="S1:&#10;S2:&#10;S3:"></textarea>
+            <p class="xp-line">Current XP: 0</p>
+            <div class="upgrade-list">
+              <p>Prologue: No upgrades</p>
+              <p>Scenario I: No upgrades</p>
+            </div>
           </article>
 
           <article class="upgrade-card">
             <h3>Wendy Adams</h3>
-            <input id="xp-wendy" class="record-field" data-storage="ahlcg_xp_wendy" type="text" placeholder="Current XP: 0" />
-            <textarea id="upgrade-wendy" class="record-field upgrade-field" data-storage="ahlcg_upgrade_wendy" placeholder="S1:&#10;S2:&#10;S3:"></textarea>
+            <p class="xp-line">Current XP: 0</p>
+            <div class="upgrade-list">
+              <p>Prologue: No upgrades</p>
+              <p>Scenario I: No upgrades</p>
+            </div>
           </article>
         </div>
       </div>
@@ -152,18 +165,5 @@
   </main>
 
   <script src="main.js"></script>
-  <script>
-    document.querySelectorAll(".record-field").forEach((field) => {
-      const key = field.dataset.storage;
-      if (!key) return;
-
-      const saved = localStorage.getItem(key);
-      if (saved !== null) field.value = saved;
-
-      field.addEventListener("input", () => {
-        localStorage.setItem(key, field.value);
-      });
-    });
-  </script>
 </body>
 </html>
