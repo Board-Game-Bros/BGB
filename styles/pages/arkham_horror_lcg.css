@@ -99,6 +99,34 @@
   border: 1px solid rgba(58, 45, 26, 0.3);
 }
 
+.story-note h4 {
+  margin: 0 0 6px;
+  font-family: "Eater", serif;
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: 0.6px;
+}
+
+.story-note p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.story-note ul {
+  margin: 0 0 12px 18px;
+  padding: 0;
+}
+
+.story-note li {
+  margin: 0 0 6px;
+  line-height: 1.35;
+}
+
+.story-note h4 + p,
+.story-note h4 + ul {
+  margin-bottom: 12px;
+}
+
 .upgrade-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
