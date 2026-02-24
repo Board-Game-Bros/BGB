@@ -24,14 +24,14 @@
 
     <!-- Subnav Tabs -->
     <div class="subnav">
-      <a href="#decks">Decks</a>
-      <a href="#campaign">Campaign</a>
-      <a href="#notes">Notes</a>
+      <a href="#campaigns">Campaigns</a>
+      <a href="#story-notes">Story Notes</a>
+      <a href="#upgrade-history">Upgrade History</a>
     </div>
 
-    <!-- Deck Section -->
-    <section id="decks">
-      <h2 class="section-title">Decks</h2>
+    <!-- Campaign Section -->
+    <section id="campaigns">
+      <h2 class="section-title">Campaigns</h2>
       <div class="campaign-group">
         <div class="campaign-subtitle-wrapper">
           <div class="subtitle-header">
@@ -47,7 +47,7 @@
             </a>
           </div>
         </div>
-    
+
         <div class="grid">
           <div class="card game-card investigator-card">
             <a href="assets/Arkham_Horror_Decks/Harvey-Walters-DeckBuild.pdf" target="_blank" rel="noopener" class="cover-link">
@@ -56,7 +56,7 @@
                 <div class="card-overlay">
                   <div class="overlay-content">
                     <span class="builder-name">Built by Yan</span>
-                    <span class="build-date">02/14/2026</span>
+                    <span class="build-date">Built: 02/14/2026 · XP: 0</span>
                   </div>
                 </div>
               </div>
@@ -70,7 +70,7 @@
                 <div class="card-overlay">
                   <div class="overlay-content">
                     <span class="builder-name">Built by Shengbo</span>
-                    <span class="build-date">02/14/2026</span>
+                    <span class="build-date">Built: 02/14/2026 · XP: 0</span>
                   </div>
                 </div>
               </div>
@@ -84,12 +84,63 @@
                 <div class="card-overlay">
                   <div class="overlay-content">
                     <span class="builder-name">Built by LL</span>
-                    <span class="build-date">02/14/2026</span>
+                    <span class="build-date">Built: 02/14/2026 · XP: 0</span>
                   </div>
                 </div>
               </div>
             </a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story-notes" class="record-section">
+      <h2 class="section-title">Story Notes</h2>
+      <div class="record-card">
+        <p class="record-intro">Use one block per scenario to记录剧情分支、关键测试和结局影响。</p>
+
+        <div class="scenario-log">
+          <h3>Scenario 1: The Witching Hour</h3>
+          <div class="record-meta">
+            <label for="session-date-1">Play Date</label>
+            <input id="session-date-1" class="record-field" data-storage="ahlcg_session_date_1" type="text" placeholder="2026-02-24" />
+          </div>
+          <textarea id="story-note-1" class="record-field story-field" data-storage="ahlcg_story_note_1" placeholder="Story beats, resolutions, trauma, who got defeated, what interlude choice was made..."></textarea>
+        </div>
+
+        <div class="scenario-log">
+          <h3>Scenario 2</h3>
+          <div class="record-meta">
+            <label for="session-date-2">Play Date</label>
+            <input id="session-date-2" class="record-field" data-storage="ahlcg_session_date_2" type="text" placeholder="YYYY-MM-DD" />
+          </div>
+          <textarea id="story-note-2" class="record-field story-field" data-storage="ahlcg_story_note_2" placeholder="Continue notes here..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section id="upgrade-history" class="record-section">
+      <h2 class="section-title">Deck Upgrade History</h2>
+      <div class="record-card">
+        <p class="record-intro">Track XP gain/spend after each scenario. Format建议: `S1 +5 XP, -2 Ward of Protection (0), +2 Ward of Protection (2)`</p>
+        <div class="upgrade-grid">
+          <article class="upgrade-card">
+            <h3>Harvey Walters</h3>
+            <input id="xp-harvey" class="record-field" data-storage="ahlcg_xp_harvey" type="text" placeholder="Current XP: 0" />
+            <textarea id="upgrade-harvey" class="record-field upgrade-field" data-storage="ahlcg_upgrade_harvey" placeholder="S1:&#10;S2:&#10;S3:"></textarea>
+          </article>
+
+          <article class="upgrade-card">
+            <h3>Michael McGlen</h3>
+            <input id="xp-michael" class="record-field" data-storage="ahlcg_xp_michael" type="text" placeholder="Current XP: 0" />
+            <textarea id="upgrade-michael" class="record-field upgrade-field" data-storage="ahlcg_upgrade_michael" placeholder="S1:&#10;S2:&#10;S3:"></textarea>
+          </article>
+
+          <article class="upgrade-card">
+            <h3>Wendy Adams</h3>
+            <input id="xp-wendy" class="record-field" data-storage="ahlcg_xp_wendy" type="text" placeholder="Current XP: 0" />
+            <textarea id="upgrade-wendy" class="record-field upgrade-field" data-storage="ahlcg_upgrade_wendy" placeholder="S1:&#10;S2:&#10;S3:"></textarea>
+          </article>
         </div>
       </div>
     </section>
@@ -101,5 +152,18 @@
   </main>
 
   <script src="main.js"></script>
+  <script>
+    document.querySelectorAll(".record-field").forEach((field) => {
+      const key = field.dataset.storage;
+      if (!key) return;
+
+      const saved = localStorage.getItem(key);
+      if (saved !== null) field.value = saved;
+
+      field.addEventListener("input", () => {
+        localStorage.setItem(key, field.value);
+      });
+    });
+  </script>
 </body>
 </html>
