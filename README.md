@@ -15,6 +15,19 @@ This repository hosts the source code of the official BGB website.
 ├── scripts/
 │   ├── main.js         # Shared site interactions
 │   └── ahlcg-upgrade-manager.js  # Reusable Arkham deck-upgrade module
+
+## AHLCG Collection Sync
+Use the script below to bulk-sync AHLCG images + standard name library from ArkhamDB:
+
+```bash
+python3 scripts/sync_arkhamdb_collection.py --project-root .
+```
+
+Optional:
+- include encounter cards too:
+```bash
+python3 scripts/sync_arkhamdb_collection.py --project-root . --include-encounter
+```
 ├── assets/
 │   ├── icon/           # Logos and icons (ex: BGB.png)
 │   ├── games/          # Board game cover images
