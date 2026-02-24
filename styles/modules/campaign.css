@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+/* Module: campaign headers and expandable preview */
+.campaign-group {
+  margin-top: 30px;
+  background: rgba(255, 248, 230, 0.4);
+  border: 4px solid #3a2d1a;
+  outline: 1px solid #e6c27a;
+  outline-offset: -3px;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow:
+    inset 0 0 15px rgba(0, 0, 0, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+.campaign-subtitle-wrapper {
+  display: block;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.campaign-subtitle-wrapper:hover .campaign-preview-container {
+  max-height: 900px;
+  opacity: 1;
+  padding: 15px 0;
+  pointer-events: auto;
+}
+
+.campaign-subtitle {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.8rem;
+  font-weight: 400;
+  color: #2a1f12;
+  margin: 0;
+  letter-spacing: 1px;
+  background: linear-gradient(145deg, #3a2d1a, #5c4a33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.campaign-meta {
+  font-family: "Cinzel", serif;
+  font-size: 0.9rem;
+  display: block;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.campaign-preview-container {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0;
+  transition: max-height 0.55s ease, opacity 0.3s ease;
+}
+
+.campaign-preview-frame {
+  position: relative;
+  display: inline-block;
+  border-radius: 16px;
+  border: 2px solid #3a2d1a;
+  overflow: hidden;
+  background: #f2e6c9;
+}
+
+.campaign-preview-frame::before {
+  display: none;
+}
+
+.campaign-preview-link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.campaign-preview-img {
+  width: 100%;
+  max-width: 450px;
+  display: block;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.campaign-preview-link:hover .campaign-preview-img {
+  transform: scale(1.02);
+}
+
+.campaign-subtitle-wrapper:hover .campaign-preview-img {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.campaign-group + .campaign-group {
+  margin-top: 50px;
+}

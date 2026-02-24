@@ -1,0 +1,53 @@
+/* Module: cards, grids, and generic game cover cards */
+.card {
+  background: #fff7e2;
+  padding: 18px;
+  margin: 14px 0;
+  border: 3px solid #3a2d1a;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.game-card {
+  padding: 0 !important;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  align-self: start;
+}
+
+.cover-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.game-cover {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: none;
+}
+
+.game-cover.wide-cover {
+  aspect-ratio: auto;
+  border-bottom: 3px solid #3a2d1a;
+}
+
+.game-card h3 {
+  margin: 12px 14px 4px;
+}
+
+.game-card p {
+  margin: 0 14px 14px;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}

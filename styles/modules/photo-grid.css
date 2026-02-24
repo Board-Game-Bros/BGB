@@ -1,0 +1,33 @@
+/* Module: masonry photo wall */
+.event-photo {
+  width: 100%;
+  border: 3px solid #3a2d1a;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+.photo-grid {
+  columns: 3;
+  column-gap: 12px;
+  margin-top: 20px;
+}
+
+.photo-grid img {
+  width: 100%;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 3px solid #3a2d1a;
+  break-inside: avoid;
+}
+
+@media (max-width: 800px) {
+  .photo-grid {
+    columns: 2;
+  }
+}
+
+@media (max-width: 500px) {
+  .photo-grid {
+    columns: 1;
+  }
+}
