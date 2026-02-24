@@ -12,7 +12,9 @@ This repository hosts the source code of the official BGB website.
 /
 ├── index.html          # Main website entry page
 ├── main.css            # Global styles (medieval parchment theme)
-├── main.js             # Future scripts / dynamic behavior
+├── scripts/
+│   ├── main.js         # Shared site interactions
+│   └── ahlcg-upgrade-manager.js  # Reusable Arkham deck-upgrade module
 ├── assets/
 │   ├── icon/           # Logos and icons (ex: BGB.png)
 │   ├── games/          # Board game cover images

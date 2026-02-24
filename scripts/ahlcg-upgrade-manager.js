@@ -4,6 +4,7 @@
     const cardDir = options.cardDir || "assets/boardgames/ahlcg_cards";
     const cardImageFiles = Array.isArray(options.cardImageFiles) ? options.cardImageFiles : [];
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
+    const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
 
     const cardCatalog = cardImageFiles.map((file) => ({
@@ -240,17 +241,61 @@
       return Math.max(1, max + 1);
     }
 
-    function clearUndo() {
-      if (!activeUndo) return;
-      window.clearTimeout(activeUndo.timerId);
-      if (activeUndo.toast && activeUndo.toast.isConnected) {
-        activeUndo.toast.remove();
-      }
-      activeUndo = null;
+    function getUpgradeCardName(upgradeList) {
+      const card = upgradeList ? upgradeList.closest(".upgrade-card") : null;
+      const nameNode = card ? card.querySelector("h3") : null;
+      return nameNode ? nameNode.textContent.trim() : "";
     }
 
-    function showUndoToast(upgradeList, entry, nextSibling) {
-      clearUndo();
+    function savePendingDelete(payload) {
+      try {
+        window.localStorage.setItem(pendingDeleteKey, JSON.stringify(payload));
+      } catch (_error) {
+        // Ignore storage failures.
+      }
+    }
+
+    function readPendingDelete() {
+      try {
+        const raw = window.localStorage.getItem(pendingDeleteKey);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") return null;
+        return parsed;
+      } catch (_error) {
+        return null;
+      }
+    }
+
+    function clearPendingDelete() {
+      try {
+        window.localStorage.removeItem(pendingDeleteKey);
+      } catch (_error) {
+        // Ignore storage failures.
+      }
+    }
+
+    function clearUndo(opts) {
+      const options = opts || {};
+      const preservePending = !!options.preservePending;
+      const skipSave = !!options.skipSave;
+      if (activeUndo) {
+        window.clearTimeout(activeUndo.timerId);
+        if (activeUndo.toast && activeUndo.toast.isConnected) {
+          activeUndo.toast.remove();
+        }
+        activeUndo = null;
+      }
+      if (!preservePending) {
+        clearPendingDelete();
+      }
+      if (!skipSave) {
+        scheduleSaveUpgradeState();
+      }
+    }
+
+    function showUndoToast(upgradeList, entry, nextSibling, expiresAt) {
+      clearUndo({ preservePending: true, skipSave: true });
 
       const toast = document.createElement("div");
       toast.className = "undo-toast";
@@ -266,6 +311,8 @@
         } else {
           upgradeList.appendChild(entry);
         }
+        ensureEntryActions(entry);
+        bindPreviewFallbacks(entry);
         clearUndo();
       });
 
@@ -276,9 +323,11 @@
         upgradeList.prepend(toast);
       }
 
+      const expireAt = Number(expiresAt) || (Date.now() + 60000);
+      const remainingMs = Math.max(0, expireAt - Date.now());
       const timerId = window.setTimeout(() => {
         clearUndo();
-      }, 60000);
+      }, remainingMs);
 
       activeUndo = { toast, timerId };
     }
@@ -331,9 +380,21 @@
         if (!ok) return;
         const upgradeList = entry.closest(".upgrade-list");
         const nextSibling = entry.nextElementSibling;
+        clearUndo();
+        if (upgradeList) {
+          const nextHead = nextSibling && nextSibling.classList.contains("upgrade-entry")
+            ? nextSibling.querySelector(".upgrade-entry-head")
+            : null;
+          savePendingDelete({
+            cardName: getUpgradeCardName(upgradeList),
+            entryHtml: entry.outerHTML,
+            nextEntryHead: nextHead ? nextHead.textContent.trim() : "",
+            expiresAt: Date.now() + 60000,
+          });
+        }
         entry.remove();
         if (upgradeList) {
-          showUndoToast(upgradeList, entry, nextSibling);
+          showUndoToast(upgradeList, entry, nextSibling, Date.now() + 60000);
         }
       });
 
@@ -537,14 +598,84 @@
       });
     }
 
-    function setupExistingPreviewFallbacks() {
-      document.querySelectorAll("img.card-preview").forEach((img) => {
+    function bindPreviewFallbacks(container) {
+      const root = container || document;
+      root.querySelectorAll("img.card-preview").forEach((img) => {
+        if (img.dataset.bound === "1") return;
+        img.dataset.bound = "1";
         img.addEventListener("error", () => {
           const cardRef = img.closest(".card-ref");
           const cardName = cardRef ? getCardNameFromRef(cardRef) : img.alt || "Unknown Card";
           img.replaceWith(buildPlaceholderPreview(cardName));
         });
       });
+    }
+
+    function setupExistingPreviewFallbacks() {
+      bindPreviewFallbacks(document);
+    }
+
+    function restorePendingDelete() {
+      const pending = readPendingDelete();
+      if (!pending) return;
+
+      const expiresAt = Number(pending.expiresAt) || 0;
+      if (expiresAt <= Date.now()) {
+        clearPendingDelete();
+        return;
+      }
+
+      const cardName = String(pending.cardName || "");
+      const entryHtml = String(pending.entryHtml || "");
+      if (!cardName || !entryHtml) {
+        clearPendingDelete();
+        return;
+      }
+
+      const targetCard = Array.from(document.querySelectorAll(".upgrade-card")).find((card) => {
+        const nameNode = card.querySelector("h3");
+        return nameNode && nameNode.textContent.trim() === cardName;
+      });
+      if (!targetCard) {
+        clearPendingDelete();
+        return;
+      }
+
+      const upgradeList = targetCard.querySelector(".upgrade-list");
+      if (!upgradeList) {
+        clearPendingDelete();
+        return;
+      }
+
+      const temp = document.createElement("div");
+      temp.innerHTML = entryHtml.trim();
+      const entry = temp.firstElementChild;
+      if (!entry) {
+        clearPendingDelete();
+        return;
+      }
+
+      let nextSibling = null;
+      const nextHeadText = String(pending.nextEntryHead || "");
+      const entryHead = entry.querySelector(".upgrade-entry-head");
+      const entryHeadText = entryHead ? entryHead.textContent.trim() : "";
+      if (entryHeadText) {
+        const existing = Array.from(upgradeList.querySelectorAll(".upgrade-entry")).find((item) => {
+          const head = item.querySelector(".upgrade-entry-head");
+          return head && head.textContent.trim() === entryHeadText;
+        });
+        if (existing) {
+          existing.remove();
+        }
+      }
+      if (nextHeadText) {
+        nextSibling = Array.from(upgradeList.querySelectorAll(".upgrade-entry")).find((item) => {
+          const head = item.querySelector(".upgrade-entry-head");
+          return head && head.textContent.trim() === nextHeadText;
+        }) || null;
+      }
+
+      showUndoToast(upgradeList, entry, nextSibling, expiresAt);
     }
 
     function refreshTraumaStatus() {
@@ -566,6 +697,7 @@
     }
 
     restoreUpgradeState();
+    restorePendingDelete();
     setupExistingPreviewFallbacks();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
       ensureEntryActions(entry);
