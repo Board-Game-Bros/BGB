@@ -203,6 +203,21 @@
   margin-top: 8px;
 }
 
+.scenario-trauma {
+  font-style: italic;
+  border-left: 3px solid rgba(58, 45, 26, 0.45);
+  padding-left: 10px;
+}
+
+.current-trauma-status {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(58, 45, 26, 0.45);
+  background: linear-gradient(180deg, rgba(232, 205, 152, 0.9) 0%, rgba(206, 171, 112, 0.88) 100%);
+  font-weight: 700;
+}
+
 .upgrade-entry {
   margin-top: 8px;
   padding: 10px;

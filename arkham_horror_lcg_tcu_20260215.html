@@ -241,11 +241,15 @@
             <p class="xp-line">Current XP: 21</p>
             <div class="upgrade-list">
               <p>Prologue: No upgrades</p>
-              <p>Scenario I: +8 XP earned, Physical trauma 0, Mental trauma 0.</p>
-              <p>Scenario II + Interlude II: +7 XP earned (5 victory + 2 bonus), Physical trauma 0, Mental trauma 0.</p>
-              <p>Scenario III: +6 XP earned (4 victory + 2 bonus), Physical trauma 0, Mental trauma 0.</p>
+              <p>Scenario I: +8 XP earned.</p>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario I): Physical 0, Mental 0.</p>
+              <p>Scenario II + Interlude II: +7 XP earned (5 victory + 2 bonus).</p>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario II): Physical 0, Mental 0.</p>
+              <p>Scenario III: +6 XP earned (4 victory + 2 bonus).</p>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario III): Physical 0, Mental 0.</p>
               <p>Campaign Asset: Harvey Walters gains <strong>The Black Book</strong>.</p>
             </div>
+            <p class="current-trauma-status">Current Trauma Status: Physical 0, Mental 0.</p>
           </article>
 
           <article class="upgrade-card">
@@ -274,6 +278,7 @@
                   </div>
                 </div>
               </div>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario I): Physical 0, Mental 0.</p>
               <div class="upgrade-entry">
                 <p class="upgrade-entry-head">After Scenario II (+7 XP)</p>
                 <div class="upgrade-columns">
@@ -292,6 +297,7 @@
                   </div>
                 </div>
               </div>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario II): Physical 0, Mental 0.</p>
               <div class="upgrade-entry">
                 <p class="upgrade-entry-head">After Scenario III (+6 XP)</p>
                 <div class="upgrade-columns">
@@ -309,8 +315,9 @@
                   </div>
                 </div>
               </div>
-              <p>Trauma status through Scenario III: Physical 0, Mental 0.</p>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario III): Physical 0, Mental 0.</p>
             </div>
+            <p class="current-trauma-status">Current Trauma Status: Physical 0, Mental 0.</p>
           </article>
 
           <article class="upgrade-card">
@@ -318,10 +325,14 @@
             <p class="xp-line">Current XP: 21</p>
             <div class="upgrade-list">
               <p>Prologue: No upgrades</p>
-              <p>Scenario I: +8 XP earned, Physical trauma 0, Mental trauma 0.</p>
-              <p>Scenario II + Interlude II: +7 XP earned (5 victory + 2 bonus), Physical trauma 0, Mental trauma 0.</p>
-              <p>Scenario III: +6 XP earned (4 victory + 2 bonus), Physical trauma 0, Mental trauma 0.</p>
+              <p>Scenario I: +8 XP earned.</p>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario I): Physical 0, Mental 0.</p>
+              <p>Scenario II + Interlude II: +7 XP earned (5 victory + 2 bonus).</p>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario II): Physical 0, Mental 0.</p>
+              <p>Scenario III: +6 XP earned (4 victory + 2 bonus).</p>
+              <p class="scenario-trauma" data-physical="0" data-mental="0">Trauma (Scenario III): Physical 0, Mental 0.</p>
             </div>
+            <p class="current-trauma-status">Current Trauma Status: Physical 0, Mental 0.</p>
           </article>
         </div>
       </div>
@@ -333,5 +344,22 @@
   </main>
 
   <script src="main.js"></script>
+  <script>
+    document.querySelectorAll(".upgrade-card").forEach((card) => {
+      const traumaRows = card.querySelectorAll(".scenario-trauma");
+      let physical = 0;
+      let mental = 0;
+
+      traumaRows.forEach((row) => {
+        physical += Number(row.dataset.physical || 0);
+        mental += Number(row.dataset.mental || 0);
+      });
+
+      const status = card.querySelector(".current-trauma-status");
+      if (status) {
+        status.textContent = `Current Trauma Status: Physical ${physical}, Mental ${mental}.`;
+      }
+    });
+  </script>
 </body>
 </html>
