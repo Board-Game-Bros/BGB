@@ -434,13 +434,10 @@
         editBtn.textContent = "Edit";
         actions.appendChild(editBtn);
       }
-
-      if (editBtn.dataset.bound !== "1") {
-        editBtn.dataset.bound = "1";
-        editBtn.addEventListener("click", () => {
-          attachEditor(entry);
-        });
-      }
+      // Always rebind to handle HTML restored from storage/undo (listeners are not persisted).
+      editBtn.onclick = () => {
+        attachEditor(entry);
+      };
     }
 
     function createScenarioDraft(scenarioNumber) {
