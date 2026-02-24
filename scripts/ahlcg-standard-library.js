@@ -33,7 +33,7 @@
       "Extra Ammunition (1)",
       "Gatling Gun (5)",
       "Harvey Walters",
-      "Let God Sort Them Out",
+      "\"Let God sort them out...\"",
       "Luger P08",
       "Marksmanship (1)",
       "Michael McGlen",
@@ -41,8 +41,8 @@
       "Strange Solution",
       "Strange Solution: Acidic Ichor (4)",
       "The Black Book (Campaign Asset)",
-      "Watch This",
-      "Watch This (3)",
+      "\"Watch this!\"",
+      "\"Watch this!\" (3)",
       "Wendy Adams"
     ]
   };
