@@ -486,9 +486,13 @@
           preview.style.position = "fixed";
           option.addEventListener("mouseenter", () => {
             positionAutocompletePreview(option, preview);
+            preview.style.display = "block";
           });
           option.addEventListener("mousemove", () => {
             positionAutocompletePreview(option, preview);
+          });
+          option.addEventListener("mouseleave", () => {
+            preview.style.display = "";
           });
           option.appendChild(preview);
           if (idx === activeIndex) option.classList.add("is-active");

@@ -518,6 +518,11 @@
   transform: none;
 }
 
+.card-autocomplete-preview {
+  z-index: 1200;
+  pointer-events: none;
+}
+
 .card-preview-placeholder {
   width: 210px;
   box-sizing: border-box;
