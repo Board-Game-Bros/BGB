@@ -302,26 +302,11 @@
 
     function getCardNameCatalog() {
       const map = new Map();
+      const sourceNames = standardCardNames.length > 0
+        ? standardCardNames
+        : cardImageFiles.map((file) => toDisplayNameFromFile(file));
 
-      standardCardNames.forEach((name) => {
-        const key = getCatalogKey(name);
-        if (!key) return;
-        if (!map.has(key)) {
-          map.set(key, { name, key });
-        }
-      });
-
-      cardImageFiles.forEach((file) => {
-        const name = toDisplayNameFromFile(file);
-        const key = getCatalogKey(name);
-        if (!key) return;
-        if (!map.has(key)) {
-          map.set(key, { name, key });
-        }
-      });
-
-      document.querySelectorAll(".card-ref").forEach((ref) => {
-        const name = getCardNameFromRef(ref);
+      sourceNames.forEach((name) => {
         const key = getCatalogKey(name);
         if (!key) return;
         if (!map.has(key)) {
