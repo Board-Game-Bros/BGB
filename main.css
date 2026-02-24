@@ -610,13 +610,10 @@ nav.sticky {
 
 /* Arrow image */
 .tg-arrow-img{
-  display: inline-block;
-  width: 84px;
-  height: 26px;
+  width: 120px;
+  height: 50px;
   background: url("assets/misc/tg_arrow.png") center / contain no-repeat;
-  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));
-  opacity: 0.92;
-  transform: translateY(2px);
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45));
 }
 
 /* 小屏：Menhir 自动缩成两列更不挤 */
