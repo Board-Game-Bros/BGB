@@ -445,6 +445,7 @@
 
       let current = [];
       let activeIndex = -1;
+      let hoveredOption = null;
 
       function positionAutocompletePreview(option, previewHost) {
         if (!option || !previewHost) return;
@@ -497,6 +498,7 @@
         panel.innerHTML = "";
         current = [];
         activeIndex = -1;
+        hoveredOption = null;
         hideAutocompleteFloatingPreview();
       }
 
@@ -515,22 +517,37 @@
           const option = document.createElement("button");
           option.type = "button";
           option.className = "card-autocomplete-item";
+          option.setAttribute("data-card-name", item.name);
           option.appendChild(document.createTextNode(item.name));
-          option.addEventListener("mouseenter", () => {
-            showAutocompletePreview(option, item.name);
-          });
-          option.addEventListener("mousemove", () => {
-            positionAutocompletePreview(option, getAutocompleteFloatingPreview());
-          });
-          option.addEventListener("mouseleave", () => {
-            hideAutocompleteFloatingPreview();
-          });
           if (idx === activeIndex) option.classList.add("is-active");
           option.addEventListener("click", () => pick(item.name));
           panel.appendChild(option);
         });
         panel.hidden = false;
       }
+
+      panel.addEventListener("mouseover", (event) => {
+        const option = event.target.closest(".card-autocomplete-item");
+        if (!option || !panel.contains(option)) return;
+        const name = option.getAttribute("data-card-name") || "";
+        hoveredOption = option;
+        showAutocompletePreview(option, name);
+      });
+
+      panel.addEventListener("mousemove", () => {
+        if (!hoveredOption) return;
+        positionAutocompletePreview(hoveredOption, getAutocompleteFloatingPreview());
+      });
+
+      panel.addEventListener("mouseleave", () => {
+        hoveredOption = null;
+        hideAutocompleteFloatingPreview();
+      });
+
+      panel.addEventListener("scroll", () => {
+        if (!hoveredOption) return;
+        positionAutocompletePreview(hoveredOption, getAutocompleteFloatingPreview());
+      });
 
       input.addEventListener("input", () => {
         const value = input.value.trim();
