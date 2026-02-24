@@ -241,6 +241,28 @@
       return Math.max(1, max + 1);
     }
 
+    function getScenarioLabelFromHead(headText) {
+      const match = String(headText || "").match(/After Scenario\s+([IVXLCDM]+)/i);
+      return match ? match[1].toUpperCase() : "";
+    }
+
+    function getXpFromHead(headText) {
+      const match = String(headText || "").match(/\(([+-]?\d+)\s*XP\)/i);
+      return match ? Number(match[1]) : 0;
+    }
+
+    function toNonNegativeInteger(value) {
+      const parsed = Number(value);
+      if (!Number.isFinite(parsed)) return 0;
+      return Math.max(0, Math.trunc(parsed));
+    }
+
+    function formatEntryHead(scenarioLabel, xpValue) {
+      const label = scenarioLabel || "I";
+      const xp = toNonNegativeInteger(xpValue);
+      return "After Scenario " + label + " (+" + xp + " XP)";
+    }
+
     function getUpgradeCardName(upgradeList) {
       const card = upgradeList ? upgradeList.closest(".upgrade-card") : null;
       const nameNode = card ? card.querySelector("h3") : null;
@@ -369,6 +391,10 @@
       const editor = document.createElement("div");
       editor.className = "upgrade-entry-editor";
       editor.innerHTML = `
+        <div class="builder-input-row">
+          <label>XP Gained</label>
+          <input type="number" class="upgrade-input" data-edit="xp" min="0" step="1" />
+        </div>
         <div class="editor-grid">
           <div class="editor-col">
             <h5>Removed</h5>
@@ -388,12 +414,20 @@
 
       editor.querySelector('[data-edit="removed"]').value = listCardNames(removedList).join("\n");
       editor.querySelector('[data-edit="added"]').value = listCardNames(addedList).join("\n");
+      const head = entry.querySelector(".upgrade-entry-head");
+      const currentHeadText = head ? head.textContent : "";
+      editor.querySelector('[data-edit="xp"]').value = String(getXpFromHead(currentHeadText));
 
       editor.querySelector('[data-action="save-edit"]').addEventListener("click", () => {
         const removedCards = parseInputCards(editor.querySelector('[data-edit="removed"]').value);
         const addedCards = parseInputCards(editor.querySelector('[data-edit="added"]').value);
+        const xpValue = toNonNegativeInteger(editor.querySelector('[data-edit="xp"]').value);
         setCards(removedList, removedCards);
         setCards(addedList, addedCards);
+        if (head) {
+          const scenarioLabel = getScenarioLabelFromHead(currentHeadText) || "I";
+          head.textContent = formatEntryHead(scenarioLabel, xpValue);
+        }
         editor.remove();
       });
 
@@ -466,6 +500,10 @@
           </div>
         </div>
         <div class="upgrade-entry-builder">
+          <div class="builder-input-row">
+            <label>XP Gained</label>
+            <input type="number" class="upgrade-input" data-draft="xp" min="0" step="1" value="0" />
+          </div>
           <div class="builder-grid">
             <div class="builder-col" data-builder="removed">
               <h5>Removed</h5>
@@ -516,7 +554,9 @@
 
       entry.querySelector('[data-action="confirm-draft"]').addEventListener("click", () => {
         const head = entry.querySelector(".upgrade-entry-head");
-        head.textContent = `After Scenario ${intToRoman(scenarioNumber)}`;
+        const xpInput = entry.querySelector('[data-draft="xp"]');
+        const xpValue = toNonNegativeInteger(xpInput ? xpInput.value : 0);
+        head.textContent = formatEntryHead(intToRoman(scenarioNumber), xpValue);
         const builder = entry.querySelector(".upgrade-entry-builder");
         if (builder) builder.remove();
         entry.classList.remove("upgrade-entry-draft");
@@ -613,6 +653,7 @@
       if (!root) return;
       const observer = new MutationObserver(() => {
         scheduleSaveUpgradeState();
+        refreshCurrentXp();
       });
       observer.observe(root, {
         subtree: true,
@@ -712,6 +753,39 @@
       });
     }
 
+    function parseAllXpFromCard(card) {
+      let total = 0;
+
+      card.querySelectorAll(".upgrade-entry-head").forEach((head) => {
+        total += getXpFromHead(head.textContent);
+      });
+
+      card.querySelectorAll(".upgrade-list > p").forEach((line) => {
+        const text = String(line.textContent || "");
+        if (!/xp/i.test(text)) return;
+        const matches = text.match(/[+-]\s*\d+\s*XP/gi) || [];
+        matches.forEach((chunk) => {
+          const num = chunk.match(/[+-]\s*\d+/);
+          if (!num) return;
+          total += Number(num[0].replace(/\s+/g, ""));
+        });
+      });
+
+      return total;
+    }
+
+    function refreshCurrentXp() {
+      document.querySelectorAll(".upgrade-card").forEach((card) => {
+        const xpLine = card.querySelector(".xp-line");
+        if (!xpLine) return;
+        const totalXp = parseAllXpFromCard(card);
+        const nextText = "Current XP: " + totalXp;
+        if (xpLine.textContent.trim() !== nextText) {
+          xpLine.textContent = nextText;
+        }
+      });
+    }
+
     restoreUpgradeState();
     setupExistingPreviewFallbacks();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
@@ -726,6 +800,7 @@
     window.addEventListener("beforeunload", () => {
       saveUpgradeState();
     });
+    refreshCurrentXp();
     refreshTraumaStatus();
   }
 
