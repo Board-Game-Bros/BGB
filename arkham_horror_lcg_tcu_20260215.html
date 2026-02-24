@@ -426,17 +426,78 @@
       const cardCatalog = CARD_IMAGE_FILES.map((file) => ({
         file,
         key: normalizeText(file.replace(/\.png$/i, "")),
+        level: getLevelFromFileName(file),
       }));
+      const UPGRADE_STATE_KEY = "ahlcg_tcu_20260215_upgrade_state_v1";
       let activeUndo = null;
+      let saveTimer = null;
 
       function normalizeText(value) {
         return String(value || "")
           .toLowerCase()
           .replace(/["']/g, "")
-          .replace(/\(x?\d+\)/g, " ")
+          .replace(/\(\s*x\s*\d+\s*\)/gi, " ")
+          .replace(/\(([^)]*)\)/g, " $1 ")
           .replace(/[^\p{L}\p{N}]+/gu, " ")
           .trim()
           .replace(/\s+/g, " ");
+      }
+
+      function getLevelFromFileName(fileName) {
+        const match = String(fileName || "").match(/_(\d+)\.png$/i);
+        if (!match) return null;
+        return Number(match[1]);
+      }
+
+      function getRequestedLevel(inputName) {
+        const text = String(inputName || "");
+        const parenGroups = text.match(/\(([^)]*)\)/g) || [];
+        for (let i = parenGroups.length - 1; i >= 0; i -= 1) {
+          const group = parenGroups[i].replace(/[()]/g, "").trim();
+          if (/^x\s*\d+$/i.test(group)) continue;
+          const num = group.match(/\d+/);
+          if (num) return Number(num[0]);
+        }
+        return null;
+      }
+
+      function getNameOnly(normalizedText) {
+        return String(normalizedText || "")
+          .split(" ")
+          .filter((token) => token && !/^\d+$/.test(token))
+          .join(" ");
+      }
+
+      function levenshteinDistance(a, b) {
+        const left = String(a || "");
+        const right = String(b || "");
+        const rows = left.length + 1;
+        const cols = right.length + 1;
+        const matrix = Array.from({ length: rows }, () => Array(cols).fill(0));
+
+        for (let i = 0; i < rows; i += 1) matrix[i][0] = i;
+        for (let j = 0; j < cols; j += 1) matrix[0][j] = j;
+
+        for (let i = 1; i < rows; i += 1) {
+          for (let j = 1; j < cols; j += 1) {
+            const cost = left[i - 1] === right[j - 1] ? 0 : 1;
+            matrix[i][j] = Math.min(
+              matrix[i - 1][j] + 1,
+              matrix[i][j - 1] + 1,
+              matrix[i - 1][j - 1] + cost
+            );
+          }
+        }
+        return matrix[rows - 1][cols - 1];
+      }
+
+      function similarityScore(a, b) {
+        const left = String(a || "");
+        const right = String(b || "");
+        if (!left || !right) return 0;
+        if (left === right) return 1;
+        const distance = levenshteinDistance(left, right);
+        return 1 - distance / Math.max(left.length, right.length);
       }
 
       function romanToInt(roman) {
@@ -476,22 +537,37 @@
       function findMatchingImage(cardName) {
         const target = normalizeText(cardName);
         if (!target) return null;
-
-        const targetTokens = target.split(" ").filter(Boolean);
+        const targetNameOnly = getNameOnly(target);
+        const targetTokens = targetNameOnly.split(" ").filter(Boolean);
+        const requestedLevel = getRequestedLevel(cardName);
         let best = null;
         let bestScore = 0;
 
         cardCatalog.forEach((item) => {
-          let score = 0;
+          const itemNameOnly = getNameOnly(item.key);
+          const nameSimilarity = similarityScore(targetNameOnly, itemNameOnly);
+          const overlap = targetTokens.length > 0
+            ? targetTokens.filter((t) => itemNameOnly.includes(t)).length / targetTokens.length
+            : 0;
+
+          let score = nameSimilarity * 70 + overlap * 30;
+
           if (item.key === target) {
-            score = 100;
+            score += 30;
           } else if (item.key.includes(target)) {
-            score = 85;
+            score += 15;
           } else if (target.includes(item.key)) {
-            score = 75;
-          } else if (targetTokens.length > 0) {
-            const hit = targetTokens.filter((t) => item.key.includes(t)).length;
-            score = (hit / targetTokens.length) * 60;
+            score += 10;
+          }
+
+          if (requestedLevel !== null) {
+            if (item.level === requestedLevel) {
+              score += 40;
+            } else if (item.level === null) {
+              score -= 8;
+            } else {
+              score -= 18;
+            }
           }
 
           if (score > bestScore) {
@@ -500,7 +576,7 @@
           }
         });
 
-        if (!best || bestScore < 35) return null;
+        if (!best || bestScore < 28) return null;
         return `${CARD_DIR}/${best.file}`;
       }
 
@@ -734,6 +810,7 @@
       function addToolbar(card) {
         const upgradeList = card.querySelector(".upgrade-list");
         if (!upgradeList) return;
+        if (upgradeList.querySelector(".upgrade-toolbar")) return;
 
         const toolbar = document.createElement("div");
         toolbar.className = "upgrade-toolbar";
@@ -749,6 +826,72 @@
         });
 
         upgradeList.appendChild(toolbar);
+      }
+
+      function sanitizeUpgradeListForSave(listEl) {
+        const clone = listEl.cloneNode(true);
+        clone.querySelectorAll(".upgrade-toolbar, .undo-toast, .upgrade-entry-editor").forEach((node) => {
+          node.remove();
+        });
+        return clone.innerHTML;
+      }
+
+      function saveUpgradeState() {
+        try {
+          const state = {};
+          document.querySelectorAll(".upgrade-card").forEach((card) => {
+            const name = card.querySelector("h3") ? card.querySelector("h3").textContent.trim() : "";
+            const upgradeList = card.querySelector(".upgrade-list");
+            if (!name || !upgradeList) return;
+            state[name] = sanitizeUpgradeListForSave(upgradeList);
+          });
+          window.localStorage.setItem(UPGRADE_STATE_KEY, JSON.stringify(state));
+        } catch (_error) {
+          // Ignore storage failures (private mode / quota).
+        }
+      }
+
+      function scheduleSaveUpgradeState() {
+        if (saveTimer) {
+          window.clearTimeout(saveTimer);
+        }
+        saveTimer = window.setTimeout(() => {
+          saveUpgradeState();
+          saveTimer = null;
+        }, 120);
+      }
+
+      function restoreUpgradeState() {
+        try {
+          const raw = window.localStorage.getItem(UPGRADE_STATE_KEY);
+          if (!raw) return;
+          const state = JSON.parse(raw);
+          if (!state || typeof state !== "object") return;
+
+          document.querySelectorAll(".upgrade-card").forEach((card) => {
+            const name = card.querySelector("h3") ? card.querySelector("h3").textContent.trim() : "";
+            const upgradeList = card.querySelector(".upgrade-list");
+            if (!name || !upgradeList) return;
+            if (typeof state[name] === "string") {
+              upgradeList.innerHTML = state[name];
+            }
+          });
+        } catch (_error) {
+          // Ignore malformed or unavailable local storage.
+        }
+      }
+
+      function watchUpgradeChanges() {
+        const root = document.querySelector("#upgrade-history .upgrade-grid");
+        if (!root) return;
+        const observer = new MutationObserver(() => {
+          scheduleSaveUpgradeState();
+        });
+        observer.observe(root, {
+          subtree: true,
+          childList: true,
+          characterData: true,
+        });
       }
 
       function clearUndo() {
@@ -822,6 +965,7 @@
         });
       }
 
+      restoreUpgradeState();
       setupExistingPreviewFallbacks();
       document.querySelectorAll(".upgrade-entry").forEach((entry) => {
         ensureEntryActions(entry);
@@ -829,6 +973,8 @@
       document.querySelectorAll(".upgrade-card").forEach((card) => {
         addToolbar(card);
       });
+      watchUpgradeChanges();
+      scheduleSaveUpgradeState();
       refreshTraumaStatus();
     })();
   </script>
