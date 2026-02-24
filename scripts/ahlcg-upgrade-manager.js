@@ -279,6 +279,8 @@
       const options = opts || {};
       const preservePending = !!options.preservePending;
       const skipSave = !!options.skipSave;
+      const forceClearPending = !!options.forceClearPending;
+      const hasActiveUndo = !!activeUndo;
       if (activeUndo) {
         window.clearTimeout(activeUndo.timerId);
         if (activeUndo.toast && activeUndo.toast.isConnected) {
@@ -286,7 +288,7 @@
         }
         activeUndo = null;
       }
-      if (!preservePending) {
+      if (!preservePending && (hasActiveUndo || forceClearPending)) {
         clearPendingDelete();
       }
       if (!skipSave) {
@@ -394,7 +396,7 @@
         if (!ok) return;
         const upgradeList = entry.closest(".upgrade-list");
         const nextSibling = entry.nextElementSibling;
-        clearUndo();
+        clearUndo({ forceClearPending: true });
         if (upgradeList) {
           const nextHead = nextSibling && nextSibling.classList.contains("upgrade-entry")
             ? nextSibling.querySelector(".upgrade-entry-head")
@@ -700,7 +702,6 @@
     }
 
     restoreUpgradeState();
-    restorePendingDelete();
     setupExistingPreviewFallbacks();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
       ensureEntryActions(entry);
@@ -708,6 +709,7 @@
     document.querySelectorAll(".upgrade-card").forEach((card) => {
       addToolbar(card);
     });
+    restorePendingDelete();
     watchUpgradeChanges();
     scheduleSaveUpgradeState();
     window.addEventListener("beforeunload", () => {
