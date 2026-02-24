@@ -606,14 +606,14 @@ nav.sticky {
   grid-template-columns: max-content 120px max-content; /* 左数字 / 箭头 / 右数字 */
   align-items: center;
   justify-content: start;   /* 不要 space-between */
-  column-gap: 8px;         /* 你现在的 gap */
+  column-gap: 6px;         /* 你现在的 gap */
 }
 
 /* Arrow image */
 .tg-arrow-img{
   display: inline-block;
-  width: 120px;
-  height: 48px;
+  width: 60px;
+  height: 36px;
 
   background: url("assets/misc/tg_arrow.png") center / contain no-repeat;
 
