@@ -600,23 +600,24 @@ nav.sticky {
   font-weight: 800;
 }
 
-/* Moves */
+/* Moves (use 3-column grid to avoid huge empty space) */
 .tg-move{
-  display: flex;
+  display: grid;
+  grid-template-columns: max-content 120px max-content; /* 左数字 / 箭头 / 右数字 */
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
+  justify-content: start;   /* 不要 space-between */
+  column-gap: 14px;         /* 你现在的 gap */
 }
 
 /* Arrow image */
 .tg-arrow-img{
   display: inline-block;
-
-  width: 120px;      /* 根据需要调大小 */
+  width: 120px;
   height: 48px;
 
   background: url("assets/misc/tg_arrow.png") center / contain no-repeat;
 
+  justify-self: center;     /* 箭头列里居中 */
   filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
 }
 
