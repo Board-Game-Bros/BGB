@@ -483,7 +483,10 @@
   background: rgba(255, 249, 236, 0.98);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
   z-index: 60;
-  overflow: visible;
+  max-height: min(320px, 48vh);
+  overflow-y: auto;
+  overflow-x: visible;
+  overscroll-behavior: contain;
 }
 
 .card-autocomplete-item {
@@ -511,10 +514,8 @@
 
 .card-autocomplete-item:hover .card-preview {
   display: block;
-  left: calc(100% + 8px);
   bottom: auto;
-  top: 50%;
-  transform: translateY(-50%);
+  transform: none;
 }
 
 .card-preview-placeholder {

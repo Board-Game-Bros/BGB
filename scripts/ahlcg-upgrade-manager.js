@@ -379,8 +379,6 @@
       const catalog = getCardNameCatalog();
       const exact = catalog.find((item) => item.key === normalized);
       if (exact) return exact.name;
-      const starts = catalog.find((item) => item.key.startsWith(normalized));
-      if (starts && normalized.length >= 4) return starts.name;
       return original;
     }
 
@@ -398,6 +396,35 @@
 
       let current = [];
       let activeIndex = -1;
+
+      function positionAutocompletePreview(option, preview) {
+        if (!option || !preview) return;
+        const optionRect = option.getBoundingClientRect();
+        const previewWidth = 210;
+        const previewHeight = 300;
+        const margin = 8;
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+
+        let left = optionRect.right + margin;
+        if (left + previewWidth > viewportWidth - margin) {
+          left = optionRect.left - previewWidth - margin;
+        }
+        if (left < margin) {
+          left = margin;
+        }
+
+        let top = optionRect.top + (optionRect.height - previewHeight) / 2;
+        if (top + previewHeight > viewportHeight - margin) {
+          top = viewportHeight - previewHeight - margin;
+        }
+        if (top < margin) {
+          top = margin;
+        }
+
+        preview.style.left = left + "px";
+        preview.style.top = top + "px";
+      }
 
       function closePanel() {
         panel.hidden = true;
@@ -424,6 +451,13 @@
           option.appendChild(document.createTextNode(item.name));
           const preview = buildPreviewNode(item.name);
           preview.classList.add("card-autocomplete-preview");
+          preview.style.position = "fixed";
+          option.addEventListener("mouseenter", () => {
+            positionAutocompletePreview(option, preview);
+          });
+          option.addEventListener("mousemove", () => {
+            positionAutocompletePreview(option, preview);
+          });
           option.appendChild(preview);
           if (idx === activeIndex) option.classList.add("is-active");
           option.addEventListener("click", () => pick(item.name));
