@@ -1049,6 +1049,75 @@
       bindPreviewFallbacks(document);
     }
 
+    function extractFileNameFromSrc(src) {
+      const text = String(src || "");
+      const clean = text.split("?")[0].split("#")[0];
+      const parts = clean.split("/");
+      return parts.length ? parts[parts.length - 1] : "";
+    }
+
+    function extractQuantitySuffix(nameText) {
+      const match = String(nameText || "").match(/\(\s*x\s*\d+\s*\)\s*$/i);
+      if (!match) return "";
+      const num = match[0].match(/\d+/);
+      if (!num) return "";
+      return "(x" + Number(num[0]) + ")";
+    }
+
+    function findStandardNameByFile(fileName) {
+      const file = String(fileName || "").trim();
+      if (!file) return "";
+      const inferred = toDisplayNameFromFile(file);
+      const inferredKey = getCatalogKey(inferred);
+      if (!inferredKey) return inferred;
+      const fromStandard = standardCardNames.find((name) => getCatalogKey(name) === inferredKey);
+      return fromStandard || inferred;
+    }
+
+    function replaceCardRefText(cardRef, nextText) {
+      const text = String(nextText || "").trim();
+      if (!text) return;
+      const first = cardRef.firstChild;
+      if (first && first.nodeType === Node.TEXT_NODE) {
+        first.textContent = text;
+      } else {
+        cardRef.insertBefore(document.createTextNode(text), first || null);
+      }
+    }
+
+    function normalizeExistingCardNames() {
+      let changed = false;
+      document.querySelectorAll(".card-ref").forEach((cardRef) => {
+        const currentName = getCardNameFromRef(cardRef);
+        if (!currentName) return;
+        const qty = extractQuantitySuffix(currentName);
+        const img = cardRef.querySelector("img.card-preview");
+
+        let normalizedBase = "";
+        if (img && img.getAttribute("src")) {
+          normalizedBase = findStandardNameByFile(extractFileNameFromSrc(img.getAttribute("src")));
+        }
+        if (!normalizedBase) {
+          normalizedBase = normalizeCardNameInput(currentName);
+        }
+        if (!normalizedBase) return;
+
+        const nextName = qty ? (normalizedBase + " " + qty) : normalizedBase;
+        if (nextName !== currentName) {
+          replaceCardRefText(cardRef, nextName);
+          changed = true;
+        }
+        if (img && img.getAttribute("alt") !== normalizedBase) {
+          img.setAttribute("alt", normalizedBase);
+          changed = true;
+        }
+      });
+
+      if (changed) {
+        scheduleSaveUpgradeState();
+      }
+    }
+
     function restorePendingDelete() {
       const pending = readPendingDelete();
       if (!pending) return;
@@ -1157,6 +1226,7 @@
     }
 
     restoreUpgradeState();
+    normalizeExistingCardNames();
     setupExistingPreviewFallbacks();
     renderEditGate();
     bindInactivityTracking();
