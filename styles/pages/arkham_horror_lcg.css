@@ -403,13 +403,20 @@
 
 .edit-card-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
   gap: 8px;
   padding: 6px 8px;
   border: 1px solid rgba(58, 45, 26, 0.25);
   border-radius: 6px;
   background: rgba(255, 249, 236, 0.72);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.edit-card-row > span {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .edit-card-row + .edit-card-row {
@@ -425,6 +432,9 @@
   font-size: 0.78rem;
   padding: 3px 8px;
   cursor: pointer;
+  flex: 0 0 auto;
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 .card-autocomplete {
