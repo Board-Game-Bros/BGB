@@ -134,12 +134,20 @@
       if (!target) return null;
       const targetNameOnly = getNameOnly(target);
       const targetTokens = targetNameOnly.split(" ").filter(Boolean);
+      const requiredTokens = targetTokens.filter((token) => {
+        if (token.length < 3) return false;
+        return !["the", "and", "for", "with", "from", "into", "campaign", "asset"].includes(token);
+      });
       const requestedLevel = getRequestedLevel(cardName);
       let best = null;
       let bestScore = 0;
 
       cardCatalog.forEach((item) => {
         const itemNameOnly = getNameOnly(item.key);
+        if (requiredTokens.length > 0) {
+          const missingRequired = requiredTokens.some((token) => !itemNameOnly.includes(token));
+          if (missingRequired) return;
+        }
         const nameSimilarity = similarityScore(targetNameOnly, itemNameOnly);
         const overlap = targetTokens.length > 0
           ? targetTokens.filter((t) => itemNameOnly.includes(t)).length / targetTokens.length
@@ -175,6 +183,30 @@
       return cardDir + "/" + best.file;
     }
 
+    function findExactImage(cardName) {
+      const target = normalizeText(cardName);
+      if (!target) return null;
+      const targetNameOnly = getNameOnly(target);
+      const requestedLevel = getRequestedLevel(cardName);
+
+      const exact = cardCatalog.find((item) => item.key === target);
+      if (exact) return cardDir + "/" + exact.file;
+
+      if (requestedLevel !== null) {
+        const byLevel = cardCatalog.find((item) => (
+          getNameOnly(item.key) === targetNameOnly && item.level === requestedLevel
+        ));
+        if (byLevel) return cardDir + "/" + byLevel.file;
+      }
+
+      const noLevel = cardCatalog.find((item) => (
+        getNameOnly(item.key) === targetNameOnly && item.level === null
+      ));
+      if (noLevel) return cardDir + "/" + noLevel.file;
+
+      return null;
+    }
+
     function inferImagePath(cardName) {
       const normalized = normalizeText(cardName).replace(/\s+/g, "_");
       if (!normalized) return null;
@@ -188,7 +220,7 @@
     }
 
     function buildPreviewNode(cardName) {
-      const src = findMatchingImage(cardName) || inferImagePath(cardName);
+      const src = findExactImage(cardName) || findMatchingImage(cardName) || inferImagePath(cardName);
       if (src) {
         const img = document.createElement("img");
         img.className = "card-preview";
@@ -1221,7 +1253,7 @@
           changed = true;
         }
         if (img) {
-          const preferredSrc = findMatchingImage(normalizedBase) || inferImagePath(normalizedBase);
+          const preferredSrc = findExactImage(normalizedBase);
           if (preferredSrc && img.getAttribute("src") !== preferredSrc) {
             img.setAttribute("src", preferredSrc);
             changed = true;
