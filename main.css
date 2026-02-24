@@ -512,6 +512,9 @@ nav.sticky {
   padding: 8px 14px;
   border-radius: 12px;
   font-weight: 800;
+
+  font-size: 1.5rem;
+  letter-spacing: 1px;
 }
 
 .tg-list{
