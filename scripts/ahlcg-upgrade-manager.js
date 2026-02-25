@@ -321,6 +321,13 @@
       });
     }
 
+    function setCardsWithInlineRemove(listEl, cardNames) {
+      listEl.innerHTML = "";
+      (cardNames || []).forEach((name) => {
+        listEl.appendChild(createDraftCardListItem(name));
+      });
+    }
+
     function parseInputCards(textValue) {
       return String(textValue || "")
         .split(/[\n,]+/)
@@ -419,40 +426,6 @@
       }
       messageNode.textContent = msg;
       messageNode.hidden = false;
-    }
-
-    function createEditableCardRow(cardName) {
-      const li = document.createElement("li");
-      li.className = "edit-card-row";
-      li.setAttribute("data-card-name", cardName);
-
-      const nameText = document.createElement("span");
-      nameText.textContent = cardName;
-      li.appendChild(nameText);
-
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.className = "edit-card-remove";
-      removeBtn.textContent = "Remove";
-      removeBtn.addEventListener("click", () => {
-        li.remove();
-      });
-      li.appendChild(removeBtn);
-      return li;
-    }
-
-    function setEditableCardList(listEl, cardNames) {
-      listEl.innerHTML = "";
-      cardNames.forEach((name) => {
-        listEl.appendChild(createEditableCardRow(name));
-      });
-    }
-
-    function getEditableCardNames(listEl) {
-      return Array.from(listEl.querySelectorAll(".edit-card-row"))
-        .map((row) => row.getAttribute("data-card-name") || "")
-        .map((name) => name.trim())
-        .filter(Boolean);
     }
 
     function toDisplayNameFromFile(fileName) {
@@ -1027,7 +1000,8 @@
               <input type="text" class="upgrade-input" placeholder="Type card name..." />
               <button type="button" class="upgrade-btn upgrade-btn-secondary">Add</button>
             </div>
-            <ul class="edit-card-list" data-edit-list="removed"></ul>
+            <p class="builder-hint">Input a card name and click Add (or press Enter).</p>
+            <ul class="card-list" data-edit-list="removed"></ul>
           </div>
           <div class="builder-col" data-edit-builder="added">
             <h5>Added</h5>
@@ -1035,7 +1009,8 @@
               <input type="text" class="upgrade-input" placeholder="Type card name..." />
               <button type="button" class="upgrade-btn upgrade-btn-secondary">Add</button>
             </div>
-            <ul class="edit-card-list" data-edit-list="added"></ul>
+            <p class="builder-hint">Input a card name and click Add (or press Enter).</p>
+            <ul class="card-list" data-edit-list="added"></ul>
           </div>
         </div>
         <p class="builder-error" data-edit-error hidden></p>
@@ -1049,8 +1024,8 @@
       const removedEditList = editor.querySelector('[data-edit-list="removed"]');
       const addedEditList = editor.querySelector('[data-edit-list="added"]');
       const errorNode = editor.querySelector('[data-edit-error]');
-      setEditableCardList(removedEditList, listCardNames(removedList));
-      setEditableCardList(addedEditList, listCardNames(addedList));
+      setCardsWithInlineRemove(removedEditList, listCardNames(removedList));
+      setCardsWithInlineRemove(addedEditList, listCardNames(addedList));
       const head = entry.querySelector(".upgrade-entry-head");
       const currentHeadText = head ? head.textContent : "";
       editor.querySelector('[data-edit="xp"]').value = String(getXpFromHead(currentHeadText));
@@ -1064,7 +1039,7 @@
         const addCardToEditorList = (rawName) => {
           const name = normalizeCardNameInput(rawName);
           if (!name) return;
-          listEl.appendChild(createEditableCardRow(name));
+          listEl.appendChild(createDraftCardListItem(name));
           input.value = "";
           input.focus();
         };
@@ -1075,8 +1050,8 @@
       });
 
       editor.querySelector('[data-action="save-edit"]').addEventListener("click", () => {
-        const removedCards = getEditableCardNames(removedEditList);
-        const addedCards = getEditableCardNames(addedEditList);
+        const removedCards = listCardNames(removedEditList);
+        const addedCards = listCardNames(addedEditList);
         const xpValue = toNonNegativeInteger(editor.querySelector('[data-edit="xp"]').value);
         const card = entry.closest(".upgrade-card");
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
@@ -1090,8 +1065,8 @@
           return;
         }
         setInlineValidationMessage(errorNode, "");
-        setCards(removedList, removedCards);
-        setCards(addedList, addedCards);
+        setCardsWithInlineRemove(removedList, removedCards);
+        setCardsWithInlineRemove(addedList, addedCards);
         if (head) {
           const scenarioLabel = getScenarioLabelFromHead(currentHeadText) || "I";
           head.textContent = formatEntryHead(scenarioLabel, xpValue);
