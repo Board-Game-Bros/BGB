@@ -291,7 +291,8 @@
       removeBtn.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        li.remove();
+        decrementOrRemoveCardRow(li);
+        syncDerivedUpgradeState();
       });
       inline.appendChild(ref);
       inline.appendChild(removeBtn);
@@ -343,6 +344,31 @@
       const safeQty = Number.isFinite(Number(qty)) ? Math.max(1, Math.trunc(Number(qty))) : 1;
       if (!base) return "";
       return safeQty > 1 ? (base + " (x" + safeQty + ")") : base;
+    }
+
+    function decrementOrRemoveCardRow(row) {
+      if (!row) return;
+      const ref = row.querySelector(".card-ref");
+      if (!ref) {
+        row.remove();
+        return;
+      }
+      const currentName = getCardNameFromRef(ref);
+      const parsed = parseTrailingQuantity(currentName);
+      if (parsed.qty <= 1) {
+        row.remove();
+        return;
+      }
+
+      const nextName = formatCardNameWithQuantity(parsed.base, parsed.qty - 1);
+      replaceCardRefText(ref, nextName);
+
+      const preview = ref.querySelector(".card-preview");
+      if (preview && preview.tagName === "IMG") {
+        preview.setAttribute("alt", parsed.base);
+        const src = findExactImage(parsed.base);
+        if (src) preview.setAttribute("src", src);
+      }
     }
 
     function addOrIncrementCardInList(listEl, rawName) {
@@ -1504,7 +1530,7 @@
         if (!row) return;
         event.preventDefault();
         event.stopPropagation();
-        row.remove();
+        decrementOrRemoveCardRow(row);
         syncDerivedUpgradeState();
       });
     }
