@@ -26,6 +26,7 @@
     let editUnlocked = !requireEditPassword;
     let editGateButton = null;
     let editGateStatus = null;
+    let entryUidCounter = 1;
 
     function normalizeText(value) {
       return String(value || "")
@@ -585,6 +586,57 @@
       messageNode.hidden = false;
     }
 
+    function ensureEntryUid(entry) {
+      if (!entry) return "";
+      const existing = String(entry.dataset.entryUid || "").trim();
+      if (existing) return existing;
+      const next = "e" + entryUidCounter;
+      entryUidCounter += 1;
+      entry.dataset.entryUid = next;
+      return next;
+    }
+
+    function getScenarioLabelFromTraumaRow(row) {
+      if (!row) return "";
+      const fromData = String(row.dataset.traumaLabel || "");
+      const fromText = String(row.textContent || "");
+      const source = fromData || fromText;
+      const match = source.match(/Scenario\s+([IVXLCDM]+)/i);
+      return match ? match[1].toUpperCase() : "";
+    }
+
+    function findLinkedTraumaRow(entry) {
+      if (!entry) return null;
+      const upgradeList = entry.closest(".upgrade-list");
+      if (!upgradeList) return null;
+
+      const uid = String(entry.dataset.entryUid || "").trim();
+      if (uid) {
+        const byUid = upgradeList.querySelector(`.scenario-trauma[data-entry-uid-link="${uid}"]`);
+        if (byUid) return byUid;
+      }
+
+      const head = entry.querySelector(".upgrade-entry-head");
+      const scenarioLabel = getScenarioLabelFromHead(head ? head.textContent : "");
+      if (!scenarioLabel) return null;
+
+      const traumaRows = Array.from(upgradeList.querySelectorAll(".scenario-trauma"));
+      return traumaRows.find((row) => getScenarioLabelFromTraumaRow(row) === scenarioLabel) || null;
+    }
+
+    function createScenarioTraumaRow(scenarioLabel, opts) {
+      const options = opts || {};
+      const physical = toNonNegativeInteger(options.physical || 0);
+      const mental = toNonNegativeInteger(options.mental || 0);
+      const row = document.createElement("p");
+      row.className = "scenario-trauma";
+      row.dataset.physical = String(physical);
+      row.dataset.mental = String(mental);
+      row.dataset.traumaLabel = `Trauma (Scenario ${scenarioLabel}):`;
+      renderTraumaRow(row);
+      return row;
+    }
+
     function toDisplayNameFromFile(fileName) {
       let base = String(fileName || "").replace(/\.png$/i, "");
       let level = null;
@@ -1081,7 +1133,7 @@
       }
     }
 
-    function showUndoToast(upgradeList, entry, nextSibling, expiresAt) {
+    function showUndoToast(upgradeList, entry, traumaRow, nextSibling, expiresAt) {
       if (!isEditEnabled()) return;
       clearUndo({ preservePending: true, skipSave: true });
 
@@ -1112,6 +1164,14 @@
           upgradeList.insertBefore(entry, nextSibling);
         } else {
           upgradeList.appendChild(entry);
+        }
+        if (traumaRow) {
+          const insertionAnchor = entry.nextSibling;
+          if (insertionAnchor) {
+            upgradeList.insertBefore(traumaRow, insertionAnchor);
+          } else {
+            upgradeList.appendChild(traumaRow);
+          }
         }
         ensureEntryActions(entry);
         bindPreviewFallbacks(entry);
@@ -1260,7 +1320,8 @@
         const ok = window.confirm("Delete this scenario entry?");
         if (!ok) return;
         const upgradeList = entry.closest(".upgrade-list");
-        const nextSibling = entry.nextElementSibling;
+        const linkedTrauma = findLinkedTraumaRow(entry);
+        const nextSibling = linkedTrauma ? linkedTrauma.nextElementSibling : entry.nextElementSibling;
         clearUndo({ forceClearPending: true });
         if (upgradeList) {
           const nextHead = nextSibling && nextSibling.classList.contains("upgrade-entry")
@@ -1269,13 +1330,15 @@
           savePendingDelete({
             cardName: getUpgradeCardName(upgradeList),
             entryHtml: serializeEntryForPendingDelete(entry),
+            traumaHtml: linkedTrauma ? linkedTrauma.outerHTML : "",
             nextEntryHead: nextHead ? nextHead.textContent.trim() : "",
             expiresAt: Date.now() + 60000,
           });
         }
+        if (linkedTrauma) linkedTrauma.remove();
         entry.remove();
         if (upgradeList) {
-          showUndoToast(upgradeList, entry, nextSibling, Date.now() + 60000);
+          showUndoToast(upgradeList, entry, linkedTrauma, nextSibling, Date.now() + 60000);
         }
         syncDerivedUpgradeState();
       });
@@ -1315,6 +1378,7 @@
     function createScenarioDraft(scenarioNumber) {
       const entry = document.createElement("div");
       entry.className = "upgrade-entry upgrade-entry-draft";
+      ensureEntryUid(entry);
       entry.innerHTML = `
         <p class="upgrade-entry-head">After Scenario ${intToRoman(scenarioNumber)} (Draft)</p>
         <div class="upgrade-columns">
@@ -1413,6 +1477,8 @@
       });
 
       entry.querySelector('[data-action="rollback-draft"]').addEventListener("click", () => {
+        const linkedTrauma = findLinkedTraumaRow(entry);
+        if (linkedTrauma) linkedTrauma.remove();
         entry.remove();
         syncDerivedUpgradeState();
       });
@@ -1437,7 +1503,12 @@
         if (hasDraft) return;
         const scenarioNum = nextScenarioNumber(upgradeList);
         const draftEntry = createScenarioDraft(scenarioNum);
+        const traumaRow = createScenarioTraumaRow(intToRoman(scenarioNum));
+        const entryUid = ensureEntryUid(draftEntry);
+        traumaRow.dataset.entryUidLink = entryUid;
         upgradeList.appendChild(draftEntry);
+        upgradeList.appendChild(traumaRow);
+        syncDerivedUpgradeState();
       };
     }
 
@@ -1542,6 +1613,71 @@
 
     function bindPreviewFallbacks(container) {
       const root = container || document;
+      const previewMargin = 8;
+      const previewGap = 10;
+
+      function resetCardPreviewPosition(preview) {
+        if (!preview) return;
+        preview.style.position = "";
+        preview.style.left = "";
+        preview.style.right = "";
+        preview.style.top = "";
+        preview.style.bottom = "";
+        preview.style.transform = "";
+      }
+
+      function clampCardPreviewPosition(cardRef, preview) {
+        if (!cardRef || !preview) return;
+        const rect = cardRef.getBoundingClientRect();
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const width = preview.offsetWidth || 210;
+        const height = preview.offsetHeight || 300;
+
+        let left = rect.left + (rect.width / 2) - (width / 2);
+        if (left < previewMargin) left = previewMargin;
+        if (left + width > viewportWidth - previewMargin) {
+          left = Math.max(previewMargin, viewportWidth - width - previewMargin);
+        }
+
+        let top = rect.top - height - previewGap;
+        if (top < previewMargin) {
+          top = rect.bottom + previewGap;
+        }
+        if (top + height > viewportHeight - previewMargin) {
+          top = Math.max(previewMargin, viewportHeight - height - previewMargin);
+        }
+
+        preview.style.position = "fixed";
+        preview.style.left = Math.round(left) + "px";
+        preview.style.top = Math.round(top) + "px";
+        preview.style.right = "auto";
+        preview.style.bottom = "auto";
+        preview.style.transform = "none";
+      }
+
+      root.querySelectorAll(".card-ref").forEach((cardRef) => {
+        if (cardRef.dataset.previewBound === "1") return;
+        cardRef.dataset.previewBound = "1";
+
+        const reposition = () => {
+          const preview = cardRef.querySelector(".card-preview");
+          if (!preview) return;
+          clampCardPreviewPosition(cardRef, preview);
+        };
+
+        const reset = () => {
+          const preview = cardRef.querySelector(".card-preview");
+          resetCardPreviewPosition(preview);
+        };
+
+        cardRef.addEventListener("mouseenter", reposition);
+        cardRef.addEventListener("mousemove", reposition);
+        cardRef.addEventListener("focusin", reposition);
+        cardRef.addEventListener("mouseleave", reset);
+        cardRef.addEventListener("focusout", reset);
+      });
+
       root.querySelectorAll("img.card-preview").forEach((img) => {
         if (img.dataset.bound === "1") return;
         img.dataset.bound = "1";
@@ -1673,6 +1809,7 @@
 
       const cardName = String(pending.cardName || "");
       const entryHtml = String(pending.entryHtml || "");
+      const traumaHtml = String(pending.traumaHtml || "");
       if (!cardName || !entryHtml) {
         clearPendingDelete();
         return;
@@ -1703,6 +1840,25 @@
       entry.querySelectorAll("[data-bound]").forEach((node) => {
         node.removeAttribute("data-bound");
       });
+      ensureEntryUid(entry);
+
+      let traumaRow = null;
+      if (traumaHtml) {
+        const traumaTemp = document.createElement("div");
+        traumaTemp.innerHTML = traumaHtml.trim();
+        traumaRow = traumaTemp.firstElementChild;
+      }
+      if (!traumaRow) {
+        const head = entry.querySelector(".upgrade-entry-head");
+        const scenarioLabel = getScenarioLabelFromHead(head ? head.textContent : "");
+        if (scenarioLabel) {
+          traumaRow = createScenarioTraumaRow(scenarioLabel);
+        }
+      }
+      if (traumaRow) {
+        traumaRow.classList.add("scenario-trauma");
+        traumaRow.dataset.entryUidLink = String(entry.dataset.entryUid || "");
+      }
 
       let nextSibling = null;
       const nextHeadText = String(pending.nextEntryHead || "");
@@ -1713,7 +1869,7 @@
         }) || null;
       }
 
-      showUndoToast(upgradeList, entry, nextSibling, expiresAt);
+      showUndoToast(upgradeList, entry, traumaRow, nextSibling, expiresAt);
     }
 
     function refreshTraumaStatus() {
@@ -1822,8 +1978,17 @@
     }
 
     function normalizeScenarioTraumaRows() {
+      document.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        ensureEntryUid(entry);
+      });
       document.querySelectorAll(".scenario-trauma").forEach((row) => {
         renderTraumaRow(row);
+        if (!row.dataset.entryUidLink) {
+          const prevEntry = row.previousElementSibling;
+          if (prevEntry && prevEntry.classList.contains("upgrade-entry")) {
+            row.dataset.entryUidLink = ensureEntryUid(prevEntry);
+          }
+        }
       });
     }
 
