@@ -1250,9 +1250,6 @@
           return;
         }
         setInlineValidationMessage(draftErrorNode, "");
-        // Convert draft rows (with inline × buttons) into normal static rows.
-        if (removedList) setCards(removedList, removedCards);
-        if (addedList) setCards(addedList, addedCards);
         head.textContent = formatEntryHead(intToRoman(scenarioNumber), xpValue);
         const builder = entry.querySelector(".upgrade-entry-builder");
         if (builder) builder.remove();
@@ -1390,6 +1387,27 @@
           const cardName = cardRef ? getCardNameFromRef(cardRef) : img.alt || "Unknown Card";
           img.replaceWith(buildPlaceholderPreview(cardName));
         });
+      });
+    }
+
+    function bindCardRemoveDelegation() {
+      const root = document.querySelector(rootSelector + " .upgrade-grid");
+      if (!root || root.dataset.cardRemoveBound === "1") return;
+      root.dataset.cardRemoveBound = "1";
+
+      root.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const removeBtn = target.closest(".draft-card-remove");
+        if (!removeBtn) return;
+        if (!isEditEnabled()) return;
+
+        const row = removeBtn.closest("li");
+        if (!row) return;
+        event.preventDefault();
+        event.stopPropagation();
+        row.remove();
+        syncDerivedUpgradeState();
       });
     }
 
@@ -1588,6 +1606,7 @@
     restoreUpgradeState();
     normalizeExistingCardNames();
     setupExistingPreviewFallbacks();
+    bindCardRemoveDelegation();
     decorateInvestigatorHeaders();
     renderEditGate();
     bindInactivityTracking();
