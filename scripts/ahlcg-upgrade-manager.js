@@ -744,8 +744,8 @@
 
       let current = [];
       let activeIndex = -1;
-      const previewWidth = 210;
-      const previewHeight = 300;
+      const previewWidth = 420;
+      const previewHeight = 600;
       const previewMargin = 8;
 
       function resetAutocompletePreviewPosition(preview) {
@@ -1631,8 +1631,8 @@
         const rect = cardRef.getBoundingClientRect();
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const width = preview.offsetWidth || 210;
-        const height = preview.offsetHeight || 300;
+        const width = preview.offsetWidth || 420;
+        const height = preview.offsetHeight || 600;
         const centerX = rect.left + (rect.width / 2);
 
         resetCardPreviewPosition(preview);
