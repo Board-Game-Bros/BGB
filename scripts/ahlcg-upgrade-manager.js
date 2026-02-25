@@ -383,18 +383,22 @@
       return computeNetSpentXp(removedNames, addedNames);
     }
 
-    function computeAvailableXpExcludingEntry(card, excludedEntry) {
+    function sumEarnedXpFromEntryHeads(card, excludedEntry) {
       if (!card) return 0;
       let earned = 0;
-      let spent = 0;
-
       card.querySelectorAll(".upgrade-entry-head").forEach((head) => {
         const entry = head.closest(".upgrade-entry");
-        if (entry && excludedEntry && entry === excludedEntry) return;
-        if (entry && entry.classList.contains("upgrade-entry-draft")) return;
+        if (!entry) return;
+        if (entry.classList.contains("upgrade-entry-draft")) return;
+        if (excludedEntry && entry === excludedEntry) return;
         earned += getXpFromHead(head.textContent);
       });
+      return earned;
+    }
 
+    function sumEarnedXpFromSummaryLines(card) {
+      if (!card) return 0;
+      let earned = 0;
       card.querySelectorAll(".upgrade-list > p").forEach((line) => {
         const text = String(line.textContent || "");
         if (!/xp/i.test(text)) return;
@@ -405,6 +409,27 @@
           earned += Number(num[0].replace(/\s+/g, ""));
         });
       });
+      return earned;
+    }
+
+    function hasConfirmedEntries(card) {
+      if (!card) return false;
+      return !!card.querySelector(".upgrade-entry:not(.upgrade-entry-draft)");
+    }
+
+    function computeEarnedXp(card, excludedEntry) {
+      // Use one source of truth to avoid double-counting:
+      // once structured entries exist, ignore legacy summary paragraphs.
+      if (hasConfirmedEntries(card)) {
+        return sumEarnedXpFromEntryHeads(card, excludedEntry);
+      }
+      return sumEarnedXpFromSummaryLines(card);
+    }
+
+    function computeAvailableXpExcludingEntry(card, excludedEntry) {
+      if (!card) return 0;
+      const earned = computeEarnedXp(card, excludedEntry);
+      let spent = 0;
 
       card.querySelectorAll(".upgrade-entry").forEach((entry) => {
         if (excludedEntry && entry === excludedEntry) return;
@@ -1556,25 +1581,11 @@
     }
 
     function parseAllXpFromCard(card) {
-      let earned = 0;
+      const earned = computeEarnedXp(card, null);
       let spent = 0;
 
-      card.querySelectorAll(".upgrade-entry-head").forEach((head) => {
-        earned += getXpFromHead(head.textContent);
-      });
-
-      card.querySelectorAll(".upgrade-list > p").forEach((line) => {
-        const text = String(line.textContent || "");
-        if (!/xp/i.test(text)) return;
-        const matches = text.match(/[+-]\s*\d+\s*XP/gi) || [];
-        matches.forEach((chunk) => {
-          const num = chunk.match(/[+-]\s*\d+/);
-          if (!num) return;
-          earned += Number(num[0].replace(/\s+/g, ""));
-        });
-      });
-
       card.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        if (entry.classList.contains("upgrade-entry-draft")) return;
         spent += getEntryNetSpentXp(entry);
       });
 
