@@ -276,7 +276,16 @@
   display: list-item;
 }
 
+.draft-card-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+}
+
 .draft-card-item .card-ref {
+  display: inline-block;
+  max-width: calc(100% - 18px);
   line-height: 1.25;
 }
 
@@ -288,10 +297,11 @@
   font-size: 0.95rem;
   line-height: 1;
   padding: 0 1px;
-  margin-left: 4px;
-  vertical-align: middle;
+  margin: 0;
   cursor: pointer;
   border-radius: 4px;
+  flex: 0 0 auto;
+  align-self: center;
 }
 
 .draft-card-remove:hover {

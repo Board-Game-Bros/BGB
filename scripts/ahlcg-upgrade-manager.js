@@ -275,10 +275,13 @@
     function createDraftCardListItem(cardName) {
       const li = document.createElement("li");
       li.className = "draft-card-item";
+      const inline = document.createElement("span");
+      inline.className = "draft-card-inline";
 
       const ref = document.createElement("span");
       ref.className = "card-ref";
       ref.appendChild(document.createTextNode(cardName));
+      ref.appendChild(buildPreviewNode(cardName));
 
       const removeBtn = document.createElement("button");
       removeBtn.type = "button";
@@ -290,9 +293,9 @@
         event.stopPropagation();
         li.remove();
       });
-      ref.appendChild(removeBtn);
-      ref.appendChild(buildPreviewNode(cardName));
-      li.appendChild(ref);
+      inline.appendChild(ref);
+      inline.appendChild(removeBtn);
+      li.appendChild(inline);
 
       return li;
     }
