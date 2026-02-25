@@ -1209,15 +1209,16 @@
         const draftErrorNode = entry.querySelector('[data-draft-error]');
         const xpValue = toNonNegativeInteger(xpInput ? xpInput.value : 0);
         const cols = entry.querySelectorAll(".upgrade-col");
-        const removedList = cols[0] ? cols[0].querySelector('.card-list[data-list="removed"]') : null;
-        const addedList = cols[1] ? cols[1].querySelector('.card-list[data-list="added"]') : null;
+        const removedList = cols[0] ? cols[0].querySelector(".card-list") : null;
+        const addedList = cols[1] ? cols[1].querySelector(".card-list") : null;
         const removedCards = removedList ? listCardNames(removedList) : [];
         const addedCards = addedList ? listCardNames(addedList) : [];
         const netSpent = computeNetSpentXp(removedCards, addedCards);
         const card = entry.closest(".upgrade-card");
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
+        const budget = availableBefore + xpValue;
         if (netSpent > availableBefore + xpValue) {
-          const overBy = netSpent - (availableBefore + xpValue);
+          const overBy = netSpent - budget;
           setInlineValidationMessage(
             draftErrorNode,
             `XP exceeded by ${overBy}. Available ${availableBefore} + gained ${xpValue}, but update spends ${netSpent}.`
