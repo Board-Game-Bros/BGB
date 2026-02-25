@@ -533,6 +533,18 @@
       const catalog = getCardNameCatalog();
       const exact = catalog.find((item) => item.key === normalized);
       if (exact) return exact.name;
+      const requestedLevel = getRequestedLevel(original);
+      if (requestedLevel !== null) {
+        const levelMatched = catalog.filter((item) => getRequestedLevel(item.name) === requestedLevel);
+        const exactLevel = levelMatched.find((item) => getCatalogKey(item.name) === normalized);
+        if (exactLevel) return exactLevel.name;
+      }
+      const nameOnly = getNameOnly(normalized);
+      if (!nameOnly) return original;
+      const sameBaseName = catalog.filter((item) => getNameOnly(item.key) === nameOnly);
+      if (sameBaseName.length === 1) {
+        return sameBaseName[0].name;
+      }
       return original;
     }
 
