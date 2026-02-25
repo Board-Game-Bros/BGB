@@ -272,6 +272,34 @@
   margin: 0 0 5px;
 }
 
+.draft-card-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.draft-card-item .card-ref {
+  flex: 1;
+  min-width: 0;
+}
+
+.draft-card-remove {
+  border: 0;
+  background: transparent;
+  color: rgba(58, 45, 26, 0.86);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.draft-card-remove:hover {
+  color: #8f2e20;
+  background: rgba(143, 46, 32, 0.08);
+}
+
 .card-ref {
   position: relative;
   cursor: help;

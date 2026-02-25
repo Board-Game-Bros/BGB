@@ -272,6 +272,29 @@
       return li;
     }
 
+    function createDraftCardListItem(cardName) {
+      const li = document.createElement("li");
+      li.className = "draft-card-item";
+
+      const ref = document.createElement("span");
+      ref.className = "card-ref";
+      ref.appendChild(document.createTextNode(cardName));
+      ref.appendChild(buildPreviewNode(cardName));
+      li.appendChild(ref);
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "draft-card-remove";
+      removeBtn.setAttribute("aria-label", "Remove " + cardName);
+      removeBtn.textContent = "×";
+      removeBtn.addEventListener("click", () => {
+        li.remove();
+      });
+      li.appendChild(removeBtn);
+
+      return li;
+    }
+
     function getCardNameFromRef(ref) {
       return Array.from(ref.childNodes)
         .filter((node) => node.nodeType === Node.TEXT_NODE)
@@ -428,6 +451,50 @@
 
       let current = [];
       let activeIndex = -1;
+      const previewWidth = 210;
+      const previewHeight = 300;
+      const previewMargin = 8;
+
+      function resetAutocompletePreviewPosition(preview) {
+        if (!preview) return;
+        preview.style.left = "";
+        preview.style.right = "";
+        preview.style.top = "";
+        preview.style.bottom = "";
+        preview.style.transform = "";
+      }
+
+      function clampAutocompletePreviewPosition(option, preview) {
+        if (!option || !preview) return;
+        const rect = option.getBoundingClientRect();
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+
+        resetAutocompletePreviewPosition(preview);
+
+        const rightSideLeft = rect.right + previewMargin;
+        const hasRightSpace = rightSideLeft + previewWidth <= viewportWidth - previewMargin;
+        if (hasRightSpace) {
+          preview.style.left = "calc(100% + 8px)";
+        } else {
+          preview.style.right = "calc(100% + 8px)";
+        }
+
+        const idealTop = rect.top + rect.height / 2 - previewHeight / 2;
+        const minTop = previewMargin;
+        const maxTop = Math.max(previewMargin, viewportHeight - previewHeight - previewMargin);
+        const safeTop = Math.min(maxTop, Math.max(minTop, idealTop));
+        const offset = Math.round(safeTop - idealTop);
+        if (offset === 0) {
+          preview.style.top = "50%";
+        } else if (offset > 0) {
+          preview.style.top = "calc(50% + " + offset + "px)";
+        } else {
+          preview.style.top = "calc(50% - " + Math.abs(offset) + "px)";
+        }
+        preview.style.bottom = "auto";
+        preview.style.transform = "translateY(-50%)";
+      }
 
       function closePanel() {
         panel.hidden = true;
@@ -454,6 +521,15 @@
           option.appendChild(document.createTextNode(item.name));
           const preview = buildPreviewNode(item.name);
           preview.classList.add("card-autocomplete-preview");
+          option.addEventListener("mouseenter", () => {
+            clampAutocompletePreviewPosition(option, preview);
+          });
+          option.addEventListener("mousemove", () => {
+            clampAutocompletePreviewPosition(option, preview);
+          });
+          option.addEventListener("mouseleave", () => {
+            resetAutocompletePreviewPosition(preview);
+          });
           option.appendChild(preview);
           if (idx === activeIndex) option.classList.add("is-active");
           option.addEventListener("click", () => pick(item.name));
@@ -498,6 +574,13 @@
         if (!row.contains(event.target)) {
           closePanel();
         }
+      });
+
+      panel.addEventListener("scroll", () => {
+        const hovered = panel.querySelector(".card-autocomplete-item:hover");
+        if (!hovered) return;
+        const preview = hovered.querySelector(".card-autocomplete-preview");
+        clampAutocompletePreviewPosition(hovered, preview);
       });
     }
 
@@ -1001,7 +1084,7 @@
         const addCardToList = (rawName) => {
           const name = normalizeCardNameInput(rawName);
           if (!name) return;
-          listEl.appendChild(createCardListItem(name));
+          listEl.appendChild(createDraftCardListItem(name));
           input.value = "";
           input.focus();
         };
