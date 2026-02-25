@@ -445,25 +445,39 @@
       return false;
     }
 
-    function getCardUpgradeCost(cardName) {
+    function getAddedCardCost(cardName) {
       if (isStoryCardName(cardName)) return 0;
       const level = getCardLevel(cardName);
       if (level <= 0) return 1;
       return level;
     }
 
-    function sumUpgradeCostsFromCardNames(cardNames) {
+    function getRemovedCardValue(cardName) {
+      if (isStoryCardName(cardName)) return 0;
+      const level = getCardLevel(cardName);
+      return level > 0 ? level : 0;
+    }
+
+    function sumAddedCostsFromCardNames(cardNames) {
       return (cardNames || []).reduce((acc, name) => {
         const qty = getCardQuantity(name);
-        const cost = getCardUpgradeCost(name);
+        const cost = getAddedCardCost(name);
+        return acc + qty * cost;
+      }, 0);
+    }
+
+    function sumRemovedValuesFromCardNames(cardNames) {
+      return (cardNames || []).reduce((acc, name) => {
+        const qty = getCardQuantity(name);
+        const cost = getRemovedCardValue(name);
         return acc + qty * cost;
       }, 0);
     }
 
     function computeNetSpentXp(removedCardNames, addedCardNames) {
-      const removedCost = sumUpgradeCostsFromCardNames(removedCardNames);
-      const addedCost = sumUpgradeCostsFromCardNames(addedCardNames);
-      return Math.max(0, addedCost - removedCost);
+      const removedValue = sumRemovedValuesFromCardNames(removedCardNames);
+      const addedCost = sumAddedCostsFromCardNames(addedCardNames);
+      return Math.max(0, addedCost - removedValue);
     }
 
     function getEntryCardLists(entry) {
