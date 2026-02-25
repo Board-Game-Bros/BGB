@@ -1639,6 +1639,7 @@
       function resetCardPreviewPosition(preview) {
         if (!preview) return;
         preview.style.position = "absolute";
+        preview.style.width = "";
         preview.style.left = "";
         preview.style.right = "";
         preview.style.top = "";
@@ -1651,19 +1652,20 @@
         const rect = cardRef.getBoundingClientRect();
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const width = preview.offsetWidth || 0;
-        const height = preview.offsetHeight || 0;
         const adaptive = computeAdaptivePreviewSize();
-        const effectiveWidth = width || adaptive.width;
-        const effectiveHeight = height || adaptive.height;
-        const centerX = rect.left + (rect.width / 2);
 
         resetCardPreviewPosition(preview);
 
         // Vertical clamp: choose side with enough room; if both fit/fail, prefer the larger side.
         const availableTop = rect.top - previewMargin - previewGap;
         const availableBottom = viewportHeight - rect.bottom - previewMargin - previewGap;
-        const placeAbove = (availableTop >= effectiveHeight) || (availableTop >= availableBottom);
+        const placeAbove = (availableTop >= adaptive.height) || (availableTop >= availableBottom);
+        const availableOnChosenSide = Math.max(160, placeAbove ? availableTop : availableBottom);
+        const widthByHeight = availableOnChosenSide / previewAspectRatio;
+        const effectiveWidth = Math.max(160, Math.min(adaptive.width, widthByHeight));
+        preview.style.width = Math.round(effectiveWidth) + "px";
+
+        const centerX = rect.left + (rect.width / 2);
         if (!placeAbove) {
           preview.style.top = "calc(100% + 10px)";
           preview.style.bottom = "auto";
