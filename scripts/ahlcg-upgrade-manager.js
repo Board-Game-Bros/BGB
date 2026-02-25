@@ -279,18 +279,20 @@
       const ref = document.createElement("span");
       ref.className = "card-ref";
       ref.appendChild(document.createTextNode(cardName));
-      ref.appendChild(buildPreviewNode(cardName));
-      li.appendChild(ref);
 
       const removeBtn = document.createElement("button");
       removeBtn.type = "button";
       removeBtn.className = "draft-card-remove";
       removeBtn.setAttribute("aria-label", "Remove " + cardName);
       removeBtn.textContent = "×";
-      removeBtn.addEventListener("click", () => {
+      removeBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         li.remove();
       });
-      li.appendChild(removeBtn);
+      ref.appendChild(removeBtn);
+      ref.appendChild(buildPreviewNode(cardName));
+      li.appendChild(ref);
 
       return li;
     }
