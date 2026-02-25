@@ -27,6 +27,8 @@
     let editGateButton = null;
     let editGateStatus = null;
     let entryUidCounter = 1;
+    const previewBaseWidth = 420;
+    const previewAspectRatio = 600 / 420;
 
     function normalizeText(value) {
       return String(value || "")
@@ -94,6 +96,23 @@
       if (left === right) return 1;
       const distance = levenshteinDistance(left, right);
       return 1 - distance / Math.max(left.length, right.length);
+    }
+
+    function computeAdaptivePreviewSize() {
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || previewBaseWidth;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || (previewBaseWidth * previewAspectRatio);
+      const maxByWidth = Math.max(160, viewportWidth - 16);
+      const maxByHeight = Math.max(160, (viewportHeight - 16) / previewAspectRatio);
+      const width = Math.min(previewBaseWidth, maxByWidth, maxByHeight);
+      return {
+        width,
+        height: width * previewAspectRatio,
+      };
+    }
+
+    function applyAdaptivePreviewSize() {
+      const size = computeAdaptivePreviewSize();
+      document.documentElement.style.setProperty("--card-preview-width", Math.round(size.width) + "px");
     }
 
     function romanToInt(roman) {
@@ -744,8 +763,6 @@
 
       let current = [];
       let activeIndex = -1;
-      const previewWidth = 420;
-      const previewHeight = 600;
       const previewMargin = 8;
 
       function resetAutocompletePreviewPosition(preview) {
@@ -762,6 +779,9 @@
         const rect = option.getBoundingClientRect();
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const adaptive = computeAdaptivePreviewSize();
+        const previewWidth = adaptive.width;
+        const previewHeight = adaptive.height;
 
         resetAutocompletePreviewPosition(preview);
 
@@ -1631,8 +1651,11 @@
         const rect = cardRef.getBoundingClientRect();
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const width = preview.offsetWidth || 420;
-        const height = preview.offsetHeight || 600;
+        const width = preview.offsetWidth || 0;
+        const height = preview.offsetHeight || 0;
+        const adaptive = computeAdaptivePreviewSize();
+        const effectiveWidth = width || adaptive.width;
+        const effectiveHeight = height || adaptive.height;
         const centerX = rect.left + (rect.width / 2);
 
         resetCardPreviewPosition(preview);
@@ -1640,7 +1663,7 @@
         // Vertical clamp: choose side with enough room; if both fit/fail, prefer the larger side.
         const availableTop = rect.top - previewMargin - previewGap;
         const availableBottom = viewportHeight - rect.bottom - previewMargin - previewGap;
-        const placeAbove = (availableTop >= height) || (availableTop >= availableBottom);
+        const placeAbove = (availableTop >= effectiveHeight) || (availableTop >= availableBottom);
         if (!placeAbove) {
           preview.style.top = "calc(100% + 10px)";
           preview.style.bottom = "auto";
@@ -1650,8 +1673,8 @@
         }
 
         // Horizontal clamp in absolute mode: center by default, pin edges if needed.
-        const wouldOverflowLeft = (centerX - width / 2) < previewMargin;
-        const wouldOverflowRight = (centerX + width / 2) > (viewportWidth - previewMargin);
+        const wouldOverflowLeft = (centerX - effectiveWidth / 2) < previewMargin;
+        const wouldOverflowRight = (centerX + effectiveWidth / 2) > (viewportWidth - previewMargin);
         if (wouldOverflowLeft) {
           preview.style.left = "0";
           preview.style.right = "auto";
@@ -2056,6 +2079,11 @@
         }
       });
     }
+
+    applyAdaptivePreviewSize();
+    window.addEventListener("resize", () => {
+      applyAdaptivePreviewSize();
+    }, { passive: true });
 
     restoreUpgradeState();
     normalizeExistingCardNames();
