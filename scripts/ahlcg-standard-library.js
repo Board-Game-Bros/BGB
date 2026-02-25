@@ -2945,7 +2945,7 @@
       "The Bell Tolls",
       "The Beyond",
       "The Beyond: Black Netherworld",
-      "The Black Book (Campaign Asset)",
+      "The Black Book (Story Asset)",
       "The Black Cat: A Liar, or a Prophet, or Both (5)",
       "The Black Fan: Symbol of Power (3)",
       "The Book of War: Sun Tzu's Legacy",

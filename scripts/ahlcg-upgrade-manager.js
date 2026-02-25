@@ -382,6 +382,7 @@
     function getCatalogKey(name) {
       return normalizeText(name)
         .replace(/\bcampaign\b/g, " ")
+        .replace(/\bstory\b/g, " ")
         .replace(/\basset\b/g, " ")
         .trim()
         .replace(/\s+/g, " ");
