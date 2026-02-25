@@ -1626,20 +1626,27 @@
           replaceCardRefText(cardRef, nextName);
           changed = true;
         }
+        const previewNode = cardRef.querySelector(".card-preview");
+        const preferredSrc = findExactImage(normalizedBase);
         if (img && img.getAttribute("alt") !== normalizedBase) {
           img.setAttribute("alt", normalizedBase);
           changed = true;
         }
-        if (img) {
-          const preferredSrc = findExactImage(normalizedBase);
-          if (preferredSrc && img.getAttribute("src") !== preferredSrc) {
-            img.setAttribute("src", preferredSrc);
-            changed = true;
-          }
+        if (img && preferredSrc && img.getAttribute("src") !== preferredSrc) {
+          img.setAttribute("src", preferredSrc);
+          changed = true;
+        }
+
+        // Recover from previously persisted placeholder previews in localStorage.
+        if (!img || (previewNode && previewNode.classList.contains("card-preview-placeholder"))) {
+          if (previewNode) previewNode.remove();
+          cardRef.appendChild(buildPreviewNode(normalizedBase));
+          changed = true;
         }
       });
 
       if (changed) {
+        bindPreviewFallbacks(document);
         scheduleSaveUpgradeState();
       }
     }
