@@ -274,13 +274,15 @@
 
 .draft-card-item {
   display: flex;
-  align-items: flex-start;
-  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px;
 }
 
 .draft-card-item .card-ref {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
+  line-height: 1.25;
 }
 
 .draft-card-remove {
@@ -288,11 +290,13 @@
   background: transparent;
   color: rgba(58, 45, 26, 0.86);
   font: inherit;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1;
-  padding: 0 2px;
+  padding: 0;
+  margin-top: 0;
   cursor: pointer;
   border-radius: 4px;
+  align-self: center;
 }
 
 .draft-card-remove:hover {
