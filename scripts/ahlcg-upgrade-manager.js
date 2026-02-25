@@ -405,7 +405,8 @@
         spent += getEntryNetSpentXp(entry);
       });
 
-      return Math.max(0, earned - spent);
+      // Keep negative balances so validation can block further overspending.
+      return earned - spent;
     }
 
     function setInlineValidationMessage(messageNode, text) {
@@ -1543,7 +1544,8 @@
         spent += getEntryNetSpentXp(entry);
       });
 
-      return Math.max(0, earned - spent);
+      // Surface overspending as negative XP instead of masking it as 0.
+      return earned - spent;
     }
 
     function refreshCurrentXp() {
