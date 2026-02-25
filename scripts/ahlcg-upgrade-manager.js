@@ -136,7 +136,7 @@
       const targetTokens = targetNameOnly.split(" ").filter(Boolean);
       const requiredTokens = targetTokens.filter((token) => {
         if (token.length < 3) return false;
-        return !["the", "and", "for", "with", "from", "into", "campaign", "asset"].includes(token);
+        return !["the", "and", "for", "with", "from", "into", "campaign", "story", "asset"].includes(token);
       });
       const requestedLevel = getRequestedLevel(cardName);
       let best = null;
@@ -203,6 +203,16 @@
         getNameOnly(item.key) === targetNameOnly && item.level === null
       ));
       if (noLevel) return cardDir + "/" + noLevel.file;
+
+      // Fallback by catalog key to bridge labels like "(Story Asset)" vs "_campaign".
+      const targetCatalogKey = getCatalogKey(cardName);
+      if (targetCatalogKey) {
+        const byCatalogKey = cardCatalog.find((item) => {
+          const inferredName = toDisplayNameFromFile(item.file);
+          return getCatalogKey(inferredName) === targetCatalogKey;
+        });
+        if (byCatalogKey) return cardDir + "/" + byCatalogKey.file;
+      }
 
       return null;
     }
