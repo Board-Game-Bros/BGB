@@ -328,6 +328,89 @@
         .filter(Boolean);
     }
 
+    function getCardQuantity(cardName) {
+      const text = String(cardName || "");
+      const match = text.match(/\(\s*x\s*(\d+)\s*\)\s*$/i);
+      if (!match) return 1;
+      const value = Number(match[1]);
+      return Number.isFinite(value) && value > 0 ? value : 1;
+    }
+
+    function getCardLevel(cardName) {
+      const text = String(cardName || "");
+      const groups = text.match(/\(([^)]*)\)/g) || [];
+      for (let i = groups.length - 1; i >= 0; i -= 1) {
+        const inner = groups[i].replace(/[()]/g, "").trim();
+        if (/^x\s*\d+$/i.test(inner)) continue;
+        const match = inner.match(/^\d+$/);
+        if (match) return Number(match[0]);
+      }
+      return 0;
+    }
+
+    function sumLevelsFromCardNames(cardNames) {
+      return (cardNames || []).reduce((acc, name) => {
+        const qty = getCardQuantity(name);
+        const level = getCardLevel(name);
+        return acc + qty * level;
+      }, 0);
+    }
+
+    function computeNetSpentXp(removedCardNames, addedCardNames) {
+      const removedLevel = sumLevelsFromCardNames(removedCardNames);
+      const addedLevel = sumLevelsFromCardNames(addedCardNames);
+      return Math.max(0, addedLevel - removedLevel);
+    }
+
+    function computeAvailableXpExcludingEntry(card, excludedEntry) {
+      if (!card) return 0;
+      let earned = 0;
+      let spent = 0;
+
+      card.querySelectorAll(".upgrade-entry-head").forEach((head) => {
+        const entry = head.closest(".upgrade-entry");
+        if (entry && excludedEntry && entry === excludedEntry) return;
+        if (entry && entry.classList.contains("upgrade-entry-draft")) return;
+        earned += getXpFromHead(head.textContent);
+      });
+
+      card.querySelectorAll(".upgrade-list > p").forEach((line) => {
+        const text = String(line.textContent || "");
+        if (!/xp/i.test(text)) return;
+        const matches = text.match(/[+-]\s*\d+\s*XP/gi) || [];
+        matches.forEach((chunk) => {
+          const num = chunk.match(/[+-]\s*\d+/);
+          if (!num) return;
+          earned += Number(num[0].replace(/\s+/g, ""));
+        });
+      });
+
+      card.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        if (excludedEntry && entry === excludedEntry) return;
+        if (entry.classList.contains("upgrade-entry-draft")) return;
+        const cols = entry.querySelectorAll(".upgrade-col");
+        const removedList = cols[0] ? cols[0].querySelector(".card-list") : null;
+        const addedList = cols[1] ? cols[1].querySelector(".card-list") : null;
+        const removedNames = removedList ? listCardNames(removedList) : [];
+        const addedNames = addedList ? listCardNames(addedList) : [];
+        spent += computeNetSpentXp(removedNames, addedNames);
+      });
+
+      return Math.max(0, earned - spent);
+    }
+
+    function setInlineValidationMessage(messageNode, text) {
+      if (!messageNode) return;
+      const msg = String(text || "").trim();
+      if (!msg) {
+        messageNode.textContent = "";
+        messageNode.hidden = true;
+        return;
+      }
+      messageNode.textContent = msg;
+      messageNode.hidden = false;
+    }
+
     function createEditableCardRow(cardName) {
       const li = document.createElement("li");
       li.className = "edit-card-row";
@@ -933,6 +1016,7 @@
             <ul class="edit-card-list" data-edit-list="added"></ul>
           </div>
         </div>
+        <p class="builder-error" data-edit-error hidden></p>
         <div class="entry-actions">
           <button type="button" class="upgrade-btn" data-action="save-edit">Save</button>
           <button type="button" class="upgrade-btn upgrade-btn-secondary" data-action="cancel-edit">Cancel</button>
@@ -942,6 +1026,7 @@
 
       const removedEditList = editor.querySelector('[data-edit-list="removed"]');
       const addedEditList = editor.querySelector('[data-edit-list="added"]');
+      const errorNode = editor.querySelector('[data-edit-error]');
       setEditableCardList(removedEditList, listCardNames(removedList));
       setEditableCardList(addedEditList, listCardNames(addedList));
       const head = entry.querySelector(".upgrade-entry-head");
@@ -971,6 +1056,18 @@
         const removedCards = getEditableCardNames(removedEditList);
         const addedCards = getEditableCardNames(addedEditList);
         const xpValue = toNonNegativeInteger(editor.querySelector('[data-edit="xp"]').value);
+        const card = entry.closest(".upgrade-card");
+        const availableBefore = computeAvailableXpExcludingEntry(card, entry);
+        const netSpent = computeNetSpentXp(removedCards, addedCards);
+        if (netSpent > availableBefore + xpValue) {
+          const overBy = netSpent - (availableBefore + xpValue);
+          setInlineValidationMessage(
+            errorNode,
+            `XP exceeded by ${overBy}. Available ${availableBefore} + gained ${xpValue}, but update spends ${netSpent}.`
+          );
+          return;
+        }
+        setInlineValidationMessage(errorNode, "");
         setCards(removedList, removedCards);
         setCards(addedList, addedCards);
         if (head) {
@@ -1076,6 +1173,7 @@
               <p class="builder-hint">Input a card name and click Add (or press Enter).</p>
             </div>
           </div>
+          <p class="builder-error" data-draft-error hidden></p>
           <div class="entry-actions">
             <button type="button" class="upgrade-btn" data-action="confirm-draft">Confirm Update</button>
             <button type="button" class="upgrade-btn upgrade-btn-danger" data-action="rollback-draft">Rollback</button>
@@ -1108,7 +1206,25 @@
       entry.querySelector('[data-action="confirm-draft"]').addEventListener("click", () => {
         const head = entry.querySelector(".upgrade-entry-head");
         const xpInput = entry.querySelector('[data-draft="xp"]');
+        const draftErrorNode = entry.querySelector('[data-draft-error]');
         const xpValue = toNonNegativeInteger(xpInput ? xpInput.value : 0);
+        const cols = entry.querySelectorAll(".upgrade-col");
+        const removedList = cols[0] ? cols[0].querySelector('.card-list[data-list="removed"]') : null;
+        const addedList = cols[1] ? cols[1].querySelector('.card-list[data-list="added"]') : null;
+        const removedCards = removedList ? listCardNames(removedList) : [];
+        const addedCards = addedList ? listCardNames(addedList) : [];
+        const netSpent = computeNetSpentXp(removedCards, addedCards);
+        const card = entry.closest(".upgrade-card");
+        const availableBefore = computeAvailableXpExcludingEntry(card, entry);
+        if (netSpent > availableBefore + xpValue) {
+          const overBy = netSpent - (availableBefore + xpValue);
+          setInlineValidationMessage(
+            draftErrorNode,
+            `XP exceeded by ${overBy}. Available ${availableBefore} + gained ${xpValue}, but update spends ${netSpent}.`
+          );
+          return;
+        }
+        setInlineValidationMessage(draftErrorNode, "");
         head.textContent = formatEntryHead(intToRoman(scenarioNumber), xpValue);
         const builder = entry.querySelector(".upgrade-entry-builder");
         if (builder) builder.remove();
@@ -1398,35 +1514,6 @@
       let earned = 0;
       let spent = 0;
 
-      function getCardQuantity(cardName) {
-        const text = String(cardName || "");
-        const match = text.match(/\(\s*x\s*(\d+)\s*\)\s*$/i);
-        if (!match) return 1;
-        const value = Number(match[1]);
-        return Number.isFinite(value) && value > 0 ? value : 1;
-      }
-
-      function getCardLevel(cardName) {
-        const text = String(cardName || "");
-        const groups = text.match(/\(([^)]*)\)/g) || [];
-        for (let i = groups.length - 1; i >= 0; i -= 1) {
-          const inner = groups[i].replace(/[()]/g, "").trim();
-          if (/^x\s*\d+$/i.test(inner)) continue;
-          const match = inner.match(/^\d+$/);
-          if (match) return Number(match[0]);
-        }
-        return 0;
-      }
-
-      function sumListLevel(listEl) {
-        if (!listEl) return 0;
-        return listCardNames(listEl).reduce((acc, name) => {
-          const qty = getCardQuantity(name);
-          const level = getCardLevel(name);
-          return acc + qty * level;
-        }, 0);
-      }
-
       card.querySelectorAll(".upgrade-entry-head").forEach((head) => {
         earned += getXpFromHead(head.textContent);
       });
@@ -1446,9 +1533,9 @@
         const cols = entry.querySelectorAll(".upgrade-col");
         const removedList = cols[0] ? cols[0].querySelector(".card-list") : null;
         const addedList = cols[1] ? cols[1].querySelector(".card-list") : null;
-        const removedLevel = sumListLevel(removedList);
-        const addedLevel = sumListLevel(addedList);
-        spent += Math.max(0, addedLevel - removedLevel);
+        const removedCards = removedList ? listCardNames(removedList) : [];
+        const addedCards = addedList ? listCardNames(addedList) : [];
+        spent += computeNetSpentXp(removedCards, addedCards);
       });
 
       return Math.max(0, earned - spent);
