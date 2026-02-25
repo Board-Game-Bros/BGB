@@ -1250,6 +1250,9 @@
           return;
         }
         setInlineValidationMessage(draftErrorNode, "");
+        // Convert draft rows (with inline × buttons) into normal static rows.
+        if (removedList) setCards(removedList, removedCards);
+        if (addedList) setCards(addedList, addedCards);
         head.textContent = formatEntryHead(intToRoman(scenarioNumber), xpValue);
         const builder = entry.querySelector(".upgrade-entry-builder");
         if (builder) builder.remove();
