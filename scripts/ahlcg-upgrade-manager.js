@@ -462,11 +462,11 @@
 
       function resetAutocompletePreviewPosition(preview) {
         if (!preview) return;
-        preview.style.left = "";
-        preview.style.right = "";
-        preview.style.top = "";
-        preview.style.bottom = "";
-        preview.style.transform = "";
+        preview.style.left = "auto";
+        preview.style.right = "auto";
+        preview.style.top = "auto";
+        preview.style.bottom = "auto";
+        preview.style.transform = "none";
       }
 
       function clampAutocompletePreviewPosition(option, preview) {
@@ -481,8 +481,10 @@
         const hasRightSpace = rightSideLeft + previewWidth <= viewportWidth - previewMargin;
         if (hasRightSpace) {
           preview.style.left = "calc(100% + 8px)";
+          preview.style.right = "auto";
         } else {
           preview.style.right = "calc(100% + 8px)";
+          preview.style.left = "auto";
         }
 
         const idealTop = rect.top + rect.height / 2 - previewHeight / 2;
