@@ -985,17 +985,18 @@
       if (lists.length < 2) return;
       const removedList = lists[0];
       const addedList = lists[1];
-      const displayColumns = entry.querySelector(":scope > .upgrade-columns");
-      const displayActions = entry.querySelector(":scope > .entry-actions");
+      const directChildren = Array.from(entry.children || []);
+      const displayColumns = directChildren.find((node) => node.classList && node.classList.contains("upgrade-columns")) || null;
+      const displayActions = directChildren.find((node) => node.classList && node.classList.contains("entry-actions")) || null;
 
       const hideDisplayLayer = () => {
-        if (displayColumns) displayColumns.hidden = true;
-        if (displayActions) displayActions.hidden = true;
+        if (displayColumns) displayColumns.style.display = "none";
+        if (displayActions) displayActions.style.display = "none";
       };
 
       const showDisplayLayer = () => {
-        if (displayColumns) displayColumns.hidden = false;
-        if (displayActions) displayActions.hidden = false;
+        if (displayColumns) displayColumns.style.removeProperty("display");
+        if (displayActions) displayActions.style.removeProperty("display");
       };
 
       const editor = document.createElement("div");
