@@ -1637,8 +1637,11 @@
 
         resetCardPreviewPosition(preview);
 
-        // Vertical clamp: prefer above, switch below if top would be clipped.
-        if (rect.top - height - previewGap < previewMargin) {
+        // Vertical clamp: choose side with enough room; if both fit/fail, prefer the larger side.
+        const availableTop = rect.top - previewMargin - previewGap;
+        const availableBottom = viewportHeight - rect.bottom - previewMargin - previewGap;
+        const placeAbove = (availableTop >= height) || (availableTop >= availableBottom);
+        if (!placeAbove) {
           preview.style.top = "calc(100% + 10px)";
           preview.style.bottom = "auto";
         } else {
@@ -1668,10 +1671,14 @@
         if (cardRef.dataset.previewBound === "1") return;
         cardRef.dataset.previewBound = "1";
 
-        const reposition = () => {
+        const repositionNow = () => {
           const preview = cardRef.querySelector(".card-preview");
           if (!preview) return;
           clampCardPreviewPosition(cardRef, preview);
+        };
+        const reposition = () => {
+          // Ensure hover styles have applied so dimensions are stable.
+          window.requestAnimationFrame(repositionNow);
         };
 
         const reset = () => {
@@ -1680,7 +1687,7 @@
         };
 
         cardRef.addEventListener("mouseenter", reposition);
-        cardRef.addEventListener("mousemove", reposition);
+        cardRef.addEventListener("mousemove", repositionNow);
         cardRef.addEventListener("focusin", reposition);
         cardRef.addEventListener("mouseleave", reset);
         cardRef.addEventListener("focusout", reset);
@@ -2060,6 +2067,7 @@
     bindTraumaInlineEditing();
     normalizeScenarioTraumaRows();
     decorateInvestigatorHeaders();
+    bindPreviewFallbacks(document);
     renderEditGate();
     bindInactivityTracking();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
