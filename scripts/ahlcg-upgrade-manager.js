@@ -329,6 +329,17 @@
       });
     }
 
+    function normalizeStaticEntryCardRows(entry) {
+      if (!entry) return;
+      if (entry.classList.contains("upgrade-entry-draft")) return;
+      if (entry.querySelector(".upgrade-entry-editor")) return;
+      const lists = entry.querySelectorAll(".card-list");
+      lists.forEach((listEl) => {
+        const names = listCardNames(listEl);
+        setCards(listEl, names);
+      });
+    }
+
     function parseTrailingQuantity(cardName) {
       const text = String(cardName || "").trim();
       const match = text.match(/\(\s*x\s*(\d+)\s*\)\s*$/i);
@@ -1218,14 +1229,15 @@
           return;
         }
         setInlineValidationMessage(errorNode, "");
-        setCardsWithInlineRemove(removedList, removedCards);
-        setCardsWithInlineRemove(addedList, addedCards);
+        setCards(removedList, removedCards);
+        setCards(addedList, addedCards);
         if (head) {
           const scenarioLabel = getScenarioLabelFromHead(currentHeadText) || "I";
           head.textContent = formatEntryHead(scenarioLabel, xpValue);
         }
         editor.remove();
         showDisplayLayer();
+        normalizeStaticEntryCardRows(entry);
         syncDerivedUpgradeState();
       });
 
@@ -1379,11 +1391,14 @@
           return;
         }
         setInlineValidationMessage(draftErrorNode, "");
+        setCards(removedList, removedCards);
+        setCards(addedList, addedCards);
         head.textContent = formatEntryHead(intToRoman(scenarioNumber), xpValue);
         const builder = entry.querySelector(".upgrade-entry-builder");
         if (builder) builder.remove();
         entry.classList.remove("upgrade-entry-draft");
         ensureEntryActions(entry);
+        normalizeStaticEntryCardRows(entry);
         syncDerivedUpgradeState();
       });
 
@@ -1847,6 +1862,9 @@
 
     restoreUpgradeState();
     normalizeExistingCardNames();
+    document.querySelectorAll(".upgrade-entry").forEach((entry) => {
+      normalizeStaticEntryCardRows(entry);
+    });
     setupExistingPreviewFallbacks();
     bindCardRemoveDelegation();
     bindTraumaInlineEditing();
