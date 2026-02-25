@@ -328,6 +328,55 @@
       });
     }
 
+    function parseTrailingQuantity(cardName) {
+      const text = String(cardName || "").trim();
+      const match = text.match(/\(\s*x\s*(\d+)\s*\)\s*$/i);
+      if (!match) return { base: text, qty: 1 };
+      const qty = Number(match[1]);
+      const safeQty = Number.isFinite(qty) && qty > 0 ? qty : 1;
+      const base = text.slice(0, match.index).trim();
+      return { base, qty: safeQty };
+    }
+
+    function formatCardNameWithQuantity(baseName, qty) {
+      const base = String(baseName || "").trim();
+      const safeQty = Number.isFinite(Number(qty)) ? Math.max(1, Math.trunc(Number(qty))) : 1;
+      if (!base) return "";
+      return safeQty > 1 ? (base + " (x" + safeQty + ")") : base;
+    }
+
+    function addOrIncrementCardInList(listEl, rawName) {
+      if (!listEl) return;
+      const normalized = normalizeCardNameInput(rawName);
+      if (!normalized) return;
+
+      const incoming = parseTrailingQuantity(normalized);
+      const incomingBase = incoming.base;
+      const incomingQty = incoming.qty;
+      if (!incomingBase) return;
+      const incomingKey = getCatalogKey(incomingBase);
+
+      const existingRefs = Array.from(listEl.querySelectorAll(".card-ref"));
+      for (let i = 0; i < existingRefs.length; i += 1) {
+        const ref = existingRefs[i];
+        const existingText = getCardNameFromRef(ref);
+        const existing = parseTrailingQuantity(existingText);
+        if (getCatalogKey(existing.base) !== incomingKey) continue;
+        const nextQty = existing.qty + incomingQty;
+        const nextName = formatCardNameWithQuantity(existing.base, nextQty);
+        replaceCardRefText(ref, nextName);
+        const preview = ref.querySelector(".card-preview");
+        if (preview && preview.tagName === "IMG") {
+          preview.setAttribute("alt", existing.base);
+          const src = findExactImage(existing.base);
+          if (src) preview.setAttribute("src", src);
+        }
+        return;
+      }
+
+      listEl.appendChild(createDraftCardListItem(formatCardNameWithQuantity(incomingBase, incomingQty)));
+    }
+
     function parseInputCards(textValue) {
       return String(textValue || "")
         .split(/[\n,]+/)
@@ -355,18 +404,40 @@
       return 0;
     }
 
-    function sumLevelsFromCardNames(cardNames) {
+    function isStoryCardName(cardName) {
+      const text = String(cardName || "");
+      const groups = text.match(/\(([^)]*)\)/g) || [];
+      for (let i = 0; i < groups.length; i += 1) {
+        const inner = groups[i].replace(/[()]/g, "").trim();
+        if (!inner) continue;
+        // Quantity suffix like (x2) is never a story marker.
+        if (/^x\s*\d+$/i.test(inner)) continue;
+        if (/\bstory\b/i.test(inner) || /\bcampaign\b/i.test(inner)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function getCardUpgradeCost(cardName) {
+      if (isStoryCardName(cardName)) return 0;
+      const level = getCardLevel(cardName);
+      if (level <= 0) return 1;
+      return level;
+    }
+
+    function sumUpgradeCostsFromCardNames(cardNames) {
       return (cardNames || []).reduce((acc, name) => {
         const qty = getCardQuantity(name);
-        const level = getCardLevel(name);
-        return acc + qty * level;
+        const cost = getCardUpgradeCost(name);
+        return acc + qty * cost;
       }, 0);
     }
 
     function computeNetSpentXp(removedCardNames, addedCardNames) {
-      const removedLevel = sumLevelsFromCardNames(removedCardNames);
-      const addedLevel = sumLevelsFromCardNames(addedCardNames);
-      return Math.max(0, addedLevel - removedLevel);
+      const removedCost = sumUpgradeCostsFromCardNames(removedCardNames);
+      const addedCost = sumUpgradeCostsFromCardNames(addedCardNames);
+      return Math.max(0, addedCost - removedCost);
     }
 
     function getEntryCardLists(entry) {
@@ -1066,7 +1137,13 @@
       setCardsWithInlineRemove(addedEditList, listCardNames(addedList));
       const head = entry.querySelector(".upgrade-entry-head");
       const currentHeadText = head ? head.textContent : "";
-      editor.querySelector('[data-edit="xp"]').value = String(getXpFromHead(currentHeadText));
+      const editXpInput = editor.querySelector('[data-edit="xp"]');
+      editXpInput.value = String(getXpFromHead(currentHeadText));
+      ["input", "change"].forEach((evtName) => {
+        editXpInput.addEventListener(evtName, () => {
+          refreshCurrentXp();
+        });
+      });
 
       editor.querySelectorAll("[data-edit-builder]").forEach((builderCol) => {
         const mode = builderCol.getAttribute("data-edit-builder");
@@ -1075,9 +1152,7 @@
         const addBtn = builderCol.querySelector(".upgrade-btn");
 
         const addCardToEditorList = (rawName) => {
-          const name = normalizeCardNameInput(rawName);
-          if (!name) return;
-          listEl.appendChild(createDraftCardListItem(name));
+          addOrIncrementCardInList(listEl, rawName);
           input.value = "";
           input.focus();
         };
@@ -1228,9 +1303,7 @@
         const addBtn = builderCol.querySelector(".upgrade-btn");
 
         const addCardToList = (rawName) => {
-          const name = normalizeCardNameInput(rawName);
-          if (!name) return;
-          listEl.appendChild(createDraftCardListItem(name));
+          addOrIncrementCardInList(listEl, rawName);
           input.value = "";
           input.focus();
         };
@@ -1278,6 +1351,15 @@
         entry.remove();
         syncDerivedUpgradeState();
       });
+
+      const draftXpInput = entry.querySelector('[data-draft="xp"]');
+      if (draftXpInput) {
+        ["input", "change"].forEach((evtName) => {
+          draftXpInput.addEventListener(evtName, () => {
+            refreshCurrentXp();
+          });
+        });
+      }
 
       return entry;
     }
@@ -1593,11 +1675,36 @@
       return earned - spent;
     }
 
+    function getPendingXpPreviewDelta(card) {
+      if (!card) return 0;
+      let delta = 0;
+
+      // Draft entries are not committed yet, so preview contributes full XP gained.
+      card.querySelectorAll(".upgrade-entry-draft").forEach((entry) => {
+        const xpInput = entry.querySelector('[data-draft="xp"]');
+        const xpValue = toNonNegativeInteger(xpInput ? xpInput.value : 0);
+        delta += xpValue;
+      });
+
+      // Editors are opened on committed entries, so preview contributes only delta.
+      card.querySelectorAll(".upgrade-entry-editor").forEach((editor) => {
+        const entry = editor.closest(".upgrade-entry");
+        if (!entry) return;
+        const head = entry.querySelector(".upgrade-entry-head");
+        const currentXp = getXpFromHead(head ? head.textContent : "");
+        const xpInput = editor.querySelector('[data-edit="xp"]');
+        const previewXp = toNonNegativeInteger(xpInput ? xpInput.value : currentXp);
+        delta += (previewXp - currentXp);
+      });
+
+      return delta;
+    }
+
     function refreshCurrentXp() {
       document.querySelectorAll(".upgrade-card").forEach((card) => {
         const xpLine = card.querySelector(".xp-line");
         if (!xpLine) return;
-        const totalXp = parseAllXpFromCard(card);
+        const totalXp = parseAllXpFromCard(card) + getPendingXpPreviewDelta(card);
         const nextText = "Current XP: " + totalXp;
         if (xpLine.textContent.trim() !== nextText) {
           xpLine.textContent = nextText;
