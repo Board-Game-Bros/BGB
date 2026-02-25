@@ -1618,7 +1618,7 @@
 
       function resetCardPreviewPosition(preview) {
         if (!preview) return;
-        preview.style.position = "";
+        preview.style.position = "absolute";
         preview.style.left = "";
         preview.style.right = "";
         preview.style.top = "";
@@ -1633,27 +1633,35 @@
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
         const width = preview.offsetWidth || 210;
         const height = preview.offsetHeight || 300;
+        const centerX = rect.left + (rect.width / 2);
 
-        let left = rect.left + (rect.width / 2) - (width / 2);
-        if (left < previewMargin) left = previewMargin;
-        if (left + width > viewportWidth - previewMargin) {
-          left = Math.max(previewMargin, viewportWidth - width - previewMargin);
+        resetCardPreviewPosition(preview);
+
+        // Vertical clamp: prefer above, switch below if top would be clipped.
+        if (rect.top - height - previewGap < previewMargin) {
+          preview.style.top = "calc(100% + 10px)";
+          preview.style.bottom = "auto";
+        } else {
+          preview.style.bottom = "calc(100% + 10px)";
+          preview.style.top = "auto";
         }
 
-        let top = rect.top - height - previewGap;
-        if (top < previewMargin) {
-          top = rect.bottom + previewGap;
+        // Horizontal clamp in absolute mode: center by default, pin edges if needed.
+        const wouldOverflowLeft = (centerX - width / 2) < previewMargin;
+        const wouldOverflowRight = (centerX + width / 2) > (viewportWidth - previewMargin);
+        if (wouldOverflowLeft) {
+          preview.style.left = "0";
+          preview.style.right = "auto";
+          preview.style.transform = "none";
+        } else if (wouldOverflowRight) {
+          preview.style.right = "0";
+          preview.style.left = "auto";
+          preview.style.transform = "none";
+        } else {
+          preview.style.left = "50%";
+          preview.style.right = "auto";
+          preview.style.transform = "translateX(-50%)";
         }
-        if (top + height > viewportHeight - previewMargin) {
-          top = Math.max(previewMargin, viewportHeight - height - previewMargin);
-        }
-
-        preview.style.position = "fixed";
-        preview.style.left = Math.round(left) + "px";
-        preview.style.top = Math.round(top) + "px";
-        preview.style.right = "auto";
-        preview.style.bottom = "auto";
-        preview.style.transform = "none";
       }
 
       root.querySelectorAll(".card-ref").forEach((cardRef) => {
