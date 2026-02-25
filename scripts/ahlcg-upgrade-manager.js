@@ -985,6 +985,18 @@
       if (lists.length < 2) return;
       const removedList = lists[0];
       const addedList = lists[1];
+      const displayColumns = entry.querySelector(":scope > .upgrade-columns");
+      const displayActions = entry.querySelector(":scope > .entry-actions");
+
+      const hideDisplayLayer = () => {
+        if (displayColumns) displayColumns.hidden = true;
+        if (displayActions) displayActions.hidden = true;
+      };
+
+      const showDisplayLayer = () => {
+        if (displayColumns) displayColumns.hidden = false;
+        if (displayActions) displayActions.hidden = false;
+      };
 
       const editor = document.createElement("div");
       editor.className = "upgrade-entry-editor";
@@ -1072,11 +1084,13 @@
           head.textContent = formatEntryHead(scenarioLabel, xpValue);
         }
         editor.remove();
+        showDisplayLayer();
         syncDerivedUpgradeState();
       });
 
       editor.querySelector('[data-action="cancel-edit"]').addEventListener("click", () => {
         editor.remove();
+        showDisplayLayer();
       });
 
       editor.querySelector('[data-action="delete-entry"]').addEventListener("click", () => {
@@ -1103,6 +1117,7 @@
         syncDerivedUpgradeState();
       });
 
+      hideDisplayLayer();
       entry.appendChild(editor);
     }
 
