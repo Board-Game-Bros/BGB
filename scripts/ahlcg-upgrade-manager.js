@@ -362,6 +362,20 @@
       return Math.max(0, addedLevel - removedLevel);
     }
 
+    function getEntryCardLists(entry) {
+      const lists = entry ? entry.querySelectorAll(".card-list") : [];
+      const removedList = lists[0] || null;
+      const addedList = lists[1] || null;
+      return { removedList, addedList };
+    }
+
+    function getEntryNetSpentXp(entry) {
+      const { removedList, addedList } = getEntryCardLists(entry);
+      const removedNames = removedList ? listCardNames(removedList) : [];
+      const addedNames = addedList ? listCardNames(addedList) : [];
+      return computeNetSpentXp(removedNames, addedNames);
+    }
+
     function computeAvailableXpExcludingEntry(card, excludedEntry) {
       if (!card) return 0;
       let earned = 0;
@@ -388,12 +402,7 @@
       card.querySelectorAll(".upgrade-entry").forEach((entry) => {
         if (excludedEntry && entry === excludedEntry) return;
         if (entry.classList.contains("upgrade-entry-draft")) return;
-        const cols = entry.querySelectorAll(".upgrade-col");
-        const removedList = cols[0] ? cols[0].querySelector(".card-list") : null;
-        const addedList = cols[1] ? cols[1].querySelector(".card-list") : null;
-        const removedNames = removedList ? listCardNames(removedList) : [];
-        const addedNames = addedList ? listCardNames(addedList) : [];
-        spent += computeNetSpentXp(removedNames, addedNames);
+        spent += getEntryNetSpentXp(entry);
       });
 
       return Math.max(0, earned - spent);
@@ -1208,9 +1217,9 @@
         const xpInput = entry.querySelector('[data-draft="xp"]');
         const draftErrorNode = entry.querySelector('[data-draft-error]');
         const xpValue = toNonNegativeInteger(xpInput ? xpInput.value : 0);
-        const cols = entry.querySelectorAll(".upgrade-col");
-        const removedList = cols[0] ? cols[0].querySelector(".card-list") : null;
-        const addedList = cols[1] ? cols[1].querySelector(".card-list") : null;
+        const lists = entry.querySelectorAll(".card-list");
+        const removedList = lists[0] || null;
+        const addedList = lists[1] || null;
         const removedCards = removedList ? listCardNames(removedList) : [];
         const addedCards = addedList ? listCardNames(addedList) : [];
         const netSpent = computeNetSpentXp(removedCards, addedCards);
@@ -1531,12 +1540,7 @@
       });
 
       card.querySelectorAll(".upgrade-entry").forEach((entry) => {
-        const cols = entry.querySelectorAll(".upgrade-col");
-        const removedList = cols[0] ? cols[0].querySelector(".card-list") : null;
-        const addedList = cols[1] ? cols[1].querySelector(".card-list") : null;
-        const removedCards = removedList ? listCardNames(removedList) : [];
-        const addedCards = addedList ? listCardNames(addedList) : [];
-        spent += computeNetSpentXp(removedCards, addedCards);
+        spent += getEntryNetSpentXp(entry);
       });
 
       return Math.max(0, earned - spent);
