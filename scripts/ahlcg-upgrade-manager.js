@@ -29,6 +29,8 @@
     let entryUidCounter = 1;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
+    const previewMargin = 8;
+    const previewGap = 10;
 
     function normalizeText(value) {
       return String(value || "")
@@ -101,8 +103,10 @@
     function computeAdaptivePreviewSize() {
       const viewportWidth = window.innerWidth || document.documentElement.clientWidth || previewBaseWidth;
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight || (previewBaseWidth * previewAspectRatio);
-      const maxByWidth = Math.max(160, viewportWidth - 16);
-      const maxByHeight = Math.max(160, (viewportHeight - 16) / previewAspectRatio);
+      const maxByWidth = Math.max(160, viewportWidth - (previewMargin * 2));
+      // Keep one uniform size that still fits above or below even near the viewport center.
+      const maxHeightForAnyAnchor = Math.max(160, (viewportHeight / 2) - previewMargin - previewGap);
+      const maxByHeight = Math.max(160, maxHeightForAnyAnchor / previewAspectRatio);
       const width = Math.min(previewBaseWidth, maxByWidth, maxByHeight);
       return {
         width,
@@ -1633,13 +1637,10 @@
 
     function bindPreviewFallbacks(container) {
       const root = container || document;
-      const previewMargin = 8;
-      const previewGap = 10;
 
       function resetCardPreviewPosition(preview) {
         if (!preview) return;
         preview.style.position = "absolute";
-        preview.style.width = "";
         preview.style.left = "";
         preview.style.right = "";
         preview.style.top = "";
@@ -1653,18 +1654,15 @@
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
         const adaptive = computeAdaptivePreviewSize();
+        const effectiveWidth = preview.offsetWidth || adaptive.width;
+        const effectiveHeight = preview.offsetHeight || adaptive.height;
 
         resetCardPreviewPosition(preview);
 
         // Vertical clamp: choose side with enough room; if both fit/fail, prefer the larger side.
         const availableTop = rect.top - previewMargin - previewGap;
         const availableBottom = viewportHeight - rect.bottom - previewMargin - previewGap;
-        const placeAbove = (availableTop >= adaptive.height) || (availableTop >= availableBottom);
-        const availableOnChosenSide = Math.max(160, placeAbove ? availableTop : availableBottom);
-        const widthByHeight = availableOnChosenSide / previewAspectRatio;
-        const effectiveWidth = Math.max(160, Math.min(adaptive.width, widthByHeight));
-        preview.style.width = Math.round(effectiveWidth) + "px";
-
+        const placeAbove = (availableTop >= effectiveHeight) || (availableTop >= availableBottom);
         const centerX = rect.left + (rect.width / 2);
         if (!placeAbove) {
           preview.style.top = "calc(100% + 10px)";
