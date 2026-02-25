@@ -935,7 +935,7 @@
         clearPendingDelete();
       }
       if (!skipSave) {
-        scheduleSaveUpgradeState();
+        syncDerivedUpgradeState();
       }
     }
 
@@ -1085,6 +1085,7 @@
           head.textContent = formatEntryHead(scenarioLabel, xpValue);
         }
         editor.remove();
+        syncDerivedUpgradeState();
       });
 
       editor.querySelector('[data-action="cancel-edit"]').addEventListener("click", () => {
@@ -1112,6 +1113,7 @@
         if (upgradeList) {
           showUndoToast(upgradeList, entry, nextSibling, Date.now() + 60000);
         }
+        syncDerivedUpgradeState();
       });
 
       entry.appendChild(editor);
@@ -1241,10 +1243,12 @@
         if (builder) builder.remove();
         entry.classList.remove("upgrade-entry-draft");
         ensureEntryActions(entry);
+        syncDerivedUpgradeState();
       });
 
       entry.querySelector('[data-action="rollback-draft"]').addEventListener("click", () => {
         entry.remove();
+        syncDerivedUpgradeState();
       });
 
       return entry;
@@ -1319,6 +1323,12 @@
         saveUpgradeState();
         saveTimer = null;
       }, 120);
+    }
+
+    function syncDerivedUpgradeState() {
+      scheduleSaveUpgradeState();
+      refreshCurrentXp();
+      refreshTraumaStatus();
     }
 
     function restoreUpgradeState() {
