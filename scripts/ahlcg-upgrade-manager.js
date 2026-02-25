@@ -1702,6 +1702,99 @@
       });
     }
 
+    function escapeHtml(text) {
+      return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function getTraumaLabel(row) {
+      const saved = String(row.dataset.traumaLabel || "").trim();
+      if (saved) return saved;
+      const text = String(row.textContent || "");
+      const match = text.match(/^(.*?:)\s*Physical\s*\d+\s*,\s*Mental\s*\d+\s*\.?$/i);
+      if (match && match[1]) return match[1].trim();
+      return "Trauma:";
+    }
+
+    function renderTraumaRow(row) {
+      if (!row) return;
+      const label = getTraumaLabel(row);
+      const physical = toNonNegativeInteger(row.dataset.physical || 0);
+      const mental = toNonNegativeInteger(row.dataset.mental || 0);
+      row.dataset.physical = String(physical);
+      row.dataset.mental = String(mental);
+      row.dataset.traumaLabel = label;
+      row.innerHTML = `${escapeHtml(label)} Physical <button type="button" class="trauma-value" data-trauma-field="physical">${physical}</button>, Mental <button type="button" class="trauma-value" data-trauma-field="mental">${mental}</button>.`;
+    }
+
+    function startTraumaInlineEdit(button) {
+      if (!button || !isEditEnabled()) return;
+      if (button.closest(".scenario-trauma")?.querySelector(".trauma-input")) return;
+      const row = button.closest(".scenario-trauma");
+      if (!row) return;
+      const field = button.getAttribute("data-trauma-field");
+      if (field !== "physical" && field !== "mental") return;
+      const currentValue = toNonNegativeInteger(row.dataset[field] || button.textContent || 0);
+
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = "0";
+      input.step = "1";
+      input.className = "trauma-input";
+      input.value = String(currentValue);
+
+      const commit = () => {
+        const next = toNonNegativeInteger(input.value);
+        row.dataset[field] = String(next);
+        renderTraumaRow(row);
+        syncDerivedUpgradeState();
+      };
+
+      const cancel = () => {
+        renderTraumaRow(row);
+      };
+
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          commit();
+        } else if (event.key === "Escape") {
+          event.preventDefault();
+          cancel();
+        }
+      });
+      input.addEventListener("blur", commit, { once: true });
+
+      button.replaceWith(input);
+      input.focus();
+      input.select();
+    }
+
+    function bindTraumaInlineEditing() {
+      const root = document.querySelector(rootSelector + " .upgrade-grid");
+      if (!root || root.dataset.traumaEditBound === "1") return;
+      root.dataset.traumaEditBound = "1";
+
+      root.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const valueBtn = target.closest(".trauma-value");
+        if (!valueBtn) return;
+        event.preventDefault();
+        startTraumaInlineEdit(valueBtn);
+      });
+    }
+
+    function normalizeScenarioTraumaRows() {
+      document.querySelectorAll(".scenario-trauma").forEach((row) => {
+        renderTraumaRow(row);
+      });
+    }
+
     function parseAllXpFromCard(card) {
       const earned = computeEarnedXp(card, null);
       let spent = 0;
@@ -1756,6 +1849,8 @@
     normalizeExistingCardNames();
     setupExistingPreviewFallbacks();
     bindCardRemoveDelegation();
+    bindTraumaInlineEditing();
+    normalizeScenarioTraumaRows();
     decorateInvestigatorHeaders();
     renderEditGate();
     bindInactivityTracking();
