@@ -53,13 +53,16 @@
 }
 
 .more-info-btn {
-  display: inline-block;
+  display: block;
+  width: calc(100% - 28px);
+  box-sizing: border-box;
   margin: 2px 14px 14px;
   padding: 8px 14px;
   border: 2px solid #5a4427;
   border-radius: 999px;
   background: linear-gradient(180deg, #f5e8c9 0%, #ddc08e 100%);
   color: #2f2316;
+  text-align: center;
   text-decoration: none;
   font-weight: 700;
   letter-spacing: 0.3px;

@@ -1,4 +1,5 @@
 @import url("../base.css");
+@import url("../modules/banner-title.css");
 @import url("../modules/cards.css");
 @import url("../modules/investigator-cards.css");
 @import url("../modules/campaign.css");
