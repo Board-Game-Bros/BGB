@@ -185,13 +185,6 @@ const setupCardRefPreviewClamp = () => {
 
   const margin = 8;
   const gap = 18;
-  let pointerX = -1;
-  let pointerY = -1;
-
-  window.addEventListener("mousemove", (event) => {
-    pointerX = event.clientX;
-    pointerY = event.clientY;
-  }, { passive: true });
 
   const clamp = (value, min, max) => {
     if (max < min) return min;
@@ -224,18 +217,6 @@ const setupCardRefPreviewClamp = () => {
       width: right - left,
       height: bottom - top,
     };
-  };
-
-  const isPointerOnCardText = (cardRef, anchorRect) => {
-    if (!cardRef) return false;
-    const hasPointer = pointerX >= 0 && pointerY >= 0;
-    if (!hasPointer) return cardRef.matches(":hover");
-    const hit = document.elementFromPoint(pointerX, pointerY);
-    const pointerRef = hit && typeof hit.closest === "function" ? hit.closest(".card-ref") : null;
-    if (pointerRef !== cardRef) return false;
-    const anchor = anchorRect || getTextAnchorRect(cardRef);
-    if (!anchor) return false;
-    return pointerX >= anchor.left && pointerX <= anchor.right && pointerY >= anchor.top && pointerY <= anchor.bottom;
   };
 
   const positionPreviewAboveText = (anchor, preview) => {
@@ -281,7 +262,9 @@ const setupCardRefPreviewClamp = () => {
         resetHoverPreviewStyles(preview);
         return;
       }
-      if (!isPointerOnCardText(cardRef, anchorRect) && !cardRef.contains(document.activeElement)) {
+      const hasFocusInside = cardRef.contains(document.activeElement);
+      const isHovered = cardRef.matches(":hover");
+      if (!isHovered && !hasFocusInside) {
         preview.classList.remove("is-active");
         resetHoverPreviewStyles(preview);
         return;
@@ -301,24 +284,16 @@ const setupCardRefPreviewClamp = () => {
 
     const refreshOnViewportChange = () => {
       const hasFocusInside = cardRef.contains(document.activeElement);
-      if (hasFocusInside) {
+      const isHovered = cardRef.matches(":hover");
+      if (hasFocusInside || isHovered) {
         placeNow();
         return;
       }
-      const anchorRect = getTextAnchorRect(cardRef);
-      if (!isPointerOnCardText(cardRef, anchorRect)) {
-        reset();
-        return;
-      }
-      placeNow();
+      reset();
     };
 
     cardRef.addEventListener("mouseenter", place);
-    cardRef.addEventListener("mousemove", (event) => {
-      pointerX = event.clientX;
-      pointerY = event.clientY;
-      placeNow();
-    });
+    cardRef.addEventListener("mousemove", placeNow);
     cardRef.addEventListener("focusin", place);
     cardRef.addEventListener("mouseleave", reset);
     cardRef.addEventListener("focusout", reset);
