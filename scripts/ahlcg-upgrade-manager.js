@@ -1742,11 +1742,20 @@
           resetCardPreviewPosition(preview);
         };
 
+        const refreshOnViewportChange = () => {
+          const isHovered = cardRef.matches(":hover");
+          const hasFocusInside = cardRef.contains(document.activeElement);
+          if (!isHovered && !hasFocusInside) return;
+          repositionNow();
+        };
+
         cardRef.addEventListener("mouseenter", reposition);
         cardRef.addEventListener("mousemove", repositionNow);
         cardRef.addEventListener("focusin", reposition);
         cardRef.addEventListener("mouseleave", reset);
         cardRef.addEventListener("focusout", reset);
+        window.addEventListener("scroll", refreshOnViewportChange, { passive: true });
+        window.addEventListener("resize", refreshOnViewportChange, { passive: true });
       });
 
       root.querySelectorAll("img.card-preview").forEach((img) => {

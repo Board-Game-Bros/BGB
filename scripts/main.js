@@ -243,11 +243,20 @@ const setupCardRefPreviewClamp = () => {
       resetHoverPreviewStyles(preview);
     };
 
+    const refreshOnViewportChange = () => {
+      const isHovered = cardRef.matches(":hover");
+      const hasFocusInside = cardRef.contains(document.activeElement);
+      if (!isHovered && !hasFocusInside) return;
+      placeNow();
+    };
+
     cardRef.addEventListener("mouseenter", place);
     cardRef.addEventListener("mousemove", placeNow);
     cardRef.addEventListener("focusin", place);
     cardRef.addEventListener("mouseleave", reset);
     cardRef.addEventListener("focusout", reset);
+    window.addEventListener("scroll", refreshOnViewportChange, { passive: true });
+    window.addEventListener("resize", refreshOnViewportChange, { passive: true });
   });
 };
 
