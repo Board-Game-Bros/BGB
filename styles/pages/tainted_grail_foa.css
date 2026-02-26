@@ -12,7 +12,19 @@ body {
 }
 
 header h1,
+.page-title,
 .section-title,
-nav a {
+nav a,
+.subnav a,
+.back-link {
   font-family: "Uncial Antiqua", serif;
+}
+
+#overview .campaign-subtitle {
+  font-family: "Uncial Antiqua", serif;
+  font-size: 2.2rem;
+  background: none;
+  -webkit-text-fill-color: #2f1d12;
+  color: #2f1d12;
+  text-shadow: 1px 1px 0 rgba(255, 230, 180, 0.3);
 }
