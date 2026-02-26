@@ -1689,35 +1689,38 @@
 
         resetCardPreviewPosition(preview);
 
-        // Vertical clamp: choose side with enough room; if both fit/fail, prefer the larger side.
-        const availableTop = rect.top - previewMargin - previewGap;
-        const availableBottom = viewportHeight - rect.bottom - previewMargin - previewGap;
-        const placeAbove = (availableTop >= effectiveHeight) || (availableTop >= availableBottom);
-        const centerX = rect.left + (rect.width / 2);
-        if (!placeAbove) {
-          preview.style.top = "calc(100% + 10px)";
-          preview.style.bottom = "auto";
-        } else {
-          preview.style.bottom = "calc(100% + 10px)";
-          preview.style.top = "auto";
-        }
+        const clamp = (value, min, max) => {
+          if (max < min) return min;
+          return Math.min(Math.max(value, min), max);
+        };
 
-        // Horizontal clamp in absolute mode: center by default, pin edges if needed.
-        const wouldOverflowLeft = (centerX - effectiveWidth / 2) < previewMargin;
-        const wouldOverflowRight = (centerX + effectiveWidth / 2) > (viewportWidth - previewMargin);
-        if (wouldOverflowLeft) {
-          preview.style.left = "0";
-          preview.style.right = "auto";
-          preview.style.transform = "none";
-        } else if (wouldOverflowRight) {
-          preview.style.right = "0";
-          preview.style.left = "auto";
-          preview.style.transform = "none";
+        const centerX = rect.left + (rect.width / 2);
+        const idealLeft = centerX - (effectiveWidth / 2);
+        const minLeft = previewMargin;
+        const maxLeft = viewportWidth - effectiveWidth - previewMargin;
+        const left = clamp(idealLeft, minLeft, maxLeft);
+
+        const aboveTop = rect.top - previewGap - effectiveHeight;
+        const belowTop = rect.bottom + previewGap;
+        const fitsAbove = aboveTop >= previewMargin;
+        const fitsBelow = (belowTop + effectiveHeight) <= (viewportHeight - previewMargin);
+        let top;
+        if (fitsAbove || !fitsBelow) {
+          top = aboveTop;
         } else {
-          preview.style.left = "50%";
-          preview.style.right = "auto";
-          preview.style.transform = "translateX(-50%)";
+          top = belowTop;
         }
+        const minTop = previewMargin;
+        const maxTop = viewportHeight - effectiveHeight - previewMargin;
+        top = clamp(top, minTop, maxTop);
+
+        preview.style.position = "fixed";
+        preview.style.left = Math.round(left) + "px";
+        preview.style.top = Math.round(top) + "px";
+        preview.style.right = "auto";
+        preview.style.bottom = "auto";
+        preview.style.transform = "none";
+        preview.style.zIndex = "1200";
       }
 
       root.querySelectorAll(".card-ref").forEach((cardRef) => {

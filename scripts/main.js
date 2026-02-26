@@ -171,6 +171,88 @@ const setupHoverImagePreview = () => {
 
 setupHoverImagePreview();
 
+// 2.4 Clamp card previews (.card-ref .card-preview) to viewport.
+const setupCardRefPreviewClamp = () => {
+  const refs = Array.from(document.querySelectorAll(".card-ref"));
+  if (!refs.length) return;
+
+  const margin = 8;
+  const gap = 10;
+
+  const clamp = (value, min, max) => {
+    if (max < min) return min;
+    return Math.min(Math.max(value, min), max);
+  };
+
+  const positionPreview = (cardRef, preview) => {
+    if (!cardRef || !preview) return;
+    const anchor = cardRef.getBoundingClientRect();
+    const box = preview.getBoundingClientRect();
+    const width = box.width || preview.offsetWidth || 0;
+    const height = box.height || preview.offsetHeight || 0;
+    if (!width || !height) return;
+
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+    if (!viewportWidth || !viewportHeight) return;
+
+    const centeredLeft = anchor.left + (anchor.width / 2) - (width / 2);
+    const minLeft = margin;
+    const maxLeft = viewportWidth - width - margin;
+    const left = clamp(centeredLeft, minLeft, maxLeft);
+
+    const aboveTop = anchor.top - gap - height;
+    const belowTop = anchor.bottom + gap;
+    const fitsAbove = aboveTop >= margin;
+    const fitsBelow = (belowTop + height) <= (viewportHeight - margin);
+    let top;
+    if (fitsAbove || !fitsBelow) {
+      top = aboveTop;
+    } else {
+      top = belowTop;
+    }
+    const minTop = margin;
+    const maxTop = viewportHeight - height - margin;
+    top = clamp(top, minTop, maxTop);
+
+    preview.style.position = "fixed";
+    preview.style.left = `${Math.round(left)}px`;
+    preview.style.top = `${Math.round(top)}px`;
+    preview.style.right = "auto";
+    preview.style.bottom = "auto";
+    preview.style.transform = "none";
+    preview.style.zIndex = "1200";
+  };
+
+  refs.forEach((cardRef) => {
+    if (cardRef.dataset.cardPreviewClampBound === "1") return;
+    cardRef.dataset.cardPreviewClampBound = "1";
+
+    const placeNow = () => {
+      const preview = cardRef.querySelector(".card-preview");
+      if (!preview) return;
+      positionPreview(cardRef, preview);
+    };
+
+    const place = () => {
+      window.requestAnimationFrame(placeNow);
+    };
+
+    const reset = () => {
+      const preview = cardRef.querySelector(".card-preview");
+      resetHoverPreviewStyles(preview);
+    };
+
+    cardRef.addEventListener("mouseenter", place);
+    cardRef.addEventListener("mousemove", placeNow);
+    cardRef.addEventListener("focusin", place);
+    cardRef.addEventListener("mouseleave", reset);
+    cardRef.addEventListener("focusout", reset);
+  });
+};
+
+setupCardRefPreviewClamp();
+
 // 3. Page Fade-in Animation
 window.onload = () => {
   document.body.classList.add("loaded");
