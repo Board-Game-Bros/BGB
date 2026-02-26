@@ -13,36 +13,37 @@ nav a {
   font-family: "Uncial Antiqua", serif;
 }
 
-.collection-banner {
+.section-title {
   position: relative;
-  margin-bottom: 26px;
-  padding: 14px 20px 12px;
-  border: 2px solid rgba(90, 68, 39, 0.85);
-  border-radius: 12px;
-  background:
-    linear-gradient(180deg, rgba(243, 226, 192, 0.55) 0%, rgba(227, 201, 153, 0.38) 100%);
+  display: inline-block;
+  width: fit-content;
+  max-width: calc(100% - 40px);
+  margin-bottom: 24px;
+  padding: 12px 42px 12px 18px;
+  border: 2px solid #8f1f1f;
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  background: linear-gradient(180deg, #cf3030 0%, #9e1f1f 100%);
+  color: #f8e9d1;
+  line-height: 1.2;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
   box-shadow:
-    0 8px 18px rgba(32, 22, 12, 0.16),
-    inset 0 1px 0 rgba(255, 248, 229, 0.75);
+    0 8px 18px rgba(20, 8, 8, 0.25),
+    0 2px 0 rgba(86, 12, 12, 0.5);
+  border-bottom: none;
 }
 
-.collection-banner::before,
-.collection-banner::after {
+.section-title::after {
   content: "";
   position: absolute;
-  top: 50%;
-  width: 26px;
-  height: 26px;
-  border-top: 2px solid rgba(90, 68, 39, 0.75);
-  border-right: 2px solid rgba(90, 68, 39, 0.75);
-  opacity: 0.75;
-  transform: translateY(-50%) rotate(45deg);
-}
-
-.collection-banner::before {
-  left: -15px;
-}
-
-.collection-banner::after {
-  right: -15px;
+  top: -2px;
+  right: -34px;
+  width: 36px;
+  height: calc(100% + 4px);
+  background: linear-gradient(180deg, #cf3030 0%, #9e1f1f 100%);
+  border-top: 2px solid #8f1f1f;
+  border-right: 2px solid #8f1f1f;
+  border-bottom: 2px solid #8f1f1f;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  filter: drop-shadow(0 8px 10px rgba(20, 8, 8, 0.2));
 }

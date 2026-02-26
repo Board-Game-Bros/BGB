@@ -12,3 +12,38 @@ header h1,
 nav a {
   font-family: "Uncial Antiqua", serif;
 }
+
+.section-title {
+  display: inline-block;
+  position: relative;
+  width: fit-content;
+  max-width: calc(100% - 40px);
+  margin-bottom: 24px;
+  padding: 12px 42px 12px 18px;
+  border: 2px solid #8f1f1f;
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  background: linear-gradient(180deg, #cf3030 0%, #9e1f1f 100%);
+  color: #f8e9d1;
+  line-height: 1.2;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  box-shadow:
+    0 8px 18px rgba(20, 8, 8, 0.25),
+    0 2px 0 rgba(86, 12, 12, 0.5);
+  border-bottom: none;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -34px;
+  width: 36px;
+  height: calc(100% + 4px);
+  background: linear-gradient(180deg, #cf3030 0%, #9e1f1f 100%);
+  border-top: 2px solid #8f1f1f;
+  border-right: 2px solid #8f1f1f;
+  border-bottom: 2px solid #8f1f1f;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  filter: drop-shadow(0 8px 10px rgba(20, 8, 8, 0.2));
+}

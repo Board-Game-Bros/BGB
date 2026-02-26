@@ -51,3 +51,33 @@
   opacity: 0.8;
   font-size: 0.95rem;
 }
+
+.more-info-btn {
+  display: inline-block;
+  margin: 2px 14px 14px;
+  padding: 8px 14px;
+  border: 2px solid #5a4427;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f5e8c9 0%, #ddc08e 100%);
+  color: #2f2316;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  box-shadow:
+    0 2px 0 rgba(47, 35, 22, 0.42),
+    0 4px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.more-info-btn:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #fbf0da 0%, #e7c896 100%);
+  box-shadow:
+    0 2px 0 rgba(47, 35, 22, 0.45),
+    0 6px 12px rgba(0, 0, 0, 0.16);
+}
+
+.more-info-btn:active {
+  transform: translateY(0);
+  background: linear-gradient(180deg, #d7b16d 0%, #c99b52 100%);
+}

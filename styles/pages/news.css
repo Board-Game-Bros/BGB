@@ -1,7 +1,8 @@
 @import url("../base.css");
+@import url("../modules/cards.css");
 @import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English+SC&display=swap");
 
-/* Page: index.html */
+/* Page: news.html */
 body {
   font-family: "IM Fell English SC", serif;
 }

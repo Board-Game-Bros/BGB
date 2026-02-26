@@ -21,7 +21,7 @@ This project now uses a page-entry + module architecture.
 - `index.html` -> `styles/pages/index.css`
 - `library.html` -> `styles/pages/library.css`
 - `daily.html` -> `styles/pages/daily.css`
-- `news.html` -> `styles/pages/new.css`
+- `news.html` -> `styles/pages/news.css`
 - `arkham_horror_lcg.html` -> `styles/pages/arkham_horror_lcg.css`
 - `tainted_grail_foa.html` -> `styles/pages/tainted_grail_foa.css`
 
