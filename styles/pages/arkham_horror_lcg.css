@@ -415,6 +415,10 @@ body.deck-panel-mode .card-ref:hover .card-preview {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 420 / 600;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(239, 227, 199, 0.92);
   border: 2px solid #3a2d1a;
   border-radius: 8px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
