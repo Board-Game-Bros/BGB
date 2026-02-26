@@ -180,9 +180,9 @@ const setupCampaignPreviewPositioning = () => {
       const margin = 10;
       const gap = 10;
       const maxW = Math.max(220, Math.min(450, vw - margin * 2));
-      const maxH = Math.max(220, vh - margin * 2);
+      const globalMaxH = Math.max(220, vh - margin * 2);
       preview.style.setProperty("--campaign-preview-max-width", `${Math.round(maxW)}px`);
-      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(maxH)}px`);
+      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(globalMaxH)}px`);
 
       // Measure in hidden state first, then place, then reveal.
       preview.style.visibility = "hidden";
@@ -193,25 +193,41 @@ const setupCampaignPreviewPositioning = () => {
 
       const anchor = title.getBoundingClientRect();
       const box = preview.getBoundingClientRect();
-      const h = box.height || 0;
-      const w = box.width || 0;
-      if (!h || !w) return;
+      let naturalH = box.height || 0;
+      let naturalW = box.width || 0;
+      if (!naturalH || !naturalW) return;
 
       const above = anchor.top - margin - gap;
       const below = vh - anchor.bottom - margin - gap;
       let placeAbove;
-      if (above >= h) {
+      if (above >= naturalH) {
         placeAbove = true;
-      } else if (below >= h) {
+      } else if (below >= naturalH) {
         placeAbove = false;
       } else {
         placeAbove = above >= below;
       }
 
+      // Constrain preview height to selected side space so it never flips across anchor.
+      const sideSpace = Math.max(120, Math.floor(placeAbove ? above : below));
+      const sideMaxH = Math.min(globalMaxH, sideSpace);
+      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(sideMaxH)}px`);
+
+      // Re-measure after side-specific height cap.
+      preview.style.left = "-9999px";
+      preview.style.top = "-9999px";
+      const fitted = preview.getBoundingClientRect();
+      const h = fitted.height || naturalH;
+      const w = fitted.width || naturalW;
+
       let top = placeAbove ? (anchor.top - h - gap) : (anchor.bottom + gap);
-      const minTop = margin;
-      const maxTop = Math.max(margin, vh - h - margin);
-      top = Math.min(Math.max(top, minTop), maxTop);
+      if (placeAbove) {
+        top = Math.max(margin, top);
+      } else {
+        const minBelowTop = anchor.bottom + gap;
+        const maxBelowTop = Math.max(minBelowTop, vh - h - margin);
+        top = Math.min(Math.max(top, minBelowTop), maxBelowTop);
+      }
 
       let left = anchor.left;
       const minLeft = margin;
