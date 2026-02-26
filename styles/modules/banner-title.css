@@ -5,21 +5,39 @@
   width: fit-content;
   max-width: calc(100% - 40px);
   margin-bottom: 24px;
-  padding: 12px 56px 12px 18px;
+  padding: 12px 62px 12px 18px;
   border: 2px solid #6b4e2b;
-  border-radius: 10px 0 0 10px;
-  clip-path: polygon(
-    0 0,
-    calc(100% - 34px) 0,
-    100% 50%,
-    calc(100% - 34px) 100%,
-    0 100%
-  );
+  border-radius: 10px;
   background: linear-gradient(180deg, #ecd3a3 0%, #d1ab70 100%);
   color: #382816;
   line-height: 1.2;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
-  box-shadow:
-    0 8px 18px rgba(41, 27, 12, 0.2),
-    0 2px 0 rgba(73, 52, 27, 0.45);
+  filter:
+    drop-shadow(0 10px 14px rgba(41, 27, 12, 0.24))
+    drop-shadow(0 2px 0 rgba(73, 52, 27, 0.32));
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  pointer-events: none;
+}
+
+.section-title::before {
+  right: -23px;
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  background: #6b4e2b;
+}
+
+.section-title::after {
+  right: -19px;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #ecd3a3 0%, #d1ab70 100%);
 }
