@@ -1,4 +1,8 @@
 /* Base: global layout, header/nav, container, footer, torch mode */
+:root {
+  --frame-border-color: #3a2d1a;
+}
+
 body {
   margin: 0;
   font-family: "Cinzel", serif;
@@ -100,7 +104,7 @@ nav.sticky {
   margin: 40px auto;
   padding: 25px;
   background: rgba(255, 243, 219, 0.92);
-  border: 5px solid #3a2d1a;
+  border: 5px solid var(--frame-border-color);
   border-radius: 14px;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(2px);
@@ -118,7 +122,7 @@ nav.sticky {
 
 .section-title {
   font-size: 32px;
-  border-bottom: 4px solid #3a2d1a;
+  border-bottom: 4px solid var(--frame-border-color);
   padding-bottom: 6px;
   margin-bottom: 20px;
   text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
@@ -167,6 +171,7 @@ nav.sticky {
 }
 
 body.torch-mode {
+  --frame-border-color: #e6c27a;
   background: #2e2214 url("../assets/misc/dark_parchment.jpg");
   background-size: cover;
   color: #f7e7c3;

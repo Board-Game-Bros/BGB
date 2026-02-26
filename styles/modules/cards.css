@@ -3,7 +3,7 @@
   background: #fff7e2;
   padding: 18px;
   margin: 14px 0;
-  border: 3px solid #3a2d1a;
+  border: 3px solid var(--frame-border-color, #3a2d1a);
   border-radius: 8px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
@@ -39,7 +39,7 @@
 
 .game-cover.wide-cover {
   aspect-ratio: auto;
-  border-bottom: 3px solid #3a2d1a;
+  border-bottom: 3px solid var(--frame-border-color, #3a2d1a);
 }
 
 .game-card h3 {

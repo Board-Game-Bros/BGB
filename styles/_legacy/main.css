@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
 /* ===================== GLOBAL STYLE ===================== */
+:root {
+  --frame-border-color: #3a2d1a;
+}
+
 body {
   margin: 0;
   font-family: "Cinzel", serif;
@@ -107,7 +111,7 @@ nav.sticky {
   margin: 40px auto;
   padding: 25px;
   background: rgba(255, 243, 219, 0.92);
-  border: 5px solid #3a2d1a;
+  border: 5px solid var(--frame-border-color);
   border-radius: 14px;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(2px);
@@ -126,7 +130,7 @@ nav.sticky {
 /* ===================== TITLES ===================== */
 .section-title {
   font-size: 32px;
-  border-bottom: 4px solid #3a2d1a;
+  border-bottom: 4px solid var(--frame-border-color);
   padding-bottom: 6px;
   margin-bottom: 20px;
   text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
@@ -137,7 +141,7 @@ nav.sticky {
   background: #fff7e2;
   padding: 18px;
   margin: 14px 0;
-  border: 3px solid #3a2d1a;
+  border: 3px solid var(--frame-border-color, #3a2d1a);
   border-radius: 8px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
@@ -177,7 +181,7 @@ nav.sticky {
 /* 针对 Arkham 这种超宽图的特殊处理 */
 .game-cover.wide-cover {
   aspect-ratio: auto;    /* 不强制比例，由原图决定 */
-  border-bottom: 3px solid #3a2d1a; 
+  border-bottom: 3px solid var(--frame-border-color, #3a2d1a);
 }
 
 .game-card h3 {
@@ -661,6 +665,7 @@ nav.sticky {
 
 /* ===================== DARK MODE (Torch Mode) ===================== */
 body.torch-mode {
+  --frame-border-color: #e6c27a;
   background: #2e2214 url("assets/misc/dark_parchment.jpg");
   background-size: cover;
   color: #f7e7c3;

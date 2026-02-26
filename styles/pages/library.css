@@ -1,5 +1,48 @@
 @import url("../base.css");
 @import url("../modules/cards.css");
+@import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English+SC&display=swap");
 
 /* Page: library.html */
-/* Add page-only overrides here. */
+body {
+  font-family: "IM Fell English SC", serif;
+}
+
+header h1,
+.section-title,
+nav a {
+  font-family: "Uncial Antiqua", serif;
+}
+
+.collection-banner {
+  position: relative;
+  margin-bottom: 26px;
+  padding: 14px 20px 12px;
+  border: 2px solid rgba(90, 68, 39, 0.85);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(243, 226, 192, 0.55) 0%, rgba(227, 201, 153, 0.38) 100%);
+  box-shadow:
+    0 8px 18px rgba(32, 22, 12, 0.16),
+    inset 0 1px 0 rgba(255, 248, 229, 0.75);
+}
+
+.collection-banner::before,
+.collection-banner::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 26px;
+  height: 26px;
+  border-top: 2px solid rgba(90, 68, 39, 0.75);
+  border-right: 2px solid rgba(90, 68, 39, 0.75);
+  opacity: 0.75;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.collection-banner::before {
+  left: -15px;
+}
+
+.collection-banner::after {
+  right: -15px;
+}
