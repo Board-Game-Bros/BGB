@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
-/* Module: campaign headers and expandable preview */
+/* Module: campaign headers */
 .campaign-group {
   position: relative;
   overflow: visible;
@@ -40,12 +40,6 @@
   margin: 0 0 20px;
 }
 
-.campaign-subtitle-wrapper.is-preview-open .campaign-preview-container {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
 .campaign-subtitle {
   font-family: 'Great Vibes', cursive;
   font-size: 2.8rem;
@@ -65,52 +59,6 @@
   display: block;
   opacity: 0.7;
   margin-top: 4px;
-}
-
-.campaign-preview-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  z-index: 2147483000 !important;
-  transition: opacity 0.14s ease;
-}
-
-.campaign-preview-frame {
-  position: relative;
-  z-index: 2147483001;
-  display: inline-block;
-  max-height: var(--campaign-preview-max-height, calc(100vh - 20px));
-  border-radius: 16px;
-  border: 2px solid #3a2d1a;
-  overflow: hidden;
-  background: #f2e6c9;
-}
-
-.campaign-preview-frame::before {
-  display: none;
-}
-
-.campaign-preview-link {
-  display: block;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.campaign-preview-img {
-  width: var(--campaign-preview-width, auto);
-  max-width: var(--campaign-preview-max-width, 450px);
-  max-height: calc(var(--campaign-preview-max-height, calc(100vh - 20px)) - 4px);
-  height: auto;
-  display: block;
-  border: none;
-  transition: none;
-}
-
-.campaign-preview-link:hover .campaign-preview-img {
-  transform: none;
 }
 
 .campaign-group + .campaign-group {
