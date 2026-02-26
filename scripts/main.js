@@ -181,9 +181,10 @@ const setupCampaignPreviewPositioning = () => {
       const margin = 10;
       const gap = 10;
       const maxW = Math.max(220, Math.min(450, vw - margin * 2));
-      const globalMaxH = Math.max(220, vh - margin * 2);
+      const maxH = Math.max(220, vh - margin * 2);
       preview.style.setProperty("--campaign-preview-max-width", `${Math.round(maxW)}px`);
-      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(globalMaxH)}px`);
+      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(maxH)}px`);
+      preview.style.removeProperty("--campaign-preview-width");
 
       // Measure in hidden state first, then place, then reveal.
       preview.style.visibility = "hidden";
@@ -194,29 +195,14 @@ const setupCampaignPreviewPositioning = () => {
 
       const anchor = title.getBoundingClientRect();
       const box = preview.getBoundingClientRect();
-      const fallbackW = box.width || maxW;
-      const fallbackH = box.height || Math.round(maxW * 1.4);
+      const previewWidth = box.width || 0;
+      const previewHeight = box.height || 0;
+      if (!previewWidth || !previewHeight) return;
 
-      const naturalW = (previewImg && previewImg.naturalWidth) ? previewImg.naturalWidth : fallbackW;
-      const naturalH = (previewImg && previewImg.naturalHeight) ? previewImg.naturalHeight : fallbackH;
-      const ratio = naturalH > 0 && naturalW > 0 ? (naturalH / naturalW) : (fallbackH / Math.max(1, fallbackW));
-
-      let targetW = maxW;
-      let targetH = Math.round(targetW * ratio);
-      if (targetH > globalMaxH) {
-        targetH = globalMaxH;
-        targetW = Math.round(targetH / Math.max(0.01, ratio));
-      }
-
-      preview.style.setProperty("--campaign-preview-width", `${Math.round(targetW)}px`);
-      preview.style.setProperty("--campaign-preview-max-width", `${Math.round(targetW)}px`);
-      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(targetH + 4)}px`);
-
-      // Side-placement logic (same idea as deck-update autocomplete):
-      // prefer right of title; if no room, place left; keep vertically centered and clamped.
+      // Same side logic as deck-update autocomplete: prefer right, fallback left.
       const rightLeft = anchor.right + gap;
-      const hasRightSpace = rightLeft + targetW <= vw - margin;
-      const leftLeft = anchor.left - targetW - gap;
+      const hasRightSpace = rightLeft + previewWidth <= vw - margin;
+      const leftLeft = anchor.left - previewWidth - gap;
       const hasLeftSpace = leftLeft >= margin;
 
       let left;
@@ -231,19 +217,14 @@ const setupCampaignPreviewPositioning = () => {
         left = rightSpace >= leftSpace ? rightLeft : leftLeft;
       }
 
-      // Keep height within viewport and center around title.
-      preview.style.left = "-9999px";
-      preview.style.top = "-9999px";
-      const fitted = preview.getBoundingClientRect();
-      const h = fitted.height || targetH;
-      const w = fitted.width || targetW;
-      const idealTop = anchor.top + (anchor.height / 2) - (h / 2);
+      // Vertical center align, clamp only if touching viewport edges.
+      const idealTop = anchor.top + (anchor.height / 2) - (previewHeight / 2);
       const minTop = margin;
-      const maxTop = Math.max(margin, vh - h - margin);
+      const maxTop = Math.max(margin, vh - previewHeight - margin);
       const top = Math.min(Math.max(idealTop, minTop), maxTop);
 
       const minLeft = margin;
-      const maxLeft = Math.max(margin, vw - w - margin);
+      const maxLeft = Math.max(margin, vw - previewWidth - margin);
       left = Math.min(Math.max(left, minLeft), maxLeft);
 
       preview.style.left = `${Math.round(left)}px`;
@@ -288,7 +269,6 @@ const setupCampaignPreviewPositioning = () => {
       preview.style.pointerEvents = "none";
       preview.style.removeProperty("--campaign-preview-max-width");
       preview.style.removeProperty("--campaign-preview-max-height");
-      preview.style.removeProperty("--campaign-preview-width");
     };
 
     const maybeClose = () => {
