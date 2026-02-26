@@ -185,6 +185,9 @@ const setupCardRefPreviewClamp = () => {
 
   const margin = 8;
   const gap = 12;
+  const fallbackWidth = 420;
+  const fallbackHeight = 600;
+  let activeRef = null;
 
   const clamp = (value, min, max) => {
     if (max < min) return min;
@@ -219,92 +222,99 @@ const setupCardRefPreviewClamp = () => {
     };
   };
 
-  const positionPreviewAtSide = (anchor, preview) => {
-    if (!preview) return;
+  const floating = document.createElement("img");
+  floating.className = "card-preview card-preview-floating";
+  floating.alt = "";
+  floating.setAttribute("aria-hidden", "true");
+  document.body.appendChild(floating);
+
+  const getPreviewSize = () => {
+    const rect = floating.getBoundingClientRect();
+    const width = rect.width || floating.offsetWidth || fallbackWidth;
+    const ratio = (floating.naturalWidth > 0 && floating.naturalHeight > 0)
+      ? (floating.naturalHeight / floating.naturalWidth)
+      : (fallbackHeight / fallbackWidth);
+    const height = rect.height || floating.offsetHeight || Math.round(width * ratio);
+    return { width, height };
+  };
+
+  const placeFloatingPreview = () => {
+    if (!activeRef) return;
+    const anchor = getTextAnchorRect(activeRef);
     if (!anchor) return;
-    const box = preview.getBoundingClientRect();
-    const width = box.width || preview.offsetWidth || 0;
-    const height = box.height || preview.offsetHeight || 0;
-    if (!width || !height) return;
 
     const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
     if (!viewportWidth || !viewportHeight) return;
 
-    const rightPreferredLeft = anchor.right + gap;
-    const leftFallbackLeft = anchor.left - gap - width;
-    const rightSpace = (viewportWidth - margin) - rightPreferredLeft;
-    const leftSpace = leftFallbackLeft - margin;
-    const placeLeft = rightSpace < width && leftSpace > rightSpace;
-    const idealLeft = placeLeft ? leftFallbackLeft : rightPreferredLeft;
+    const size = getPreviewSize();
+    const width = size.width;
+    const height = size.height;
+
+    const rightLeft = anchor.right + gap;
+    const leftLeft = anchor.left - gap - width;
+    const canPlaceRight = rightLeft + width <= viewportWidth - margin;
+    const idealLeft = canPlaceRight ? rightLeft : leftLeft;
     const left = clamp(idealLeft, margin, viewportWidth - width - margin);
 
     const centerY = anchor.top + (anchor.height / 2);
     const idealTop = centerY - (height / 2);
     const top = clamp(idealTop, margin, viewportHeight - height - margin);
 
-    preview.style.position = "fixed";
-    preview.style.left = `${Math.round(left)}px`;
-    preview.style.top = `${Math.round(top)}px`;
-    preview.style.right = "auto";
-    preview.style.bottom = "auto";
-    preview.style.transform = "none";
-    preview.style.zIndex = "1200";
-    preview.classList.add("is-active");
+    floating.style.left = `${Math.round(left)}px`;
+    floating.style.top = `${Math.round(top)}px`;
+  };
+
+  const showFloatingPreview = (cardRef) => {
+    const source = cardRef ? cardRef.querySelector("img.card-preview") : null;
+    const src = source ? source.getAttribute("src") : "";
+    if (!src) return;
+    activeRef = cardRef;
+    floating.src = src;
+    floating.alt = source ? (source.getAttribute("alt") || "") : "";
+    floating.classList.add("is-active");
+    placeFloatingPreview();
+  };
+
+  const hideFloatingPreview = (cardRef) => {
+    if (cardRef && activeRef && cardRef !== activeRef) return;
+    activeRef = null;
+    floating.classList.remove("is-active");
+    floating.removeAttribute("src");
+    floating.removeAttribute("alt");
   };
 
   refs.forEach((cardRef) => {
     if (cardRef.dataset.cardPreviewClampBound === "1") return;
     cardRef.dataset.cardPreviewClampBound = "1";
 
-    const placeNow = () => {
-      const preview = cardRef.querySelector(".card-preview");
-      if (!preview) return;
-      const anchorRect = getTextAnchorRect(cardRef);
-      if (!anchorRect) {
-        preview.classList.remove("is-active");
-        resetHoverPreviewStyles(preview);
-        return;
-      }
-      const hasFocusInside = cardRef.contains(document.activeElement);
-      const isHovered = cardRef.matches(":hover");
-      if (!isHovered && !hasFocusInside) {
-        preview.classList.remove("is-active");
-        resetHoverPreviewStyles(preview);
-        return;
-      }
-      // Activate first so width/height are measurable.
-      preview.classList.add("is-active");
-      positionPreviewAtSide(anchorRect, preview);
-    };
+    cardRef.addEventListener("mouseenter", () => showFloatingPreview(cardRef));
+    cardRef.addEventListener("mousemove", () => {
+      if (activeRef === cardRef) placeFloatingPreview();
+    });
+    cardRef.addEventListener("focusin", () => showFloatingPreview(cardRef));
+    cardRef.addEventListener("mouseleave", () => hideFloatingPreview(cardRef));
+    cardRef.addEventListener("focusout", () => hideFloatingPreview(cardRef));
+  });
 
-    const place = () => {
-      window.requestAnimationFrame(placeNow);
-    };
+  window.addEventListener("scroll", () => {
+    if (!activeRef) return;
+    const stillActive = activeRef.matches(":hover") || activeRef.contains(document.activeElement);
+    if (!stillActive) {
+      hideFloatingPreview();
+      return;
+    }
+    placeFloatingPreview();
+  }, { passive: true });
 
-    const reset = () => {
-      const preview = cardRef.querySelector(".card-preview");
-      if (preview) preview.classList.remove("is-active");
-      resetHoverPreviewStyles(preview);
-    };
+  window.addEventListener("resize", () => {
+    if (!activeRef) return;
+    placeFloatingPreview();
+  }, { passive: true });
 
-    const refreshOnViewportChange = () => {
-      const hasFocusInside = cardRef.contains(document.activeElement);
-      const isHovered = cardRef.matches(":hover");
-      if (hasFocusInside || isHovered) {
-        placeNow();
-        return;
-      }
-      reset();
-    };
-
-    cardRef.addEventListener("mouseenter", place);
-    cardRef.addEventListener("mousemove", placeNow);
-    cardRef.addEventListener("focusin", place);
-    cardRef.addEventListener("mouseleave", reset);
-    cardRef.addEventListener("focusout", reset);
-    window.addEventListener("scroll", refreshOnViewportChange, { passive: true });
-    window.addEventListener("resize", refreshOnViewportChange, { passive: true });
+  floating.addEventListener("load", () => {
+    if (!activeRef) return;
+    placeFloatingPreview();
   });
 };
 
