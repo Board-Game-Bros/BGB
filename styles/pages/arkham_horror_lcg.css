@@ -16,7 +16,8 @@ nav a,
 .page-title,
 .section-title,
 .subnav a,
-.back-link {
+.back-link,
+.pill-btn {
   font-family: "Uncial Antiqua", serif;
 }
 
@@ -44,29 +45,8 @@ nav a,
 }
 
 .campaign-meta-link {
-  display: inline-block;
   margin-top: 8px;
-  padding: 7px 12px;
-  border-radius: 999px;
-  border: 1px solid #5a4427;
-  background: linear-gradient(180deg, rgba(232, 205, 152, 0.9) 0%, rgba(206, 171, 112, 0.88) 100%);
-  color: #2a1f12;
-  text-decoration: none;
   font-size: 1.06rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  box-shadow:
-    0 1px 0 rgba(58, 45, 26, 0.4),
-    0 3px 8px rgba(0, 0, 0, 0.14);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-
-.campaign-meta-link:hover {
-  background: linear-gradient(180deg, rgba(241, 220, 180, 0.95) 0%, rgba(222, 189, 131, 0.9) 100%);
-  transform: translateY(-1px);
-  box-shadow:
-    0 1px 0 rgba(58, 45, 26, 0.45),
-    0 5px 10px rgba(0, 0, 0, 0.18);
 }
 
 .record-section {

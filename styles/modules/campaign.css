@@ -16,15 +16,16 @@
 }
 
 .campaign-subtitle-wrapper {
-  display: block;
+  display: inline-block;
+  position: relative;
   margin-bottom: 20px;
   cursor: pointer;
 }
 
 .campaign-subtitle-wrapper:hover .campaign-preview-container {
-  max-height: 900px;
   opacity: 1;
-  padding: 15px 0;
+  visibility: visible;
+  transform: translateY(0);
   pointer-events: auto;
 }
 
@@ -50,11 +51,15 @@
 }
 
 .campaign-preview-container {
-  max-height: 0;
-  overflow: hidden;
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
   opacity: 0;
-  padding: 0;
-  transition: max-height 0.55s ease, opacity 0.3s ease;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 60;
+  transform: translateY(8px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
 .campaign-preview-frame {
@@ -86,11 +91,6 @@
 
 .campaign-preview-link:hover .campaign-preview-img {
   transform: scale(1.02);
-}
-
-.campaign-subtitle-wrapper:hover .campaign-preview-img {
-  transform: translateY(0) scale(1);
-  opacity: 1;
 }
 
 .campaign-group + .campaign-group {

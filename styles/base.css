@@ -132,7 +132,8 @@ nav.sticky {
   margin-top: 24px;
 }
 
-.back-link {
+.back-link,
+.pill-btn {
   display: inline-block;
   padding: 10px 18px;
   border-radius: 999px;
@@ -148,7 +149,8 @@ nav.sticky {
   transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
 }
 
-.back-link:hover {
+.back-link:hover,
+.pill-btn:hover {
   background: linear-gradient(180deg, #f9efda 0%, #f0deb7 100%);
   transform: translateY(-2px);
   box-shadow:
@@ -156,7 +158,8 @@ nav.sticky {
     0 7px 15px rgba(0, 0, 0, 0.16);
 }
 
-.back-link:active {
+.back-link:active,
+.pill-btn:active {
   background: linear-gradient(180deg, #d9b87a 0%, #cfa461 100%);
   color: #2a1f12;
   transform: translateY(0);
@@ -165,7 +168,8 @@ nav.sticky {
     0 2px 6px rgba(0, 0, 0, 0.18);
 }
 
-.back-link:focus-visible {
+.back-link:focus-visible,
+.pill-btn:focus-visible {
   outline: 2px solid #a6824a;
   outline-offset: 2px;
 }
