@@ -21,7 +21,6 @@
 .campaign-subtitle-wrapper {
   display: inline-block;
   position: relative;
-  z-index: 3;
   margin-bottom: 8px;
 }
 
@@ -39,14 +38,7 @@
 .campaign-subtitle-wrapper.is-preview-open .campaign-preview-container {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
   pointer-events: auto;
-  position: fixed !important;
-  z-index: 12000 !important;
-}
-
-.campaign-subtitle-wrapper.is-preview-open {
-  z-index: 20;
 }
 
 .campaign-subtitle {
@@ -71,15 +63,14 @@
 }
 
 .campaign-preview-container {
-  position: absolute;
-  top: calc(100% + 12px);
+  position: fixed;
+  top: 0;
   left: 0;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  z-index: 30;
-  transform: translateY(8px);
-  transition: opacity 0.22s ease, transform 0.22s ease;
+  z-index: 12000;
+  transition: opacity 0.14s ease;
 }
 
 .campaign-preview-frame {
@@ -109,11 +100,11 @@
   height: auto;
   display: block;
   border: none;
-  transition: transform 0.3s ease;
+  transition: none;
 }
 
 .campaign-preview-link:hover .campaign-preview-img {
-  transform: scale(1.02);
+  transform: none;
 }
 
 .campaign-group + .campaign-group {

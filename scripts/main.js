@@ -154,48 +154,76 @@ const resetHoverPreviewStyles = (previewEl) => {
   previewEl.style.zIndex = "";
 };
 
-// 2.3 Keep campaign hover previews fully inside viewport.
+// 2.3 Keep campaign hover previews fully inside viewport (clean rewrite).
 const setupCampaignPreviewPositioning = () => {
   const wrappers = Array.from(document.querySelectorAll(".campaign-subtitle-wrapper"));
   if (!wrappers.length) return;
 
-  const positionPreview = (wrapper, anchor) => {
-    const preview = wrapper.querySelector(".campaign-preview-container");
-    if (!preview) return;
-    if (!anchor) return;
-    preview.style.setProperty(
-      "--campaign-preview-max-width",
-      `${Math.round(Math.max(220, Math.min(450, (window.innerWidth || 0) - 20)))}px`
-    );
-    preview.style.setProperty(
-      "--campaign-preview-max-height",
-      `${Math.round(Math.max(220, (window.innerHeight || 0) - 20))}px`
-    );
-    positionHoverPreview(anchor, preview, {
-      margin: 10,
-      gap: 10,
-      preferAbove: true,
-      align: "start",
-      maxWidth: 450,
-      maxHeight: Math.max(220, (window.innerHeight || 0) - 24),
-      zIndex: 12000
-    });
-  };
-
   wrappers.forEach((wrapper) => {
+    if (wrapper.dataset.previewBound === "1") return;
+    wrapper.dataset.previewBound = "1";
+
     const preview = wrapper.querySelector(".campaign-preview-container");
     const title = wrapper.querySelector(".campaign-subtitle");
+    const previewImg = preview ? preview.querySelector(".campaign-preview-img") : null;
     if (!preview) return;
     if (!title) return;
 
-    const refresh = () => {
-      if (!wrapper.classList.contains("is-preview-open")) return;
-      positionPreview(wrapper, title);
+    let overTitle = false;
+    let overPreview = false;
+
+    const positionPreview = () => {
+      const vw = window.innerWidth || document.documentElement.clientWidth || 0;
+      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      if (!vw || !vh) return;
+
+      const margin = 10;
+      const gap = 10;
+      const maxW = Math.max(220, Math.min(450, vw - margin * 2));
+      const maxH = Math.max(220, vh - margin * 2);
+      preview.style.setProperty("--campaign-preview-max-width", `${Math.round(maxW)}px`);
+      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(maxH)}px`);
+
+      preview.style.left = `${margin}px`;
+      preview.style.top = `${margin}px`;
+
+      const anchor = title.getBoundingClientRect();
+      const box = preview.getBoundingClientRect();
+      const h = box.height || 0;
+      const w = box.width || 0;
+      if (!h || !w) return;
+
+      const above = anchor.top - margin - gap;
+      const below = vh - anchor.bottom - margin - gap;
+      let placeAbove;
+      if (above >= h) {
+        placeAbove = true;
+      } else if (below >= h) {
+        placeAbove = false;
+      } else {
+        placeAbove = above >= below;
+      }
+
+      let top = placeAbove ? (anchor.top - h - gap) : (anchor.bottom + gap);
+      const minTop = margin;
+      const maxTop = Math.max(margin, vh - h - margin);
+      top = Math.min(Math.max(top, minTop), maxTop);
+
+      let left = anchor.left;
+      const minLeft = margin;
+      const maxLeft = Math.max(margin, vw - w - margin);
+      left = Math.min(Math.max(left, minLeft), maxLeft);
+
+      preview.style.left = `${Math.round(left)}px`;
+      preview.style.top = `${Math.round(top)}px`;
     };
 
     const openPreview = () => {
       wrapper.classList.add("is-preview-open");
-      positionPreview(wrapper, title);
+      window.requestAnimationFrame(() => {
+        positionPreview();
+        window.requestAnimationFrame(positionPreview);
+      });
     };
 
     const closePreview = () => {
@@ -205,18 +233,42 @@ const setupCampaignPreviewPositioning = () => {
       preview.style.removeProperty("--campaign-preview-max-height");
     };
 
-    // Only the campaign title opens the preview; other controls in the header do not.
-    title.addEventListener("mouseenter", openPreview);
-    title.addEventListener("focusin", openPreview);
-    wrapper.addEventListener("mouseleave", closePreview);
-    wrapper.addEventListener("focusout", (event) => {
-      const next = event.relatedTarget;
-      if (next instanceof Node && wrapper.contains(next)) return;
+    const maybeClose = () => {
+      if (overTitle || overPreview) return;
       closePreview();
+    };
+
+    title.addEventListener("mouseenter", () => {
+      overTitle = true;
+      openPreview();
+    });
+    title.addEventListener("mouseleave", () => {
+      overTitle = false;
+      window.requestAnimationFrame(maybeClose);
+    });
+    title.addEventListener("focusin", openPreview);
+    title.addEventListener("focusout", maybeClose);
+
+    preview.addEventListener("mouseenter", () => {
+      overPreview = true;
+      if (!wrapper.classList.contains("is-preview-open")) openPreview();
+    });
+    preview.addEventListener("mouseleave", () => {
+      overPreview = false;
+      window.requestAnimationFrame(maybeClose);
     });
 
+    const refresh = () => {
+      if (!wrapper.classList.contains("is-preview-open")) return;
+      positionPreview();
+    };
     window.addEventListener("resize", refresh, { passive: true });
     window.addEventListener("scroll", refresh, { passive: true });
+
+    if (previewImg && previewImg.dataset.previewLoadBound !== "1") {
+      previewImg.dataset.previewLoadBound = "1";
+      previewImg.addEventListener("load", refresh);
+    }
   });
 };
 
