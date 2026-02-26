@@ -5,10 +5,14 @@
     const investigatorDir = options.investigatorDir || "assets/boardgames/ahlcg_investigators";
     const cardImageFiles = Array.isArray(options.cardImageFiles) ? options.cardImageFiles : [];
     const standardCardNames = Array.isArray(options.standardCardNames) ? options.standardCardNames : [];
+    const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
-    const editPassword = typeof options.editPassword === "string" ? options.editPassword : "";
+    const configuredPassword = typeof options.editPassword === "string" ? options.editPassword : "";
+    const onTcuPage = /arkham_horror_lcg_tcu_20260215\.html$/i.test(String(window.location.pathname || ""));
+    const fallbackPassword = onTcuPage ? "bgbzhangyan2026" : "";
+    const editPassword = String(configuredPassword || fallbackPassword);
     const requireEditPassword = editPassword.length > 0;
     const inactivityMs = Number(options.inactivityMs) > 0 ? Number(options.inactivityMs) : 120000;
 
@@ -17,6 +21,12 @@
       key: normalizeText(file.replace(/\.png$/i, "")),
       level: getLevelFromFileName(file),
     }));
+    const exceptionalCatalogKeys = exceptionalCardNames
+      .map((name) => getCatalogKey(name))
+      .filter(Boolean);
+    const exceptionalNameOnlySet = new Set(
+      exceptionalCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
+    );
 
     let activeUndo = null;
     let saveTimer = null;
@@ -493,14 +503,31 @@
     function getAddedCardCost(cardName) {
       if (isStoryCardName(cardName)) return 0;
       const level = getCardLevel(cardName);
-      if (level <= 0) return 1;
-      return level;
+      const baseCost = level <= 0 ? 1 : level;
+      return isExceptionalCardName(cardName) ? (baseCost * 2) : baseCost;
     }
 
     function getRemovedCardValue(cardName) {
       if (isStoryCardName(cardName)) return 0;
       const level = getCardLevel(cardName);
       return level > 0 ? level : 0;
+    }
+
+    function isExceptionalCardName(cardName) {
+      const key = getCatalogKey(cardName);
+      if (!key) return false;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return false;
+      if (exceptionalNameOnlySet.has(nameOnly)) return true;
+      return exceptionalCatalogKeys.some((ek) => {
+        const eNameOnly = getNameOnly(ek);
+        if (!eNameOnly) return false;
+        return (
+          nameOnly === eNameOnly ||
+          nameOnly.startsWith(eNameOnly + " ") ||
+          eNameOnly.startsWith(nameOnly + " ")
+        );
+      });
     }
 
     function sumAddedCostsFromCardNames(cardNames) {

@@ -3132,6 +3132,33 @@
       "Zeal",
       "Zoey Samaras: The Chef",
       "Zoey's Cross: Symbol of Righteousness"
+    ],
+    exceptionalCardNames: [
+      "\"Lucky\" Penny: Omen of Misfortune (2)",
+      "Ace in the Hole (3)",
+      "Ancestral Knowledge (3)",
+      "Bewitching (3)",
+      "Borrowed Time (3)",
+      "Charon's Obol: The Ferryman's Pay (1)",
+      "Double, Double (4)",
+      "Eldritch Brand (5)",
+      "Eye of Ghatanothoa: Artifact of the Dark God (2)",
+      "Eye of the Djinn: Vessel of Good and Evil (2)",
+      "Flute of the Outer Gods (4)",
+      "Geas (2)",
+      "Lucky Dice: ...Or Are They? (2)",
+      "Lucky Dice: ...Or Are They? (3)",
+      "Mob Connections (2)",
+      "On Your Own (3)",
+      "Sin-Eater (3)",
+      "Soul Sanctification (3)",
+      "Stick to the Plan (3)",
+      "The Black Fan: Symbol of Power (3)",
+      "The Gold Pocket Watch: Stealing Time (4)",
+      "The Red Clock: Broken but Reliable (2)",
+      "The Red Clock: Broken but Reliable (5)",
+      "The Skeleton Key (2)",
+      "Underworld Market (2)"
     ]
   };
 })();
