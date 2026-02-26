@@ -307,6 +307,10 @@ nav a,
   gap: 10px;
 }
 
+.deck-overview-grid {
+  align-items: center;
+}
+
 .upgrade-col h4 {
   margin: 0 0 6px;
   font-family: "Eater", serif;
@@ -642,6 +646,10 @@ nav a,
 
   .upgrade-columns {
     grid-template-columns: 1fr;
+  }
+
+  .deck-overview-grid {
+    align-items: start;
   }
 
   .builder-grid,
