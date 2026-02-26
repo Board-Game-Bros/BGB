@@ -186,8 +186,7 @@ const setupCampaignPreviewPositioning = () => {
       preview.style.left = "-9999px";
       preview.style.top = "-9999px";
 
-      const titleLink = title.querySelector(".campaign-subtitle-link") || title;
-      const titleRect = titleLink.getBoundingClientRect();
+      const titleRect = title.getBoundingClientRect();
       const box = preview.getBoundingClientRect();
       const previewWidth = box.width || 0;
       const previewHeight = box.height || 0;
