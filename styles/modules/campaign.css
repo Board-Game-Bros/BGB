@@ -92,6 +92,8 @@
 .campaign-preview-img {
   width: auto;
   max-width: var(--campaign-preview-max-width, 450px);
+  max-height: var(--campaign-preview-max-height, calc(100vh - 20px));
+  height: auto;
   display: block;
   border: none;
   transition: transform 0.3s ease;

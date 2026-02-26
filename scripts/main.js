@@ -72,6 +72,7 @@ const positionHoverPreview = (anchorEl, previewEl, options = {}) => {
   const align = options.align || "start"; // "start" | "center" | "end"
   const maxWidth = Number(options.maxWidth) || 0;
   const maxHeight = Number(options.maxHeight) || 0;
+  const zIndex = Number(options.zIndex) || 0;
 
   const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
   const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
@@ -83,6 +84,7 @@ const positionHoverPreview = (anchorEl, previewEl, options = {}) => {
   previewEl.style.right = "auto";
   previewEl.style.bottom = "auto";
   previewEl.style.transform = "none";
+  if (zIndex > 0) previewEl.style.zIndex = String(Math.round(zIndex));
   if (maxWidth > 0) previewEl.style.maxWidth = `${Math.round(Math.min(maxWidth, viewportWidth - margin * 2))}px`;
   if (maxHeight > 0) previewEl.style.maxHeight = `${Math.round(Math.min(maxHeight, viewportHeight - margin * 2))}px`;
 
@@ -97,9 +99,21 @@ const positionHoverPreview = (anchorEl, previewEl, options = {}) => {
 
   let placeAbove;
   if (preferAbove) {
-    placeAbove = (availableAbove >= previewHeight) || (availableAbove >= availableBelow);
+    if (availableAbove >= previewHeight) {
+      placeAbove = true;
+    } else if (availableBelow >= previewHeight) {
+      placeAbove = false;
+    } else {
+      placeAbove = availableAbove >= availableBelow;
+    }
   } else {
-    placeAbove = !((availableBelow >= previewHeight) || (availableBelow >= availableAbove));
+    if (availableBelow >= previewHeight) {
+      placeAbove = false;
+    } else if (availableAbove >= previewHeight) {
+      placeAbove = true;
+    } else {
+      placeAbove = availableAbove >= availableBelow;
+    }
   }
 
   let top = placeAbove
@@ -137,6 +151,7 @@ const resetHoverPreviewStyles = (previewEl) => {
   previewEl.style.transform = "";
   previewEl.style.maxWidth = "";
   previewEl.style.maxHeight = "";
+  previewEl.style.zIndex = "";
 };
 
 // 2.3 Keep campaign hover previews fully inside viewport.
@@ -151,12 +166,18 @@ const setupCampaignPreviewPositioning = () => {
       "--campaign-preview-max-width",
       `${Math.round(Math.max(220, Math.min(450, (window.innerWidth || 0) - 20)))}px`
     );
+    preview.style.setProperty(
+      "--campaign-preview-max-height",
+      `${Math.round(Math.max(220, (window.innerHeight || 0) - 20))}px`
+    );
     positionHoverPreview(wrapper, preview, {
       margin: 10,
       gap: 10,
       preferAbove: true,
       align: "start",
-      maxWidth: 450
+      maxWidth: 450,
+      maxHeight: Math.max(220, (window.innerHeight || 0) - 20),
+      zIndex: 12000
     });
   };
 
@@ -180,6 +201,7 @@ const setupCampaignPreviewPositioning = () => {
       wrapper.classList.remove("is-preview-open");
       resetHoverPreviewStyles(preview);
       preview.style.removeProperty("--campaign-preview-max-width");
+      preview.style.removeProperty("--campaign-preview-max-height");
     };
 
     // Only the campaign title opens the preview; other controls in the header do not.

@@ -1680,22 +1680,10 @@
 
       function clampCardPreviewPosition(cardRef, preview) {
         if (!cardRef || !preview) return;
-        const adaptive = computeAdaptivePreviewSize();
-        if (window.BGB && typeof window.BGB.positionHoverPreview === "function") {
-          window.BGB.positionHoverPreview(cardRef, preview, {
-            margin: previewMargin,
-            gap: previewGap,
-            preferAbove: true,
-            align: "center",
-            maxWidth: adaptive.width,
-            maxHeight: adaptive.height
-          });
-          return;
-        }
-
         const rect = cardRef.getBoundingClientRect();
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const adaptive = computeAdaptivePreviewSize();
         const effectiveWidth = preview.offsetWidth || adaptive.width;
         const effectiveHeight = preview.offsetHeight || adaptive.height;
 
