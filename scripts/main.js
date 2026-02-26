@@ -76,6 +76,101 @@ const resetHoverPreviewStyles = (previewEl) => {
   previewEl.style.zIndex = "";
 };
 
+// 2.3 Generic hover image preview for elements with data-hover-preview-src.
+const setupHoverImagePreview = () => {
+  const targets = Array.from(document.querySelectorAll("[data-hover-preview-src]"));
+  if (!targets.length) return;
+
+  const margin = 10;
+  const gap = 10;
+
+  const createPreview = (target) => {
+    const src = target.getAttribute("data-hover-preview-src");
+    if (!src) return null;
+    const alt = target.getAttribute("data-hover-preview-alt") || "Preview";
+
+    const wrap = document.createElement("div");
+    wrap.className = "hover-preview-pop";
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = alt;
+    wrap.appendChild(img);
+    document.body.appendChild(wrap);
+    return { wrap, img };
+  };
+
+  const placePreview = (target, preview) => {
+    if (!target || !preview) return;
+    const { wrap } = preview;
+    const anchor = target.getBoundingClientRect();
+    const box = wrap.getBoundingClientRect();
+    const popupWidth = box.width || 0;
+    const popupHeight = box.height || 0;
+    if (!popupWidth || !popupHeight) return;
+
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+    if (!viewportWidth || !viewportHeight) return;
+
+    let left = anchor.right + gap;
+    if (left + popupWidth > viewportWidth - margin) {
+      left = anchor.left - popupWidth - gap;
+    }
+    const minLeft = margin;
+    const maxLeft = Math.max(minLeft, viewportWidth - popupWidth - margin);
+    left = Math.min(Math.max(left, minLeft), maxLeft);
+
+    const centerY = anchor.top + (anchor.height / 2);
+    let top = centerY - (popupHeight / 2);
+    const minTop = margin;
+    const maxTop = Math.max(minTop, viewportHeight - popupHeight - margin);
+    top = Math.min(Math.max(top, minTop), maxTop);
+
+    wrap.style.left = `${Math.round(left)}px`;
+    wrap.style.top = `${Math.round(top)}px`;
+  };
+
+  targets.forEach((target) => {
+    if (target.dataset.hoverPreviewBound === "1") return;
+    target.dataset.hoverPreviewBound = "1";
+
+    const preview = createPreview(target);
+    if (!preview) return;
+    const { wrap, img } = preview;
+    let open = false;
+
+    const show = () => {
+      open = true;
+      wrap.classList.add("is-open");
+      wrap.style.left = "-9999px";
+      wrap.style.top = "-9999px";
+      window.requestAnimationFrame(() => {
+        placePreview(target, preview);
+      });
+    };
+
+    const hide = () => {
+      open = false;
+      wrap.classList.remove("is-open");
+    };
+
+    const refresh = () => {
+      if (!open) return;
+      placePreview(target, preview);
+    };
+
+    target.addEventListener("mouseenter", show);
+    target.addEventListener("mouseleave", hide);
+    target.addEventListener("focusin", show);
+    target.addEventListener("focusout", hide);
+    window.addEventListener("resize", refresh, { passive: true });
+    window.addEventListener("scroll", refresh, { passive: true });
+    img.addEventListener("load", refresh);
+  });
+};
+
+setupHoverImagePreview();
+
 // 3. Page Fade-in Animation
 window.onload = () => {
   document.body.classList.add("loaded");

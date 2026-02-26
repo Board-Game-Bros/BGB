@@ -64,3 +64,28 @@
 .campaign-group + .campaign-group {
   margin-top: 50px;
 }
+
+.hover-preview-pop {
+  position: fixed;
+  z-index: 2147483000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.hover-preview-pop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hover-preview-pop img {
+  display: block;
+  width: min(420px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  height: auto;
+  border: 2px solid #3a2d1a;
+  border-radius: 16px;
+  background: #efe4ca;
+  box-shadow: 0 10px 24px rgba(25, 16, 8, 0.35);
+}
