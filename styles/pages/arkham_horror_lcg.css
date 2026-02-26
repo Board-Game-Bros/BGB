@@ -393,6 +393,19 @@ nav a,
   display: block;
 }
 
+/* Investigator deck pages use JS-exclusive preview rendering. */
+body.card-preview-js-mode .card-ref:hover .card-preview {
+  display: none;
+}
+
+body.card-preview-js-mode .card-preview {
+  pointer-events: none;
+}
+
+body.card-preview-js-mode .card-preview.is-active {
+  display: block;
+}
+
 .upgrade-toolbar {
   margin: 8px 0 10px;
 }

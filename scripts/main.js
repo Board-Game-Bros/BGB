@@ -176,6 +176,9 @@ const setupCardRefPreviewClamp = () => {
   const isInvestigatorDeckPage = /arkham_horror_lcg_tcu_(harvey_walters|michael_mcglen|wendy_adams)_20260214\.html$/i
     .test(String(window.location.pathname || ""));
   if (!isInvestigatorDeckPage) return;
+  if (document.body) {
+    document.body.classList.add("card-preview-js-mode");
+  }
 
   const refs = Array.from(document.querySelectorAll(".card-ref"));
   if (!refs.length) return;
@@ -262,6 +265,7 @@ const setupCardRefPreviewClamp = () => {
     preview.style.bottom = "auto";
     preview.style.transform = "none";
     preview.style.zIndex = "1200";
+    preview.classList.add("is-active");
   };
 
   refs.forEach((cardRef) => {
@@ -273,10 +277,12 @@ const setupCardRefPreviewClamp = () => {
       if (!preview) return;
       const anchorRect = getTextAnchorRect(cardRef);
       if (!anchorRect) {
+        preview.classList.remove("is-active");
         resetHoverPreviewStyles(preview);
         return;
       }
       if (!isPointerOnCardText(cardRef, anchorRect) && !cardRef.contains(document.activeElement)) {
+        preview.classList.remove("is-active");
         resetHoverPreviewStyles(preview);
         return;
       }
@@ -289,6 +295,7 @@ const setupCardRefPreviewClamp = () => {
 
     const reset = () => {
       const preview = cardRef.querySelector(".card-preview");
+      if (preview) preview.classList.remove("is-active");
       resetHoverPreviewStyles(preview);
     };
 
