@@ -82,7 +82,7 @@ const setupHoverImagePreview = () => {
   if (!targets.length) return;
 
   const margin = 10;
-  const gap = 10;
+  const gap = 18;
 
   const createPreview = (target) => {
     const src = target.getAttribute("data-hover-preview-src");
@@ -177,7 +177,7 @@ const setupCardRefPreviewClamp = () => {
   if (!refs.length) return;
 
   const margin = 8;
-  const gap = 10;
+  const gap = 18;
 
   const clamp = (value, min, max) => {
     if (max < min) return min;

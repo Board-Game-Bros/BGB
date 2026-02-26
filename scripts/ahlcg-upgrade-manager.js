@@ -40,7 +40,7 @@
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
     const previewMargin = 8;
-    const previewGap = 10;
+    const previewGap = 18;
 
     function normalizeText(value) {
       return String(value || "")
