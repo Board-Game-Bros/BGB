@@ -184,8 +184,12 @@ const setupCampaignPreviewPositioning = () => {
       preview.style.setProperty("--campaign-preview-max-width", `${Math.round(maxW)}px`);
       preview.style.setProperty("--campaign-preview-max-height", `${Math.round(maxH)}px`);
 
-      preview.style.left = `${margin}px`;
-      preview.style.top = `${margin}px`;
+      // Measure in hidden state first, then place, then reveal.
+      preview.style.visibility = "hidden";
+      preview.style.opacity = "0";
+      preview.style.pointerEvents = "none";
+      preview.style.left = "-9999px";
+      preview.style.top = "-9999px";
 
       const anchor = title.getBoundingClientRect();
       const box = preview.getBoundingClientRect();
@@ -216,6 +220,9 @@ const setupCampaignPreviewPositioning = () => {
 
       preview.style.left = `${Math.round(left)}px`;
       preview.style.top = `${Math.round(top)}px`;
+      preview.style.visibility = "visible";
+      preview.style.opacity = "1";
+      preview.style.pointerEvents = "auto";
     };
 
     const openPreview = () => {
@@ -229,6 +236,9 @@ const setupCampaignPreviewPositioning = () => {
     const closePreview = () => {
       wrapper.classList.remove("is-preview-open");
       resetHoverPreviewStyles(preview);
+      preview.style.opacity = "0";
+      preview.style.visibility = "hidden";
+      preview.style.pointerEvents = "none";
       preview.style.removeProperty("--campaign-preview-max-width");
       preview.style.removeProperty("--campaign-preview-max-height");
     };
