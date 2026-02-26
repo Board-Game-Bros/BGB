@@ -184,7 +184,7 @@ const setupCardRefPreviewClamp = () => {
   if (!refs.length) return;
 
   const margin = 8;
-  const gap = 18;
+  const gap = 12;
 
   const clamp = (value, min, max) => {
     if (max < min) return min;
@@ -219,7 +219,7 @@ const setupCardRefPreviewClamp = () => {
     };
   };
 
-  const positionPreviewAboveText = (anchor, preview) => {
+  const positionPreviewAtSide = (anchor, preview) => {
     if (!preview) return;
     if (!anchor) return;
     const box = preview.getBoundingClientRect();
@@ -231,13 +231,17 @@ const setupCardRefPreviewClamp = () => {
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
     if (!viewportWidth || !viewportHeight) return;
 
-    const centeredLeft = anchor.left + (anchor.width / 2) - (width / 2);
-    const minLeft = margin;
-    const maxLeft = viewportWidth - width - margin;
-    const left = clamp(centeredLeft, minLeft, maxLeft);
+    const rightPreferredLeft = anchor.right + gap;
+    const leftFallbackLeft = anchor.left - gap - width;
+    const rightSpace = (viewportWidth - margin) - rightPreferredLeft;
+    const leftSpace = leftFallbackLeft - margin;
+    const placeLeft = rightSpace < width && leftSpace > rightSpace;
+    const idealLeft = placeLeft ? leftFallbackLeft : rightPreferredLeft;
+    const left = clamp(idealLeft, margin, viewportWidth - width - margin);
 
-    // Always render above the card-name text baseline.
-    const top = clamp(anchor.top - gap - height, margin, viewportHeight - height - margin);
+    const centerY = anchor.top + (anchor.height / 2);
+    const idealTop = centerY - (height / 2);
+    const top = clamp(idealTop, margin, viewportHeight - height - margin);
 
     preview.style.position = "fixed";
     preview.style.left = `${Math.round(left)}px`;
@@ -271,7 +275,7 @@ const setupCardRefPreviewClamp = () => {
       }
       // Activate first so width/height are measurable.
       preview.classList.add("is-active");
-      positionPreviewAboveText(anchorRect, preview);
+      positionPreviewAtSide(anchorRect, preview);
     };
 
     const place = () => {
