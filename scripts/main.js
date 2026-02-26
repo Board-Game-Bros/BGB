@@ -171,6 +171,7 @@ const setupCampaignPreviewPositioning = () => {
 
     let overTitle = false;
     let overPreview = false;
+    let repositionTimer = null;
 
     const positionPreview = () => {
       const vw = window.innerWidth || document.documentElement.clientWidth || 0;
@@ -240,16 +241,35 @@ const setupCampaignPreviewPositioning = () => {
       preview.style.pointerEvents = "auto";
     };
 
+    const scheduleReposition = () => {
+      if (!wrapper.classList.contains("is-preview-open")) return;
+      window.requestAnimationFrame(positionPreview);
+      // Extra delayed passes: handles late image decode/layout.
+      if (repositionTimer) window.clearTimeout(repositionTimer);
+      repositionTimer = window.setTimeout(() => {
+        if (!wrapper.classList.contains("is-preview-open")) return;
+        positionPreview();
+      }, 80);
+    };
+
     const openPreview = () => {
       wrapper.classList.add("is-preview-open");
       window.requestAnimationFrame(() => {
         positionPreview();
         window.requestAnimationFrame(positionPreview);
       });
+      window.setTimeout(() => {
+        if (!wrapper.classList.contains("is-preview-open")) return;
+        positionPreview();
+      }, 160);
     };
 
     const closePreview = () => {
       wrapper.classList.remove("is-preview-open");
+      if (repositionTimer) {
+        window.clearTimeout(repositionTimer);
+        repositionTimer = null;
+      }
       resetHoverPreviewStyles(preview);
       preview.style.opacity = "0";
       preview.style.visibility = "hidden";
@@ -285,14 +305,25 @@ const setupCampaignPreviewPositioning = () => {
 
     const refresh = () => {
       if (!wrapper.classList.contains("is-preview-open")) return;
-      positionPreview();
+      scheduleReposition();
     };
     window.addEventListener("resize", refresh, { passive: true });
     window.addEventListener("scroll", refresh, { passive: true });
 
     if (previewImg && previewImg.dataset.previewLoadBound !== "1") {
       previewImg.dataset.previewLoadBound = "1";
-      previewImg.addEventListener("load", refresh);
+      previewImg.addEventListener("load", scheduleReposition);
+      if (previewImg.complete) {
+        window.requestAnimationFrame(scheduleReposition);
+      }
+      if (typeof ResizeObserver !== "undefined") {
+        const ro = new ResizeObserver(() => {
+          if (!wrapper.classList.contains("is-preview-open")) return;
+          scheduleReposition();
+        });
+        ro.observe(previewImg);
+        ro.observe(preview);
+      }
     }
   });
 };
