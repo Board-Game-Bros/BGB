@@ -1678,73 +1678,15 @@
         preview.style.transform = "";
       }
 
-      function clampCardPreviewPosition(cardRef, preview) {
-        if (!cardRef || !preview) return;
-        const rect = cardRef.getBoundingClientRect();
-        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const adaptive = computeAdaptivePreviewSize();
-        const effectiveWidth = preview.offsetWidth || adaptive.width;
-        const effectiveHeight = preview.offsetHeight || adaptive.height;
-
-        resetCardPreviewPosition(preview);
-
-        const clamp = (value, min, max) => {
-          if (max < min) return min;
-          return Math.min(Math.max(value, min), max);
-        };
-
-        const centerX = rect.left + (rect.width / 2);
-        const idealLeft = centerX - (effectiveWidth / 2);
-        const minLeft = previewMargin;
-        const maxLeft = viewportWidth - effectiveWidth - previewMargin;
-        const left = clamp(idealLeft, minLeft, maxLeft);
-
-        const aboveTop = rect.top - previewGap - effectiveHeight;
-        const belowTop = rect.bottom + previewGap;
-        const fitsAbove = aboveTop >= previewMargin;
-        const fitsBelow = (belowTop + effectiveHeight) <= (viewportHeight - previewMargin);
-        let top;
-        if (fitsAbove || !fitsBelow) {
-          top = aboveTop;
-        } else {
-          top = belowTop;
-        }
-        const minTop = previewMargin;
-        const maxTop = viewportHeight - effectiveHeight - previewMargin;
-        top = clamp(top, minTop, maxTop);
-
-        preview.style.position = "fixed";
-        preview.style.left = Math.round(left) + "px";
-        preview.style.top = Math.round(top) + "px";
-        preview.style.right = "auto";
-        preview.style.bottom = "auto";
-        preview.style.transform = "none";
-        preview.style.zIndex = "1200";
-      }
-
       root.querySelectorAll(".card-ref").forEach((cardRef) => {
         if (cardRef.dataset.previewBound === "1") return;
         cardRef.dataset.previewBound = "1";
-
-        const repositionNow = () => {
-          const preview = cardRef.querySelector(".card-preview");
-          if (!preview) return;
-          clampCardPreviewPosition(cardRef, preview);
-        };
-        const reposition = () => {
-          // Ensure hover styles have applied so dimensions are stable.
-          window.requestAnimationFrame(repositionNow);
-        };
 
         const reset = () => {
           const preview = cardRef.querySelector(".card-preview");
           resetCardPreviewPosition(preview);
         };
 
-        cardRef.addEventListener("mouseenter", reposition);
-        cardRef.addEventListener("mousemove", repositionNow);
-        cardRef.addEventListener("focusin", reposition);
         cardRef.addEventListener("mouseleave", reset);
         cardRef.addEventListener("focusout", reset);
       });

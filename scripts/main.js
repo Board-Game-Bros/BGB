@@ -175,7 +175,10 @@ setupHoverImagePreview();
 const setupDeckPanelPreview = () => {
   const isInvestigatorDeckPage = /arkham_horror_lcg_tcu_(harvey_walters|michael_mcglen|wendy_adams)_20260214\.html$/i
     .test(String(window.location.pathname || ""));
-  if (!isInvestigatorDeckPage) return;
+  if (!isInvestigatorDeckPage) {
+    document.body.classList.remove("deck-panel-mode");
+    return;
+  }
   document.body.classList.add("deck-panel-mode");
 
   const grids = Array.from(document.querySelectorAll(".deck-list-grid[data-deck-preview]"));
