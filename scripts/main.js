@@ -173,6 +173,10 @@ setupHoverImagePreview();
 
 // 2.4 Clamp card previews (.card-ref .card-preview) to viewport.
 const setupCardRefPreviewClamp = () => {
+  const isInvestigatorDeckPage = /arkham_horror_lcg_tcu_(harvey_walters|michael_mcglen|wendy_adams)_20260214\.html$/i
+    .test(String(window.location.pathname || ""));
+  if (!isInvestigatorDeckPage) return;
+
   const refs = Array.from(document.querySelectorAll(".card-ref"));
   if (!refs.length) return;
 
@@ -219,19 +223,19 @@ const setupCardRefPreviewClamp = () => {
     };
   };
 
-  const isPointerOnCardText = (cardRef) => {
+  const isPointerOnCardText = (cardRef, anchorRect) => {
     if (!cardRef) return false;
     const hasPointer = pointerX >= 0 && pointerY >= 0;
     if (!hasPointer) return cardRef.matches(":hover");
     const hit = document.elementFromPoint(pointerX, pointerY);
     const pointerRef = hit && typeof hit.closest === "function" ? hit.closest(".card-ref") : null;
     if (pointerRef !== cardRef) return false;
-    const anchor = getTextAnchorRect(cardRef);
+    const anchor = anchorRect || getTextAnchorRect(cardRef);
     if (!anchor) return false;
     return pointerX >= anchor.left && pointerX <= anchor.right && pointerY >= anchor.top && pointerY <= anchor.bottom;
   };
 
-  const positionPreview = (anchor, preview) => {
+  const positionPreviewAboveText = (anchor, preview) => {
     if (!preview) return;
     if (!anchor) return;
     const box = preview.getBoundingClientRect();
@@ -248,19 +252,8 @@ const setupCardRefPreviewClamp = () => {
     const maxLeft = viewportWidth - width - margin;
     const left = clamp(centeredLeft, minLeft, maxLeft);
 
-    const aboveTop = anchor.top - gap - height;
-    const belowTop = anchor.bottom + gap;
-    const fitsAbove = aboveTop >= margin;
-    const fitsBelow = (belowTop + height) <= (viewportHeight - margin);
-    let top;
-    if (fitsAbove || !fitsBelow) {
-      top = aboveTop;
-    } else {
-      top = belowTop;
-    }
-    const minTop = margin;
-    const maxTop = viewportHeight - height - margin;
-    top = clamp(top, minTop, maxTop);
+    // Always render above the card-name text baseline.
+    const top = clamp(anchor.top - gap - height, margin, viewportHeight - height - margin);
 
     preview.style.position = "fixed";
     preview.style.left = `${Math.round(left)}px`;
@@ -278,11 +271,16 @@ const setupCardRefPreviewClamp = () => {
     const placeNow = () => {
       const preview = cardRef.querySelector(".card-preview");
       if (!preview) return;
-      if (!isPointerOnCardText(cardRef) && !cardRef.contains(document.activeElement)) {
+      const anchorRect = getTextAnchorRect(cardRef);
+      if (!anchorRect) {
         resetHoverPreviewStyles(preview);
         return;
       }
-      positionPreview(getTextAnchorRect(cardRef), preview);
+      if (!isPointerOnCardText(cardRef, anchorRect) && !cardRef.contains(document.activeElement)) {
+        resetHoverPreviewStyles(preview);
+        return;
+      }
+      positionPreviewAboveText(anchorRect, preview);
     };
 
     const place = () => {
@@ -300,7 +298,8 @@ const setupCardRefPreviewClamp = () => {
         placeNow();
         return;
       }
-      if (!isPointerOnCardText(cardRef)) {
+      const anchorRect = getTextAnchorRect(cardRef);
+      if (!isPointerOnCardText(cardRef, anchorRect)) {
         reset();
         return;
       }
