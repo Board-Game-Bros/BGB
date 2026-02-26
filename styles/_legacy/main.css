@@ -677,6 +677,15 @@ body.torch-mode nav {
   border-color: #e6c27a;
 }
 
+/* Keep text under light game covers readable in torch mode. */
+body.torch-mode .game-card h3,
+body.torch-mode .game-card p,
+body.torch-mode .game-card .build-date {
+  color: #3a2d1a;
+  opacity: 1;
+  text-shadow: 0 1px 0 rgba(255, 244, 220, 0.35);
+}
+
 /* ===================== FOOTER ===================== */
 footer {
   background: #3a2d1a;
