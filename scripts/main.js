@@ -174,16 +174,9 @@ const setupCampaignPreviewPositioning = () => {
     let repositionTimer = null;
 
     const positionPreview = () => {
-      const vw = window.innerWidth || document.documentElement.clientWidth || 0;
-      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
-      if (!vw || !vh) return;
-
-      const margin = 10;
       const gap = 10;
-      const hardMaxW = Math.max(220, Math.min(450, vw - margin * 2));
-      const hardMaxH = Math.max(220, vh - margin * 2);
-      preview.style.setProperty("--campaign-preview-max-width", `${Math.round(hardMaxW)}px`);
-      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(hardMaxH)}px`);
+      preview.style.removeProperty("--campaign-preview-max-width");
+      preview.style.removeProperty("--campaign-preview-max-height");
       preview.style.removeProperty("--campaign-preview-width");
 
       // Measure in hidden state first, then place, then reveal.
@@ -194,55 +187,14 @@ const setupCampaignPreviewPositioning = () => {
       preview.style.top = "-9999px";
 
       const anchor = title.getBoundingClientRect();
-      const anchorCenterY = anchor.top + (anchor.height / 2);
-      const maxCenteredHalf = Math.min(
-        Math.max(0, anchorCenterY - margin),
-        Math.max(0, vh - margin - anchorCenterY)
-      );
-      // Keep preview center-alignable around title before fallback clamp.
-      const centerFitMaxH = Math.max(180, Math.floor(maxCenteredHalf * 2));
-
-      const naturalW = (previewImg && previewImg.naturalWidth) ? previewImg.naturalWidth : 360;
-      const naturalH = (previewImg && previewImg.naturalHeight) ? previewImg.naturalHeight : 500;
-      const ratio = naturalH > 0 ? (naturalW / naturalH) : 0.72;
-
-      const targetH = Math.min(hardMaxH, centerFitMaxH);
-      const targetW = Math.min(hardMaxW, Math.round(targetH * ratio));
-      preview.style.setProperty("--campaign-preview-max-width", `${Math.round(targetW)}px`);
-      preview.style.setProperty("--campaign-preview-max-height", `${Math.round(targetH)}px`);
-
       const box = preview.getBoundingClientRect();
       const previewWidth = box.width || 0;
       const previewHeight = box.height || 0;
       if (!previewWidth || !previewHeight) return;
 
-      // Same side logic as deck-update autocomplete: prefer right, fallback left.
-      const rightLeft = anchor.right + gap;
-      const hasRightSpace = rightLeft + previewWidth <= vw - margin;
-      const leftLeft = anchor.left - previewWidth - gap;
-      const hasLeftSpace = leftLeft >= margin;
-
-      let left;
-      if (hasRightSpace) {
-        left = rightLeft;
-      } else if (hasLeftSpace) {
-        left = leftLeft;
-      } else {
-        // Neither side fits fully: pick side with more space then clamp.
-        const rightSpace = vw - anchor.right - margin - gap;
-        const leftSpace = anchor.left - margin - gap;
-        left = rightSpace >= leftSpace ? rightLeft : leftLeft;
-      }
-
-      // Vertical center align, clamp only if touching viewport edges.
-      const idealTop = anchor.top + (anchor.height / 2) - (previewHeight / 2);
-      const minTop = margin;
-      const maxTop = Math.max(margin, vh - previewHeight - margin);
-      const top = Math.min(Math.max(idealTop, minTop), maxTop);
-
-      const minLeft = margin;
-      const maxLeft = Math.max(margin, vw - previewWidth - margin);
-      left = Math.min(Math.max(left, minLeft), maxLeft);
+      // Keep only center-alignment behavior: no boundary push-back / anti-cutoff.
+      const left = anchor.right + gap;
+      const top = anchor.top + (anchor.height / 2) - (previewHeight / 2);
 
       preview.style.left = `${Math.round(left)}px`;
       preview.style.top = `${Math.round(top)}px`;
