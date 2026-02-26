@@ -1664,6 +1664,13 @@
 
     function bindPreviewFallbacks(container) {
       const root = container || document;
+      let pointerX = -1;
+      let pointerY = -1;
+
+      window.addEventListener("mousemove", (event) => {
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+      }, { passive: true });
 
       function resetCardPreviewPosition(preview) {
         if (!preview) return;
@@ -1743,9 +1750,20 @@
         };
 
         const refreshOnViewportChange = () => {
-          const isHovered = cardRef.matches(":hover");
           const hasFocusInside = cardRef.contains(document.activeElement);
-          if (!isHovered && !hasFocusInside) return;
+          if (hasFocusInside) {
+            repositionNow();
+            return;
+          }
+
+          const hasPointer = pointerX >= 0 && pointerY >= 0;
+          const hit = hasPointer ? document.elementFromPoint(pointerX, pointerY) : null;
+          const pointerRef = hit && typeof hit.closest === "function" ? hit.closest(".card-ref") : null;
+          const shouldKeepPreview = hasPointer ? pointerRef === cardRef : cardRef.matches(":hover");
+          if (!shouldKeepPreview) {
+            reset();
+            return;
+          }
           repositionNow();
         };
 

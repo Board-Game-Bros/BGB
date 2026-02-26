@@ -178,6 +178,13 @@ const setupCardRefPreviewClamp = () => {
 
   const margin = 8;
   const gap = 18;
+  let pointerX = -1;
+  let pointerY = -1;
+
+  window.addEventListener("mousemove", (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+  }, { passive: true });
 
   const clamp = (value, min, max) => {
     if (max < min) return min;
@@ -244,9 +251,20 @@ const setupCardRefPreviewClamp = () => {
     };
 
     const refreshOnViewportChange = () => {
-      const isHovered = cardRef.matches(":hover");
       const hasFocusInside = cardRef.contains(document.activeElement);
-      if (!isHovered && !hasFocusInside) return;
+      if (hasFocusInside) {
+        placeNow();
+        return;
+      }
+
+      const hasPointer = pointerX >= 0 && pointerY >= 0;
+      const hit = hasPointer ? document.elementFromPoint(pointerX, pointerY) : null;
+      const pointerRef = hit && typeof hit.closest === "function" ? hit.closest(".card-ref") : null;
+      const shouldKeepPreview = hasPointer ? pointerRef === cardRef : cardRef.matches(":hover");
+      if (!shouldKeepPreview) {
+        reset();
+        return;
+      }
       placeNow();
     };
 
