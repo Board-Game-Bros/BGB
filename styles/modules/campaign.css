@@ -31,6 +31,8 @@
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
+  position: fixed !important;
+  z-index: 12000 !important;
 }
 
 .campaign-subtitle-wrapper.is-preview-open {
@@ -73,6 +75,7 @@
 .campaign-preview-frame {
   position: relative;
   display: inline-block;
+  max-height: var(--campaign-preview-max-height, calc(100vh - 20px));
   border-radius: 16px;
   border: 2px solid #3a2d1a;
   overflow: hidden;
@@ -92,7 +95,7 @@
 .campaign-preview-img {
   width: auto;
   max-width: var(--campaign-preview-max-width, 450px);
-  max-height: var(--campaign-preview-max-height, calc(100vh - 20px));
+  max-height: calc(var(--campaign-preview-max-height, calc(100vh - 20px)) - 4px);
   height: auto;
   display: block;
   border: none;

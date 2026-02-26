@@ -159,9 +159,10 @@ const setupCampaignPreviewPositioning = () => {
   const wrappers = Array.from(document.querySelectorAll(".campaign-subtitle-wrapper"));
   if (!wrappers.length) return;
 
-  const positionPreview = (wrapper) => {
+  const positionPreview = (wrapper, anchor) => {
     const preview = wrapper.querySelector(".campaign-preview-container");
     if (!preview) return;
+    if (!anchor) return;
     preview.style.setProperty(
       "--campaign-preview-max-width",
       `${Math.round(Math.max(220, Math.min(450, (window.innerWidth || 0) - 20)))}px`
@@ -170,13 +171,13 @@ const setupCampaignPreviewPositioning = () => {
       "--campaign-preview-max-height",
       `${Math.round(Math.max(220, (window.innerHeight || 0) - 20))}px`
     );
-    positionHoverPreview(wrapper, preview, {
+    positionHoverPreview(anchor, preview, {
       margin: 10,
       gap: 10,
       preferAbove: true,
       align: "start",
       maxWidth: 450,
-      maxHeight: Math.max(220, (window.innerHeight || 0) - 20),
+      maxHeight: Math.max(220, (window.innerHeight || 0) - 24),
       zIndex: 12000
     });
   };
@@ -189,12 +190,12 @@ const setupCampaignPreviewPositioning = () => {
 
     const refresh = () => {
       if (!wrapper.classList.contains("is-preview-open")) return;
-      positionPreview(wrapper);
+      positionPreview(wrapper, title);
     };
 
     const openPreview = () => {
       wrapper.classList.add("is-preview-open");
-      positionPreview(wrapper);
+      positionPreview(wrapper, title);
     };
 
     const closePreview = () => {
