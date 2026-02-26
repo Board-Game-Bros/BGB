@@ -22,14 +22,11 @@
 .section-title::after {
   content: "";
   position: absolute;
-  top: -2px;
+  top: 0;
   right: -34px;
-  width: 36px;
-  height: calc(100% + 4px);
+  width: 34px;
+  height: 100%;
   background: linear-gradient(180deg, #ecd3a3 0%, #d1ab70 100%);
-  border-top: 2px solid #6b4e2b;
   border-right: 2px solid #6b4e2b;
-  border-bottom: 2px solid #6b4e2b;
   clip-path: polygon(0 0, 100% 50%, 0 100%);
-  filter: drop-shadow(0 8px 10px rgba(20, 8, 8, 0.2));
 }
