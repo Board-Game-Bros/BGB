@@ -1685,9 +1685,48 @@
         preview.style.transform = "";
       }
 
-      function clampCardPreviewPosition(cardRef, preview) {
-        if (!cardRef || !preview) return;
-        const rect = cardRef.getBoundingClientRect();
+      function getTextAnchorRect(cardRef) {
+        if (!cardRef) return null;
+        const walker = document.createTreeWalker(cardRef, NodeFilter.SHOW_TEXT);
+        const rects = [];
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          const value = String(node.nodeValue || "");
+          if (!value.trim()) continue;
+          const range = document.createRange();
+          range.selectNodeContents(node);
+          const parts = Array.from(range.getClientRects()).filter((r) => r.width > 0 && r.height > 0);
+          rects.push(...parts);
+        }
+        if (!rects.length) return cardRef.getBoundingClientRect();
+        const left = Math.min(...rects.map((r) => r.left));
+        const right = Math.max(...rects.map((r) => r.right));
+        const top = Math.min(...rects.map((r) => r.top));
+        const bottom = Math.max(...rects.map((r) => r.bottom));
+        return {
+          left,
+          right,
+          top,
+          bottom,
+          width: right - left,
+          height: bottom - top,
+        };
+      }
+
+      function isPointerOnCardText(cardRef) {
+        if (!cardRef) return false;
+        const hasPointer = pointerX >= 0 && pointerY >= 0;
+        if (!hasPointer) return cardRef.matches(":hover");
+        const hit = document.elementFromPoint(pointerX, pointerY);
+        const pointerRef = hit && typeof hit.closest === "function" ? hit.closest(".card-ref") : null;
+        if (pointerRef !== cardRef) return false;
+        const anchor = getTextAnchorRect(cardRef);
+        if (!anchor) return false;
+        return pointerX >= anchor.left && pointerX <= anchor.right && pointerY >= anchor.top && pointerY <= anchor.bottom;
+      }
+
+      function clampCardPreviewPosition(anchorRect, preview) {
+        if (!anchorRect || !preview) return;
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
         const adaptive = computeAdaptivePreviewSize();
@@ -1701,14 +1740,14 @@
           return Math.min(Math.max(value, min), max);
         };
 
-        const centerX = rect.left + (rect.width / 2);
+        const centerX = anchorRect.left + (anchorRect.width / 2);
         const idealLeft = centerX - (effectiveWidth / 2);
         const minLeft = previewMargin;
         const maxLeft = viewportWidth - effectiveWidth - previewMargin;
         const left = clamp(idealLeft, minLeft, maxLeft);
 
-        const aboveTop = rect.top - previewGap - effectiveHeight;
-        const belowTop = rect.bottom + previewGap;
+        const aboveTop = anchorRect.top - previewGap - effectiveHeight;
+        const belowTop = anchorRect.bottom + previewGap;
         const fitsAbove = aboveTop >= previewMargin;
         const fitsBelow = (belowTop + effectiveHeight) <= (viewportHeight - previewMargin);
         let top;
@@ -1737,7 +1776,11 @@
         const repositionNow = () => {
           const preview = cardRef.querySelector(".card-preview");
           if (!preview) return;
-          clampCardPreviewPosition(cardRef, preview);
+          if (!isPointerOnCardText(cardRef) && !cardRef.contains(document.activeElement)) {
+            resetCardPreviewPosition(preview);
+            return;
+          }
+          clampCardPreviewPosition(getTextAnchorRect(cardRef), preview);
         };
         const reposition = () => {
           // Ensure hover styles have applied so dimensions are stable.
@@ -1755,12 +1798,7 @@
             repositionNow();
             return;
           }
-
-          const hasPointer = pointerX >= 0 && pointerY >= 0;
-          const hit = hasPointer ? document.elementFromPoint(pointerX, pointerY) : null;
-          const pointerRef = hit && typeof hit.closest === "function" ? hit.closest(".card-ref") : null;
-          const shouldKeepPreview = hasPointer ? pointerRef === cardRef : cardRef.matches(":hover");
-          if (!shouldKeepPreview) {
+          if (!isPointerOnCardText(cardRef)) {
             reset();
             return;
           }
@@ -1768,7 +1806,11 @@
         };
 
         cardRef.addEventListener("mouseenter", reposition);
-        cardRef.addEventListener("mousemove", repositionNow);
+        cardRef.addEventListener("mousemove", (event) => {
+          pointerX = event.clientX;
+          pointerY = event.clientY;
+          repositionNow();
+        });
         cardRef.addEventListener("focusin", reposition);
         cardRef.addEventListener("mouseleave", reset);
         cardRef.addEventListener("focusout", reset);
