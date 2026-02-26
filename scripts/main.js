@@ -186,15 +186,20 @@ const setupCampaignPreviewPositioning = () => {
       preview.style.left = "-9999px";
       preview.style.top = "-9999px";
 
-      const anchor = title.getBoundingClientRect();
+      const titleLink = title.querySelector(".campaign-subtitle-link") || title;
+      const titleRect = titleLink.getBoundingClientRect();
       const box = preview.getBoundingClientRect();
       const previewWidth = box.width || 0;
       const previewHeight = box.height || 0;
       if (!previewWidth || !previewHeight) return;
 
-      // Keep only center-alignment behavior: no boundary push-back / anti-cutoff.
-      const left = anchor.right + gap;
-      const top = anchor.top + (anchor.height / 2) - (previewHeight / 2);
+      // Align strictly to the campaign title row center.
+      const anchorCenterY = titleRect.top + (titleRect.height / 2);
+      const left = titleRect.right + gap;
+      const topRaw = anchorCenterY - (previewHeight / 2);
+      const minTop = 10;
+      const maxTop = Math.max(minTop, (window.innerHeight || document.documentElement.clientHeight || 0) - previewHeight - 10);
+      const top = Math.min(Math.max(topRaw, minTop), maxTop);
 
       preview.style.left = `${Math.round(left)}px`;
       preview.style.top = `${Math.round(top)}px`;
