@@ -393,24 +393,31 @@ nav a,
   display: block;
 }
 
-/* Investigator deck pages use JS-exclusive preview rendering. */
-body.card-preview-js-mode .card-ref:hover .card-preview {
+/* Investigator deck pages: use panel preview instead of popup hover preview. */
+body.deck-panel-mode .card-ref:hover .card-preview {
   display: none !important;
 }
 
-body.card-preview-js-mode .card-preview {
-  display: none !important;
-  position: fixed !important;
-  pointer-events: none !important;
-  z-index: 2147483000 !important;
+.deck-list-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(240px, 320px);
+  gap: 6px;
+  align-items: start;
 }
 
-body.card-preview-js-mode .card-preview.is-active {
-  display: block !important;
+.deck-preview-panel {
+  border: 1px solid rgba(58, 45, 26, 0.4);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(247, 233, 203, 0.9) 0%, rgba(230, 205, 165, 0.86) 100%);
+  padding: 10px;
 }
 
-body.card-preview-js-mode .card-ref:hover .card-preview.is-active {
-  display: block !important;
+.deck-preview-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid #3a2d1a;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
 }
 
 .upgrade-toolbar {
@@ -670,6 +677,11 @@ body.card-preview-js-mode .card-ref:hover .card-preview.is-active {
 
   .deck-overview-grid {
     align-items: start;
+  }
+
+  .deck-list-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .builder-grid,

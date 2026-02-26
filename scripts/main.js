@@ -171,154 +171,67 @@ const setupHoverImagePreview = () => {
 
 setupHoverImagePreview();
 
-// 2.4 Clamp card previews (.card-ref .card-preview) to viewport.
-const setupCardRefPreviewClamp = () => {
+// 2.4 Deck panel preview for investigator deck pages.
+const setupDeckPanelPreview = () => {
   const isInvestigatorDeckPage = /arkham_horror_lcg_tcu_(harvey_walters|michael_mcglen|wendy_adams)_20260214\.html$/i
     .test(String(window.location.pathname || ""));
   if (!isInvestigatorDeckPage) return;
-  if (document.body) {
-    document.body.classList.add("card-preview-js-mode");
-  }
+  document.body.classList.add("deck-panel-mode");
 
-  const refs = Array.from(document.querySelectorAll(".card-ref"));
-  if (!refs.length) return;
+  const grids = Array.from(document.querySelectorAll(".deck-list-grid[data-deck-preview]"));
+  if (!grids.length) return;
 
-  const margin = 8;
-  const gap = 12;
-  const fallbackWidth = 420;
-  const fallbackHeight = 600;
-  let activeRef = null;
-
-  const clamp = (value, min, max) => {
-    if (max < min) return min;
-    return Math.min(Math.max(value, min), max);
+  const getPreviewSource = (ref) => {
+    const img = ref ? ref.querySelector("img.card-preview") : null;
+    return img ? (img.getAttribute("src") || "") : "";
   };
 
-  const getTextAnchorRect = (cardRef) => {
-    if (!cardRef) return null;
-    const walker = document.createTreeWalker(cardRef, NodeFilter.SHOW_TEXT);
-    const rects = [];
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      const value = String(node.nodeValue || "");
-      if (!value.trim()) continue;
-      const range = document.createRange();
-      range.selectNodeContents(node);
-      const parts = Array.from(range.getClientRects()).filter((r) => r.width > 0 && r.height > 0);
-      rects.push(...parts);
-    }
-    if (!rects.length) return cardRef.getBoundingClientRect();
-    const left = Math.min(...rects.map((r) => r.left));
-    const right = Math.max(...rects.map((r) => r.right));
-    const top = Math.min(...rects.map((r) => r.top));
-    const bottom = Math.max(...rects.map((r) => r.bottom));
-    return {
-      left,
-      right,
-      top,
-      bottom,
-      width: right - left,
-      height: bottom - top,
+  grids.forEach((grid) => {
+    if (grid.dataset.deckPanelBound === "1") return;
+    grid.dataset.deckPanelBound = "1";
+
+    const panelImg = grid.querySelector("[data-deck-preview-image]");
+    if (!panelImg) return;
+    const defaultSrc = panelImg.getAttribute("data-default-src") || panelImg.getAttribute("src") || "";
+
+    const setPanelSrc = (src) => {
+      panelImg.setAttribute("src", src || defaultSrc);
     };
-  };
 
-  const floating = document.createElement("img");
-  floating.className = "card-preview card-preview-floating";
-  floating.alt = "";
-  floating.setAttribute("aria-hidden", "true");
-  document.body.appendChild(floating);
+    setPanelSrc(defaultSrc);
 
-  const getPreviewSize = () => {
-    const rect = floating.getBoundingClientRect();
-    const width = rect.width || floating.offsetWidth || fallbackWidth;
-    const ratio = (floating.naturalWidth > 0 && floating.naturalHeight > 0)
-      ? (floating.naturalHeight / floating.naturalWidth)
-      : (fallbackHeight / fallbackWidth);
-    const height = rect.height || floating.offsetHeight || Math.round(width * ratio);
-    return { width, height };
-  };
+    const activateFromTarget = (target) => {
+      const ref = target && typeof target.closest === "function" ? target.closest(".card-ref") : null;
+      if (!ref || !grid.contains(ref)) {
+        setPanelSrc(defaultSrc);
+        return;
+      }
+      const src = getPreviewSource(ref);
+      setPanelSrc(src || defaultSrc);
+    };
 
-  const placeFloatingPreview = () => {
-    if (!activeRef) return;
-    const anchor = getTextAnchorRect(activeRef);
-    if (!anchor) return;
-
-    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-    if (!viewportWidth || !viewportHeight) return;
-
-    const size = getPreviewSize();
-    const width = size.width;
-    const height = size.height;
-
-    const rightLeft = anchor.right + gap;
-    const leftLeft = anchor.left - gap - width;
-    const canPlaceRight = rightLeft + width <= viewportWidth - margin;
-    const idealLeft = canPlaceRight ? rightLeft : leftLeft;
-    const left = clamp(idealLeft, margin, viewportWidth - width - margin);
-
-    const centerY = anchor.top + (anchor.height / 2);
-    const idealTop = centerY - (height / 2);
-    const top = clamp(idealTop, margin, viewportHeight - height - margin);
-
-    floating.style.left = `${Math.round(left)}px`;
-    floating.style.top = `${Math.round(top)}px`;
-  };
-
-  const showFloatingPreview = (cardRef) => {
-    const source = cardRef ? cardRef.querySelector("img.card-preview") : null;
-    const src = source ? source.getAttribute("src") : "";
-    if (!src) return;
-    activeRef = cardRef;
-    floating.src = src;
-    floating.alt = source ? (source.getAttribute("alt") || "") : "";
-    floating.classList.add("is-active");
-    placeFloatingPreview();
-  };
-
-  const hideFloatingPreview = (cardRef) => {
-    if (cardRef && activeRef && cardRef !== activeRef) return;
-    activeRef = null;
-    floating.classList.remove("is-active");
-    floating.removeAttribute("src");
-    floating.removeAttribute("alt");
-  };
-
-  refs.forEach((cardRef) => {
-    if (cardRef.dataset.cardPreviewClampBound === "1") return;
-    cardRef.dataset.cardPreviewClampBound = "1";
-
-    cardRef.addEventListener("mouseenter", () => showFloatingPreview(cardRef));
-    cardRef.addEventListener("mousemove", () => {
-      if (activeRef === cardRef) placeFloatingPreview();
+    grid.addEventListener("pointerover", (event) => {
+      activateFromTarget(event.target);
     });
-    cardRef.addEventListener("focusin", () => showFloatingPreview(cardRef));
-    cardRef.addEventListener("mouseleave", () => hideFloatingPreview(cardRef));
-    cardRef.addEventListener("focusout", () => hideFloatingPreview(cardRef));
-  });
-
-  window.addEventListener("scroll", () => {
-    if (!activeRef) return;
-    const stillActive = activeRef.matches(":hover") || activeRef.contains(document.activeElement);
-    if (!stillActive) {
-      hideFloatingPreview();
-      return;
-    }
-    placeFloatingPreview();
-  }, { passive: true });
-
-  window.addEventListener("resize", () => {
-    if (!activeRef) return;
-    placeFloatingPreview();
-  }, { passive: true });
-
-  floating.addEventListener("load", () => {
-    if (!activeRef) return;
-    placeFloatingPreview();
+    grid.addEventListener("focusin", (event) => {
+      activateFromTarget(event.target);
+    });
+    grid.addEventListener("pointerleave", () => {
+      setPanelSrc(defaultSrc);
+    });
+    grid.addEventListener("focusout", () => {
+      window.requestAnimationFrame(() => {
+        const active = document.activeElement;
+        const activeRef = active && typeof active.closest === "function" ? active.closest(".card-ref") : null;
+        if (!activeRef || !grid.contains(activeRef)) {
+          setPanelSrc(defaultSrc);
+        }
+      });
+    });
   });
 };
 
-setupCardRefPreviewClamp();
+setupDeckPanelPreview();
 
 // 3. Page Fade-in Animation
 window.onload = () => {
