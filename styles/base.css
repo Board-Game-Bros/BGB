@@ -95,8 +95,8 @@ nav.sticky {
 }
 
 .container {
-  width: 90%;
-  max-width: 1000px;
+  width: 90vw;
+  max-width: 90vw;
   margin: 40px auto;
   padding: 25px;
   background: rgba(255, 243, 219, 0.92);
