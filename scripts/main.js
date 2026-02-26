@@ -269,6 +269,8 @@ const setupCardRefPreviewClamp = () => {
         resetHoverPreviewStyles(preview);
         return;
       }
+      // Activate first so width/height are measurable.
+      preview.classList.add("is-active");
       positionPreviewAboveText(anchorRect, preview);
     };
 
