@@ -197,39 +197,38 @@ const setupCampaignPreviewPositioning = () => {
       let naturalW = box.width || 0;
       if (!naturalH || !naturalW) return;
 
-      const above = anchor.top - margin - gap;
-      const below = vh - anchor.bottom - margin - gap;
-      let placeAbove;
-      if (above >= naturalH) {
-        placeAbove = true;
-      } else if (below >= naturalH) {
-        placeAbove = false;
+      // Side-placement logic (same idea as deck-update autocomplete):
+      // prefer right of title; if no room, place left; keep vertically centered and clamped.
+      const rightLeft = anchor.right + gap;
+      const hasRightSpace = rightLeft + naturalW <= vw - margin;
+      const leftLeft = anchor.left - naturalW - gap;
+      const hasLeftSpace = leftLeft >= margin;
+
+      let left;
+      if (hasRightSpace) {
+        left = rightLeft;
+      } else if (hasLeftSpace) {
+        left = leftLeft;
       } else {
-        placeAbove = above >= below;
+        // Neither side fits fully: pick side with more space then clamp.
+        const rightSpace = vw - anchor.right - margin - gap;
+        const leftSpace = anchor.left - margin - gap;
+        left = rightSpace >= leftSpace ? rightLeft : leftLeft;
       }
 
-      // Constrain preview height to selected side space so it never flips across anchor.
-      const sideSpace = Math.max(120, Math.floor(placeAbove ? above : below));
-      const sideMaxH = Math.min(globalMaxH, sideSpace);
+      // Keep height within viewport and center around title.
+      const sideMaxH = Math.min(globalMaxH, vh - margin * 2);
       preview.style.setProperty("--campaign-preview-max-height", `${Math.round(sideMaxH)}px`);
-
-      // Re-measure after side-specific height cap.
       preview.style.left = "-9999px";
       preview.style.top = "-9999px";
       const fitted = preview.getBoundingClientRect();
       const h = fitted.height || naturalH;
       const w = fitted.width || naturalW;
+      const idealTop = anchor.top + (anchor.height / 2) - (h / 2);
+      const minTop = margin;
+      const maxTop = Math.max(margin, vh - h - margin);
+      const top = Math.min(Math.max(idealTop, minTop), maxTop);
 
-      let top = placeAbove ? (anchor.top - h - gap) : (anchor.bottom + gap);
-      if (placeAbove) {
-        top = Math.max(margin, top);
-      } else {
-        const minBelowTop = anchor.bottom + gap;
-        const maxBelowTop = Math.max(minBelowTop, vh - h - margin);
-        top = Math.min(Math.max(top, minBelowTop), maxBelowTop);
-      }
-
-      let left = anchor.left;
       const minLeft = margin;
       const maxLeft = Math.max(margin, vw - w - margin);
       left = Math.min(Math.max(left, minLeft), maxLeft);

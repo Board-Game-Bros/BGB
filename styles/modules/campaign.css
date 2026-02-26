@@ -69,12 +69,13 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  z-index: 12000;
+  z-index: 2147483000 !important;
   transition: opacity 0.14s ease;
 }
 
 .campaign-preview-frame {
   position: relative;
+  z-index: 2147483001;
   display: inline-block;
   max-height: var(--campaign-preview-max-height, calc(100vh - 20px));
   border-radius: 16px;
