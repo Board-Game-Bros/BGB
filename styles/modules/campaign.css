@@ -28,6 +28,11 @@
   cursor: pointer;
 }
 
+.campaign-subtitle-link {
+  color: inherit;
+  text-decoration: none;
+}
+
 .campaign-session-links {
   display: flex;
   flex-wrap: wrap;
