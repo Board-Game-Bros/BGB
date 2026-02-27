@@ -386,7 +386,7 @@
   <script src="scripts/shell-layout.js"></script>
   <script src="scripts/main.js?v=20260226j"></script>
   <script src="scripts/ahlcg-standard-library.js"></script>
-  <script src="scripts/ahlcg-upgrade-manager.js?v=20260226e"></script>
+  <script src="scripts/ahlcg-upgrade-manager.js?v=20260227a"></script>
   <script>
     const ahlcgLibrary = window.AHLCG_STANDARD_NAME_LIBRARY || {};
     initAhlcgUpgradeManager({
@@ -398,6 +398,15 @@
       standardCardNames: ahlcgLibrary.standardCardNames || [],
       exceptionalCardNames: ahlcgLibrary.exceptionalCardNames || [],
       inactivityMs: 120000,
+      remoteSync: {
+        provider: "github",
+        owner: "Board-Game-Bros",
+        repo: "BGB",
+        branch: "main",
+        filePath: "arkham_horror_lcg_tcu_20260215.html",
+      },
+      remoteSyncTokenStorageKey: "bgb_github_sync_token_v1",
+      remoteSyncDebounceMs: 2800,
     });
   </script>
 </body>

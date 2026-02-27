@@ -15,6 +15,11 @@
     const editPassword = String(configuredPassword || fallbackPassword);
     const requireEditPassword = editPassword.length > 0;
     const inactivityMs = Number(options.inactivityMs) > 0 ? Number(options.inactivityMs) : 120000;
+    const remoteSync = normalizeRemoteSync(options.remoteSync);
+    const remoteSyncTokenStorageKey = typeof options.remoteSyncTokenStorageKey === "string" && options.remoteSyncTokenStorageKey.trim()
+      ? options.remoteSyncTokenStorageKey.trim()
+      : "bgb_github_sync_token_v1";
+    const remoteSyncDebounceMs = Number(options.remoteSyncDebounceMs) > 0 ? Number(options.remoteSyncDebounceMs) : 2800;
 
     const cardCatalog = cardImageFiles.map((file) => ({
       file,
@@ -36,6 +41,13 @@
     let editUnlocked = !requireEditPassword;
     let editGateButton = null;
     let editGateStatus = null;
+    let remoteSyncButton = null;
+    let remoteSyncStatus = null;
+    let remoteSyncTimer = null;
+    let remoteSyncInFlight = false;
+    let remoteSyncQueued = false;
+    let lastSyncedHtmlHash = "";
+    let remoteSyncReady = false;
     let entryUidCounter = 1;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
@@ -51,6 +63,82 @@
         .replace(/[^\p{L}\p{N}]+/gu, " ")
         .trim()
         .replace(/\s+/g, " ");
+    }
+
+    function normalizeRemoteSync(rawConfig) {
+      if (!rawConfig || typeof rawConfig !== "object") return null;
+      const provider = String(rawConfig.provider || "").trim().toLowerCase();
+      if (provider !== "github") return null;
+      const owner = String(rawConfig.owner || "").trim();
+      const repo = String(rawConfig.repo || "").trim();
+      const branch = String(rawConfig.branch || "main").trim();
+      const filePath = String(rawConfig.filePath || "").trim().replace(/^\/+/, "");
+      if (!owner || !repo || !filePath) return null;
+      return { provider, owner, repo, branch, filePath };
+    }
+
+    function getRemoteSyncToken() {
+      if (!remoteSync) return "";
+      try {
+        return String(window.localStorage.getItem(remoteSyncTokenStorageKey) || "").trim();
+      } catch (_error) {
+        return "";
+      }
+    }
+
+    function setRemoteSyncToken(nextToken) {
+      if (!remoteSync) return;
+      try {
+        if (nextToken) {
+          window.localStorage.setItem(remoteSyncTokenStorageKey, nextToken);
+        } else {
+          window.localStorage.removeItem(remoteSyncTokenStorageKey);
+        }
+      } catch (_error) {
+        // Ignore storage failures.
+      }
+    }
+
+    function getRemoteSyncConfigLabel() {
+      if (!remoteSync) return "";
+      return `${remoteSync.owner}/${remoteSync.repo}:${remoteSync.branch}`;
+    }
+
+    function refreshRemoteSyncUi(textOverride) {
+      if (!remoteSync) return;
+      const hasToken = !!getRemoteSyncToken();
+      if (remoteSyncButton) {
+        remoteSyncButton.textContent = hasToken ? "GitHub Sync Connected" : "Connect GitHub Sync";
+      }
+      if (remoteSyncStatus) {
+        if (textOverride) {
+          remoteSyncStatus.textContent = textOverride;
+        } else if (!hasToken) {
+          remoteSyncStatus.textContent = "GitHub sync not connected";
+        } else {
+          remoteSyncStatus.textContent = `GitHub sync ready (${getRemoteSyncConfigLabel()})`;
+        }
+      }
+    }
+
+    function toBase64Utf8(value) {
+      const bytes = new TextEncoder().encode(String(value || ""));
+      let binary = "";
+      const chunkSize = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        const chunk = bytes.subarray(i, i + chunkSize);
+        binary += String.fromCharCode(...chunk);
+      }
+      return window.btoa(binary);
+    }
+
+    function makeQuickHash(value) {
+      let hash = 5381;
+      const text = String(value || "");
+      for (let i = 0; i < text.length; i += 1) {
+        hash = ((hash << 5) + hash) ^ text.charCodeAt(i);
+      }
+      return String(hash >>> 0);
     }
 
     function getLevelFromFileName(fileName) {
@@ -1168,6 +1256,24 @@
         tryUnlockEditMode();
       });
 
+      if (remoteSync) {
+        const remoteBtn = document.createElement("button");
+        remoteBtn.type = "button";
+        remoteBtn.className = "upgrade-btn upgrade-btn-secondary";
+        remoteBtn.textContent = "Connect GitHub Sync";
+        remoteBtn.addEventListener("click", () => {
+          openRemoteSyncPrompt();
+        });
+        remoteSyncButton = remoteBtn;
+        gate.appendChild(remoteBtn);
+
+        const remoteStatusEl = document.createElement("span");
+        remoteStatusEl.className = "edit-gate-status";
+        remoteStatusEl.textContent = "GitHub sync not connected";
+        remoteSyncStatus = remoteStatusEl;
+        gate.appendChild(remoteStatusEl);
+      }
+
       const title = section.querySelector(".section-title");
       if (title && title.nextSibling) {
         section.insertBefore(gate, title.nextSibling);
@@ -1176,6 +1282,7 @@
       }
 
       refreshEditGateUi();
+      refreshRemoteSyncUi();
     }
 
     function clearUndo(opts) {
@@ -1630,16 +1737,161 @@
       return clone.innerHTML;
     }
 
+    function buildCurrentUpgradeState() {
+      const state = {};
+      document.querySelectorAll(".upgrade-card").forEach((card) => {
+        const name = getCardOwnerName(card);
+        const upgradeList = card.querySelector(".upgrade-list");
+        if (!name || !upgradeList) return;
+        state[name] = sanitizeUpgradeListForSave(upgradeList);
+      });
+      return state;
+    }
+
+    function buildPersistableHtml(state) {
+      const docClone = document.documentElement.cloneNode(true);
+      docClone.querySelectorAll(".edit-gate").forEach((node) => node.remove());
+      const bodyEl = docClone.querySelector("body");
+      if (bodyEl) {
+        bodyEl.classList.remove("deck-panel-mode");
+      }
+      docClone.querySelectorAll(".upgrade-card").forEach((card) => {
+        const ownerName = getCardOwnerName(card);
+        const upgradeList = card.querySelector(".upgrade-list");
+        if (!ownerName || !upgradeList) return;
+        if (typeof state[ownerName] === "string") {
+          upgradeList.innerHTML = state[ownerName];
+        }
+      });
+      return "<!DOCTYPE html>\n" + docClone.outerHTML;
+    }
+
+    async function requestGitHubFileSha(token) {
+      if (!remoteSync) return "";
+      const endpoint = `https://api.github.com/repos/${encodeURIComponent(remoteSync.owner)}/${encodeURIComponent(remoteSync.repo)}/contents/${encodeURIComponent(remoteSync.filePath).replace(/%2F/g, "/")}?ref=${encodeURIComponent(remoteSync.branch)}`;
+      const response = await window.fetch(endpoint, {
+        method: "GET",
+        headers: {
+          Accept: "application/vnd.github+json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`GitHub read failed (${response.status})`);
+      }
+      const payload = await response.json();
+      if (!payload || typeof payload.sha !== "string") {
+        throw new Error("GitHub response missing file SHA");
+      }
+      return payload.sha;
+    }
+
+    async function pushHtmlToGitHub(htmlText) {
+      if (!remoteSync) return;
+      const token = getRemoteSyncToken();
+      if (!token) {
+        refreshRemoteSyncUi("GitHub token missing");
+        return;
+      }
+      const nextHash = makeQuickHash(htmlText);
+      if (nextHash === lastSyncedHtmlHash) return;
+
+      const sha = await requestGitHubFileSha(token);
+      const endpoint = `https://api.github.com/repos/${encodeURIComponent(remoteSync.owner)}/${encodeURIComponent(remoteSync.repo)}/contents/${encodeURIComponent(remoteSync.filePath).replace(/%2F/g, "/")}`;
+      const now = new Date();
+      const message = `auto-sync deck upgrade ${now.toISOString().slice(0, 19)}Z`;
+      const response = await window.fetch(endpoint, {
+        method: "PUT",
+        headers: {
+          Accept: "application/vnd.github+json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          message,
+          content: toBase64Utf8(htmlText),
+          branch: remoteSync.branch,
+          sha,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error(`GitHub write failed (${response.status})`);
+      }
+      lastSyncedHtmlHash = nextHash;
+    }
+
+    async function runRemoteSyncNow() {
+      if (!remoteSync) return;
+      if (remoteSyncInFlight) {
+        remoteSyncQueued = true;
+        return;
+      }
+      remoteSyncInFlight = true;
+      refreshRemoteSyncUi("Syncing HTML to GitHub...");
+      try {
+        const state = buildCurrentUpgradeState();
+        const htmlText = buildPersistableHtml(state);
+        await pushHtmlToGitHub(htmlText);
+        const syncedAt = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        refreshRemoteSyncUi(`GitHub synced at ${syncedAt}`);
+      } catch (error) {
+        const message = error && error.message ? error.message : "GitHub sync failed";
+        refreshRemoteSyncUi(message);
+      } finally {
+        remoteSyncInFlight = false;
+        if (remoteSyncQueued) {
+          remoteSyncQueued = false;
+          window.setTimeout(() => {
+            void runRemoteSyncNow();
+          }, 300);
+        }
+      }
+    }
+
+    function scheduleRemoteSync() {
+      if (!remoteSync) return;
+      if (!remoteSyncReady) return;
+      if (!getRemoteSyncToken()) {
+        refreshRemoteSyncUi();
+        return;
+      }
+      if (remoteSyncTimer) {
+        window.clearTimeout(remoteSyncTimer);
+      }
+      remoteSyncTimer = window.setTimeout(() => {
+        remoteSyncTimer = null;
+        void runRemoteSyncNow();
+      }, remoteSyncDebounceMs);
+    }
+
+    function openRemoteSyncPrompt() {
+      if (!remoteSync) return;
+      const existing = getRemoteSyncToken();
+      const input = window.prompt(
+        [
+          "Paste a GitHub Personal Access Token with repository content write access.",
+          `Target: ${getRemoteSyncConfigLabel()} (${remoteSync.filePath})`,
+          "Leave blank to disconnect sync.",
+        ].join("\n"),
+        existing
+      );
+      if (input === null) return;
+      const nextToken = String(input || "").trim();
+      setRemoteSyncToken(nextToken);
+      lastSyncedHtmlHash = "";
+      if (nextToken) {
+        refreshRemoteSyncUi("GitHub connected. Pending first sync...");
+        scheduleRemoteSync();
+      } else {
+        refreshRemoteSyncUi("GitHub sync disconnected");
+      }
+    }
+
     function saveUpgradeState() {
       try {
-        const state = {};
-        document.querySelectorAll(".upgrade-card").forEach((card) => {
-          const name = getCardOwnerName(card);
-          const upgradeList = card.querySelector(".upgrade-list");
-          if (!name || !upgradeList) return;
-          state[name] = sanitizeUpgradeListForSave(upgradeList);
-        });
+        const state = buildCurrentUpgradeState();
         window.localStorage.setItem(storageKey, JSON.stringify(state));
+        scheduleRemoteSync();
       } catch (_error) {
         // Ignore storage failures.
       }
@@ -2237,6 +2489,7 @@
       pendingRestoreDone = true;
     }
     watchUpgradeChanges();
+    remoteSyncReady = true;
     scheduleSaveUpgradeState();
     window.addEventListener("beforeunload", () => {
       saveUpgradeState();
