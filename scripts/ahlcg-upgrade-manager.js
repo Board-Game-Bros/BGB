@@ -2032,6 +2032,8 @@
         if (window.BGB && typeof window.BGB.resetHoverPreviewStyles === "function") {
           window.BGB.resetHoverPreviewStyles(preview);
         }
+        preview.style.removeProperty("display");
+        preview.style.removeProperty("visibility");
         preview.style.removeProperty("position");
         preview.style.removeProperty("left");
         preview.style.removeProperty("right");
@@ -2041,11 +2043,25 @@
         preview.style.removeProperty("z-index");
       }
 
+      function forceShowCardPreview(preview) {
+        if (!preview) return;
+        preview.style.setProperty("display", "block", "important");
+        preview.style.setProperty("visibility", "visible", "important");
+      }
+
       function clampCardPreviewPosition(cardRef) {
         if (!cardRef) return;
         const preview = cardRef.querySelector(".card-preview");
         if (!preview) return;
-        resetCardPreviewPosition(preview);
+        // Ensure measurable box on first hover frame.
+        forceShowCardPreview(preview);
+        preview.style.removeProperty("position");
+        preview.style.removeProperty("left");
+        preview.style.removeProperty("right");
+        preview.style.removeProperty("top");
+        preview.style.removeProperty("bottom");
+        preview.style.removeProperty("transform");
+        preview.style.removeProperty("z-index");
 
         const rect = preview.getBoundingClientRect();
         const width = rect.width || 0;
@@ -2059,7 +2075,12 @@
         const overflowLeft = rect.left < previewMargin;
         const overflowRight = rect.right > (viewportWidth - previewMargin);
         const overflowTop = rect.top < previewMargin;
-        if (!(overflowLeft || overflowRight || overflowTop)) return;
+        if (!(overflowLeft || overflowRight || overflowTop)) {
+          // Keep default CSS hover behavior when within viewport.
+          preview.style.removeProperty("display");
+          preview.style.removeProperty("visibility");
+          return;
+        }
 
         const clamp = (value, min, max) => {
           if (max < min) return min;
@@ -2116,6 +2137,8 @@
 
         const activate = () => {
           setActiveCardRef(cardRef);
+          const preview = cardRef.querySelector(".card-preview");
+          forceShowCardPreview(preview);
           window.requestAnimationFrame(() => {
             clampCardPreviewPosition(cardRef);
           });
@@ -2123,6 +2146,8 @@
 
         const move = () => {
           if (getActiveCardRef() !== cardRef) return;
+          const preview = cardRef.querySelector(".card-preview");
+          forceShowCardPreview(preview);
           window.requestAnimationFrame(() => {
             clampCardPreviewPosition(cardRef);
           });
