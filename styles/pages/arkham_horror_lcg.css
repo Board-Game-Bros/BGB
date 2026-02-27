@@ -382,6 +382,9 @@ nav a,
   bottom: calc(100% + 10px);
   transform: translateX(-50%);
   width: var(--card-preview-width, 420px);
+  max-width: calc(100vw - 16px);
+  max-height: calc(100vh - 16px);
+  height: auto;
   border: 2px solid #3a2d1a;
   border-radius: 8px;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);

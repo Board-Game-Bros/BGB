@@ -2016,12 +2016,131 @@
 
     function bindPreviewFallbacks(container) {
       const root = container || document;
+      const previewMargin = 8;
+      const previewGap = 10;
+
+      function getActiveCardRef() {
+        return window.__bgbActiveCardRef || null;
+      }
+
+      function setActiveCardRef(cardRef) {
+        window.__bgbActiveCardRef = cardRef || null;
+      }
+
+      function resetCardPreviewPosition(preview) {
+        if (!preview) return;
+        if (window.BGB && typeof window.BGB.resetHoverPreviewStyles === "function") {
+          window.BGB.resetHoverPreviewStyles(preview);
+        }
+        preview.style.removeProperty("position");
+        preview.style.removeProperty("left");
+        preview.style.removeProperty("right");
+        preview.style.removeProperty("top");
+        preview.style.removeProperty("bottom");
+        preview.style.removeProperty("transform");
+        preview.style.removeProperty("z-index");
+      }
+
+      function clampCardPreviewPosition(cardRef) {
+        if (!cardRef) return;
+        const preview = cardRef.querySelector(".card-preview");
+        if (!preview) return;
+        resetCardPreviewPosition(preview);
+
+        const rect = preview.getBoundingClientRect();
+        const width = rect.width || 0;
+        const height = rect.height || 0;
+        if (!width || !height) return;
+
+        const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
+        const viewportHeight = document.documentElement.clientHeight || window.innerHeight || 0;
+        if (!viewportWidth || !viewportHeight) return;
+
+        const overflowLeft = rect.left < previewMargin;
+        const overflowRight = rect.right > (viewportWidth - previewMargin);
+        const overflowTop = rect.top < previewMargin;
+        if (!(overflowLeft || overflowRight || overflowTop)) return;
+
+        const clamp = (value, min, max) => {
+          if (max < min) return min;
+          return Math.min(Math.max(value, min), max);
+        };
+
+        const anchor = cardRef.getBoundingClientRect();
+        let left = anchor.left + (anchor.width / 2) - (width / 2);
+        left = clamp(left, previewMargin, viewportWidth - width - previewMargin);
+
+        let top = anchor.top - previewGap - height;
+        if (top < previewMargin) {
+          top = anchor.bottom + previewGap;
+        }
+        top = clamp(top, previewMargin, viewportHeight - height - previewMargin);
+
+        preview.style.position = "fixed";
+        preview.style.left = Math.round(left) + "px";
+        preview.style.top = Math.round(top) + "px";
+        preview.style.right = "auto";
+        preview.style.bottom = "auto";
+        preview.style.transform = "none";
+        preview.style.zIndex = "2147483000";
+      }
+
+      function refreshActivePreview() {
+        const activeCardRef = getActiveCardRef();
+        if (!activeCardRef) return;
+        if (!(activeCardRef.matches(":hover") || activeCardRef.contains(document.activeElement))) {
+          const preview = activeCardRef.querySelector(".card-preview");
+          resetCardPreviewPosition(preview);
+          setActiveCardRef(null);
+          return;
+        }
+        clampCardPreviewPosition(activeCardRef);
+      }
+
+      if (root === document && document.documentElement.dataset.previewViewportBound !== "1") {
+        document.documentElement.dataset.previewViewportBound = "1";
+        window.addEventListener("scroll", () => {
+          window.requestAnimationFrame(refreshActivePreview);
+        }, { passive: true });
+        window.addEventListener("resize", () => {
+          window.requestAnimationFrame(refreshActivePreview);
+        }, { passive: true });
+      }
+
       root.querySelectorAll(".card-ref").forEach((cardRef) => {
         if (cardRef.__bgbPreviewBound === true) return;
         cardRef.__bgbPreviewBound = true;
         if (cardRef instanceof HTMLElement) {
           cardRef.removeAttribute("data-preview-bound");
         }
+
+        const activate = () => {
+          setActiveCardRef(cardRef);
+          window.requestAnimationFrame(() => {
+            clampCardPreviewPosition(cardRef);
+          });
+        };
+
+        const move = () => {
+          if (getActiveCardRef() !== cardRef) return;
+          window.requestAnimationFrame(() => {
+            clampCardPreviewPosition(cardRef);
+          });
+        };
+
+        const reset = () => {
+          const preview = cardRef.querySelector(".card-preview");
+          resetCardPreviewPosition(preview);
+          if (getActiveCardRef() === cardRef) {
+            setActiveCardRef(null);
+          }
+        };
+
+        cardRef.addEventListener("mouseenter", activate);
+        cardRef.addEventListener("mousemove", move);
+        cardRef.addEventListener("focusin", activate);
+        cardRef.addEventListener("mouseleave", reset);
+        cardRef.addEventListener("focusout", reset);
       });
 
       root.querySelectorAll("img.card-preview").forEach((img) => {
