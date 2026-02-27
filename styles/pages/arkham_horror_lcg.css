@@ -682,6 +682,14 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
     linear-gradient(180deg, rgba(247, 235, 214, 0.96) 0%, rgba(230, 205, 166, 0.96) 100%);
 }
 
+/* Torch mode: keep text readable on light parchment cards. */
+body.torch-mode .record-card,
+body.torch-mode .record-card * {
+  color: #2a1f12;
+  opacity: 1;
+  text-shadow: none;
+}
+
 @media (max-width: 720px) {
   .record-card {
     padding: 14px;

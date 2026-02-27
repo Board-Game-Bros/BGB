@@ -28,3 +28,15 @@ nav a,
   color: #2f1d12;
   text-shadow: 1px 1px 0 rgba(255, 230, 180, 0.3);
 }
+
+/* Torch mode: force high-contrast copy on light cards/log blocks. */
+body.torch-mode .card,
+body.torch-mode .card *,
+body.torch-mode .session,
+body.torch-mode .session *,
+body.torch-mode .tg-block,
+body.torch-mode .tg-block * {
+  color: #2a1f12;
+  opacity: 1;
+  text-shadow: none;
+}

@@ -32,21 +32,7 @@ header {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  /* Trim the parchment square and keep only the center crest silhouette. */
-  clip-path: polygon(
-    50% 3%,
-    89% 12%,
-    87% 50%,
-    95% 57%,
-    87% 65%,
-    83% 79%,
-    50% 98%,
-    17% 79%,
-    13% 65%,
-    5% 57%,
-    13% 50%,
-    11% 12%
-  );
+  clip-path: none;
   filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.55));
 }
 
