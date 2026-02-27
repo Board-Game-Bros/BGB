@@ -2135,6 +2135,10 @@
           cardRef.removeAttribute("data-preview-bound");
         }
 
+        const isWithinCardRef = (target) => {
+          return !!(target && target instanceof Node && cardRef.contains(target));
+        };
+
         const activate = () => {
           setActiveCardRef(cardRef);
           const preview = cardRef.querySelector(".card-preview");
@@ -2153,8 +2157,12 @@
           });
         };
 
-        const reset = () => {
+        const reset = (event) => {
           const preview = cardRef.querySelector(".card-preview");
+          const relatedTarget = event && event.relatedTarget;
+          if (isWithinCardRef(relatedTarget)) {
+            return;
+          }
           resetCardPreviewPosition(preview);
           if (getActiveCardRef() === cardRef) {
             setActiveCardRef(null);
@@ -2166,6 +2174,20 @@
         cardRef.addEventListener("focusin", activate);
         cardRef.addEventListener("mouseleave", reset);
         cardRef.addEventListener("focusout", reset);
+
+        const preview = cardRef.querySelector(".card-preview");
+        if (preview && preview.__bgbPreviewHoverBound !== true) {
+          preview.__bgbPreviewHoverBound = true;
+          preview.addEventListener("mouseenter", activate);
+          preview.addEventListener("mousemove", move);
+          preview.addEventListener("mouseleave", (event) => {
+            const relatedTarget = event && event.relatedTarget;
+            if (isWithinCardRef(relatedTarget)) {
+              return;
+            }
+            reset(event);
+          });
+        }
       });
 
       root.querySelectorAll("img.card-preview").forEach((img) => {
