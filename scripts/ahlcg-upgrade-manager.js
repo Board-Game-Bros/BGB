@@ -48,6 +48,7 @@
     let remoteSyncQueued = false;
     let lastSyncedHtmlHash = "";
     let remoteSyncReady = false;
+    let lastSavedStateRaw = "";
     let entryUidCounter = 1;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
@@ -1912,6 +1913,7 @@
     function scheduleRemoteSync() {
       if (!remoteSync) return;
       if (!remoteSyncReady) return;
+      if (requireEditPassword && !isEditEnabled()) return;
       if (!getRemoteSyncToken()) {
         refreshRemoteSyncUi();
         return;
@@ -1951,7 +1953,10 @@
     function saveUpgradeState() {
       try {
         const state = buildCurrentUpgradeState();
-        window.localStorage.setItem(storageKey, JSON.stringify(state));
+        const nextRaw = JSON.stringify(state);
+        if (nextRaw === lastSavedStateRaw) return;
+        window.localStorage.setItem(storageKey, nextRaw);
+        lastSavedStateRaw = nextRaw;
         scheduleRemoteSync();
       } catch (_error) {
         // Ignore storage failures.
@@ -1989,6 +1994,7 @@
             upgradeList.innerHTML = state[name];
           }
         });
+        lastSavedStateRaw = JSON.stringify(state);
       } catch (_error) {
         // Ignore malformed storage.
       }
@@ -2552,6 +2558,11 @@
       pendingRestoreDone = true;
     }
     watchUpgradeChanges();
+    try {
+      lastSavedStateRaw = JSON.stringify(buildCurrentUpgradeState());
+    } catch (_error) {
+      // Ignore serialization failures.
+    }
     remoteSyncReady = true;
     scheduleSaveUpgradeState();
     window.addEventListener("beforeunload", () => {
