@@ -2531,6 +2531,8 @@
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
       normalizeStaticEntryCardRows(entry);
     });
+    // Ensure upgrade page hover previews are never suppressed by deck panel mode.
+    document.body.classList.remove("deck-panel-mode");
     setupExistingPreviewFallbacks();
     bindCardRemoveDelegation();
     bindTraumaInlineEditing();
