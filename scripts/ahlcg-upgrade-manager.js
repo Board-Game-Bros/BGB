@@ -1026,6 +1026,21 @@
       clone.querySelectorAll("[data-bound]").forEach((node) => {
         node.removeAttribute("data-bound");
       });
+      clone.querySelectorAll("[data-preview-bound]").forEach((node) => {
+        node.removeAttribute("data-preview-bound");
+      });
+      clone.querySelectorAll(".card-preview").forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
+        node.style.removeProperty("display");
+        node.style.removeProperty("visibility");
+        node.style.removeProperty("position");
+        node.style.removeProperty("left");
+        node.style.removeProperty("right");
+        node.style.removeProperty("top");
+        node.style.removeProperty("bottom");
+        node.style.removeProperty("transform");
+        node.style.removeProperty("z-index");
+      });
       return clone.outerHTML;
     }
 
@@ -1594,6 +1609,24 @@
       clone.querySelectorAll("[data-bound]").forEach((node) => {
         node.removeAttribute("data-bound");
       });
+      clone.querySelectorAll("[data-preview-bound], [data-bound], [data-card-remove-bound], [data-trauma-edit-bound]").forEach((node) => {
+        node.removeAttribute("data-preview-bound");
+        node.removeAttribute("data-bound");
+        node.removeAttribute("data-card-remove-bound");
+        node.removeAttribute("data-trauma-edit-bound");
+      });
+      clone.querySelectorAll(".card-preview").forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
+        node.style.removeProperty("display");
+        node.style.removeProperty("visibility");
+        node.style.removeProperty("position");
+        node.style.removeProperty("left");
+        node.style.removeProperty("right");
+        node.style.removeProperty("top");
+        node.style.removeProperty("bottom");
+        node.style.removeProperty("transform");
+        node.style.removeProperty("z-index");
+      });
       return clone.innerHTML;
     }
 
@@ -1752,8 +1785,11 @@
       }
 
       root.querySelectorAll(".card-ref").forEach((cardRef) => {
-        if (cardRef.dataset.previewBound === "1") return;
-        cardRef.dataset.previewBound = "1";
+        if (cardRef.__bgbPreviewBound === true) return;
+        cardRef.__bgbPreviewBound = true;
+        if (cardRef instanceof HTMLElement) {
+          cardRef.removeAttribute("data-preview-bound");
+        }
 
         const repositionNow = () => {
           const preview = cardRef.querySelector(".card-preview");
@@ -1787,8 +1823,11 @@
       });
 
       root.querySelectorAll("img.card-preview").forEach((img) => {
-        if (img.dataset.bound === "1") return;
-        img.dataset.bound = "1";
+        if (img.__bgbPreviewImgBound === true) return;
+        img.__bgbPreviewImgBound = true;
+        if (img instanceof HTMLElement) {
+          img.removeAttribute("data-bound");
+        }
         img.addEventListener("error", () => {
           const cardRef = img.closest(".card-ref");
           const cardName = cardRef ? getCardNameFromRef(cardRef) : img.alt || "Unknown Card";
@@ -1880,8 +1919,27 @@
           replaceCardRefText(cardRef, nextName);
           changed = true;
         }
+        if (cardRef instanceof HTMLElement && cardRef.hasAttribute("data-preview-bound")) {
+          cardRef.removeAttribute("data-preview-bound");
+          changed = true;
+        }
         const previewNode = cardRef.querySelector(".card-preview");
         const preferredSrc = findExactImage(normalizedBase);
+        if (previewNode instanceof HTMLElement) {
+          previewNode.style.removeProperty("display");
+          previewNode.style.removeProperty("visibility");
+          previewNode.style.removeProperty("position");
+          previewNode.style.removeProperty("left");
+          previewNode.style.removeProperty("right");
+          previewNode.style.removeProperty("top");
+          previewNode.style.removeProperty("bottom");
+          previewNode.style.removeProperty("transform");
+          previewNode.style.removeProperty("z-index");
+          if (previewNode.hasAttribute("data-bound")) {
+            previewNode.removeAttribute("data-bound");
+            changed = true;
+          }
+        }
         if (img && img.getAttribute("alt") !== normalizedBase) {
           img.setAttribute("alt", normalizedBase);
           changed = true;
