@@ -1664,29 +1664,117 @@
 
     function bindPreviewFallbacks(container) {
       const root = container || document;
+      const previewMargin = 8;
+      const previewGap = 10;
+
+      function getActiveCardRef() {
+        return window.__bgbActiveCardRef || null;
+      }
+
+      function setActiveCardRef(cardRef) {
+        window.__bgbActiveCardRef = cardRef || null;
+      }
 
       function resetCardPreviewPosition(preview) {
         if (!preview) return;
         if (window.BGB && typeof window.BGB.resetHoverPreviewStyles === "function") {
           window.BGB.resetHoverPreviewStyles(preview);
         }
+        preview.style.display = "";
         preview.style.position = "absolute";
         preview.style.left = "";
         preview.style.right = "";
         preview.style.top = "";
         preview.style.bottom = "";
         preview.style.transform = "";
+        preview.style.zIndex = "";
+      }
+
+      function clampCardPreviewPosition(cardRef, preview) {
+        if (!cardRef || !preview) return;
+        const anchor = cardRef.getBoundingClientRect();
+        const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
+        const viewportHeight = document.documentElement.clientHeight || window.innerHeight || 0;
+        const previousDisplay = preview.style.display;
+        preview.style.display = "block";
+        const width = preview.offsetWidth || 0;
+        const height = preview.offsetHeight || 0;
+        if (!viewportWidth || !viewportHeight || !width || !height) {
+          preview.style.display = previousDisplay;
+          return;
+        }
+
+        const clamp = (value, min, max) => {
+          if (max < min) return min;
+          return Math.min(Math.max(value, min), max);
+        };
+
+        const idealLeft = anchor.left + (anchor.width / 2) - (width / 2);
+        const left = clamp(idealLeft, previewMargin, viewportWidth - width - previewMargin);
+        const idealTop = anchor.top - previewGap - height;
+        const top = clamp(idealTop, previewMargin, viewportHeight - height - previewMargin);
+
+        preview.style.position = "fixed";
+        preview.style.left = Math.round(left) + "px";
+        preview.style.top = Math.round(top) + "px";
+        preview.style.right = "auto";
+        preview.style.bottom = "auto";
+        preview.style.transform = "none";
+        preview.style.zIndex = "2147483000";
+      }
+
+      function refreshActivePreview() {
+        const activeCardRef = getActiveCardRef();
+        if (!activeCardRef) return;
+        if (!(activeCardRef.matches(":hover") || activeCardRef.contains(document.activeElement))) {
+          const activePreview = activeCardRef.querySelector(".card-preview");
+          resetCardPreviewPosition(activePreview);
+          setActiveCardRef(null);
+          return;
+        }
+        const activePreview = activeCardRef.querySelector(".card-preview");
+        clampCardPreviewPosition(activeCardRef, activePreview);
+      }
+
+      if (root === document && document.documentElement.dataset.previewViewportBound !== "1") {
+        document.documentElement.dataset.previewViewportBound = "1";
+        window.addEventListener("scroll", () => {
+          window.requestAnimationFrame(refreshActivePreview);
+        }, { passive: true });
+        window.addEventListener("resize", () => {
+          window.requestAnimationFrame(refreshActivePreview);
+        }, { passive: true });
       }
 
       root.querySelectorAll(".card-ref").forEach((cardRef) => {
         if (cardRef.dataset.previewBound === "1") return;
         cardRef.dataset.previewBound = "1";
 
+        const repositionNow = () => {
+          const preview = cardRef.querySelector(".card-preview");
+          if (!preview) return;
+          clampCardPreviewPosition(cardRef, preview);
+        };
+        const reposition = () => {
+          window.requestAnimationFrame(repositionNow);
+        };
+
         const reset = () => {
           const preview = cardRef.querySelector(".card-preview");
           resetCardPreviewPosition(preview);
+          if (getActiveCardRef() === cardRef) {
+            setActiveCardRef(null);
+          }
         };
 
+        const activate = () => {
+          setActiveCardRef(cardRef);
+          reposition();
+        };
+
+        cardRef.addEventListener("mouseenter", activate);
+        cardRef.addEventListener("mousemove", repositionNow);
+        cardRef.addEventListener("focusin", activate);
         cardRef.addEventListener("mouseleave", reset);
         cardRef.addEventListener("focusout", reset);
       });
