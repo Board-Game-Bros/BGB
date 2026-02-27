@@ -393,6 +393,10 @@ nav a,
   display: block;
 }
 
+.card-ref:focus-within .card-preview {
+  display: block;
+}
+
 /* Investigator deck pages: use panel preview instead of popup hover preview. */
 body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
   display: none !important;
