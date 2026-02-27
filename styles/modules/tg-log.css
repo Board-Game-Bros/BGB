@@ -216,11 +216,39 @@
 
 .tg-arrow-img {
   display: inline-block;
-  width: 60px;
-  height: 36px;
-  background: url("../../assets/misc/tg_arrow.png") center / contain no-repeat;
+  position: relative;
+  width: 58px;
+  height: 22px;
   justify-self: center;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.28));
+}
+
+.tg-arrow-img::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 12px;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(214, 181, 112, 0.92) 0%, rgba(241, 217, 161, 0.95) 100%);
+  box-shadow:
+    0 0 0 1px rgba(90, 68, 39, 0.35),
+    0 0 6px rgba(255, 204, 124, 0.24);
+}
+
+.tg-arrow-img::after {
+  content: "";
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid rgba(241, 217, 161, 0.95);
+  border-right: 2px solid rgba(241, 217, 161, 0.95);
+  transform: translateY(-50%) rotate(45deg);
+  box-shadow: 1px -1px 3px rgba(255, 204, 124, 0.2);
 }
 
 @media (max-width: 600px) {
