@@ -2043,7 +2043,6 @@
         if (window.BGB && typeof window.BGB.resetHoverPreviewStyles === "function") {
           window.BGB.resetHoverPreviewStyles(preview);
         }
-        preview.style.removeProperty("pointer-events");
         preview.style.removeProperty("display");
         preview.style.removeProperty("visibility");
         preview.style.removeProperty("position");
@@ -2057,8 +2056,6 @@
 
       function forceShowCardPreview(preview) {
         if (!preview) return;
-        // Keep hover state stable when preview is near viewport edges.
-        preview.style.setProperty("pointer-events", "none");
         preview.style.setProperty("display", "block", "important");
         preview.style.setProperty("visibility", "visible", "important");
       }
@@ -2085,6 +2082,16 @@
         const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
         const viewportHeight = document.documentElement.clientHeight || window.innerHeight || 0;
         if (!viewportWidth || !viewportHeight) return;
+
+        const overflowLeft = rect.left < previewMargin;
+        const overflowRight = rect.right > (viewportWidth - previewMargin);
+        const overflowTop = rect.top < previewMargin;
+        if (!(overflowLeft || overflowRight || overflowTop)) {
+          // Keep default CSS hover behavior when within viewport.
+          preview.style.removeProperty("display");
+          preview.style.removeProperty("visibility");
+          return;
+        }
 
         const clamp = (value, min, max) => {
           if (max < min) return min;
