@@ -2027,6 +2027,17 @@
         window.__bgbActiveCardRef = cardRef || null;
       }
 
+      function isCardRefInteractiveActive(cardRef) {
+        if (!cardRef) return false;
+        const preview = cardRef.querySelector(".card-preview");
+        const activeEl = document.activeElement;
+        const cardHovered = typeof cardRef.matches === "function" && cardRef.matches(":hover");
+        const previewHovered = !!(preview && typeof preview.matches === "function" && preview.matches(":hover"));
+        const cardFocused = !!(activeEl && cardRef.contains(activeEl));
+        const previewFocused = !!(preview && activeEl && preview.contains(activeEl));
+        return cardHovered || previewHovered || cardFocused || previewFocused;
+      }
+
       function resetCardPreviewPosition(preview) {
         if (!preview) return;
         if (window.BGB && typeof window.BGB.resetHoverPreviewStyles === "function") {
@@ -2109,7 +2120,7 @@
       function refreshActivePreview() {
         const activeCardRef = getActiveCardRef();
         if (!activeCardRef) return;
-        if (!(activeCardRef.matches(":hover") || activeCardRef.contains(document.activeElement))) {
+        if (!isCardRefInteractiveActive(activeCardRef)) {
           const preview = activeCardRef.querySelector(".card-preview");
           resetCardPreviewPosition(preview);
           setActiveCardRef(null);
@@ -2163,10 +2174,13 @@
           if (isWithinCardRef(relatedTarget)) {
             return;
           }
-          resetCardPreviewPosition(preview);
-          if (getActiveCardRef() === cardRef) {
-            setActiveCardRef(null);
-          }
+          window.requestAnimationFrame(() => {
+            if (isCardRefInteractiveActive(cardRef)) return;
+            resetCardPreviewPosition(preview);
+            if (getActiveCardRef() === cardRef) {
+              setActiveCardRef(null);
+            }
+          });
         };
 
         cardRef.addEventListener("mouseenter", activate);
