@@ -36,7 +36,9 @@ body.torch-mode .session,
 body.torch-mode .session *,
 body.torch-mode .tg-block,
 body.torch-mode .tg-block * {
-  color: #2a1f12;
+  color: #f3d9a4;
   opacity: 1;
-  text-shadow: none;
+  text-shadow:
+    0 0 4px rgba(255, 215, 145, 0.42),
+    0 0 12px rgba(255, 188, 92, 0.28);
 }
