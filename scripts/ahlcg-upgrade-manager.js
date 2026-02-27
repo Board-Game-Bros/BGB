@@ -1680,7 +1680,8 @@
         if (window.BGB && typeof window.BGB.resetHoverPreviewStyles === "function") {
           window.BGB.resetHoverPreviewStyles(preview);
         }
-        preview.style.display = "";
+        preview.style.removeProperty("display");
+        preview.style.visibility = "";
         preview.style.position = "absolute";
         preview.style.left = "";
         preview.style.right = "";
@@ -1690,17 +1691,21 @@
         preview.style.zIndex = "";
       }
 
+      function forceShowCardPreview(preview) {
+        if (!preview) return;
+        preview.style.setProperty("display", "block", "important");
+        preview.style.visibility = "visible";
+      }
+
       function clampCardPreviewPosition(cardRef, preview) {
         if (!cardRef || !preview) return;
         const anchor = cardRef.getBoundingClientRect();
         const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
         const viewportHeight = document.documentElement.clientHeight || window.innerHeight || 0;
-        const previousDisplay = preview.style.display;
-        preview.style.display = "block";
+        forceShowCardPreview(preview);
         const width = preview.offsetWidth || 0;
         const height = preview.offsetHeight || 0;
         if (!viewportWidth || !viewportHeight || !width || !height) {
-          preview.style.display = previousDisplay;
           return;
         }
 
@@ -1769,6 +1774,8 @@
 
         const activate = () => {
           setActiveCardRef(cardRef);
+          const preview = cardRef.querySelector(".card-preview");
+          forceShowCardPreview(preview);
           reposition();
         };
 
