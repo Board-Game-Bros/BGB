@@ -132,6 +132,15 @@
       return window.btoa(binary);
     }
 
+    function fromBase64Utf8(value) {
+      const binary = window.atob(String(value || ""));
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return new TextDecoder().decode(bytes);
+    }
+
     function makeQuickHash(value) {
       let hash = 5381;
       const text = String(value || "");
@@ -1748,25 +1757,72 @@
       return state;
     }
 
-    function buildPersistableHtml(state) {
-      const docClone = document.documentElement.cloneNode(true);
-      docClone.querySelectorAll(".edit-gate").forEach((node) => node.remove());
-      const bodyEl = docClone.querySelector("body");
-      if (bodyEl) {
-        bodyEl.classList.remove("deck-panel-mode");
+    function getOwnerNameFromCardNode(card) {
+      if (!card) return "";
+      const heading = card.querySelector("h3");
+      if (!heading) return "";
+      const dataName = heading.getAttribute("data-investigator-name");
+      if (dataName) return dataName.trim();
+      return heading.textContent.trim();
+    }
+
+    function sanitizeRuntimeNodesFromDoc(doc) {
+      if (!doc) return;
+      doc.querySelectorAll(".edit-gate").forEach((node) => node.remove());
+      doc.querySelectorAll("#torch-toggle, header.site-header, nav.sticky, footer").forEach((node) => node.remove());
+      doc.querySelectorAll("#hl-aria-live-message-container, #hl-aria-live-alert-container").forEach((node) => node.remove());
+      doc.querySelectorAll("grammarly-desktop-integration").forEach((node) => node.remove());
+
+      const htmlEl = doc.documentElement;
+      if (htmlEl) {
+        htmlEl.removeAttribute("data-preview-viewport-bound");
+        htmlEl.removeAttribute("style");
       }
-      docClone.querySelectorAll(".upgrade-card").forEach((card) => {
-        const ownerName = getCardOwnerName(card);
+      const bodyEl = doc.body;
+      if (bodyEl) {
+        bodyEl.classList.remove("loaded");
+        bodyEl.classList.remove("deck-panel-mode");
+        bodyEl.removeAttribute("style");
+        Array.from(bodyEl.attributes).forEach((attr) => {
+          if (/^data-new-gr-c-s-check-loaded$/i.test(attr.name)) {
+            bodyEl.removeAttribute(attr.name);
+          }
+          if (/^data-gr-ext-installed$/i.test(attr.name)) {
+            bodyEl.removeAttribute(attr.name);
+          }
+        });
+      }
+      doc.querySelectorAll(".subnav a.is-active").forEach((node) => node.classList.remove("is-active"));
+      doc.querySelectorAll(".card-preview").forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
+        node.style.removeProperty("display");
+        node.style.removeProperty("visibility");
+        node.style.removeProperty("position");
+        node.style.removeProperty("left");
+        node.style.removeProperty("right");
+        node.style.removeProperty("top");
+        node.style.removeProperty("bottom");
+        node.style.removeProperty("transform");
+        node.style.removeProperty("z-index");
+      });
+    }
+
+    function buildPersistableHtml(sourceHtml, state) {
+      const parser = new window.DOMParser();
+      const sourceDoc = parser.parseFromString(String(sourceHtml || ""), "text/html");
+      sourceDoc.querySelectorAll(".upgrade-card").forEach((card) => {
+        const ownerName = getOwnerNameFromCardNode(card);
         const upgradeList = card.querySelector(".upgrade-list");
         if (!ownerName || !upgradeList) return;
         if (typeof state[ownerName] === "string") {
           upgradeList.innerHTML = state[ownerName];
         }
       });
-      return "<!DOCTYPE html>\n" + docClone.outerHTML;
+      sanitizeRuntimeNodesFromDoc(sourceDoc);
+      return "<!DOCTYPE html>\n" + sourceDoc.documentElement.outerHTML;
     }
 
-    async function requestGitHubFileSha(token) {
+    async function requestGitHubFileMeta(token) {
       if (!remoteSync) return "";
       const endpoint = `https://api.github.com/repos/${encodeURIComponent(remoteSync.owner)}/${encodeURIComponent(remoteSync.repo)}/contents/${encodeURIComponent(remoteSync.filePath).replace(/%2F/g, "/")}?ref=${encodeURIComponent(remoteSync.branch)}`;
       const response = await window.fetch(endpoint, {
@@ -1783,20 +1839,26 @@
       if (!payload || typeof payload.sha !== "string") {
         throw new Error("GitHub response missing file SHA");
       }
-      return payload.sha;
+      const encodedContent = typeof payload.content === "string" ? payload.content : "";
+      const sourceHtml = encodedContent ? fromBase64Utf8(encodedContent.replace(/\n/g, "")) : "";
+      return {
+        sha: payload.sha,
+        sourceHtml,
+      };
     }
 
-    async function pushHtmlToGitHub(htmlText) {
+    async function pushHtmlToGitHub(state) {
       if (!remoteSync) return;
       const token = getRemoteSyncToken();
       if (!token) {
         refreshRemoteSyncUi("GitHub token missing");
         return;
       }
+      const fileMeta = await requestGitHubFileMeta(token);
+      const htmlText = buildPersistableHtml(fileMeta.sourceHtml, state);
       const nextHash = makeQuickHash(htmlText);
       if (nextHash === lastSyncedHtmlHash) return;
 
-      const sha = await requestGitHubFileSha(token);
       const endpoint = `https://api.github.com/repos/${encodeURIComponent(remoteSync.owner)}/${encodeURIComponent(remoteSync.repo)}/contents/${encodeURIComponent(remoteSync.filePath).replace(/%2F/g, "/")}`;
       const now = new Date();
       const message = `auto-sync deck upgrade ${now.toISOString().slice(0, 19)}Z`;
@@ -1811,7 +1873,7 @@
           message,
           content: toBase64Utf8(htmlText),
           branch: remoteSync.branch,
-          sha,
+          sha: fileMeta.sha,
         }),
       });
       if (!response.ok) {
@@ -1830,8 +1892,7 @@
       refreshRemoteSyncUi("Syncing HTML to GitHub...");
       try {
         const state = buildCurrentUpgradeState();
-        const htmlText = buildPersistableHtml(state);
-        await pushHtmlToGitHub(htmlText);
+        await pushHtmlToGitHub(state);
         const syncedAt = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
         refreshRemoteSyncUi(`GitHub synced at ${syncedAt}`);
       } catch (error) {
