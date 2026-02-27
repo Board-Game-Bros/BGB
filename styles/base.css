@@ -214,6 +214,14 @@ body.torch-mode .game-card .build-date {
   text-shadow: 0 1px 0 rgba(255, 244, 220, 0.35);
 }
 
+/* Torch mode: improve readability for deck PDF pill buttons. */
+body.torch-mode a.pill-btn[href$=".pdf"] {
+  color: #f3d9a4;
+  text-shadow:
+    0 0 4px rgba(255, 215, 145, 0.4),
+    0 0 10px rgba(255, 188, 92, 0.26);
+}
+
 footer {
   background: #3a2d1a;
   color: #f2e6c9;
