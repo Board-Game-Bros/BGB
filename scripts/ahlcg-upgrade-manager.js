@@ -1266,7 +1266,7 @@
           else tryUnlockEditMode();
         },
         onSyncClick: () => {
-          openRemoteSyncPrompt();
+          handleRemoteSyncButtonClick();
         },
         labels: {
           editLockedButton: "Edit Page",
@@ -1925,6 +1925,15 @@
         remoteSyncTimer = null;
         void runRemoteSyncNow();
       }, remoteSyncDebounceMs);
+    }
+
+    function handleRemoteSyncButtonClick() {
+      if (!remoteSync) return;
+      if (!getRemoteSyncToken()) {
+        openRemoteSyncPrompt();
+        return;
+      }
+      void runRemoteSyncNow();
     }
 
     function openRemoteSyncPrompt() {
