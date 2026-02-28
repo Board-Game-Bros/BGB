@@ -1,21 +1,19 @@
-// Tainted Grail sessions: render history + inline "new session" editor + GitHub sync.
+// Tainted Grail sessions: history + inline new-session editor.
 (() => {
   const root = document.getElementById("tg-campaign-root");
   if (!root) return;
 
   const dataSource = String(root.getAttribute("data-source") || "assets/data/tainted_grail_foa_sessions.json");
-  const defaultSyncConfig = normalizeSyncConfig(window.TG_FOA_SYNC || {});
+  const syncConfig = normalizeSyncConfig(window.TG_FOA_SYNC || {});
 
-  const draftKey = "bgb_tg_foa_sessions_draft_v2";
+  const draftKey = "bgb_tg_foa_sessions_draft_v3";
   const tokenKey = "bgb_github_sync_token_v1";
-  const syncConfigKey = "bgb_tg_foa_sync_cfg_v2";
-  const autoSyncKey = "bgb_tg_foa_auto_sync_v2";
+  const editUnlockKey = "bgb_tg_edit_unlocked_v1";
 
   let state = { campaign: {}, sessions: [], draftSession: null };
-  let sourceRaw = "";
+  let editingSessionId = "";
   let syncStatusNode = null;
   let pageStatusNode = null;
-  let syncTimer = null;
   let syncInFlight = false;
   let lastSyncedHash = "";
 
@@ -28,7 +26,7 @@
     const branch = String(raw.branch || "main").trim();
     const filePath = String(raw.filePath || "").trim().replace(/^\/+/, "");
     if (!owner || !repo || !filePath) return null;
-    return { provider, owner, repo, branch, filePath };
+    return { owner, repo, branch, filePath };
   }
 
   function deepClone(v) {
@@ -70,6 +68,7 @@
     const campaign = safe.campaign && typeof safe.campaign === "object" ? safe.campaign : {};
     const sessions = Array.isArray(safe.sessions) ? safe.sessions : [];
     const draftSession = safe.draftSession ? sanitizeSession(safe.draftSession, getNextSessionNo(sessions)) : null;
+
     return {
       campaign: {
         title: String(campaign.title || "The Fall of Avalon"),
@@ -116,6 +115,38 @@
     return n;
   }
 
+  function isEditUnlocked() {
+    try {
+      return localStorage.getItem(editUnlockKey) === "1";
+    } catch (_error) {
+      return false;
+    }
+  }
+
+  function setEditUnlocked(next) {
+    try {
+      localStorage.setItem(editUnlockKey, next ? "1" : "0");
+    } catch (_error) {
+      // Ignore.
+    }
+  }
+
+  function getToken() {
+    try {
+      return String(localStorage.getItem(tokenKey) || "").trim();
+    } catch (_error) {
+      return "";
+    }
+  }
+
+  function setPageStatus(text) {
+    if (pageStatusNode) pageStatusNode.textContent = text;
+  }
+
+  function setSyncStatus(text) {
+    if (syncStatusNode) syncStatusNode.textContent = text;
+  }
+
   function saveDraft() {
     try {
       localStorage.setItem(draftKey, JSON.stringify(state));
@@ -135,126 +166,232 @@
     }
   }
 
-  function clearDraft() {
-    try {
-      localStorage.removeItem(draftKey);
-    } catch (_error) {
-      // Ignore.
-    }
-  }
-
-  function setPageStatus(text) {
-    if (pageStatusNode) pageStatusNode.textContent = text;
-  }
-
-  function setSyncStatus(text) {
-    if (syncStatusNode) syncStatusNode.textContent = text;
-  }
-
-  function wireSaveAndSync() {
-    saveDraft();
-    if (getAutoSync()) scheduleSync();
+  function canEditNow() {
+    return isEditUnlocked();
   }
 
   function createDraftSession() {
+    if (!canEditNow()) {
+      setPageStatus("当前为锁定状态，先点 Edit Lock 解锁");
+      return;
+    }
     if (state.draftSession) return;
+
     const sorted = deepClone(state.sessions);
     sortSessions(sorted);
     const latest = sorted[sorted.length - 1] || null;
+
     state.draftSession = {
       id: `draft-${Date.now()}`,
       sessionNo: getNextSessionNo(),
       date: todayIso(),
       menhirs: [],
       tasks: [],
-      // User requested: inherit these two sections from latest session.
       locationChanges: latest ? deepClone(latest.locationChanges || []) : [],
       notes: latest ? deepClone(latest.notes || []) : [],
     };
-    wireSaveAndSync();
+    saveDraft();
     render();
-    setPageStatus("已创建 New Session，可在每个区块点击 + 逐条添加");
+    setPageStatus("已创建 New Session，可逐条追加");
   }
 
   function discardDraftSession() {
+    if (!canEditNow()) return;
     state.draftSession = null;
-    wireSaveAndSync();
+    saveDraft();
     render();
     setPageStatus("已取消 New Session");
   }
 
   function appendDraftToHistory() {
+    if (!canEditNow()) return;
     const d = state.draftSession;
     if (!d) return;
     state.sessions.push(deepClone(d));
     sortSessions(state.sessions);
     state.draftSession = null;
-    wireSaveAndSync();
+    saveDraft();
     render();
-    setPageStatus("New Session 已追加到历史列表");
+    setPageStatus("New Session 已追加到历史");
+  }
+
+  function getSessionById(sessionId) {
+    return state.sessions.find((s) => s.id === sessionId) || null;
+  }
+
+  function startEditSession(sessionId) {
+    if (!canEditNow()) {
+      setPageStatus("当前为锁定状态，先点 Edit Lock 解锁");
+      return;
+    }
+    if (!getSessionById(sessionId)) return;
+    editingSessionId = sessionId;
+    saveDraft();
+    render();
+    setPageStatus("已进入 Session 编辑模式");
+  }
+
+  function stopEditSession() {
+    editingSessionId = "";
+    saveDraft();
+    render();
+    setPageStatus("已退出 Session 编辑模式");
+  }
+
+  function deleteEditingSession() {
+    if (!canEditNow() || !editingSessionId) return;
+    const before = state.sessions.length;
+    state.sessions = state.sessions.filter((s) => s.id !== editingSessionId);
+    if (state.sessions.length === before) return;
+    editingSessionId = "";
+    saveDraft();
+    render();
+    setPageStatus("Session 已删除");
+  }
+
+  function updateSessionField(sessionId, key, value) {
+    if (!canEditNow()) return;
+    const target = getSessionById(sessionId);
+    if (!target) return;
+    target[key] = value;
+    saveDraft();
+    render();
+  }
+
+  function addSessionRow(sessionId, section, row) {
+    if (!canEditNow()) return;
+    const target = getSessionById(sessionId);
+    if (!target || !Array.isArray(target[section])) return;
+    target[section].push(row);
+    saveDraft();
+    render();
+  }
+
+  function deleteSessionRow(sessionId, section, index) {
+    if (!canEditNow()) return;
+    const target = getSessionById(sessionId);
+    if (!target || !Array.isArray(target[section])) return;
+    target[section].splice(index, 1);
+    saveDraft();
+    render();
+  }
+
+  function updateSessionRow(sessionId, section, index, key, value) {
+    if (!canEditNow()) return;
+    const target = getSessionById(sessionId);
+    if (!target || !Array.isArray(target[section])) return;
+    const row = target[section][index];
+    if (!row || typeof row !== "object") return;
+    row[key] = value;
+    saveDraft();
+  }
+
+  function updateSessionNote(sessionId, index, value) {
+    if (!canEditNow()) return;
+    const target = getSessionById(sessionId);
+    if (!target || !Array.isArray(target.notes)) return;
+    target.notes[index] = value;
+    saveDraft();
   }
 
   function updateDraftField(key, value) {
-    if (!state.draftSession) return;
+    if (!canEditNow() || !state.draftSession) return;
     state.draftSession[key] = value;
-    wireSaveAndSync();
+    saveDraft();
     render();
   }
 
   function addDraftRow(section, row) {
-    if (!state.draftSession || !Array.isArray(state.draftSession[section])) return;
+    if (!canEditNow() || !state.draftSession || !Array.isArray(state.draftSession[section])) return;
     state.draftSession[section].push(row);
-    wireSaveAndSync();
+    saveDraft();
     render();
   }
 
   function deleteDraftRow(section, index) {
-    if (!state.draftSession || !Array.isArray(state.draftSession[section])) return;
+    if (!canEditNow() || !state.draftSession || !Array.isArray(state.draftSession[section])) return;
     state.draftSession[section].splice(index, 1);
-    wireSaveAndSync();
+    saveDraft();
     render();
   }
 
   function updateDraftRow(section, index, key, value) {
-    if (!state.draftSession || !Array.isArray(state.draftSession[section])) return;
+    if (!canEditNow() || !state.draftSession || !Array.isArray(state.draftSession[section])) return;
     const row = state.draftSession[section][index];
-    if (!row) return;
+    if (!row || typeof row !== "object") return;
     row[key] = value;
-    wireSaveAndSync();
+    saveDraft();
   }
 
   function updateDraftNote(index, value) {
-    if (!state.draftSession || !Array.isArray(state.draftSession.notes)) return;
+    if (!canEditNow() || !state.draftSession || !Array.isArray(state.draftSession.notes)) return;
     state.draftSession.notes[index] = value;
-    wireSaveAndSync();
+    saveDraft();
   }
 
   function renderSessionReadOnly(session) {
     const wrap = el("div", "session");
     const header = el("div", "session-header");
     header.appendChild(el("h4", "session-title", `Session ${String(session.sessionNo).padStart(2, "0")} - ${fmtDate(session.date)}`));
+    const actions = el("div", "tg-draft-head");
+    const editBtn = el("button", "tg-add-btn", "Edit");
+    editBtn.type = "button";
+    editBtn.disabled = !canEditNow() || !!state.draftSession || !!editingSessionId;
+    editBtn.addEventListener("click", () => startEditSession(session.id));
+    actions.appendChild(editBtn);
+    header.appendChild(actions);
     wrap.appendChild(header);
-    wrap.appendChild(renderMenhirBlock(session, false));
-    wrap.appendChild(renderTasksBlock(session, false));
-    wrap.appendChild(renderLocationBlock(session, false));
-    wrap.appendChild(renderNotesBlock(session, false));
+    wrap.appendChild(renderMenhirBlock(session, false, null));
+    wrap.appendChild(renderTasksBlock(session, false, null));
+    wrap.appendChild(renderLocationBlock(session, false, null));
+    wrap.appendChild(renderNotesBlock(session, false, null));
     return wrap;
   }
 
-  function renderSessionEditable(session) {
+  function renderSessionEditable(session, options) {
+    const isDraft = !!(options && options.isDraft);
+    const locked = !canEditNow();
     const wrap = el("div", "session tg-draft-session");
     const header = el("div", "session-header");
-    const title = el("h4", "session-title", "New Session");
+    const title = el("h4", "session-title", isDraft ? "New Session" : `Edit Session ${String(session.sessionNo).padStart(2, "0")}`);
     const controls = el("div", "tg-draft-head");
+    const setField = (key, value) => {
+      if (isDraft) updateDraftField(key, value);
+      else updateSessionField(session.id, key, value);
+    };
+    const addRow = (section, row) => {
+      if (isDraft) addDraftRow(section, row);
+      else addSessionRow(session.id, section, row);
+    };
+    const deleteRow = (section, index) => {
+      if (isDraft) deleteDraftRow(section, index);
+      else deleteSessionRow(session.id, section, index);
+    };
+    const updateRow = (section, index, key, value) => {
+      if (isDraft) updateDraftRow(section, index, key, value);
+      else updateSessionRow(session.id, section, index, key, value);
+    };
+    const updateNote = (index, value) => {
+      if (isDraft) updateDraftNote(index, value);
+      else updateSessionNote(session.id, index, value);
+    };
+    const handlers = {
+      locked,
+      addRow,
+      deleteRow,
+      updateRow,
+      updateNote,
+    };
 
     const noLabel = el("label", "tg-mini-label", "No");
     const noInput = document.createElement("input");
     noInput.type = "number";
     noInput.min = "1";
     noInput.value = String(session.sessionNo || getNextSessionNo());
+    noInput.disabled = locked;
     noInput.addEventListener("input", () => {
       const next = Number(noInput.value);
-      if (next > 0) updateDraftField("sessionNo", next);
+      if (next > 0) setField("sessionNo", next);
     });
     noLabel.appendChild(noInput);
 
@@ -262,8 +399,9 @@
     const dateInput = document.createElement("input");
     dateInput.type = "date";
     dateInput.value = session.date || todayIso();
+    dateInput.disabled = locked;
     dateInput.addEventListener("input", () => {
-      updateDraftField("date", dateInput.value);
+      setField("date", dateInput.value);
     });
     dateLabel.appendChild(dateInput);
 
@@ -271,27 +409,42 @@
     header.append(title, controls);
     wrap.appendChild(header);
 
-    wrap.appendChild(renderMenhirBlock(session, true));
-    wrap.appendChild(renderTasksBlock(session, true));
-    wrap.appendChild(renderLocationBlock(session, true));
-    wrap.appendChild(renderNotesBlock(session, true));
+    wrap.appendChild(renderMenhirBlock(session, true, handlers));
+    wrap.appendChild(renderTasksBlock(session, true, handlers));
+    wrap.appendChild(renderLocationBlock(session, true, handlers));
+    wrap.appendChild(renderNotesBlock(session, true, handlers));
 
     const actions = el("div", "tg-draft-actions");
-    const appendBtn = el("button", "tg-add-btn", "Append To History");
-    appendBtn.type = "button";
-    appendBtn.addEventListener("click", appendDraftToHistory);
+    if (isDraft) {
+      const appendBtn = el("button", "tg-add-btn", "Append To History");
+      appendBtn.type = "button";
+      appendBtn.disabled = locked;
+      appendBtn.addEventListener("click", appendDraftToHistory);
 
-    const cancelBtn = el("button", "tg-add-btn", "Cancel");
-    cancelBtn.type = "button";
-    cancelBtn.addEventListener("click", discardDraftSession);
+      const cancelBtn = el("button", "tg-add-btn", "Cancel");
+      cancelBtn.type = "button";
+      cancelBtn.disabled = locked;
+      cancelBtn.addEventListener("click", discardDraftSession);
+      actions.append(appendBtn, cancelBtn);
+    } else {
+      const doneBtn = el("button", "tg-add-btn", "Done");
+      doneBtn.type = "button";
+      doneBtn.disabled = locked;
+      doneBtn.addEventListener("click", stopEditSession);
 
-    actions.append(appendBtn, cancelBtn);
+      const deleteBtn = el("button", "tg-add-btn", "Delete Session");
+      deleteBtn.type = "button";
+      deleteBtn.disabled = locked;
+      deleteBtn.addEventListener("click", deleteEditingSession);
+      actions.append(doneBtn, deleteBtn);
+    }
     wrap.appendChild(actions);
 
     return wrap;
   }
 
-  function renderMenhirBlock(session, editable) {
+  function renderMenhirBlock(session, editable, handlers) {
+    const locked = handlers ? !!handlers.locked : !canEditNow();
     const block = el("div", "tg-block cn");
     block.lang = "zh";
     block.appendChild(el("div", "tg-title", "巨神柱状态"));
@@ -312,23 +465,27 @@
       loc.className = "tg-edit-input";
       loc.value = row.location || "";
       loc.placeholder = "Location";
-      loc.addEventListener("input", () => updateDraftRow("menhirs", index, "location", loc.value));
+      loc.disabled = locked;
+      loc.addEventListener("input", () => handlers.updateRow("menhirs", index, "location", loc.value));
 
       const val = document.createElement("input");
       val.className = "tg-edit-input";
       val.value = row.value || "";
       val.placeholder = "Value";
-      val.addEventListener("input", () => updateDraftRow("menhirs", index, "value", val.value));
+      val.disabled = locked;
+      val.addEventListener("input", () => handlers.updateRow("menhirs", index, "value", val.value));
 
       const dial = document.createElement("input");
       dial.className = "tg-edit-input";
       dial.value = row.dial || "";
       dial.placeholder = "Dial";
-      dial.addEventListener("input", () => updateDraftRow("menhirs", index, "dial", dial.value));
+      dial.disabled = locked;
+      dial.addEventListener("input", () => handlers.updateRow("menhirs", index, "dial", dial.value));
 
-      const del = el("button", "tg-inline-del", "- ");
+      const del = el("button", "tg-inline-del", "×");
       del.type = "button";
-      del.addEventListener("click", () => deleteDraftRow("menhirs", index));
+      del.disabled = locked;
+      del.addEventListener("click", () => handlers.deleteRow("menhirs", index));
 
       const locWrap = el("div", "tg-menhir-row tg-edit-box");
       const valWrap = el("div", "tg-menhir-cell tg-edit-box");
@@ -344,14 +501,16 @@
     if (editable) {
       const add = el("button", "tg-add-btn", "+ Menhir");
       add.type = "button";
-      add.addEventListener("click", () => addDraftRow("menhirs", { location: "", value: "", dial: "" }));
+      add.disabled = locked;
+      add.addEventListener("click", () => handlers.addRow("menhirs", { location: "", value: "", dial: "" }));
       block.appendChild(add);
     }
 
     return block;
   }
 
-  function renderTasksBlock(session, editable) {
+  function renderTasksBlock(session, editable, handlers) {
+    const locked = handlers ? !!handlers.locked : !canEditNow();
     const block = el("div", "tg-block cn");
     block.lang = "zh";
     block.appendChild(el("div", "tg-title", "任务"));
@@ -370,17 +529,20 @@
       tag.className = "tg-edit-input tg-edit-tag";
       tag.value = row.tag || "";
       tag.placeholder = "Tag";
-      tag.addEventListener("input", () => updateDraftRow("tasks", index, "tag", tag.value));
+      tag.disabled = locked;
+      tag.addEventListener("input", () => handlers.updateRow("tasks", index, "tag", tag.value));
 
       const text = document.createElement("input");
       text.className = "tg-edit-input";
       text.value = row.text || "";
       text.placeholder = "Task";
-      text.addEventListener("input", () => updateDraftRow("tasks", index, "text", text.value));
+      text.disabled = locked;
+      text.addEventListener("input", () => handlers.updateRow("tasks", index, "text", text.value));
 
-      const del = el("button", "tg-inline-del", "-");
+      const del = el("button", "tg-inline-del", "×");
       del.type = "button";
-      del.addEventListener("click", () => deleteDraftRow("tasks", index));
+      del.disabled = locked;
+      del.addEventListener("click", () => handlers.deleteRow("tasks", index));
 
       const tagWrap = el("span", "tg-tag tg-edit-box");
       const textWrap = el("span", "tg-text tg-edit-box");
@@ -394,13 +556,15 @@
     if (editable) {
       const add = el("button", "tg-add-btn", "+ Task");
       add.type = "button";
-      add.addEventListener("click", () => addDraftRow("tasks", { tag: "", text: "" }));
+      add.disabled = locked;
+      add.addEventListener("click", () => handlers.addRow("tasks", { tag: "", text: "" }));
       block.appendChild(add);
     }
     return block;
   }
 
-  function renderLocationBlock(session, editable) {
+  function renderLocationBlock(session, editable, handlers) {
+    const locked = handlers ? !!handlers.locked : !canEditNow();
     const block = el("div", "tg-block cn");
     block.lang = "zh";
     block.appendChild(el("div", "tg-title", "地点变化"));
@@ -419,17 +583,20 @@
       from.className = "tg-edit-input";
       from.value = row.from || "";
       from.placeholder = "From";
-      from.addEventListener("input", () => updateDraftRow("locationChanges", index, "from", from.value));
+      from.disabled = locked;
+      from.addEventListener("input", () => handlers.updateRow("locationChanges", index, "from", from.value));
 
       const to = document.createElement("input");
       to.className = "tg-edit-input";
       to.value = row.to || "";
       to.placeholder = "To";
-      to.addEventListener("input", () => updateDraftRow("locationChanges", index, "to", to.value));
+      to.disabled = locked;
+      to.addEventListener("input", () => handlers.updateRow("locationChanges", index, "to", to.value));
 
-      const del = el("button", "tg-inline-del", "-");
+      const del = el("button", "tg-inline-del", "×");
       del.type = "button";
-      del.addEventListener("click", () => deleteDraftRow("locationChanges", index));
+      del.disabled = locked;
+      del.addEventListener("click", () => handlers.deleteRow("locationChanges", index));
 
       const fromWrap = el("span", "tg-tag tg-edit-box");
       const toWrap = el("span", "tg-tag tg-edit-box");
@@ -443,13 +610,15 @@
     if (editable) {
       const add = el("button", "tg-add-btn", "+ Location Change");
       add.type = "button";
-      add.addEventListener("click", () => addDraftRow("locationChanges", { from: "", to: "" }));
+      add.disabled = locked;
+      add.addEventListener("click", () => handlers.addRow("locationChanges", { from: "", to: "" }));
       block.appendChild(add);
     }
     return block;
   }
 
-  function renderNotesBlock(session, editable) {
+  function renderNotesBlock(session, editable, handlers) {
+    const locked = handlers ? !!handlers.locked : !canEditNow();
     const block = el("div", "tg-block cn");
     block.lang = "zh";
     block.appendChild(el("div", "tg-title", "冒险笔记"));
@@ -466,11 +635,13 @@
       input.className = "tg-edit-input";
       input.value = note || "";
       input.placeholder = "Note";
-      input.addEventListener("input", () => updateDraftNote(index, input.value));
+      input.disabled = locked;
+      input.addEventListener("input", () => handlers.updateNote(index, input.value));
 
-      const del = el("button", "tg-inline-del", "-");
+      const del = el("button", "tg-inline-del", "×");
       del.type = "button";
-      del.addEventListener("click", () => deleteDraftRow("notes", index));
+      del.disabled = locked;
+      del.addEventListener("click", () => handlers.deleteRow("notes", index));
 
       noteWrap.append(input, del);
       list.appendChild(noteWrap);
@@ -480,62 +651,12 @@
     if (editable) {
       const add = el("button", "tg-add-btn", "+ Note");
       add.type = "button";
-      add.addEventListener("click", () => addDraftRow("notes", ""));
+      add.disabled = locked;
+      add.addEventListener("click", () => handlers.addRow("notes", ""));
       block.appendChild(add);
     }
 
     return block;
-  }
-
-  function getToken() {
-    try {
-      return String(localStorage.getItem(tokenKey) || "").trim();
-    } catch (_error) {
-      return "";
-    }
-  }
-
-  function setToken(next) {
-    try {
-      if (next) localStorage.setItem(tokenKey, next);
-      else localStorage.removeItem(tokenKey);
-    } catch (_error) {
-      // Ignore.
-    }
-  }
-
-  function getAutoSync() {
-    try {
-      return localStorage.getItem(autoSyncKey) === "1";
-    } catch (_error) {
-      return false;
-    }
-  }
-
-  function setAutoSync(v) {
-    try {
-      localStorage.setItem(autoSyncKey, v ? "1" : "0");
-    } catch (_error) {
-      // Ignore.
-    }
-  }
-
-  function getSyncConfig() {
-    try {
-      const raw = localStorage.getItem(syncConfigKey);
-      if (!raw) return defaultSyncConfig;
-      return normalizeSyncConfig(JSON.parse(raw)) || defaultSyncConfig;
-    } catch (_error) {
-      return defaultSyncConfig;
-    }
-  }
-
-  function setSyncConfig(cfg) {
-    try {
-      localStorage.setItem(syncConfigKey, JSON.stringify(cfg));
-    } catch (_error) {
-      // Ignore.
-    }
   }
 
   function encodeBase64Utf8(text) {
@@ -570,35 +691,38 @@
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!res.ok) throw new Error(`GitHub read failed (${res.status})`);
+    if (!res.ok) throw new Error(`Sync read failed (${res.status})`);
     const payload = await res.json();
-    if (!payload || typeof payload.sha !== "string") throw new Error("GitHub response missing file SHA");
+    if (!payload || typeof payload.sha !== "string") throw new Error("Sync read payload invalid");
     return payload.sha;
   }
 
-  async function syncNow(force) {
-    const token = getToken();
-    const cfg = getSyncConfig();
-    if (!token) {
-      setSyncStatus("GitHub token 缺失");
-      return;
-    }
-    if (!cfg) {
-      setSyncStatus("GitHub 配置不完整");
-      return;
-    }
+  async function syncNow() {
     if (syncInFlight) return;
+    if (!syncConfig) {
+      setSyncStatus("Sync 配置无效");
+      return;
+    }
+
+    const token = getToken();
+    if (!token) {
+      setSyncStatus("Sync 未连接");
+      return;
+    }
 
     const content = `${JSON.stringify(getPersistablePayload(), null, 2)}\n`;
     const nextHash = quickHash(content);
-    if (!force && nextHash === lastSyncedHash) return;
+    if (nextHash === lastSyncedHash) {
+      setSyncStatus("无需同步");
+      return;
+    }
 
     syncInFlight = true;
     setSyncStatus("同步中...");
 
     try {
-      const sha = await fetchRemoteSha(cfg, token);
-      const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeURIComponent(cfg.filePath).replace(/%2F/g, "/")}`;
+      const sha = await fetchRemoteSha(syncConfig, token);
+      const endpoint = `https://api.github.com/repos/${encodeURIComponent(syncConfig.owner)}/${encodeURIComponent(syncConfig.repo)}/contents/${encodeURIComponent(syncConfig.filePath).replace(/%2F/g, "/")}`;
       const message = `update tainted grail sessions ${new Date().toISOString().slice(0, 19)}Z`;
       const res = await fetch(endpoint, {
         method: "PUT",
@@ -610,11 +734,11 @@
         body: JSON.stringify({
           message,
           content: encodeBase64Utf8(content),
-          branch: cfg.branch,
+          branch: syncConfig.branch,
           sha,
         }),
       });
-      if (!res.ok) throw new Error(`GitHub write failed (${res.status})`);
+      if (!res.ok) throw new Error(`Sync write failed (${res.status})`);
       lastSyncedHash = nextHash;
       setSyncStatus(`已同步 (${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })})`);
     } catch (error) {
@@ -624,84 +748,27 @@
     }
   }
 
-  function scheduleSync() {
-    window.clearTimeout(syncTimer);
-    syncTimer = window.setTimeout(() => {
-      syncTimer = null;
-      void syncNow(false);
-    }, 2200);
-  }
+  function renderControlBar(host) {
+    const bar = el("div", "tg-sync-bar");
 
-  function renderSyncControls(host) {
-    const box = el("div", "tg-sync-bar");
-    const cfg = getSyncConfig() || defaultSyncConfig || {
-      provider: "github", owner: "", repo: "", branch: "main", filePath: dataSource,
-    };
-
-    const owner = mkInput("Owner", cfg.owner);
-    const repo = mkInput("Repo", cfg.repo);
-    const branch = mkInput("Branch", cfg.branch || "main");
-    const file = mkInput("File", cfg.filePath || dataSource);
-    box.append(owner.wrap, repo.wrap, branch.wrap, file.wrap);
-
-    const saveCfgBtn = el("button", "tg-add-btn", "Save Sync Config");
-    saveCfgBtn.type = "button";
-    saveCfgBtn.addEventListener("click", () => {
-      const next = normalizeSyncConfig({
-        provider: "github",
-        owner: owner.input.value,
-        repo: repo.input.value,
-        branch: branch.input.value || "main",
-        filePath: file.input.value || dataSource,
-      });
-      if (!next) {
-        setSyncStatus("Sync 配置无效");
-        return;
-      }
-      setSyncConfig(next);
-      setSyncStatus("Sync 配置已保存");
+    const lockBtn = el("button", "tg-add-btn", isEditUnlocked() ? "Edit Unlocked" : "Edit Locked");
+    lockBtn.type = "button";
+    lockBtn.addEventListener("click", () => {
+      const next = !isEditUnlocked();
+      setEditUnlocked(next);
+      render();
+      setPageStatus(next ? "编辑已解锁" : "编辑已锁定");
     });
 
-    const tokenBtn = el("button", "tg-add-btn", getToken() ? "Update Token" : "Connect Token");
-    tokenBtn.type = "button";
-    tokenBtn.addEventListener("click", () => {
-      const current = getToken();
-      const input = window.prompt("输入 GitHub PAT（repo contents:write）。留空则断开。", current);
-      if (input === null) return;
-      setToken(String(input || "").trim());
-      tokenBtn.textContent = getToken() ? "Update Token" : "Connect Token";
-      setSyncStatus(getToken() ? "Token 已连接" : "Token 已断开");
+    const syncBtn = el("button", "tg-add-btn", "Sync");
+    syncBtn.type = "button";
+    syncBtn.addEventListener("click", () => {
+      void syncNow();
     });
 
-    const autoLabel = el("label", "tg-mini-label", "Auto Sync");
-    const auto = document.createElement("input");
-    auto.type = "checkbox";
-    auto.checked = getAutoSync();
-    auto.addEventListener("change", () => {
-      setAutoSync(auto.checked);
-      setSyncStatus(auto.checked ? "Auto Sync 已开启" : "Auto Sync 已关闭");
-    });
-    autoLabel.appendChild(auto);
-
-    const nowBtn = el("button", "tg-add-btn", "Sync Now");
-    nowBtn.type = "button";
-    nowBtn.addEventListener("click", () => {
-      void syncNow(true);
-    });
-
-    syncStatusNode = el("div", "tg-page-status", getToken() ? "Token 已连接" : "Token 未连接");
-    box.append(saveCfgBtn, tokenBtn, autoLabel, nowBtn, syncStatusNode);
-
-    host.appendChild(box);
-  }
-
-  function mkInput(labelText, value) {
-    const wrap = el("label", "tg-mini-label", labelText);
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = value || "";
-    wrap.appendChild(input);
-    return { wrap, input };
+    syncStatusNode = el("div", "tg-page-status", getToken() ? "Sync Ready" : "Sync 未连接");
+    bar.append(lockBtn, syncBtn, syncStatusNode);
+    host.appendChild(bar);
   }
 
   function render() {
@@ -729,24 +796,30 @@
 
     const sorted = deepClone(state.sessions);
     sortSessions(sorted);
-    sorted.forEach((s) => logsCard.appendChild(renderSessionReadOnly(s)));
+    sorted.forEach((s) => {
+      if (editingSessionId && s.id === editingSessionId) {
+        logsCard.appendChild(renderSessionEditable(s, { isDraft: false }));
+      } else {
+        logsCard.appendChild(renderSessionReadOnly(s));
+      }
+    });
 
     const newBtnWrap = el("div", "tg-new-session-wrap");
     const newBtn = el("button", "tg-add-btn tg-new-session-btn", "+ New Session");
     newBtn.type = "button";
+    newBtn.disabled = !!state.draftSession || !!editingSessionId || !canEditNow();
     newBtn.addEventListener("click", createDraftSession);
-    newBtn.disabled = !!state.draftSession;
     newBtnWrap.appendChild(newBtn);
     logsCard.appendChild(newBtnWrap);
 
     if (state.draftSession) {
-      logsCard.appendChild(renderSessionEditable(state.draftSession));
+      logsCard.appendChild(renderSessionEditable(state.draftSession, { isDraft: true }));
     }
 
-    pageStatusNode = el("div", "tg-page-status", "Ready");
+    pageStatusNode = el("div", "tg-page-status", canEditNow() ? "编辑已解锁" : "编辑已锁定");
     logsCard.appendChild(pageStatusNode);
 
-    renderSyncControls(logsCard);
+    renderControlBar(logsCard);
 
     group.append(subtitleWrap, summary, logsCard);
     root.appendChild(group);
@@ -762,7 +835,6 @@
       remoteData = sanitizeData(remoteData);
     }
 
-    sourceRaw = JSON.stringify(remoteData);
     const draft = loadDraft();
     state = draft || remoteData;
     render();
@@ -771,3 +843,4 @@
 
   void init();
 })();
+

@@ -132,3 +132,8 @@
     width: 70px;
   }
 }
+
+.session-header .tg-add-btn {
+  margin-top: 0;
+}
+
