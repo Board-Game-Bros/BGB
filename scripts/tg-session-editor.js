@@ -555,19 +555,15 @@
     grid.appendChild(el("div", "tg-menhir-head tg-menhir-head-dial", "Dial Value"));
 
     session.menhirs.forEach((row, index) => {
+      const menhirLabel = `Menhir #${index + 1}`;
       if (!editable) {
-        grid.appendChild(el("div", "tg-menhir-row", row.location || ""));
+        grid.appendChild(el("div", "tg-menhir-row", menhirLabel));
         grid.appendChild(el("div", "tg-menhir-cell", row.value || ""));
         grid.appendChild(el("div", "tg-menhir-cell", row.dial || ""));
         return;
       }
 
-      const loc = document.createElement("input");
-      loc.className = "tg-edit-input";
-      loc.value = row.location || "";
-      loc.placeholder = "Location";
-      loc.disabled = locked;
-      loc.addEventListener("input", () => handlers.updateRow("menhirs", index, "location", loc.value));
+      const menhirName = el("span", "tg-edit-input", menhirLabel);
 
       const val = document.createElement("input");
       val.className = "tg-edit-input";
@@ -591,7 +587,7 @@
       const locWrap = el("div", "tg-menhir-row tg-edit-box");
       const valWrap = el("div", "tg-menhir-cell tg-edit-box");
       const dialWrap = el("div", "tg-menhir-cell tg-edit-box");
-      locWrap.append(loc, del);
+      locWrap.append(menhirName, del);
       valWrap.appendChild(val);
       dialWrap.appendChild(dial);
       grid.append(locWrap, valWrap, dialWrap);
