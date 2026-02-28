@@ -6,8 +6,15 @@
   <title>Tainted Grail: The Fall of Avalon</title>
   <script>
     window.BGB_SHELL = { title: "Board Game Bros", activeNav: "library" };
+    window.TG_FOA_SYNC = {
+      provider: "github",
+      owner: "AnthonyZhangYan",
+      repo: "boardgamebros",
+      branch: "main",
+      filePath: "assets/data/tainted_grail_foa_sessions.json"
+    };
   </script>
-  <link rel="stylesheet" href="styles/pages/tainted_grail_foa.css?v=20260228b" />
+  <link rel="stylesheet" href="styles/pages/tainted_grail_foa.css?v=20260228c" />
 </head>
 
 <body>
@@ -17,317 +24,26 @@
     <div class="subnav">
       <a href="#overview">Overview</a>
       <a href="#logs">Campaign Logs</a>
+      <a href="#editor">Session Editor</a>
     </div>
 
     <section id="overview">
       <h2 class="section-title">Campaign</h2>
+      <div id="tg-campaign-root" data-source="assets/data/tainted_grail_foa_sessions.json"></div>
+    </section>
 
-      <div class="campaign-group">
-
-        <!-- Campaign Header -->
-        <div class="campaign-subtitle-wrapper">
-          <div class="subtitle-header">
-            <h3 class="campaign-subtitle">The Fall of Avalon</h3>
-            <span class="campaign-meta">Started on 01/11/2026</span>
-          </div>
-        </div>
-
-        <!-- Quick Summary -->
-        <div class="card">
-          <h4 style="margin-bottom:0;">
-            Ongoing campaign journal for Tainted Grail: The Fall of Avalon.
-            This page tracks session progress, key decisions, world state, 
-            Menhir status, and important notes.
-          </h4>
-        </div>
-
-        <!-- Campaign Logs -->
-        <div id="logs" class="card">
-          <h3 style="margin-top:0;">Campaign Logs</h3>
-        
-          <!-- ===================== -->
-          <!-- Session 01 -->
-          <!-- ===================== -->
-          <div class="session">
-            <div class="session-header">
-              <h4 class="session-title">Session 01 — 01/18/2026</h4>
-            </div>
-          
-            <!-- 巨神柱状态 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">巨神柱状态</div>
-          
-              <div class="tg-menhir-grid">
-                <div class="tg-menhir-head tg-menhir-head-loc">Location</div>
-                <div class="tg-menhir-head tg-menhir-head-dial">Dial Value</div>
-              
-                <div class="tg-menhir-row">Menhir #1</div>
-                <div class="tg-menhir-cell">107</div>
-                <div class="tg-menhir-cell">5</div>
-              </div>
-          
-            <!-- 任务 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">任务</div>
-          
-              <div class="tg-list">
-                <div class="tg-line">
-                  <span class="tg-tag">103</span>
-                  <span class="tg-text">找到远征英雄们</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">113</span>
-                  <span class="tg-text">（已完成）调查盘根树林（114）</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">115</span>
-                  <span class="tg-text">找到失踪的隐士，把剑鞘带到骑士团之墓（此处有圣杯线索）</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">119</span>
-                  <span class="tg-text">调查大船的秘密（后期）</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">114</span>
-                  <span class="tg-text">（已完成）去白化村转告法埃尔的遗言</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">149</span>
-                  <span class="tg-text">去（107）寻回葬礼面具，去（108）找到螺旋指环</span>
-                </div>
-
-				<div class="tg-line">
-                  <span class="tg-tag">136</span>
-                  <span class="tg-text">前往阿瓦隆某处找到白色结晶并释放封印生物（需要4点terror）</span>
-                </div>
-              </div>
-            </div>
-          
-            <!-- 地点变化 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">地点变化</div>
-          
-              <div class="tg-list">
-                <div class="tg-move">
-                  <span class="tg-tag">108</span>
-                  <span class="tg-arrow-img" aria-hidden="true"></span>
-                  <span class="tg-tag">110</span>
-                </div>
-          
-                <div class="tg-move">
-                  <span class="tg-tag">136</span>
-                  <span class="tg-arrow-img" aria-hidden="true"></span>
-                  <span class="tg-tag">149</span>
-                </div>
-              </div>
-            </div>
-          
-            <!-- 冒险笔记（去掉 bullet，每行独立边框） -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">冒险笔记</div>
-          
-              <div class="tg-list">
-                <div class="tg-note">法埃尔：原大骑士加拉哈德（叛逃）</div>
-              </div>
-            </div>
-          </div>
-        
-          <!-- ===================== -->
-          <!-- Session 02 -->
-          <!-- ===================== -->
-          <div class="session">
-            <div class="session-header">
-              <h4 class="session-title">Session 02 — 01/25/2026</h4>
-            </div>
-          
-            <!-- 巨神柱状态 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">巨神柱状态</div>
-          
-              <div class="tg-menhir-grid">
-                <div class="tg-menhir-head tg-menhir-head-loc">Location</div>
-                <div class="tg-menhir-head tg-menhir-head-dial">Dial Value</div>
-              
-                <div class="tg-menhir-row">Menhir #1</div>
-                <div class="tg-menhir-cell">140</div>
-                <div class="tg-menhir-cell">1</div>
-              </div>
-          
-            <!-- 任务 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">任务</div>
-          
-              <div class="tg-list">
-				<div class="tg-line">
-                  <span class="tg-tag">主线任务</span>
-                  <span class="tg-text">找到妮安特，获取真圣杯的线索，需要前往骑士团之墓</span>
-                </div>
-
-                <div class="tg-line">
-                  <span class="tg-tag">103</span>
-                  <span class="tg-text">找到远征英雄们</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">115</span>
-                  <span class="tg-text">（已完成）找到失踪的隐士，把剑鞘带到骑士团之墓</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">119</span>
-                  <span class="tg-text">调查大船的秘密（后期）</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">149</span>
-                  <span class="tg-text">去蛆林（108）找到螺旋指环</span>
-                </div>
-              </div>
-            </div>
-          
-            <!-- 地点变化 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">地点变化</div>
-          
-              <div class="tg-list">
-                <div class="tg-move">
-                  <span class="tg-tag">108</span>
-                  <span class="tg-arrow-img" aria-hidden="true"></span>
-                  <span class="tg-tag">110</span>
-                </div>
-          
-                <div class="tg-move">
-                  <span class="tg-tag">136</span>
-                  <span class="tg-arrow-img" aria-hidden="true"></span>
-                  <span class="tg-tag">149</span>
-                </div>
-              </div>
-            </div>
-          
-            <!-- 冒险笔记（去掉 bullet，每行独立边框） -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">冒险笔记</div>
-          
-              <div class="tg-list">
-                <div class="tg-note">法埃尔：原大骑士加拉哈德（叛逃）</div>
-              </div>
-            </div>
-          </div>
-        
-          <!-- ===================== -->
-          <!-- Session 03 -->
-          <!-- ===================== -->
-          <div class="session">
-            <div class="session-header">
-              <h4 class="session-title">Session 03 — 02/22/2026</h4>
-            </div>
-          
-            <!-- 巨神柱状态 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">巨神柱状态</div>
-          
-              <div class="tg-menhir-grid">
-                <div class="tg-menhir-head tg-menhir-head-loc">Location</div>
-                <div class="tg-menhir-head tg-menhir-head-dial">Dial Value</div>
-              
-                <div class="tg-menhir-row">Menhir #1</div>
-                <div class="tg-menhir-cell">115</div>
-                <div class="tg-menhir-cell">1</div>
-              
-                <div class="tg-menhir-row">Menhir #2</div>
-                <div class="tg-menhir-cell">135</div>
-                <div class="tg-menhir-cell">2</div>
-              </div>
-          
-            <!-- 任务 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">任务</div>
-          
-              <div class="tg-list">
-                <div class="tg-line">
-                  <span class="tg-tag">103</span>
-                  <span class="tg-text">找到远征英雄们（进度 3/4）</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">115</span>
-                  <span class="tg-text">找到失踪的隐士</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">119</span>
-                  <span class="tg-text">调查大船的秘密（后期）</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">149</span>
-                  <span class="tg-text">去蛆林（108）找到螺旋指环</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">154</span>
-                  <span class="tg-text">找到让两个圆桌骑士开口的办法</span>
-                </div>
-          
-                <div class="tg-line">
-                  <span class="tg-tag">153</span>
-                  <span class="tg-text">再向下穿过洞穴抵达最黑暗处（无视恶臭、寒冷）妮安特提及蕨海洞穴可能藏有圣杯的秘密</span>
-                </div>
-              </div>
-            </div>
-          
-            <!-- 地点变化 -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">地点变化</div>
-          
-              <div class="tg-list">
-                <div class="tg-move">
-                  <span class="tg-tag">108</span>
-                  <span class="tg-arrow-img" aria-hidden="true"></span>
-                  <span class="tg-tag">110</span>
-                </div>
-          
-                <div class="tg-move">
-                  <span class="tg-tag">136</span>
-                  <span class="tg-arrow-img" aria-hidden="true"></span>
-                  <span class="tg-tag">149</span>
-                </div>
-          
-                <div class="tg-move">
-                  <span class="tg-tag">138</span>
-                  <span class="tg-arrow-img" aria-hidden="true"></span>
-                  <span class="tg-tag">142</span>
-                </div>
-              </div>
-            </div>
-          
-            <!-- 冒险笔记（去掉 bullet，每行独立边框） -->
-            <div class="tg-block cn" lang="zh">
-              <div class="tg-title">冒险笔记</div>
-          
-              <div class="tg-list">
-                <div class="tg-note">法埃尔：原大骑士加拉哈德（叛逃）</div>
-                <div class="tg-note">与妮安特的对话得知天母教（目前未知）</div>
-                <div class="tg-note">盘根树林知识第2部分未知（待探索）</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <section id="editor">
+      <h2 class="section-title">Session Editor</h2>
+      <div id="tg-editor-root"></div>
     </section>
 
     <div class="back-link-wrap">
       <a href="library.html" class="back-link">Back to Library</a>
     </div>
-
   </main>
 
   <script src="scripts/shell-layout.js"></script>
   <script src="scripts/main.js"></script>
+  <script src="scripts/tg-session-editor.js"></script>
 </body>
 </html>
