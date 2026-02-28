@@ -10,6 +10,7 @@
   const requireEditPassword = editPassword.length > 0;
 
   const draftKey = "bgb_tg_foa_sessions_draft_v3";
+  const useLocalDraft = false;
   const tokenKey = "bgb_github_sync_token_v1";
 
   let state = { campaign: {}, sessions: [], draftSession: null };
@@ -244,16 +245,19 @@
   }
 
   function saveDraft() {
-    try {
-      localStorage.setItem(draftKey, JSON.stringify(state));
-      setPageStatus("本地草稿已保存");
-      scheduleSync();
-    } catch (_error) {
-      setPageStatus("本地草稿保存失败");
+    if (useLocalDraft) {
+      try {
+        localStorage.setItem(draftKey, JSON.stringify(state));
+        setPageStatus("本地草稿已保存");
+      } catch (_error) {
+        setPageStatus("本地草稿保存失败");
+      }
     }
+    scheduleSync();
   }
 
   function loadDraft() {
+    if (!useLocalDraft) return null;
     try {
       const raw = localStorage.getItem(draftKey);
       if (!raw) return null;
@@ -971,10 +975,8 @@
       remoteData = sanitizeData(remoteData);
     }
 
-    const draft = loadDraft();
-    state = draft || remoteData;
+    state = remoteData;
     render();
-    if (draft) setPageStatus("已加载本地草稿");
   }
 
   void init();
