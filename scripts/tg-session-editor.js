@@ -5,6 +5,7 @@
 
   const dataSource = String(root.getAttribute("data-source") || "assets/data/tainted_grail_foa_sessions.json");
   const syncConfig = normalizeSyncConfig(window.TG_FOA_SYNC || {});
+  const editPassword = String(window.TG_FOA_EDIT_PASSWORD || "").trim();
 
   const draftKey = "bgb_tg_foa_sessions_draft_v3";
   const tokenKey = "bgb_github_sync_token_v1";
@@ -13,8 +14,11 @@
   let state = { campaign: {}, sessions: [], draftSession: null };
   let editingSessionId = "";
   let syncStatusNode = null;
+  let syncButtonNode = null;
   let pageStatusNode = null;
   let syncInFlight = false;
+  let syncQueued = false;
+  let syncTimer = null;
   let lastSyncedHash = "";
 
   function normalizeSyncConfig(raw) {
@@ -139,6 +143,20 @@
     }
   }
 
+  function setToken(nextToken) {
+    try {
+      if (nextToken) localStorage.setItem(tokenKey, nextToken);
+      else localStorage.removeItem(tokenKey);
+    } catch (_error) {
+      // Ignore.
+    }
+  }
+
+  function getSyncConfigLabel() {
+    if (!syncConfig) return "";
+    return `${syncConfig.owner}/${syncConfig.repo}:${syncConfig.branch}`;
+  }
+
   function setPageStatus(text) {
     if (pageStatusNode) pageStatusNode.textContent = text;
   }
@@ -147,10 +165,82 @@
     if (syncStatusNode) syncStatusNode.textContent = text;
   }
 
+  function refreshSyncUi(textOverride) {
+    const hasToken = !!getToken();
+    if (syncButtonNode) {
+      syncButtonNode.textContent = hasToken ? "Sync Connected" : "Sync";
+    }
+    if (textOverride) {
+      setSyncStatus(textOverride);
+      return;
+    }
+    if (!syncConfig) {
+      setSyncStatus("Sync 配置无效");
+      return;
+    }
+    if (!hasToken) {
+      setSyncStatus("Sync 未连接");
+      return;
+    }
+    setSyncStatus(`Sync Ready (${getSyncConfigLabel()})`);
+  }
+
+  function scheduleSync() {
+    if (!syncConfig) return;
+    if (!getToken()) {
+      refreshSyncUi();
+      return;
+    }
+    if (syncTimer) window.clearTimeout(syncTimer);
+    syncTimer = window.setTimeout(() => {
+      syncTimer = null;
+      void syncNow();
+    }, 2800);
+  }
+
+  function openSyncPrompt() {
+    if (!syncConfig) {
+      refreshSyncUi("Sync 配置无效");
+      return;
+    }
+    const existing = getToken();
+    const input = window.prompt(
+      [
+        "Paste a GitHub Personal Access Token with repository content write access.",
+        `Target: ${getSyncConfigLabel()} (${syncConfig.filePath})`,
+        "Leave blank to disconnect sync.",
+      ].join("\n"),
+      existing
+    );
+    if (input === null) return;
+
+    const nextToken = String(input).trim();
+    setToken(nextToken);
+    lastSyncedHash = "";
+    if (nextToken) {
+      refreshSyncUi("Sync 已连接，等待首次同步...");
+      scheduleSync();
+    } else {
+      refreshSyncUi("Sync 已断开");
+    }
+  }
+
+  function tryUnlockEdit() {
+    if (!editPassword) return true;
+    const input = window.prompt("Enter edit password:");
+    if (input === null) return false;
+    if (input !== editPassword) {
+      window.alert("Incorrect password.");
+      return false;
+    }
+    return true;
+  }
+
   function saveDraft() {
     try {
       localStorage.setItem(draftKey, JSON.stringify(state));
       setPageStatus("本地草稿已保存");
+      scheduleSync();
     } catch (_error) {
       setPageStatus("本地草稿保存失败");
     }
@@ -698,15 +788,18 @@
   }
 
   async function syncNow() {
-    if (syncInFlight) return;
+    if (syncInFlight) {
+      syncQueued = true;
+      return;
+    }
     if (!syncConfig) {
-      setSyncStatus("Sync 配置无效");
+      refreshSyncUi("Sync 配置无效");
       return;
     }
 
     const token = getToken();
     if (!token) {
-      setSyncStatus("Sync 未连接");
+      refreshSyncUi();
       return;
     }
 
@@ -745,6 +838,12 @@
       setSyncStatus(error && error.message ? error.message : "同步失败");
     } finally {
       syncInFlight = false;
+      if (syncQueued) {
+        syncQueued = false;
+        window.setTimeout(() => {
+          void syncNow();
+        }, 0);
+      }
     }
   }
 
@@ -754,8 +853,11 @@
     const lockBtn = el("button", "tg-add-btn", isEditUnlocked() ? "Edit Unlocked" : "Edit Locked");
     lockBtn.type = "button";
     lockBtn.addEventListener("click", () => {
-      const next = !isEditUnlocked();
+      const currentlyUnlocked = isEditUnlocked();
+      if (!currentlyUnlocked && !tryUnlockEdit()) return;
+      const next = !currentlyUnlocked;
       setEditUnlocked(next);
+      if (!next) editingSessionId = "";
       render();
       setPageStatus(next ? "编辑已解锁" : "编辑已锁定");
     });
@@ -763,10 +865,12 @@
     const syncBtn = el("button", "tg-add-btn", "Sync");
     syncBtn.type = "button";
     syncBtn.addEventListener("click", () => {
-      void syncNow();
+      openSyncPrompt();
     });
+    syncButtonNode = syncBtn;
 
-    syncStatusNode = el("div", "tg-page-status", getToken() ? "Sync Ready" : "Sync 未连接");
+    syncStatusNode = el("div", "tg-page-status", "");
+    refreshSyncUi();
     bar.append(lockBtn, syncBtn, syncStatusNode);
     host.appendChild(bar);
   }
