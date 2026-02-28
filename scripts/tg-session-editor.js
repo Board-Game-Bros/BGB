@@ -884,7 +884,6 @@
           setEditUnlocked(true);
         }
         render();
-        setPageStatus(isEditUnlocked() ? "编辑已解锁" : "编辑已锁定");
         return false;
       },
       onSyncClick: () => {
@@ -956,7 +955,7 @@
       logsCard.appendChild(renderSessionEditable(state.draftSession, { isDraft: true }));
     }
 
-    pageStatusNode = el("div", "tg-page-status", canEditNow() ? "编辑已解锁" : "编辑已锁定");
+    pageStatusNode = el("div", "tg-page-status", "");
     logsCard.appendChild(pageStatusNode);
 
     renderControlBar(logsCard);
