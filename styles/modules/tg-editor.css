@@ -1,134 +1,134 @@
-/* Module: Tainted Grail in-page editor */
-.tg-editor {
-  margin-top: 20px;
+/* Module: Tainted Grail inline new-session editor */
+.tg-new-session-wrap {
+  margin-top: 14px;
 }
 
-.tg-editor-toolbar,
-.tg-editor-sync,
-.tg-editor-session-meta {
+.tg-new-session-btn {
+  font-size: 1rem;
+  padding: 10px 14px;
+}
+
+.tg-draft-session {
+  border-top: 2px dashed rgba(58, 45, 26, 0.42);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.tg-draft-head {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
-  margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
-.tg-editor-status {
-  font-size: 0.92rem;
-  opacity: 0.8;
-}
-
-.tg-editor label {
+.tg-mini-label {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-weight: 700;
 }
 
-.tg-editor input,
-.tg-editor select,
-.tg-editor textarea,
-.tg-editor button {
+.tg-mini-label input {
+  border: 2px solid rgba(58, 45, 26, 0.45);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: rgba(255, 248, 230, 0.96);
+  color: #2f2316;
   font: inherit;
 }
 
-.tg-editor input,
-.tg-editor select,
-.tg-editor textarea {
-  border: 2px solid rgba(58, 45, 26, 0.4);
-  border-radius: 8px;
-  padding: 7px 9px;
-  background: rgba(255, 248, 230, 0.95);
-  color: #2f2316;
-}
-
-.tg-editor textarea {
-  min-height: 70px;
-  width: 100%;
-  resize: vertical;
-}
-
-.tg-editor button {
+.tg-add-btn,
+.tg-inline-del {
+  margin-top: 10px;
   border: 2px solid #5a4427;
   border-radius: 999px;
   background: linear-gradient(180deg, #f5e8c9 0%, #ddc08e 100%);
   color: #2f2316;
-  padding: 7px 12px;
   font-weight: 700;
+  font: inherit;
   cursor: pointer;
 }
 
-.tg-editor button:hover {
+.tg-add-btn {
+  padding: 8px 12px;
+}
+
+.tg-inline-del {
+  margin-top: 0;
+  border-radius: 8px;
+  padding: 2px 8px;
+  line-height: 1;
+}
+
+.tg-add-btn:hover,
+.tg-inline-del:hover {
   background: linear-gradient(180deg, #fbf0da 0%, #e7c896 100%);
 }
 
-.tg-editor-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.tg-editor-panel {
-  border: 2px solid rgba(58, 45, 26, 0.32);
-  border-radius: 10px;
-  padding: 10px;
-  background: rgba(255, 251, 238, 0.72);
-}
-
-.tg-editor-panel h4 {
-  margin: 0 0 10px;
-}
-
-.tg-item-list {
-  display: grid;
-  gap: 8px;
-}
-
-.tg-item-row {
-  display: grid;
-  grid-template-columns: minmax(70px, 0.7fr) minmax(0, 1.4fr) auto;
-  gap: 8px;
+.tg-edit-box {
+  display: inline-flex;
   align-items: center;
+  gap: 8px;
 }
 
-.tg-item-row.menhir {
-  grid-template-columns: minmax(110px, 1fr) 82px 82px auto;
-}
-
-.tg-item-row.move {
-  grid-template-columns: minmax(80px, 1fr) minmax(80px, 1fr) auto;
-}
-
-.tg-item-row.note {
-  grid-template-columns: minmax(0, 1fr) auto;
-}
-
-.tg-item-row button {
-  padding: 6px 9px;
+.tg-edit-input {
+  border: 1px solid rgba(58, 45, 26, 0.35);
   border-radius: 8px;
+  padding: 5px 8px;
+  width: 100%;
+  min-width: 0;
+  background: rgba(255, 248, 230, 0.96);
+  color: #2f2316;
+  font: inherit;
 }
 
-@media (max-width: 900px) {
-  .tg-editor-grid {
-    grid-template-columns: 1fr;
-  }
+.tg-edit-tag {
+  width: 90px;
+}
+
+.tg-edit-line .tg-text {
+  width: 100%;
+}
+
+.tg-edit-move {
+  grid-template-columns: minmax(90px, 1fr) max-content minmax(90px, 1fr) auto;
+}
+
+.tg-edit-note {
+  width: min(820px, 100%);
+}
+
+.tg-draft-actions,
+.tg-sync-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tg-page-status {
+  font-size: 0.92rem;
+  opacity: 0.8;
+  margin-top: 10px;
 }
 
 @media (max-width: 720px) {
-  .tg-item-row,
-  .tg-item-row.menhir,
-  .tg-item-row.move,
-  .tg-item-row.note {
-    grid-template-columns: 1fr;
+  .tg-draft-head,
+  .tg-draft-actions,
+  .tg-sync-bar {
+    align-items: stretch;
   }
 
-  .tg-editor button {
+  .tg-add-btn,
+  .tg-new-session-btn {
     width: 100%;
   }
 
-  .tg-editor-toolbar,
-  .tg-editor-sync,
-  .tg-editor-session-meta {
-    align-items: stretch;
+  .tg-edit-move {
+    grid-template-columns: 1fr;
+  }
+
+  .tg-edit-tag {
+    width: 70px;
   }
 }

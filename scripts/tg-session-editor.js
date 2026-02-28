@@ -1,24 +1,22 @@
-// Tainted Grail session renderer + in-page editor + GitHub JSON sync.
+// Tainted Grail sessions: render history + inline "new session" editor + GitHub sync.
 (() => {
-  const campaignRoot = document.getElementById("tg-campaign-root");
-  const editorRoot = document.getElementById("tg-editor-root");
-  if (!campaignRoot || !editorRoot) return;
+  const root = document.getElementById("tg-campaign-root");
+  if (!root) return;
 
-  const dataSource = String(campaignRoot.getAttribute("data-source") || "assets/data/tainted_grail_foa_sessions.json");
+  const dataSource = String(root.getAttribute("data-source") || "assets/data/tainted_grail_foa_sessions.json");
   const defaultSyncConfig = normalizeSyncConfig(window.TG_FOA_SYNC || {});
 
-  const draftKey = "bgb_tg_foa_sessions_draft_v1";
+  const draftKey = "bgb_tg_foa_sessions_draft_v2";
   const tokenKey = "bgb_github_sync_token_v1";
-  const syncConfigKey = "bgb_tg_foa_sync_cfg_v1";
-  const autoSyncKey = "bgb_tg_foa_auto_sync_v1";
+  const syncConfigKey = "bgb_tg_foa_sync_cfg_v2";
+  const autoSyncKey = "bgb_tg_foa_auto_sync_v2";
 
-  let state = { campaign: {}, sessions: [] };
-  let sourceStateRaw = "";
-  let selectedSessionId = "";
-  let editorStatusEl = null;
-  let syncStatusEl = null;
-  let syncInFlight = false;
+  let state = { campaign: {}, sessions: [], draftSession: null };
+  let sourceRaw = "";
+  let syncStatusNode = null;
+  let pageStatusNode = null;
   let syncTimer = null;
+  let syncInFlight = false;
   let lastSyncedHash = "";
 
   function normalizeSyncConfig(raw) {
@@ -33,23 +31,460 @@
     return { provider, owner, repo, branch, filePath };
   }
 
-  function getStoredSyncConfig() {
+  function deepClone(v) {
+    return JSON.parse(JSON.stringify(v));
+  }
+
+  function sanitizeRows(list, keys) {
+    if (!Array.isArray(list)) return [];
+    return list.map((item) => {
+      const row = {};
+      keys.forEach((k) => {
+        row[k] = String((item && item[k]) || "").trim();
+      });
+      return row;
+    });
+  }
+
+  function sanitizeNotes(list) {
+    if (!Array.isArray(list)) return [];
+    return list.map((note) => (typeof note === "string" ? note : String((note && note.text) || "").trim()));
+  }
+
+  function sanitizeSession(raw, fallbackNo) {
+    const safe = raw && typeof raw === "object" ? raw : {};
+    const sessionNo = Number(safe.sessionNo) > 0 ? Number(safe.sessionNo) : fallbackNo;
+    return {
+      id: String(safe.id || `session-${sessionNo}-${Date.now()}`),
+      sessionNo,
+      date: String(safe.date || ""),
+      menhirs: sanitizeRows(safe.menhirs, ["location", "value", "dial"]),
+      tasks: sanitizeRows(safe.tasks, ["tag", "text"]),
+      locationChanges: sanitizeRows(safe.locationChanges, ["from", "to"]),
+      notes: sanitizeNotes(safe.notes),
+    };
+  }
+
+  function sanitizeData(raw) {
+    const safe = raw && typeof raw === "object" ? raw : {};
+    const campaign = safe.campaign && typeof safe.campaign === "object" ? safe.campaign : {};
+    const sessions = Array.isArray(safe.sessions) ? safe.sessions : [];
+    const draftSession = safe.draftSession ? sanitizeSession(safe.draftSession, getNextSessionNo(sessions)) : null;
+    return {
+      campaign: {
+        title: String(campaign.title || "The Fall of Avalon"),
+        startedOn: String(campaign.startedOn || ""),
+        summary: String(campaign.summary || ""),
+      },
+      sessions: sessions.map((s, i) => sanitizeSession(s, i + 1)),
+      draftSession,
+    };
+  }
+
+  function sortSessions(list) {
+    list.sort((a, b) => {
+      if (a.sessionNo !== b.sessionNo) return a.sessionNo - b.sessionNo;
+      return String(a.date).localeCompare(String(b.date));
+    });
+  }
+
+  function fmtDate(dateIso) {
+    const t = String(dateIso || "");
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(t)) return t;
+    const [y, m, d] = t.split("-");
+    return `${m}/${d}/${y}`;
+  }
+
+  function todayIso() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  }
+
+  function getNextSessionNo(sessionsLike) {
+    const sessions = Array.isArray(sessionsLike) ? sessionsLike : state.sessions;
+    let maxNo = 0;
+    sessions.forEach((s) => {
+      maxNo = Math.max(maxNo, Number(s.sessionNo || 0));
+    });
+    return maxNo + 1;
+  }
+
+  function el(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (typeof text === "string") n.textContent = text;
+    return n;
+  }
+
+  function saveDraft() {
     try {
-      const raw = localStorage.getItem(syncConfigKey);
-      if (!raw) return defaultSyncConfig;
-      const parsed = JSON.parse(raw);
-      return normalizeSyncConfig(parsed) || defaultSyncConfig;
+      localStorage.setItem(draftKey, JSON.stringify(state));
+      setPageStatus("本地草稿已保存");
     } catch (_error) {
-      return defaultSyncConfig;
+      setPageStatus("本地草稿保存失败");
     }
   }
 
-  function setStoredSyncConfig(cfg) {
+  function loadDraft() {
     try {
-      localStorage.setItem(syncConfigKey, JSON.stringify(cfg));
+      const raw = localStorage.getItem(draftKey);
+      if (!raw) return null;
+      return sanitizeData(JSON.parse(raw));
     } catch (_error) {
-      // Ignore storage failures.
+      return null;
     }
+  }
+
+  function clearDraft() {
+    try {
+      localStorage.removeItem(draftKey);
+    } catch (_error) {
+      // Ignore.
+    }
+  }
+
+  function setPageStatus(text) {
+    if (pageStatusNode) pageStatusNode.textContent = text;
+  }
+
+  function setSyncStatus(text) {
+    if (syncStatusNode) syncStatusNode.textContent = text;
+  }
+
+  function wireSaveAndSync() {
+    saveDraft();
+    if (getAutoSync()) scheduleSync();
+  }
+
+  function createDraftSession() {
+    if (state.draftSession) return;
+    const sorted = deepClone(state.sessions);
+    sortSessions(sorted);
+    const latest = sorted[sorted.length - 1] || null;
+    state.draftSession = {
+      id: `draft-${Date.now()}`,
+      sessionNo: getNextSessionNo(),
+      date: todayIso(),
+      menhirs: [],
+      tasks: [],
+      // User requested: inherit these two sections from latest session.
+      locationChanges: latest ? deepClone(latest.locationChanges || []) : [],
+      notes: latest ? deepClone(latest.notes || []) : [],
+    };
+    wireSaveAndSync();
+    render();
+    setPageStatus("已创建 New Session，可在每个区块点击 + 逐条添加");
+  }
+
+  function discardDraftSession() {
+    state.draftSession = null;
+    wireSaveAndSync();
+    render();
+    setPageStatus("已取消 New Session");
+  }
+
+  function appendDraftToHistory() {
+    const d = state.draftSession;
+    if (!d) return;
+    state.sessions.push(deepClone(d));
+    sortSessions(state.sessions);
+    state.draftSession = null;
+    wireSaveAndSync();
+    render();
+    setPageStatus("New Session 已追加到历史列表");
+  }
+
+  function updateDraftField(key, value) {
+    if (!state.draftSession) return;
+    state.draftSession[key] = value;
+    wireSaveAndSync();
+    render();
+  }
+
+  function addDraftRow(section, row) {
+    if (!state.draftSession || !Array.isArray(state.draftSession[section])) return;
+    state.draftSession[section].push(row);
+    wireSaveAndSync();
+    render();
+  }
+
+  function deleteDraftRow(section, index) {
+    if (!state.draftSession || !Array.isArray(state.draftSession[section])) return;
+    state.draftSession[section].splice(index, 1);
+    wireSaveAndSync();
+    render();
+  }
+
+  function updateDraftRow(section, index, key, value) {
+    if (!state.draftSession || !Array.isArray(state.draftSession[section])) return;
+    const row = state.draftSession[section][index];
+    if (!row) return;
+    row[key] = value;
+    wireSaveAndSync();
+  }
+
+  function updateDraftNote(index, value) {
+    if (!state.draftSession || !Array.isArray(state.draftSession.notes)) return;
+    state.draftSession.notes[index] = value;
+    wireSaveAndSync();
+  }
+
+  function renderSessionReadOnly(session) {
+    const wrap = el("div", "session");
+    const header = el("div", "session-header");
+    header.appendChild(el("h4", "session-title", `Session ${String(session.sessionNo).padStart(2, "0")} - ${fmtDate(session.date)}`));
+    wrap.appendChild(header);
+    wrap.appendChild(renderMenhirBlock(session, false));
+    wrap.appendChild(renderTasksBlock(session, false));
+    wrap.appendChild(renderLocationBlock(session, false));
+    wrap.appendChild(renderNotesBlock(session, false));
+    return wrap;
+  }
+
+  function renderSessionEditable(session) {
+    const wrap = el("div", "session tg-draft-session");
+    const header = el("div", "session-header");
+    const title = el("h4", "session-title", "New Session");
+    const controls = el("div", "tg-draft-head");
+
+    const noLabel = el("label", "tg-mini-label", "No");
+    const noInput = document.createElement("input");
+    noInput.type = "number";
+    noInput.min = "1";
+    noInput.value = String(session.sessionNo || getNextSessionNo());
+    noInput.addEventListener("input", () => {
+      const next = Number(noInput.value);
+      if (next > 0) updateDraftField("sessionNo", next);
+    });
+    noLabel.appendChild(noInput);
+
+    const dateLabel = el("label", "tg-mini-label", "Date");
+    const dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.value = session.date || todayIso();
+    dateInput.addEventListener("input", () => {
+      updateDraftField("date", dateInput.value);
+    });
+    dateLabel.appendChild(dateInput);
+
+    controls.append(noLabel, dateLabel);
+    header.append(title, controls);
+    wrap.appendChild(header);
+
+    wrap.appendChild(renderMenhirBlock(session, true));
+    wrap.appendChild(renderTasksBlock(session, true));
+    wrap.appendChild(renderLocationBlock(session, true));
+    wrap.appendChild(renderNotesBlock(session, true));
+
+    const actions = el("div", "tg-draft-actions");
+    const appendBtn = el("button", "tg-add-btn", "Append To History");
+    appendBtn.type = "button";
+    appendBtn.addEventListener("click", appendDraftToHistory);
+
+    const cancelBtn = el("button", "tg-add-btn", "Cancel");
+    cancelBtn.type = "button";
+    cancelBtn.addEventListener("click", discardDraftSession);
+
+    actions.append(appendBtn, cancelBtn);
+    wrap.appendChild(actions);
+
+    return wrap;
+  }
+
+  function renderMenhirBlock(session, editable) {
+    const block = el("div", "tg-block cn");
+    block.lang = "zh";
+    block.appendChild(el("div", "tg-title", "巨神柱状态"));
+
+    const grid = el("div", "tg-menhir-grid");
+    grid.appendChild(el("div", "tg-menhir-head tg-menhir-head-loc", "Location"));
+    grid.appendChild(el("div", "tg-menhir-head tg-menhir-head-dial", "Dial Value"));
+
+    session.menhirs.forEach((row, index) => {
+      if (!editable) {
+        grid.appendChild(el("div", "tg-menhir-row", row.location || ""));
+        grid.appendChild(el("div", "tg-menhir-cell", row.value || ""));
+        grid.appendChild(el("div", "tg-menhir-cell", row.dial || ""));
+        return;
+      }
+
+      const loc = document.createElement("input");
+      loc.className = "tg-edit-input";
+      loc.value = row.location || "";
+      loc.placeholder = "Location";
+      loc.addEventListener("input", () => updateDraftRow("menhirs", index, "location", loc.value));
+
+      const val = document.createElement("input");
+      val.className = "tg-edit-input";
+      val.value = row.value || "";
+      val.placeholder = "Value";
+      val.addEventListener("input", () => updateDraftRow("menhirs", index, "value", val.value));
+
+      const dial = document.createElement("input");
+      dial.className = "tg-edit-input";
+      dial.value = row.dial || "";
+      dial.placeholder = "Dial";
+      dial.addEventListener("input", () => updateDraftRow("menhirs", index, "dial", dial.value));
+
+      const del = el("button", "tg-inline-del", "- ");
+      del.type = "button";
+      del.addEventListener("click", () => deleteDraftRow("menhirs", index));
+
+      const locWrap = el("div", "tg-menhir-row tg-edit-box");
+      const valWrap = el("div", "tg-menhir-cell tg-edit-box");
+      const dialWrap = el("div", "tg-menhir-cell tg-edit-box");
+      locWrap.append(loc, del);
+      valWrap.appendChild(val);
+      dialWrap.appendChild(dial);
+      grid.append(locWrap, valWrap, dialWrap);
+    });
+
+    block.appendChild(grid);
+
+    if (editable) {
+      const add = el("button", "tg-add-btn", "+ Menhir");
+      add.type = "button";
+      add.addEventListener("click", () => addDraftRow("menhirs", { location: "", value: "", dial: "" }));
+      block.appendChild(add);
+    }
+
+    return block;
+  }
+
+  function renderTasksBlock(session, editable) {
+    const block = el("div", "tg-block cn");
+    block.lang = "zh";
+    block.appendChild(el("div", "tg-title", "任务"));
+    const list = el("div", "tg-list");
+
+    session.tasks.forEach((row, index) => {
+      if (!editable) {
+        const line = el("div", "tg-line");
+        line.append(el("span", "tg-tag", row.tag || ""), el("span", "tg-text", row.text || ""));
+        list.appendChild(line);
+        return;
+      }
+
+      const line = el("div", "tg-line tg-edit-line");
+      const tag = document.createElement("input");
+      tag.className = "tg-edit-input tg-edit-tag";
+      tag.value = row.tag || "";
+      tag.placeholder = "Tag";
+      tag.addEventListener("input", () => updateDraftRow("tasks", index, "tag", tag.value));
+
+      const text = document.createElement("input");
+      text.className = "tg-edit-input";
+      text.value = row.text || "";
+      text.placeholder = "Task";
+      text.addEventListener("input", () => updateDraftRow("tasks", index, "text", text.value));
+
+      const del = el("button", "tg-inline-del", "-");
+      del.type = "button";
+      del.addEventListener("click", () => deleteDraftRow("tasks", index));
+
+      const tagWrap = el("span", "tg-tag tg-edit-box");
+      const textWrap = el("span", "tg-text tg-edit-box");
+      tagWrap.appendChild(tag);
+      textWrap.append(text, del);
+      line.append(tagWrap, textWrap);
+      list.appendChild(line);
+    });
+
+    block.appendChild(list);
+    if (editable) {
+      const add = el("button", "tg-add-btn", "+ Task");
+      add.type = "button";
+      add.addEventListener("click", () => addDraftRow("tasks", { tag: "", text: "" }));
+      block.appendChild(add);
+    }
+    return block;
+  }
+
+  function renderLocationBlock(session, editable) {
+    const block = el("div", "tg-block cn");
+    block.lang = "zh";
+    block.appendChild(el("div", "tg-title", "地点变化"));
+    const list = el("div", "tg-list");
+
+    session.locationChanges.forEach((row, index) => {
+      if (!editable) {
+        const move = el("div", "tg-move");
+        move.append(el("span", "tg-tag", row.from || ""), el("span", "tg-arrow-img"), el("span", "tg-tag", row.to || ""));
+        list.appendChild(move);
+        return;
+      }
+
+      const line = el("div", "tg-move tg-edit-move");
+      const from = document.createElement("input");
+      from.className = "tg-edit-input";
+      from.value = row.from || "";
+      from.placeholder = "From";
+      from.addEventListener("input", () => updateDraftRow("locationChanges", index, "from", from.value));
+
+      const to = document.createElement("input");
+      to.className = "tg-edit-input";
+      to.value = row.to || "";
+      to.placeholder = "To";
+      to.addEventListener("input", () => updateDraftRow("locationChanges", index, "to", to.value));
+
+      const del = el("button", "tg-inline-del", "-");
+      del.type = "button";
+      del.addEventListener("click", () => deleteDraftRow("locationChanges", index));
+
+      const fromWrap = el("span", "tg-tag tg-edit-box");
+      const toWrap = el("span", "tg-tag tg-edit-box");
+      fromWrap.appendChild(from);
+      toWrap.appendChild(to);
+      line.append(fromWrap, el("span", "tg-arrow-img"), toWrap, del);
+      list.appendChild(line);
+    });
+
+    block.appendChild(list);
+    if (editable) {
+      const add = el("button", "tg-add-btn", "+ Location Change");
+      add.type = "button";
+      add.addEventListener("click", () => addDraftRow("locationChanges", { from: "", to: "" }));
+      block.appendChild(add);
+    }
+    return block;
+  }
+
+  function renderNotesBlock(session, editable) {
+    const block = el("div", "tg-block cn");
+    block.lang = "zh";
+    block.appendChild(el("div", "tg-title", "冒险笔记"));
+    const list = el("div", "tg-list");
+
+    session.notes.forEach((note, index) => {
+      if (!editable) {
+        list.appendChild(el("div", "tg-note", note || ""));
+        return;
+      }
+
+      const noteWrap = el("div", "tg-note tg-edit-box tg-edit-note");
+      const input = document.createElement("input");
+      input.className = "tg-edit-input";
+      input.value = note || "";
+      input.placeholder = "Note";
+      input.addEventListener("input", () => updateDraftNote(index, input.value));
+
+      const del = el("button", "tg-inline-del", "-");
+      del.type = "button";
+      del.addEventListener("click", () => deleteDraftRow("notes", index));
+
+      noteWrap.append(input, del);
+      list.appendChild(noteWrap);
+    });
+
+    block.appendChild(list);
+    if (editable) {
+      const add = el("button", "tg-add-btn", "+ Note");
+      add.type = "button";
+      add.addEventListener("click", () => addDraftRow("notes", ""));
+      block.appendChild(add);
+    }
+
+    return block;
   }
 
   function getToken() {
@@ -60,12 +495,12 @@
     }
   }
 
-  function setToken(token) {
+  function setToken(next) {
     try {
-      if (token) localStorage.setItem(tokenKey, token);
+      if (next) localStorage.setItem(tokenKey, next);
       else localStorage.removeItem(tokenKey);
     } catch (_error) {
-      // Ignore storage failures.
+      // Ignore.
     }
   }
 
@@ -77,697 +512,36 @@
     }
   }
 
-  function setAutoSync(next) {
+  function setAutoSync(v) {
     try {
-      localStorage.setItem(autoSyncKey, next ? "1" : "0");
+      localStorage.setItem(autoSyncKey, v ? "1" : "0");
     } catch (_error) {
-      // Ignore storage failures.
+      // Ignore.
     }
   }
 
-  function deepClone(value) {
-    return JSON.parse(JSON.stringify(value));
-  }
-
-  function sanitizeData(raw) {
-    const safe = raw && typeof raw === "object" ? raw : {};
-    const campaign = safe.campaign && typeof safe.campaign === "object" ? safe.campaign : {};
-    const sessions = Array.isArray(safe.sessions) ? safe.sessions : [];
-
-    return {
-      campaign: {
-        title: String(campaign.title || "The Fall of Avalon"),
-        startedOn: String(campaign.startedOn || ""),
-        summary: String(campaign.summary || ""),
-      },
-      sessions: sessions.map((session, index) => sanitizeSession(session, index + 1)),
-    };
-  }
-
-  function sanitizeSession(raw, fallbackNo) {
-    const safe = raw && typeof raw === "object" ? raw : {};
-    const sessionNo = Number(safe.sessionNo) > 0 ? Number(safe.sessionNo) : fallbackNo;
-    const date = String(safe.date || "").trim();
-    return {
-      id: String(safe.id || `session-${sessionNo}-${Date.now()}`),
-      sessionNo,
-      date,
-      menhirs: normalizeRows(safe.menhirs, ["location", "value", "dial"]),
-      tasks: normalizeRows(safe.tasks, ["tag", "text"]),
-      locationChanges: normalizeRows(safe.locationChanges, ["from", "to"]),
-      notes: normalizeNoteRows(safe.notes),
-    };
-  }
-
-  function normalizeRows(list, keys) {
-    if (!Array.isArray(list)) return [];
-    return list.map((item) => {
-      const row = {};
-      keys.forEach((key) => {
-        row[key] = String((item && item[key]) || "");
-      });
-      return row;
-    });
-  }
-
-  function normalizeNoteRows(list) {
-    if (!Array.isArray(list)) return [];
-    return list.map((item) => (typeof item === "string" ? item : String((item && item.text) || "")));
-  }
-
-  function sortSessions(list) {
-    list.sort((a, b) => {
-      if (a.sessionNo !== b.sessionNo) return a.sessionNo - b.sessionNo;
-      return String(a.date).localeCompare(String(b.date));
-    });
-  }
-
-  function uid(prefix) {
-    return `${prefix}-${Math.random().toString(36).slice(2, 10)}-${Date.now()}`;
-  }
-
-  function formatDateDisplay(dateText) {
-    const iso = String(dateText || "");
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
-    const parts = iso.split("-");
-    return `${parts[1]}/${parts[2]}/${parts[0]}`;
-  }
-
-  function todayIso() {
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, "0");
-    const d = String(now.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  }
-
-  function el(tag, className, text) {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (typeof text === "string") node.textContent = text;
-    return node;
-  }
-
-  function renderCampaign() {
-    campaignRoot.innerHTML = "";
-    const group = el("div", "campaign-group");
-
-    const subtitleWrap = el("div", "campaign-subtitle-wrapper");
-    const subtitleHeader = el("div", "subtitle-header");
-    const subtitle = el("h3", "campaign-subtitle", state.campaign.title || "The Fall of Avalon");
-    const started = state.campaign.startedOn ? `Started on ${formatDateDisplay(state.campaign.startedOn)}` : "";
-    const meta = el("span", "campaign-meta", started);
-    subtitleHeader.append(subtitle, meta);
-    subtitleWrap.appendChild(subtitleHeader);
-
-    const summaryCard = el("div", "card");
-    const summary = el("h4", "", state.campaign.summary || "");
-    summary.style.marginBottom = "0";
-    summaryCard.appendChild(summary);
-
-    const logsCard = el("div", "card");
-    logsCard.id = "logs";
-    logsCard.appendChild(el("h3", "", "Campaign Logs"));
-
-    const sorted = deepClone(state.sessions);
-    sortSessions(sorted);
-    sorted.forEach((session) => {
-      logsCard.appendChild(renderSession(session));
-    });
-
-    group.append(subtitleWrap, summaryCard, logsCard);
-    campaignRoot.appendChild(group);
-  }
-
-  function renderSession(session) {
-    const sessionEl = el("div", "session");
-
-    const header = el("div", "session-header");
-    const title = `Session ${String(session.sessionNo).padStart(2, "0")} - ${formatDateDisplay(session.date)}`;
-    header.appendChild(el("h4", "session-title", title));
-    sessionEl.appendChild(header);
-
-    sessionEl.appendChild(renderMenhirBlock(session));
-    sessionEl.appendChild(renderTasksBlock(session));
-    sessionEl.appendChild(renderLocationBlock(session));
-    sessionEl.appendChild(renderNotesBlock(session));
-
-    return sessionEl;
-  }
-
-  function renderMenhirBlock(session) {
-    const block = el("div", "tg-block cn");
-    block.lang = "zh";
-    block.appendChild(el("div", "tg-title", "巨神柱状态"));
-
-    const grid = el("div", "tg-menhir-grid");
-    grid.appendChild(el("div", "tg-menhir-head tg-menhir-head-loc", "Location"));
-    grid.appendChild(el("div", "tg-menhir-head tg-menhir-head-dial", "Dial Value"));
-
-    session.menhirs.forEach((item) => {
-      grid.appendChild(el("div", "tg-menhir-row", item.location || ""));
-      grid.appendChild(el("div", "tg-menhir-cell", item.value || ""));
-      grid.appendChild(el("div", "tg-menhir-cell", item.dial || ""));
-    });
-
-    block.appendChild(grid);
-    return block;
-  }
-
-  function renderTasksBlock(session) {
-    const block = el("div", "tg-block cn");
-    block.lang = "zh";
-    block.appendChild(el("div", "tg-title", "任务"));
-    const list = el("div", "tg-list");
-
-    session.tasks.forEach((item) => {
-      const line = el("div", "tg-line");
-      line.appendChild(el("span", "tg-tag", item.tag || ""));
-      line.appendChild(el("span", "tg-text", item.text || ""));
-      list.appendChild(line);
-    });
-
-    block.appendChild(list);
-    return block;
-  }
-
-  function renderLocationBlock(session) {
-    const block = el("div", "tg-block cn");
-    block.lang = "zh";
-    block.appendChild(el("div", "tg-title", "地点变化"));
-    const list = el("div", "tg-list");
-
-    session.locationChanges.forEach((item) => {
-      const move = el("div", "tg-move");
-      move.appendChild(el("span", "tg-tag", item.from || ""));
-      move.appendChild(el("span", "tg-arrow-img"));
-      move.appendChild(el("span", "tg-tag", item.to || ""));
-      list.appendChild(move);
-    });
-
-    block.appendChild(list);
-    return block;
-  }
-
-  function renderNotesBlock(session) {
-    const block = el("div", "tg-block cn");
-    block.lang = "zh";
-    block.appendChild(el("div", "tg-title", "冒险笔记"));
-    const list = el("div", "tg-list");
-
-    session.notes.forEach((note) => {
-      list.appendChild(el("div", "tg-note", note || ""));
-    });
-
-    block.appendChild(list);
-    return block;
-  }
-
-  function getSelectedSession() {
-    return state.sessions.find((session) => session.id === selectedSessionId) || null;
-  }
-
-  function ensureSelectedSession() {
-    if (getSelectedSession()) return;
-    const sorted = deepClone(state.sessions);
-    sortSessions(sorted);
-    selectedSessionId = sorted.length ? sorted[sorted.length - 1].id : "";
-  }
-
-  function setEditorStatus(text) {
-    if (editorStatusEl) editorStatusEl.textContent = text;
-  }
-
-  function setSyncStatus(text) {
-    if (syncStatusEl) syncStatusEl.textContent = text;
-  }
-
-  function scheduleDraftSave() {
-    window.clearTimeout(scheduleDraftSave.timerId);
-    scheduleDraftSave.timerId = window.setTimeout(() => {
-      saveDraft();
-      if (getAutoSync()) scheduleSync();
-    }, 180);
-  }
-
-  function saveDraft() {
+  function getSyncConfig() {
     try {
-      localStorage.setItem(draftKey, JSON.stringify(state));
-      setEditorStatus("草稿已保存到本地");
+      const raw = localStorage.getItem(syncConfigKey);
+      if (!raw) return defaultSyncConfig;
+      return normalizeSyncConfig(JSON.parse(raw)) || defaultSyncConfig;
     } catch (_error) {
-      setEditorStatus("本地草稿保存失败");
+      return defaultSyncConfig;
     }
   }
-  scheduleDraftSave.timerId = 0;
 
-  function loadDraft() {
+  function setSyncConfig(cfg) {
     try {
-      const raw = localStorage.getItem(draftKey);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      return sanitizeData(parsed);
+      localStorage.setItem(syncConfigKey, JSON.stringify(cfg));
     } catch (_error) {
-      return null;
+      // Ignore.
     }
-  }
-
-  function clearDraft() {
-    try {
-      localStorage.removeItem(draftKey);
-    } catch (_error) {
-      // Ignore storage failures.
-    }
-  }
-
-  function renderEditor() {
-    ensureSelectedSession();
-    const selected = getSelectedSession();
-    editorRoot.innerHTML = "";
-
-    const wrapper = el("div", "card tg-editor");
-    const topTitle = el("h3", "", "Tainted Grail Session Editor");
-    topTitle.style.marginTop = "0";
-    wrapper.appendChild(topTitle);
-
-    editorStatusEl = el("div", "tg-editor-status", "就绪");
-    wrapper.appendChild(editorStatusEl);
-
-    const toolbar = el("div", "tg-editor-toolbar");
-    const sessionSelectLabel = el("label", "", "编辑 Session");
-    const sessionSelect = el("select");
-    const sorted = deepClone(state.sessions);
-    sortSessions(sorted);
-    sorted.forEach((session) => {
-      const option = document.createElement("option");
-      option.value = session.id;
-      option.textContent = `Session ${String(session.sessionNo).padStart(2, "0")} - ${formatDateDisplay(session.date)}`;
-      if (session.id === selectedSessionId) option.selected = true;
-      sessionSelect.appendChild(option);
-    });
-    sessionSelect.addEventListener("change", () => {
-      selectedSessionId = sessionSelect.value;
-      renderEditor();
-    });
-    sessionSelectLabel.appendChild(sessionSelect);
-    toolbar.appendChild(sessionSelectLabel);
-
-    const cloneLatestBtn = el("button", "", "新增 Session（复制最新）");
-    cloneLatestBtn.type = "button";
-    cloneLatestBtn.addEventListener("click", () => {
-      createSession(true);
-    });
-    toolbar.appendChild(cloneLatestBtn);
-
-    const emptyBtn = el("button", "", "新增 Session（仅题头）");
-    emptyBtn.type = "button";
-    emptyBtn.addEventListener("click", () => {
-      createSession(false);
-    });
-    toolbar.appendChild(emptyBtn);
-
-    const deleteBtn = el("button", "", "删除当前 Session");
-    deleteBtn.type = "button";
-    deleteBtn.addEventListener("click", () => {
-      deleteCurrentSession();
-    });
-    toolbar.appendChild(deleteBtn);
-
-    const saveBtn = el("button", "", "保存本地草稿");
-    saveBtn.type = "button";
-    saveBtn.addEventListener("click", () => saveDraft());
-    toolbar.appendChild(saveBtn);
-
-    const resetBtn = el("button", "", "重置为远程数据");
-    resetBtn.type = "button";
-    resetBtn.addEventListener("click", () => {
-      const ok = window.confirm("确定清除本地草稿并恢复到远程文件内容吗？");
-      if (!ok) return;
-      clearDraft();
-      if (sourceStateRaw) {
-        state = sanitizeData(JSON.parse(sourceStateRaw));
-        ensureSelectedSession();
-        renderCampaign();
-        renderEditor();
-        setEditorStatus("已恢复远程数据");
-      }
-    });
-    toolbar.appendChild(resetBtn);
-
-    wrapper.appendChild(toolbar);
-
-    const syncCfg = getStoredSyncConfig();
-    const syncBox = el("div", "tg-editor-sync");
-
-    const ownerInput = buildLabeledInput("Owner", syncCfg ? syncCfg.owner : "", false);
-    const repoInput = buildLabeledInput("Repo", syncCfg ? syncCfg.repo : "", false);
-    const branchInput = buildLabeledInput("Branch", syncCfg ? syncCfg.branch : "main", false);
-    const pathInput = buildLabeledInput("File", syncCfg ? syncCfg.filePath : dataSource, false);
-
-    syncBox.append(ownerInput.wrap, repoInput.wrap, branchInput.wrap, pathInput.wrap);
-
-    [ownerInput.input, repoInput.input, branchInput.input, pathInput.input].forEach((inputEl) => {
-      inputEl.addEventListener("input", () => {
-        const nextCfg = readSyncInputs(ownerInput.input, repoInput.input, branchInput.input, pathInput.input);
-        if (nextCfg) setStoredSyncConfig(nextCfg);
-      });
-    });
-
-    const tokenBtn = el("button", "", getToken() ? "更新 GitHub Token" : "连接 GitHub Token");
-    tokenBtn.type = "button";
-    tokenBtn.addEventListener("click", () => {
-      const current = getToken();
-      const input = window.prompt("输入 GitHub PAT（需要 repo contents:write 权限）。留空表示断开。", current);
-      if (input === null) return;
-      setToken(String(input || "").trim());
-      tokenBtn.textContent = getToken() ? "更新 GitHub Token" : "连接 GitHub Token";
-      setSyncStatus(getToken() ? "GitHub 已连接，可同步" : "GitHub 未连接");
-    });
-    syncBox.appendChild(tokenBtn);
-
-    const autoSyncLabel = el("label", "", "自动同步");
-    const autoSyncInput = document.createElement("input");
-    autoSyncInput.type = "checkbox";
-    autoSyncInput.checked = getAutoSync();
-    autoSyncInput.addEventListener("change", () => {
-      setAutoSync(autoSyncInput.checked);
-      setSyncStatus(autoSyncInput.checked ? "自动同步已开启" : "自动同步已关闭");
-    });
-    autoSyncLabel.appendChild(autoSyncInput);
-    syncBox.appendChild(autoSyncLabel);
-
-    const syncNowBtn = el("button", "", "立即同步到 GitHub");
-    syncNowBtn.type = "button";
-    syncNowBtn.addEventListener("click", () => {
-      const cfg = readSyncInputs(ownerInput.input, repoInput.input, branchInput.input, pathInput.input);
-      if (!cfg) {
-        setSyncStatus("同步配置不完整");
-        return;
-      }
-      setStoredSyncConfig(cfg);
-      void syncNow(cfg, false);
-    });
-    syncBox.appendChild(syncNowBtn);
-
-    syncStatusEl = el("div", "tg-editor-status", getToken() ? "GitHub 已连接，可同步" : "GitHub 未连接");
-
-    wrapper.append(syncBox, syncStatusEl);
-
-    const meta = el("div", "tg-editor-session-meta");
-    const noInput = buildLabeledInput("Session No", selected ? String(selected.sessionNo) : "", true);
-    const dateInput = buildLabeledInput("Date", selected ? selected.date : "", true);
-    dateInput.input.type = "date";
-    noInput.input.type = "number";
-    noInput.input.min = "1";
-
-    noInput.input.addEventListener("input", () => {
-      const current = getSelectedSession();
-      if (!current) return;
-      const next = Number(noInput.input.value);
-      if (next > 0) current.sessionNo = next;
-      renderCampaign();
-      scheduleDraftSave();
-    });
-
-    dateInput.input.addEventListener("input", () => {
-      const current = getSelectedSession();
-      if (!current) return;
-      current.date = dateInput.input.value;
-      renderCampaign();
-      scheduleDraftSave();
-    });
-
-    meta.append(noInput.wrap, dateInput.wrap);
-    wrapper.appendChild(meta);
-
-    const grid = el("div", "tg-editor-grid");
-    grid.appendChild(buildMenhirPanel(selected));
-    grid.appendChild(buildTaskPanel(selected));
-    grid.appendChild(buildLocationPanel(selected));
-    grid.appendChild(buildNotesPanel(selected));
-
-    wrapper.appendChild(grid);
-    editorRoot.appendChild(wrapper);
-  }
-
-  function buildLabeledInput(labelText, value, readOnly) {
-    const wrap = el("label", "", labelText);
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = value;
-    input.readOnly = !!readOnly;
-    wrap.appendChild(input);
-    return { wrap, input };
-  }
-
-  function buildMenhirPanel(session) {
-    const panel = el("div", "tg-editor-panel");
-    panel.appendChild(el("h4", "", "Menhir（逐条追加）"));
-    const list = el("div", "tg-item-list");
-
-    (session ? session.menhirs : []).forEach((item, index) => {
-      const row = el("div", "tg-item-row menhir");
-      const loc = document.createElement("input");
-      loc.value = item.location || "";
-      const value = document.createElement("input");
-      value.value = item.value || "";
-      const dial = document.createElement("input");
-      dial.value = item.dial || "";
-      const del = el("button", "", "删");
-      del.type = "button";
-
-      loc.addEventListener("input", () => updateRow("menhirs", index, "location", loc.value));
-      value.addEventListener("input", () => updateRow("menhirs", index, "value", value.value));
-      dial.addEventListener("input", () => updateRow("menhirs", index, "dial", dial.value));
-      del.addEventListener("click", () => removeRow("menhirs", index));
-
-      row.append(loc, value, dial, del);
-      list.appendChild(row);
-    });
-
-    const add = el("button", "", "+ 添加 Menhir");
-    add.type = "button";
-    add.addEventListener("click", () => {
-      pushRow("menhirs", { location: "", value: "", dial: "" });
-    });
-
-    panel.append(list, add);
-    return panel;
-  }
-
-  function buildTaskPanel(session) {
-    const panel = el("div", "tg-editor-panel");
-    panel.appendChild(el("h4", "", "任务（逐条追加）"));
-    const list = el("div", "tg-item-list");
-
-    (session ? session.tasks : []).forEach((item, index) => {
-      const row = el("div", "tg-item-row");
-      const tag = document.createElement("input");
-      tag.value = item.tag || "";
-      const text = document.createElement("input");
-      text.value = item.text || "";
-      const del = el("button", "", "删");
-      del.type = "button";
-
-      tag.addEventListener("input", () => updateRow("tasks", index, "tag", tag.value));
-      text.addEventListener("input", () => updateRow("tasks", index, "text", text.value));
-      del.addEventListener("click", () => removeRow("tasks", index));
-
-      row.append(tag, text, del);
-      list.appendChild(row);
-    });
-
-    const add = el("button", "", "+ 添加任务");
-    add.type = "button";
-    add.addEventListener("click", () => {
-      pushRow("tasks", { tag: "", text: "" });
-    });
-
-    panel.append(list, add);
-    return panel;
-  }
-
-  function buildLocationPanel(session) {
-    const panel = el("div", "tg-editor-panel");
-    panel.appendChild(el("h4", "", "地点变化（逐条追加）"));
-    const list = el("div", "tg-item-list");
-
-    (session ? session.locationChanges : []).forEach((item, index) => {
-      const row = el("div", "tg-item-row move");
-      const from = document.createElement("input");
-      from.value = item.from || "";
-      const to = document.createElement("input");
-      to.value = item.to || "";
-      const del = el("button", "", "删");
-      del.type = "button";
-
-      from.addEventListener("input", () => updateRow("locationChanges", index, "from", from.value));
-      to.addEventListener("input", () => updateRow("locationChanges", index, "to", to.value));
-      del.addEventListener("click", () => removeRow("locationChanges", index));
-
-      row.append(from, to, del);
-      list.appendChild(row);
-    });
-
-    const add = el("button", "", "+ 添加地点变化");
-    add.type = "button";
-    add.addEventListener("click", () => {
-      pushRow("locationChanges", { from: "", to: "" });
-    });
-
-    panel.append(list, add);
-    return panel;
-  }
-
-  function buildNotesPanel(session) {
-    const panel = el("div", "tg-editor-panel");
-    panel.appendChild(el("h4", "", "冒险笔记（逐条追加）"));
-    const list = el("div", "tg-item-list");
-
-    (session ? session.notes : []).forEach((item, index) => {
-      const row = el("div", "tg-item-row note");
-      const text = document.createElement("input");
-      text.value = item || "";
-      const del = el("button", "", "删");
-      del.type = "button";
-
-      text.addEventListener("input", () => updateNote(index, text.value));
-      del.addEventListener("click", () => removeNote(index));
-
-      row.append(text, del);
-      list.appendChild(row);
-    });
-
-    const add = el("button", "", "+ 添加冒险笔记");
-    add.type = "button";
-    add.addEventListener("click", () => {
-      pushNote("");
-    });
-
-    panel.append(list, add);
-    return panel;
-  }
-
-  function updateRow(section, index, key, value) {
-    const session = getSelectedSession();
-    if (!session || !Array.isArray(session[section]) || !session[section][index]) return;
-    session[section][index][key] = value;
-    renderCampaign();
-    scheduleDraftSave();
-  }
-
-  function removeRow(section, index) {
-    const session = getSelectedSession();
-    if (!session || !Array.isArray(session[section])) return;
-    session[section].splice(index, 1);
-    renderCampaign();
-    renderEditor();
-    scheduleDraftSave();
-  }
-
-  function pushRow(section, row) {
-    const session = getSelectedSession();
-    if (!session || !Array.isArray(session[section])) return;
-    session[section].push(row);
-    renderCampaign();
-    renderEditor();
-    scheduleDraftSave();
-  }
-
-  function updateNote(index, value) {
-    const session = getSelectedSession();
-    if (!session || !Array.isArray(session.notes) || index < 0 || index >= session.notes.length) return;
-    session.notes[index] = value;
-    renderCampaign();
-    scheduleDraftSave();
-  }
-
-  function removeNote(index) {
-    const session = getSelectedSession();
-    if (!session || !Array.isArray(session.notes)) return;
-    session.notes.splice(index, 1);
-    renderCampaign();
-    renderEditor();
-    scheduleDraftSave();
-  }
-
-  function pushNote(value) {
-    const session = getSelectedSession();
-    if (!session || !Array.isArray(session.notes)) return;
-    session.notes.push(value);
-    renderCampaign();
-    renderEditor();
-    scheduleDraftSave();
-  }
-
-  function createSession(copyLatest) {
-    let sessionNo = 1;
-    state.sessions.forEach((session) => {
-      sessionNo = Math.max(sessionNo, Number(session.sessionNo || 0) + 1);
-    });
-
-    let next = {
-      id: uid("tg-session"),
-      sessionNo,
-      date: todayIso(),
-      menhirs: [],
-      tasks: [],
-      locationChanges: [],
-      notes: [],
-    };
-
-    if (copyLatest && state.sessions.length) {
-      const sorted = deepClone(state.sessions);
-      sortSessions(sorted);
-      const latest = sorted[sorted.length - 1];
-      next = {
-        id: uid("tg-session"),
-        sessionNo,
-        date: todayIso(),
-        menhirs: deepClone(latest.menhirs || []),
-        tasks: deepClone(latest.tasks || []),
-        locationChanges: deepClone(latest.locationChanges || []),
-        notes: deepClone(latest.notes || []),
-      };
-    }
-
-    state.sessions.push(next);
-    selectedSessionId = next.id;
-    renderCampaign();
-    renderEditor();
-    scheduleDraftSave();
-    setEditorStatus(copyLatest ? "已复制最新 Session，可继续逐条追加/修改" : "已创建空 Session（仅题头）");
-  }
-
-  function deleteCurrentSession() {
-    const current = getSelectedSession();
-    if (!current) return;
-    const ok = window.confirm(`确定删除 Session ${String(current.sessionNo).padStart(2, "0")} 吗？`);
-    if (!ok) return;
-    state.sessions = state.sessions.filter((session) => session.id !== current.id);
-    ensureSelectedSession();
-    renderCampaign();
-    renderEditor();
-    scheduleDraftSave();
-    setEditorStatus("当前 Session 已删除");
-  }
-
-  function readSyncInputs(ownerInput, repoInput, branchInput, pathInput) {
-    const raw = {
-      provider: "github",
-      owner: ownerInput.value,
-      repo: repoInput.value,
-      branch: branchInput.value || "main",
-      filePath: pathInput.value || dataSource,
-    };
-    return normalizeSyncConfig(raw);
   }
 
   function encodeBase64Utf8(text) {
     const bytes = new TextEncoder().encode(text);
     let binary = "";
-    bytes.forEach((byte) => {
-      binary += String.fromCharCode(byte);
-    });
+    bytes.forEach((b) => { binary += String.fromCharCode(b); });
     return btoa(binary);
   }
 
@@ -780,47 +554,53 @@
     return (hash >>> 0).toString(16);
   }
 
+  function getPersistablePayload() {
+    return {
+      campaign: deepClone(state.campaign),
+      sessions: deepClone(state.sessions),
+    };
+  }
+
   async function fetchRemoteSha(cfg, token) {
     const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeURIComponent(cfg.filePath).replace(/%2F/g, "/")}?ref=${encodeURIComponent(cfg.branch)}`;
-    const response = await fetch(endpoint, {
+    const res = await fetch(endpoint, {
       method: "GET",
       headers: {
         Accept: "application/vnd.github+json",
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.ok) throw new Error(`GitHub read failed (${response.status})`);
-    const payload = await response.json();
+    if (!res.ok) throw new Error(`GitHub read failed (${res.status})`);
+    const payload = await res.json();
     if (!payload || typeof payload.sha !== "string") throw new Error("GitHub response missing file SHA");
     return payload.sha;
   }
 
-  async function syncNow(cfg, isAuto) {
+  async function syncNow(force) {
     const token = getToken();
+    const cfg = getSyncConfig();
     if (!token) {
       setSyncStatus("GitHub token 缺失");
       return;
     }
     if (!cfg) {
-      setSyncStatus("同步配置不完整");
+      setSyncStatus("GitHub 配置不完整");
       return;
     }
     if (syncInFlight) return;
 
-    const text = `${JSON.stringify(state, null, 2)}\n`;
-    const nextHash = quickHash(text);
-    if (isAuto && nextHash === lastSyncedHash) return;
+    const content = `${JSON.stringify(getPersistablePayload(), null, 2)}\n`;
+    const nextHash = quickHash(content);
+    if (!force && nextHash === lastSyncedHash) return;
 
     syncInFlight = true;
-    setSyncStatus(isAuto ? "自动同步中..." : "正在同步到 GitHub...");
+    setSyncStatus("同步中...");
 
     try {
       const sha = await fetchRemoteSha(cfg, token);
       const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeURIComponent(cfg.filePath).replace(/%2F/g, "/")}`;
-      const now = new Date();
-      const message = `update tainted grail sessions ${now.toISOString().slice(0, 19)}Z`;
-
-      const response = await fetch(endpoint, {
+      const message = `update tainted grail sessions ${new Date().toISOString().slice(0, 19)}Z`;
+      const res = await fetch(endpoint, {
         method: "PUT",
         headers: {
           Accept: "application/vnd.github+json",
@@ -829,20 +609,16 @@
         },
         body: JSON.stringify({
           message,
-          content: encodeBase64Utf8(text),
+          content: encodeBase64Utf8(content),
           branch: cfg.branch,
           sha,
         }),
       });
-      if (!response.ok) throw new Error(`GitHub write failed (${response.status})`);
-
+      if (!res.ok) throw new Error(`GitHub write failed (${res.status})`);
       lastSyncedHash = nextHash;
-      const at = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-      setSyncStatus(`GitHub 已同步 (${at})`);
-      setEditorStatus("已提交到 GitHub");
+      setSyncStatus(`已同步 (${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })})`);
     } catch (error) {
-      const message = error && error.message ? error.message : "同步失败";
-      setSyncStatus(message);
+      setSyncStatus(error && error.message ? error.message : "同步失败");
     } finally {
       syncInFlight = false;
     }
@@ -852,41 +628,146 @@
     window.clearTimeout(syncTimer);
     syncTimer = window.setTimeout(() => {
       syncTimer = null;
-      const cfg = getStoredSyncConfig();
-      if (!cfg) return;
-      void syncNow(cfg, true);
-    }, 2400);
+      void syncNow(false);
+    }, 2200);
   }
 
-  async function loadInitialData() {
-    let remoteData = { campaign: {}, sessions: [] };
-    try {
-      const response = await fetch(`${dataSource}?v=20260228`);
-      if (!response.ok) throw new Error("fetch failed");
-      remoteData = sanitizeData(await response.json());
-    } catch (_error) {
-      remoteData = sanitizeData({
-        campaign: {
-          title: "The Fall of Avalon",
-          startedOn: "",
-          summary: "",
-        },
-        sessions: [],
+  function renderSyncControls(host) {
+    const box = el("div", "tg-sync-bar");
+    const cfg = getSyncConfig() || defaultSyncConfig || {
+      provider: "github", owner: "", repo: "", branch: "main", filePath: dataSource,
+    };
+
+    const owner = mkInput("Owner", cfg.owner);
+    const repo = mkInput("Repo", cfg.repo);
+    const branch = mkInput("Branch", cfg.branch || "main");
+    const file = mkInput("File", cfg.filePath || dataSource);
+    box.append(owner.wrap, repo.wrap, branch.wrap, file.wrap);
+
+    const saveCfgBtn = el("button", "tg-add-btn", "Save Sync Config");
+    saveCfgBtn.type = "button";
+    saveCfgBtn.addEventListener("click", () => {
+      const next = normalizeSyncConfig({
+        provider: "github",
+        owner: owner.input.value,
+        repo: repo.input.value,
+        branch: branch.input.value || "main",
+        filePath: file.input.value || dataSource,
       });
-    }
+      if (!next) {
+        setSyncStatus("Sync 配置无效");
+        return;
+      }
+      setSyncConfig(next);
+      setSyncStatus("Sync 配置已保存");
+    });
 
-    sourceStateRaw = JSON.stringify(remoteData);
-    const draftData = loadDraft();
-    state = draftData || remoteData;
+    const tokenBtn = el("button", "tg-add-btn", getToken() ? "Update Token" : "Connect Token");
+    tokenBtn.type = "button";
+    tokenBtn.addEventListener("click", () => {
+      const current = getToken();
+      const input = window.prompt("输入 GitHub PAT（repo contents:write）。留空则断开。", current);
+      if (input === null) return;
+      setToken(String(input || "").trim());
+      tokenBtn.textContent = getToken() ? "Update Token" : "Connect Token";
+      setSyncStatus(getToken() ? "Token 已连接" : "Token 已断开");
+    });
 
-    ensureSelectedSession();
-    renderCampaign();
-    renderEditor();
+    const autoLabel = el("label", "tg-mini-label", "Auto Sync");
+    const auto = document.createElement("input");
+    auto.type = "checkbox";
+    auto.checked = getAutoSync();
+    auto.addEventListener("change", () => {
+      setAutoSync(auto.checked);
+      setSyncStatus(auto.checked ? "Auto Sync 已开启" : "Auto Sync 已关闭");
+    });
+    autoLabel.appendChild(auto);
 
-    if (draftData) {
-      setEditorStatus("已加载本地草稿（可直接继续编辑）");
-    }
+    const nowBtn = el("button", "tg-add-btn", "Sync Now");
+    nowBtn.type = "button";
+    nowBtn.addEventListener("click", () => {
+      void syncNow(true);
+    });
+
+    syncStatusNode = el("div", "tg-page-status", getToken() ? "Token 已连接" : "Token 未连接");
+    box.append(saveCfgBtn, tokenBtn, autoLabel, nowBtn, syncStatusNode);
+
+    host.appendChild(box);
   }
 
-  void loadInitialData();
+  function mkInput(labelText, value) {
+    const wrap = el("label", "tg-mini-label", labelText);
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = value || "";
+    wrap.appendChild(input);
+    return { wrap, input };
+  }
+
+  function render() {
+    root.innerHTML = "";
+
+    const group = el("div", "campaign-group");
+    const subtitleWrap = el("div", "campaign-subtitle-wrapper");
+    const subtitleHeader = el("div", "subtitle-header");
+    subtitleHeader.append(
+      el("h3", "campaign-subtitle", state.campaign.title || "The Fall of Avalon"),
+      el("span", "campaign-meta", state.campaign.startedOn ? `Started on ${fmtDate(state.campaign.startedOn)}` : "")
+    );
+    subtitleWrap.appendChild(subtitleHeader);
+
+    const summary = el("div", "card");
+    const h4 = el("h4", "", state.campaign.summary || "");
+    h4.style.marginBottom = "0";
+    summary.appendChild(h4);
+
+    const logsCard = el("div", "card");
+    logsCard.id = "logs";
+    const title = el("h3", "", "Campaign Logs");
+    title.style.marginTop = "0";
+    logsCard.appendChild(title);
+
+    const sorted = deepClone(state.sessions);
+    sortSessions(sorted);
+    sorted.forEach((s) => logsCard.appendChild(renderSessionReadOnly(s)));
+
+    const newBtnWrap = el("div", "tg-new-session-wrap");
+    const newBtn = el("button", "tg-add-btn tg-new-session-btn", "+ New Session");
+    newBtn.type = "button";
+    newBtn.addEventListener("click", createDraftSession);
+    newBtn.disabled = !!state.draftSession;
+    newBtnWrap.appendChild(newBtn);
+    logsCard.appendChild(newBtnWrap);
+
+    if (state.draftSession) {
+      logsCard.appendChild(renderSessionEditable(state.draftSession));
+    }
+
+    pageStatusNode = el("div", "tg-page-status", "Ready");
+    logsCard.appendChild(pageStatusNode);
+
+    renderSyncControls(logsCard);
+
+    group.append(subtitleWrap, summary, logsCard);
+    root.appendChild(group);
+  }
+
+  async function init() {
+    let remoteData = { campaign: {}, sessions: [], draftSession: null };
+    try {
+      const res = await fetch(`${dataSource}?v=20260228`);
+      if (!res.ok) throw new Error("fetch failed");
+      remoteData = sanitizeData(await res.json());
+    } catch (_error) {
+      remoteData = sanitizeData(remoteData);
+    }
+
+    sourceRaw = JSON.stringify(remoteData);
+    const draft = loadDraft();
+    state = draft || remoteData;
+    render();
+    if (draft) setPageStatus("已加载本地草稿");
+  }
+
+  void init();
 })();
