@@ -109,15 +109,15 @@
       if (!remoteSync) return;
       const hasToken = !!getRemoteSyncToken();
       if (remoteSyncButton) {
-        remoteSyncButton.textContent = hasToken ? "GitHub Sync Connected" : "Connect GitHub Sync";
+        remoteSyncButton.textContent = hasToken ? "Host Sync Connected" : "Connect Host Sync";
       }
       if (remoteSyncStatus) {
         if (textOverride) {
           remoteSyncStatus.textContent = textOverride;
         } else if (!hasToken) {
-          remoteSyncStatus.textContent = "GitHub sync not connected";
+          remoteSyncStatus.textContent = "Host sync not connected";
         } else {
-          remoteSyncStatus.textContent = `GitHub sync ready (${getRemoteSyncConfigLabel()})`;
+          remoteSyncStatus.textContent = `Host sync ready (${getRemoteSyncConfigLabel()})`;
         }
       }
     }
@@ -1249,46 +1249,46 @@
       if (!section) return;
       if (section.querySelector(".edit-gate")) return;
 
-      const gate = document.createElement("div");
-      gate.className = "edit-gate";
-      gate.innerHTML = `
-        <button type="button" class="upgrade-btn upgrade-btn-secondary" data-action="toggle-edit-lock">Edit Page</button>
-        <span class="edit-gate-status">Edit locked</span>
-      `;
-      editGateButton = gate.querySelector('[data-action="toggle-edit-lock"]');
-      editGateStatus = gate.querySelector(".edit-gate-status");
+      const gateFactory = window.BGBEditSyncGate && typeof window.BGBEditSyncGate.create === "function"
+        ? window.BGBEditSyncGate.create
+        : null;
+      if (!gateFactory) return;
 
-      editGateButton.addEventListener("click", () => {
-        if (isEditEnabled()) {
-          lockEditMode();
-          return;
-        }
-        tryUnlockEditMode();
-      });
-
-      if (remoteSync) {
-        const remoteBtn = document.createElement("button");
-        remoteBtn.type = "button";
-        remoteBtn.className = "upgrade-btn upgrade-btn-secondary";
-        remoteBtn.textContent = "Connect GitHub Sync";
-        remoteBtn.addEventListener("click", () => {
+      const gate = gateFactory({
+        rootClass: "edit-gate",
+        buttonClass: "upgrade-btn upgrade-btn-secondary",
+        statusClass: "edit-gate-status",
+        showSync: !!remoteSync,
+        getEditUnlocked: () => isEditEnabled(),
+        getSyncConnected: () => !!getRemoteSyncToken(),
+        onEditToggle: (currentlyUnlocked) => {
+          if (currentlyUnlocked) lockEditMode();
+          else tryUnlockEditMode();
+        },
+        onSyncClick: () => {
           openRemoteSyncPrompt();
-        });
-        remoteSyncButton = remoteBtn;
-        gate.appendChild(remoteBtn);
-
-        const remoteStatusEl = document.createElement("span");
-        remoteStatusEl.className = "edit-gate-status";
-        remoteStatusEl.textContent = "GitHub sync not connected";
-        remoteSyncStatus = remoteStatusEl;
-        gate.appendChild(remoteStatusEl);
-      }
+        },
+        labels: {
+          editLockedButton: "Edit Page",
+          editUnlockedButton: "Lock Edit",
+          editLockedStatus: "Edit locked",
+          editUnlockedStatus: "Edit unlocked",
+          syncDisconnectedButton: "Connect Host Sync",
+          syncConnectedButton: "Host Sync Connected",
+          syncDisconnectedStatus: "Host sync not connected",
+          syncConnectedStatus: "Host sync ready",
+        },
+      });
+      editGateButton = gate.editButton;
+      editGateStatus = gate.editStatus;
+      remoteSyncButton = gate.syncButton;
+      remoteSyncStatus = gate.syncStatus;
 
       const title = section.querySelector(".section-title");
       if (title && title.nextSibling) {
-        section.insertBefore(gate, title.nextSibling);
+        section.insertBefore(gate.root, title.nextSibling);
       } else {
-        section.prepend(gate);
+        section.prepend(gate.root);
       }
 
       refreshEditGateUi();
@@ -1834,11 +1834,11 @@
         },
       });
       if (!response.ok) {
-        throw new Error(`GitHub read failed (${response.status})`);
+        throw new Error(`Host read failed (${response.status})`);
       }
       const payload = await response.json();
       if (!payload || typeof payload.sha !== "string") {
-        throw new Error("GitHub response missing file SHA");
+        throw new Error("Host response missing file SHA");
       }
       const encodedContent = typeof payload.content === "string" ? payload.content : "";
       const sourceHtml = encodedContent ? fromBase64Utf8(encodedContent.replace(/\n/g, "")) : "";
@@ -1852,7 +1852,7 @@
       if (!remoteSync) return;
       const token = getRemoteSyncToken();
       if (!token) {
-        refreshRemoteSyncUi("GitHub token missing");
+        refreshRemoteSyncUi("Host token missing");
         return;
       }
       const fileMeta = await requestGitHubFileMeta(token);
@@ -1878,7 +1878,7 @@
         }),
       });
       if (!response.ok) {
-        throw new Error(`GitHub write failed (${response.status})`);
+        throw new Error(`Host write failed (${response.status})`);
       }
       lastSyncedHtmlHash = nextHash;
     }
@@ -1890,14 +1890,14 @@
         return;
       }
       remoteSyncInFlight = true;
-      refreshRemoteSyncUi("Syncing HTML to GitHub...");
+      refreshRemoteSyncUi("Syncing HTML to Host...");
       try {
         const state = buildCurrentUpgradeState();
         await pushHtmlToGitHub(state);
         const syncedAt = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-        refreshRemoteSyncUi(`GitHub synced at ${syncedAt}`);
+        refreshRemoteSyncUi(`Host synced at ${syncedAt}`);
       } catch (error) {
-        const message = error && error.message ? error.message : "GitHub sync failed";
+        const message = error && error.message ? error.message : "Host sync failed";
         refreshRemoteSyncUi(message);
       } finally {
         remoteSyncInFlight = false;
@@ -1932,7 +1932,7 @@
       const existing = getRemoteSyncToken();
       const input = window.prompt(
         [
-          "Paste a GitHub Personal Access Token with repository content write access.",
+          "Paste a Host Personal Access Token with repository content write access.",
           `Target: ${getRemoteSyncConfigLabel()} (${remoteSync.filePath})`,
           "Leave blank to disconnect sync.",
         ].join("\n"),
@@ -1943,10 +1943,10 @@
       setRemoteSyncToken(nextToken);
       lastSyncedHtmlHash = "";
       if (nextToken) {
-        refreshRemoteSyncUi("GitHub connected. Pending first sync...");
+        refreshRemoteSyncUi("Host connected. Pending first sync...");
         scheduleRemoteSync();
       } else {
-        refreshRemoteSyncUi("GitHub sync disconnected");
+        refreshRemoteSyncUi("Host sync disconnected");
       }
     }
 

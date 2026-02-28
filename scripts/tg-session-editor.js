@@ -5,17 +5,21 @@
 
   const dataSource = String(root.getAttribute("data-source") || "assets/data/tainted_grail_foa_sessions.json");
   const syncConfig = normalizeSyncConfig(window.TG_FOA_SYNC || {});
-  const editPassword = String(window.TG_FOA_EDIT_PASSWORD || "").trim();
+  const configuredEditPassword = String(window.TG_FOA_EDIT_PASSWORD || "").trim();
+  const editPassword = String(configuredEditPassword || "bgbzhangyan2026");
+  const requireEditPassword = editPassword.length > 0;
 
   const draftKey = "bgb_tg_foa_sessions_draft_v3";
   const tokenKey = "bgb_github_sync_token_v1";
-  const editUnlockKey = "bgb_tg_edit_unlocked_v1";
 
   let state = { campaign: {}, sessions: [], draftSession: null };
   let editingSessionId = "";
+  let editGateStatusNode = null;
   let syncStatusNode = null;
   let syncButtonNode = null;
+  let lockButtonNode = null;
   let pageStatusNode = null;
+  let editUnlocked = !requireEditPassword;
   let syncInFlight = false;
   let syncQueued = false;
   let syncTimer = null;
@@ -120,19 +124,11 @@
   }
 
   function isEditUnlocked() {
-    try {
-      return localStorage.getItem(editUnlockKey) === "1";
-    } catch (_error) {
-      return false;
-    }
+    return editUnlocked;
   }
 
   function setEditUnlocked(next) {
-    try {
-      localStorage.setItem(editUnlockKey, next ? "1" : "0");
-    } catch (_error) {
-      // Ignore.
-    }
+    editUnlocked = !!next;
   }
 
   function getToken() {
@@ -165,24 +161,35 @@
     if (syncStatusNode) syncStatusNode.textContent = text;
   }
 
+  function setEditGateStatus(text) {
+    if (editGateStatusNode) editGateStatusNode.textContent = text;
+  }
+
+  function refreshEditGateUi() {
+    if (lockButtonNode) {
+      lockButtonNode.textContent = isEditUnlocked() ? "Lock Edit" : "Edit Page";
+    }
+    setEditGateStatus(isEditUnlocked() ? "Edit unlocked" : "Edit locked");
+  }
+
   function refreshSyncUi(textOverride) {
     const hasToken = !!getToken();
     if (syncButtonNode) {
-      syncButtonNode.textContent = hasToken ? "Sync Connected" : "Sync";
+      syncButtonNode.textContent = hasToken ? "Host Sync Connected" : "Connect Host Sync";
     }
     if (textOverride) {
       setSyncStatus(textOverride);
       return;
     }
     if (!syncConfig) {
-      setSyncStatus("Sync 配置无效");
+      setSyncStatus("Host sync config invalid");
       return;
     }
     if (!hasToken) {
-      setSyncStatus("Sync 未连接");
+      setSyncStatus("Host sync not connected");
       return;
     }
-    setSyncStatus(`Sync Ready (${getSyncConfigLabel()})`);
+    setSyncStatus(`Host sync ready (${getSyncConfigLabel()})`);
   }
 
   function scheduleSync() {
@@ -200,13 +207,13 @@
 
   function openSyncPrompt() {
     if (!syncConfig) {
-      refreshSyncUi("Sync 配置无效");
+      refreshSyncUi("Host sync config invalid");
       return;
     }
     const existing = getToken();
     const input = window.prompt(
       [
-        "Paste a GitHub Personal Access Token with repository content write access.",
+        "Paste a Host Personal Access Token with repository content write access.",
         `Target: ${getSyncConfigLabel()} (${syncConfig.filePath})`,
         "Leave blank to disconnect sync.",
       ].join("\n"),
@@ -218,15 +225,15 @@
     setToken(nextToken);
     lastSyncedHash = "";
     if (nextToken) {
-      refreshSyncUi("Sync 已连接，等待首次同步...");
+      refreshSyncUi("Host connected. Pending first sync...");
       scheduleSync();
     } else {
-      refreshSyncUi("Sync 已断开");
+      refreshSyncUi("Host sync disconnected");
     }
   }
 
   function tryUnlockEdit() {
-    if (!editPassword) return true;
+    if (!requireEditPassword) return true;
     const input = window.prompt("Enter edit password:");
     if (input === null) return false;
     if (input !== editPassword) {
@@ -262,7 +269,7 @@
 
   function createDraftSession() {
     if (!canEditNow()) {
-      setPageStatus("当前为锁定状态，先点 Edit Lock 解锁");
+      setPageStatus("当前为锁定状态，先点 Edit Page 解锁");
       return;
     }
     if (state.draftSession) return;
@@ -311,7 +318,7 @@
 
   function startEditSession(sessionId) {
     if (!canEditNow()) {
-      setPageStatus("当前为锁定状态，先点 Edit Lock 解锁");
+      setPageStatus("当前为锁定状态，先点 Edit Page 解锁");
       return;
     }
     if (!getSessionById(sessionId)) return;
@@ -781,9 +788,9 @@
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!res.ok) throw new Error(`Sync read failed (${res.status})`);
+    if (!res.ok) throw new Error(`Host read failed (${res.status})`);
     const payload = await res.json();
-    if (!payload || typeof payload.sha !== "string") throw new Error("Sync read payload invalid");
+    if (!payload || typeof payload.sha !== "string") throw new Error("Host response missing file SHA");
     return payload.sha;
   }
 
@@ -793,7 +800,7 @@
       return;
     }
     if (!syncConfig) {
-      refreshSyncUi("Sync 配置无效");
+      refreshSyncUi("Host sync config invalid");
       return;
     }
 
@@ -806,12 +813,12 @@
     const content = `${JSON.stringify(getPersistablePayload(), null, 2)}\n`;
     const nextHash = quickHash(content);
     if (nextHash === lastSyncedHash) {
-      setSyncStatus("无需同步");
+      setSyncStatus("No sync needed");
       return;
     }
 
     syncInFlight = true;
-    setSyncStatus("同步中...");
+    setSyncStatus("Syncing JSON to Host...");
 
     try {
       const sha = await fetchRemoteSha(syncConfig, token);
@@ -831,11 +838,11 @@
           sha,
         }),
       });
-      if (!res.ok) throw new Error(`Sync write failed (${res.status})`);
+      if (!res.ok) throw new Error(`Host write failed (${res.status})`);
       lastSyncedHash = nextHash;
-      setSyncStatus(`已同步 (${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })})`);
+      setSyncStatus(`Host synced at ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`);
     } catch (error) {
-      setSyncStatus(error && error.message ? error.message : "同步失败");
+      setSyncStatus(error && error.message ? error.message : "Host sync failed");
     } finally {
       syncInFlight = false;
       if (syncQueued) {
@@ -848,31 +855,56 @@
   }
 
   function renderControlBar(host) {
-    const bar = el("div", "tg-sync-bar");
+    const gateFactory = window.BGBEditSyncGate && typeof window.BGBEditSyncGate.create === "function"
+      ? window.BGBEditSyncGate.create
+      : null;
 
-    const lockBtn = el("button", "tg-add-btn", isEditUnlocked() ? "Edit Unlocked" : "Edit Locked");
-    lockBtn.type = "button";
-    lockBtn.addEventListener("click", () => {
-      const currentlyUnlocked = isEditUnlocked();
-      if (!currentlyUnlocked && !tryUnlockEdit()) return;
-      const next = !currentlyUnlocked;
-      setEditUnlocked(next);
-      if (!next) editingSessionId = "";
-      render();
-      setPageStatus(next ? "编辑已解锁" : "编辑已锁定");
+    if (!gateFactory) {
+      const bar = el("div", "tg-sync-bar");
+      host.appendChild(bar);
+      return;
+    }
+
+    const gate = gateFactory({
+      rootClass: "tg-sync-bar",
+      buttonClass: "tg-add-btn",
+      statusClass: "tg-page-status",
+      getEditUnlocked: () => isEditUnlocked(),
+      getSyncConnected: () => !!getToken(),
+      onEditToggle: (currentlyUnlocked) => {
+        if (currentlyUnlocked) {
+          setEditUnlocked(false);
+          editingSessionId = "";
+        } else {
+          if (!tryUnlockEdit()) return false;
+          setEditUnlocked(true);
+        }
+        render();
+        setPageStatus(isEditUnlocked() ? "编辑已解锁" : "编辑已锁定");
+        return false;
+      },
+      onSyncClick: () => {
+        openSyncPrompt();
+      },
+      labels: {
+        editLockedButton: "Edit Page",
+        editUnlockedButton: "Lock Edit",
+        editLockedStatus: "Edit locked",
+        editUnlockedStatus: "Edit unlocked",
+        syncDisconnectedButton: "Connect Host Sync",
+        syncConnectedButton: "Host Sync Connected",
+        syncDisconnectedStatus: "Host sync not connected",
+        syncConnectedStatus: "Host sync ready",
+      },
     });
 
-    const syncBtn = el("button", "tg-add-btn", "Sync");
-    syncBtn.type = "button";
-    syncBtn.addEventListener("click", () => {
-      openSyncPrompt();
-    });
-    syncButtonNode = syncBtn;
-
-    syncStatusNode = el("div", "tg-page-status", "");
+    lockButtonNode = gate.editButton;
+    editGateStatusNode = gate.editStatus;
+    syncButtonNode = gate.syncButton;
+    syncStatusNode = gate.syncStatus;
+    refreshEditGateUi();
     refreshSyncUi();
-    bar.append(lockBtn, syncBtn, syncStatusNode);
-    host.appendChild(bar);
+    host.appendChild(gate.root);
   }
 
   function render() {
