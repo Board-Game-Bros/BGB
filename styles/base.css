@@ -3,6 +3,18 @@
   --frame-border-color: #3a2d1a;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: "Cinzel", serif;
@@ -41,8 +53,9 @@ nav {
   background-size: cover;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 35px;
-  padding: 18px 0;
+  padding: 18px 12px;
   border-bottom: 10px solid #2a1f12;
   border-top: 10px solid #2a1f12;
   position: relative;
@@ -103,8 +116,8 @@ nav.sticky {
 }
 
 .container {
-  width: 90vw;
-  max-width: 90vw;
+  width: min(1100px, calc(100% - 24px));
+  max-width: 100%;
   margin: 40px auto;
   padding: 25px;
   background: rgba(255, 243, 219, 0.92);
@@ -256,4 +269,30 @@ footer {
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 0 6px #f7d987);
+}
+
+@media (max-width: 720px) {
+  header {
+    padding: 14px 12px;
+  }
+
+  .logo {
+    height: 96px;
+  }
+
+  nav {
+    gap: 12px 18px;
+    padding: 12px 10px;
+  }
+
+  nav a {
+    font-size: 17px;
+    padding: 6px 10px;
+  }
+
+  .container {
+    margin: 22px auto;
+    padding: 18px;
+    border-width: 4px;
+  }
 }
