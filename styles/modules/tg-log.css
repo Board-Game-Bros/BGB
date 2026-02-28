@@ -144,8 +144,12 @@
 
 .tg-text {
   display: inline-block;
+  min-width: 0;
+  max-width: 100%;
   padding: 10px 14px;
   border-radius: 12px;
+  line-height: 1.45;
+  word-break: break-word;
 }
 
 .tg-note {
@@ -171,9 +175,10 @@
 .tg-menhir-grid {
   margin-top: 14px;
   display: grid;
-  grid-template-columns: 160px 140px 140px;
+  grid-template-columns: minmax(110px, 1.2fr) minmax(72px, 0.9fr) minmax(72px, 0.9fr);
   gap: 12px 14px;
   align-items: center;
+  width: 100%;
 }
 
 .tg-menhir-head,
@@ -181,6 +186,7 @@
 .tg-menhir-cell {
   padding: 10px 14px;
   border-radius: 12px;
+  min-width: 0;
 }
 
 .tg-menhir-head {
@@ -252,12 +258,67 @@
   border-radius: 3px;
 }
 
-@media (max-width: 600px) {
-  .tg-menhir-grid {
-    grid-template-columns: 1fr 1fr;
+@media (max-width: 720px) {
+  .tg-block {
+    padding: 10px;
   }
 
-  .tg-menhir-grid .tg-menhir-head:first-child {
-    display: none;
+  .tg-title {
+    font-size: 1.2rem;
+    padding: 7px 12px;
+  }
+
+  .tg-line {
+    gap: 8px;
+  }
+
+  .tg-tag {
+    min-width: 48px;
+    padding: 7px 11px;
+  }
+
+  .tg-text,
+  .tg-note {
+    padding: 9px 12px;
+  }
+
+  .tg-menhir-grid {
+    grid-template-columns: minmax(96px, 1.2fr) minmax(64px, 0.9fr) minmax(64px, 0.9fr);
+    gap: 8px;
+  }
+
+  .tg-menhir-head,
+  .tg-menhir-row,
+  .tg-menhir-cell {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  .tg-arrow-img {
+    width: 42px;
+    height: 20px;
+  }
+
+  .tg-arrow-img::before {
+    left: 5px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .tg-arrow-img::after {
+    left: 19px;
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .tg-menhir-head {
+    font-size: 0.82rem;
+  }
+
+  .tg-menhir-row,
+  .tg-menhir-cell {
+    font-size: 0.88rem;
   }
 }
