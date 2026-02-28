@@ -118,9 +118,9 @@
           "dial": "1"
         },
         {
-          "location": "Menhir #2",
-          "value": "135",
-          "dial": "2"
+          "location": "测试",
+          "value": "",
+          "dial": ""
         }
       ],
       "tasks": [
