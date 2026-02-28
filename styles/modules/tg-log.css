@@ -192,6 +192,9 @@
 .tg-menhir-head {
   font-weight: 900;
   text-align: center;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .tg-menhir-head-loc {
@@ -290,8 +293,8 @@
   .tg-menhir-head,
   .tg-menhir-row,
   .tg-menhir-cell {
-    padding: 8px 10px;
-    font-size: 0.9rem;
+    padding: 7px 8px;
+    font-size: 0.86rem;
   }
 
   .tg-arrow-img {
@@ -314,7 +317,7 @@
 
 @media (max-width: 420px) {
   .tg-menhir-head {
-    font-size: 0.82rem;
+    font-size: 0.76rem;
   }
 
   .tg-menhir-row,
