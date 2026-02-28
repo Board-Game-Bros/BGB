@@ -233,6 +233,14 @@
     }
   }
 
+  function handleSyncButtonClick() {
+    if (!getToken()) {
+      openSyncPrompt();
+      return;
+    }
+    void syncNow();
+  }
+
   function tryUnlockEdit() {
     if (!requireEditPassword) return true;
     const input = window.prompt("Enter edit password:");
@@ -883,7 +891,7 @@
         return false;
       },
       onSyncClick: () => {
-        openSyncPrompt();
+        handleSyncButtonClick();
       },
       labels: {
         editLockedButton: "Edit Page",
