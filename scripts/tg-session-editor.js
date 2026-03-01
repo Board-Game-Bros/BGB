@@ -10,7 +10,7 @@
   const requireEditPassword = editPassword.length > 0;
 
   const draftKey = "bgb_tg_foa_sessions_draft_v3";
-  const useLocalDraft = false;
+  const useLocalDraft = true;
   const tokenKey = "bgb_github_sync_token_v1";
 
   let state = { campaign: {}, sessions: [], draftSession: null };
@@ -799,6 +799,14 @@
     };
   }
 
+  function getPersistableHash(payloadLike) {
+    const payload = payloadLike && typeof payloadLike === "object"
+      ? payloadLike
+      : getPersistablePayload();
+    const text = `${JSON.stringify(payload, null, 2)}\n`;
+    return quickHash(text);
+  }
+
   async function fetchRemoteSnapshot(cfg, token) {
     const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeURIComponent(cfg.filePath).replace(/%2F/g, "/")}?ref=${encodeURIComponent(cfg.branch)}`;
     const res = await fetch(endpoint, {
@@ -1023,20 +1031,43 @@
   async function init() {
     let remoteData = { campaign: {}, sessions: [], draftSession: null };
     try {
-      const res = await fetch(`${dataSource}?v=20260228`);
+      const res = await fetch(`${dataSource}?v=${Date.now()}`);
       if (!res.ok) throw new Error("fetch failed");
       remoteData = sanitizeData(await res.json());
     } catch (_error) {
       remoteData = sanitizeData(remoteData);
     }
 
-    state = remoteData;
-    const initialContent = `${JSON.stringify({
+    const localDraft = loadDraft();
+    let restoredLocal = false;
+    if (localDraft) {
+      const remoteHash = getPersistableHash({
+        campaign: deepClone(remoteData.campaign),
+        sessions: deepClone(remoteData.sessions),
+      });
+      const localHash = getPersistableHash({
+        campaign: deepClone(localDraft.campaign || {}),
+        sessions: deepClone(localDraft.sessions || []),
+      });
+      const hasDraftSession = !!localDraft.draftSession;
+      if (hasDraftSession || localHash !== remoteHash) {
+        state = sanitizeData(localDraft);
+        restoredLocal = true;
+      } else {
+        state = remoteData;
+      }
+    } else {
+      state = remoteData;
+    }
+
+    lastSyncedHash = getPersistableHash({
       campaign: deepClone(state.campaign),
       sessions: deepClone(state.sessions),
-    }, null, 2)}\n`;
-    lastSyncedHash = quickHash(initialContent);
+    });
     render();
+    if (restoredLocal) {
+      setPageStatus("Recovered unsynced local edits. Review and sync.");
+    }
   }
 
   void init();

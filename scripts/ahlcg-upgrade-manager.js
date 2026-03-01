@@ -133,6 +133,12 @@
       return window.btoa(binary);
     }
 
+    function sleep(ms) {
+      return new Promise((resolve) => {
+        window.setTimeout(resolve, ms);
+      });
+    }
+
     function fromBase64Utf8(value) {
       const binary = window.atob(String(value || ""));
       const bytes = new Uint8Array(binary.length);
@@ -1845,7 +1851,35 @@
       return {
         sha: payload.sha,
         sourceHtml,
+        hash: makeQuickHash(sourceHtml),
       };
+    }
+
+    async function parseHostError(response) {
+      if (!response) return "";
+      try {
+        const payload = await response.json();
+        if (payload && typeof payload.message === "string" && payload.message.trim()) {
+          return payload.message.trim();
+        }
+      } catch (_error) {
+        // Ignore non-JSON payloads.
+      }
+      return "";
+    }
+
+    async function seedRemoteSyncBaseline() {
+      if (!remoteSync) return;
+      const token = getRemoteSyncToken();
+      if (!token) return;
+      try {
+        const fileMeta = await requestGitHubFileMeta(token);
+        if (fileMeta && typeof fileMeta.hash === "string") {
+          lastSyncedHtmlHash = fileMeta.hash;
+        }
+      } catch (_error) {
+        // Keep existing baseline when remote metadata cannot be read.
+      }
     }
 
     async function pushHtmlToGitHub(state) {
@@ -1853,34 +1887,55 @@
       const token = getRemoteSyncToken();
       if (!token) {
         refreshRemoteSyncUi("Host token missing");
-        return;
+        return { status: "token_missing" };
       }
-      const fileMeta = await requestGitHubFileMeta(token);
-      const htmlText = buildPersistableHtml(fileMeta.sourceHtml, state);
-      const nextHash = makeQuickHash(htmlText);
-      if (nextHash === lastSyncedHtmlHash) return;
 
       const endpoint = `https://api.github.com/repos/${encodeURIComponent(remoteSync.owner)}/${encodeURIComponent(remoteSync.repo)}/contents/${encodeURIComponent(remoteSync.filePath).replace(/%2F/g, "/")}`;
       const now = new Date();
       const message = `auto-sync deck upgrade ${now.toISOString().slice(0, 19)}Z`;
-      const response = await window.fetch(endpoint, {
-        method: "PUT",
-        headers: {
-          Accept: "application/vnd.github+json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          message,
-          content: toBase64Utf8(htmlText),
-          branch: remoteSync.branch,
-          sha: fileMeta.sha,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error(`Host write failed (${response.status})`);
+      let lastError = "";
+
+      for (let attempt = 1; attempt <= 3; attempt += 1) {
+        const fileMeta = await requestGitHubFileMeta(token);
+        const htmlText = buildPersistableHtml(fileMeta.sourceHtml, state);
+        const nextHash = makeQuickHash(htmlText);
+
+        if (nextHash === fileMeta.hash) {
+          lastSyncedHtmlHash = nextHash;
+          return { status: "no_change" };
+        }
+        if (lastSyncedHtmlHash && fileMeta.hash !== lastSyncedHtmlHash) {
+          throw new Error("Host data changed remotely. Refresh page before syncing.");
+        }
+
+        const response = await window.fetch(endpoint, {
+          method: "PUT",
+          headers: {
+            Accept: "application/vnd.github+json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            message,
+            content: toBase64Utf8(htmlText),
+            branch: remoteSync.branch,
+            sha: fileMeta.sha,
+          }),
+        });
+        if (response.ok) {
+          lastSyncedHtmlHash = nextHash;
+          return { status: "synced" };
+        }
+
+        const detail = await parseHostError(response);
+        lastError = detail
+          ? `Host write failed (${response.status}): ${detail}`
+          : `Host write failed (${response.status})`;
+        if (response.status !== 409 || attempt === 3) break;
+        await sleep(220 * attempt);
       }
-      lastSyncedHtmlHash = nextHash;
+
+      throw new Error(lastError || "Host write failed");
     }
 
     async function runRemoteSyncNow() {
@@ -1893,9 +1948,15 @@
       refreshRemoteSyncUi("Syncing HTML to Host...");
       try {
         const state = buildCurrentUpgradeState();
-        await pushHtmlToGitHub(state);
-        const syncedAt = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-        refreshRemoteSyncUi(`Host synced at ${syncedAt}`);
+        const result = await pushHtmlToGitHub(state);
+        if (result && result.status === "no_change") {
+          refreshRemoteSyncUi("No sync needed");
+        } else if (result && result.status === "token_missing") {
+          refreshRemoteSyncUi("Host token missing");
+        } else {
+          const syncedAt = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+          refreshRemoteSyncUi(`Host synced at ${syncedAt}`);
+        }
       } catch (error) {
         const message = error && error.message ? error.message : "Host sync failed";
         refreshRemoteSyncUi(message);
@@ -1953,7 +2014,9 @@
       lastSyncedHtmlHash = "";
       if (nextToken) {
         refreshRemoteSyncUi("Host connected. Pending first sync...");
-        scheduleRemoteSync();
+        void seedRemoteSyncBaseline().finally(() => {
+          scheduleRemoteSync();
+        });
       } else {
         refreshRemoteSyncUi("Host sync disconnected");
       }
@@ -2636,7 +2699,13 @@
       // Ignore serialization failures.
     }
     remoteSyncReady = true;
-    scheduleSaveUpgradeState();
+    if (getRemoteSyncToken()) {
+      void seedRemoteSyncBaseline().finally(() => {
+        scheduleSaveUpgradeState();
+      });
+    } else {
+      scheduleSaveUpgradeState();
+    }
     window.addEventListener("beforeunload", () => {
       saveUpgradeState();
     });
