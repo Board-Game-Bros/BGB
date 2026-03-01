@@ -72,3 +72,23 @@ body.torch-mode .tg-inline-del {
   -webkit-text-fill-color: #2f2316;
   text-shadow: none;
 }
+
+body.torch-mode .tg-mini-label input,
+body.torch-mode .tg-edit-input,
+body.torch-mode .session input,
+body.torch-mode .session textarea,
+body.torch-mode .session select {
+  color: #2f2316;
+  -webkit-text-fill-color: #2f2316;
+  caret-color: #2f2316;
+  text-shadow: none;
+}
+
+body.torch-mode .tg-mini-label input::placeholder,
+body.torch-mode .tg-edit-input::placeholder,
+body.torch-mode .session input::placeholder,
+body.torch-mode .session textarea::placeholder {
+  color: rgba(110, 82, 47, 0.55);
+  -webkit-text-fill-color: rgba(110, 82, 47, 0.55);
+  text-shadow: none;
+}
