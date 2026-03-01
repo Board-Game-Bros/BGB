@@ -771,6 +771,18 @@
     return btoa(binary);
   }
 
+  function decodeBase64Utf8(base64Text) {
+    const binary = atob(base64Text);
+    const bytes = Uint8Array.from(binary, (ch) => ch.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+
+  function delay(ms) {
+    return new Promise((resolve) => {
+      window.setTimeout(resolve, ms);
+    });
+  }
+
   function quickHash(text) {
     let hash = 2166136261;
     for (let i = 0; i < text.length; i += 1) {
@@ -787,7 +799,7 @@
     };
   }
 
-  async function fetchRemoteSha(cfg, token) {
+  async function fetchRemoteSnapshot(cfg, token) {
     const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeURIComponent(cfg.filePath).replace(/%2F/g, "/")}?ref=${encodeURIComponent(cfg.branch)}`;
     const res = await fetch(endpoint, {
       method: "GET",
@@ -799,7 +811,27 @@
     if (!res.ok) throw new Error(`Host read failed (${res.status})`);
     const payload = await res.json();
     if (!payload || typeof payload.sha !== "string") throw new Error("Host response missing file SHA");
-    return payload.sha;
+    let text = "";
+    if (typeof payload.content === "string" && payload.content) {
+      text = decodeBase64Utf8(String(payload.content).replace(/\n/g, ""));
+    }
+    return {
+      sha: payload.sha,
+      hash: quickHash(text),
+    };
+  }
+
+  async function parseHostError(res) {
+    if (!res) return "";
+    try {
+      const payload = await res.json();
+      if (payload && typeof payload.message === "string" && payload.message.trim()) {
+        return payload.message.trim();
+      }
+    } catch (_error) {
+      // Ignore non-JSON payloads.
+    }
+    return "";
   }
 
   async function syncNow() {
@@ -820,33 +852,53 @@
 
     const content = `${JSON.stringify(getPersistablePayload(), null, 2)}\n`;
     const nextHash = quickHash(content);
-    if (nextHash === lastSyncedHash) {
-      setSyncStatus("No sync needed");
-      return;
-    }
 
     syncInFlight = true;
     setSyncStatus("Syncing JSON to Host...");
 
     try {
-      const sha = await fetchRemoteSha(syncConfig, token);
       const endpoint = `https://api.github.com/repos/${encodeURIComponent(syncConfig.owner)}/${encodeURIComponent(syncConfig.repo)}/contents/${encodeURIComponent(syncConfig.filePath).replace(/%2F/g, "/")}`;
       const message = `update tainted grail sessions ${new Date().toISOString().slice(0, 19)}Z`;
-      const res = await fetch(endpoint, {
-        method: "PUT",
-        headers: {
-          Accept: "application/vnd.github+json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          message,
-          content: encodeBase64Utf8(content),
-          branch: syncConfig.branch,
-          sha,
-        }),
-      });
-      if (!res.ok) throw new Error(`Host write failed (${res.status})`);
+
+      let synced = false;
+      let lastError = "";
+      for (let attempt = 1; attempt <= 3; attempt += 1) {
+        const snapshot = await fetchRemoteSnapshot(syncConfig, token);
+        if (nextHash === snapshot.hash) {
+          lastSyncedHash = nextHash;
+          setSyncStatus("No sync needed");
+          return;
+        }
+        if (lastSyncedHash && snapshot.hash !== lastSyncedHash) {
+          throw new Error("Host data changed remotely. Refresh page before syncing.");
+        }
+        const res = await fetch(endpoint, {
+          method: "PUT",
+          headers: {
+            Accept: "application/vnd.github+json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            message,
+            content: encodeBase64Utf8(content),
+            branch: syncConfig.branch,
+            sha: snapshot.sha,
+          }),
+        });
+        if (res.ok) {
+          synced = true;
+          break;
+        }
+
+        const detail = await parseHostError(res);
+        lastError = detail ? `Host write failed (${res.status}): ${detail}` : `Host write failed (${res.status})`;
+        if (res.status !== 409 || attempt === 3) break;
+        await delay(220 * attempt);
+      }
+
+      if (!synced) throw new Error(lastError || "Host write failed");
+
       lastSyncedHash = nextHash;
       setSyncStatus(`Host synced at ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`);
     } catch (error) {
@@ -979,6 +1031,11 @@
     }
 
     state = remoteData;
+    const initialContent = `${JSON.stringify({
+      campaign: deepClone(state.campaign),
+      sessions: deepClone(state.sessions),
+    }, null, 2)}\n`;
+    lastSyncedHash = quickHash(initialContent);
     render();
   }
 
