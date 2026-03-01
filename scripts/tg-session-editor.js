@@ -9,7 +9,8 @@
   const editPassword = String(configuredEditPassword || "bgbzhangyan2026");
   const requireEditPassword = editPassword.length > 0;
 
-  const draftKey = "bgb_tg_foa_sessions_draft_v3";
+  const draftKey = "bgb_tg_foa_sessions_draft_v4";
+  const legacyDraftKey = "bgb_tg_foa_sessions_draft_v3";
   const useLocalDraft = true;
   const tokenKey = "bgb_github_sync_token_v1";
 
@@ -224,7 +225,10 @@
 
     const nextToken = String(input).trim();
     setToken(nextToken);
-    lastSyncedHash = "";
+    lastSyncedHash = getPersistableHash({
+      campaign: deepClone(state.campaign),
+      sessions: deepClone(state.sessions),
+    });
     if (nextToken) {
       refreshSyncUi("Host connected. Pending first sync...");
       scheduleSync();
@@ -255,7 +259,7 @@
   function saveDraft() {
     if (useLocalDraft) {
       try {
-        localStorage.setItem(draftKey, JSON.stringify(state));
+        writeDraftEnvelope();
         setPageStatus("本地草稿已保存");
       } catch (_error) {
         setPageStatus("本地草稿保存失败");
@@ -268,8 +272,41 @@
     if (!useLocalDraft) return null;
     try {
       const raw = localStorage.getItem(draftKey);
-      if (!raw) return null;
-      return sanitizeData(JSON.parse(raw));
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.state && parsed.meta && typeof parsed.meta === "object") {
+          return {
+            state: sanitizeData(parsed.state),
+            meta: {
+              dirty: !!parsed.meta.dirty,
+              persistHash: String(parsed.meta.persistHash || ""),
+            },
+          };
+        }
+      }
+
+      const legacyRaw = localStorage.getItem(legacyDraftKey);
+      if (!legacyRaw) return null;
+      const legacyState = sanitizeData(JSON.parse(legacyRaw));
+      if (!legacyState.draftSession) {
+        clearLegacyDraft();
+        return null;
+      }
+
+      const migrated = {
+        state: legacyState,
+        meta: {
+          dirty: true,
+          persistHash: "",
+        },
+      };
+      try {
+        localStorage.setItem(draftKey, JSON.stringify(buildDraftEnvelope(migrated.state, { forceDirty: true })));
+        clearLegacyDraft();
+      } catch (_error) {
+        // Ignore migration failure.
+      }
+      return migrated;
     } catch (_error) {
       return null;
     }
@@ -799,12 +836,103 @@
     };
   }
 
-  function getPersistableHash(payloadLike) {
+  function persistableText(payloadLike) {
     const payload = payloadLike && typeof payloadLike === "object"
       ? payloadLike
       : getPersistablePayload();
-    const text = `${JSON.stringify(payload, null, 2)}\n`;
-    return quickHash(text);
+    return `${JSON.stringify(payload, null, 2)}\n`;
+  }
+
+  function getPersistableHash(payloadLike) {
+    return quickHash(persistableText(payloadLike));
+  }
+
+  function parsePersistablePayload(text) {
+    try {
+      const parsed = sanitizeData(JSON.parse(String(text || "")));
+      return {
+        campaign: deepClone(parsed.campaign),
+        sessions: deepClone(parsed.sessions),
+      };
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function sessionMergeKey(session) {
+    const safe = session && typeof session === "object" ? session : {};
+    const id = String(safe.id || "").trim();
+    if (id) return `id:${id}`;
+    const no = Number(safe.sessionNo || 0);
+    const date = String(safe.date || "").trim();
+    return `no:${no}|date:${date}`;
+  }
+
+  function mergePersistablePayload(remotePayloadLike, localPayloadLike) {
+    const remoteSafe = sanitizeData(remotePayloadLike || {});
+    const localSafe = sanitizeData(localPayloadLike || {});
+    const mergedSessionsByKey = new Map();
+
+    remoteSafe.sessions.forEach((s) => {
+      mergedSessionsByKey.set(sessionMergeKey(s), deepClone(s));
+    });
+    localSafe.sessions.forEach((s) => {
+      mergedSessionsByKey.set(sessionMergeKey(s), deepClone(s));
+    });
+
+    const mergedSessions = Array.from(mergedSessionsByKey.values());
+    sortSessions(mergedSessions);
+    return {
+      campaign: deepClone(localSafe.campaign || remoteSafe.campaign),
+      sessions: mergedSessions,
+    };
+  }
+
+  function clearLegacyDraft() {
+    try {
+      localStorage.removeItem(legacyDraftKey);
+    } catch (_error) {
+      // Ignore.
+    }
+  }
+
+  function buildDraftEnvelope(stateLike, options) {
+    const safeState = sanitizeData(stateLike || {});
+    const persistHash = getPersistableHash({
+      campaign: deepClone(safeState.campaign),
+      sessions: deepClone(safeState.sessions),
+    });
+    const opts = options && typeof options === "object" ? options : {};
+    const dirty = typeof opts.forceDirty === "boolean"
+      ? opts.forceDirty
+      : (!!safeState.draftSession || !lastSyncedHash || persistHash !== lastSyncedHash);
+    return {
+      version: 1,
+      meta: {
+        dirty,
+        persistHash,
+        savedAt: Date.now(),
+      },
+      state: safeState,
+    };
+  }
+
+  function writeDraftEnvelope(options) {
+    if (!useLocalDraft) return;
+    localStorage.setItem(draftKey, JSON.stringify(buildDraftEnvelope(state, options)));
+    clearLegacyDraft();
+  }
+
+  function markLocalDraftClean() {
+    try {
+      if (state && state.draftSession) {
+        writeDraftEnvelope({ forceDirty: true });
+      } else {
+        writeDraftEnvelope({ forceDirty: false });
+      }
+    } catch (_error) {
+      // Ignore.
+    }
   }
 
   async function fetchRemoteSnapshot(cfg, token) {
@@ -825,6 +953,7 @@
     }
     return {
       sha: payload.sha,
+      text,
       hash: quickHash(text),
     };
   }
@@ -858,8 +987,9 @@
       return;
     }
 
-    const content = `${JSON.stringify(getPersistablePayload(), null, 2)}\n`;
-    const nextHash = quickHash(content);
+    let payloadToPersist = getPersistablePayload();
+    let content = persistableText(payloadToPersist);
+    let nextHash = quickHash(content);
 
     syncInFlight = true;
     setSyncStatus("Syncing JSON to Host...");
@@ -873,12 +1003,29 @@
       for (let attempt = 1; attempt <= 3; attempt += 1) {
         const snapshot = await fetchRemoteSnapshot(syncConfig, token);
         if (nextHash === snapshot.hash) {
+          markLocalDraftClean();
           lastSyncedHash = nextHash;
           setSyncStatus("No sync needed");
           return;
         }
         if (lastSyncedHash && snapshot.hash !== lastSyncedHash) {
-          throw new Error("Host data changed remotely. Refresh page before syncing.");
+          const remotePayload = parsePersistablePayload(snapshot.text);
+          if (!remotePayload) {
+            throw new Error("Host data changed remotely. Refresh page before syncing.");
+          }
+          payloadToPersist = mergePersistablePayload(remotePayload, payloadToPersist);
+          content = persistableText(payloadToPersist);
+          nextHash = quickHash(content);
+          if (nextHash === snapshot.hash) {
+            state.campaign = deepClone(payloadToPersist.campaign);
+            state.sessions = deepClone(payloadToPersist.sessions);
+            sortSessions(state.sessions);
+            render();
+            markLocalDraftClean();
+            lastSyncedHash = nextHash;
+            setSyncStatus("No sync needed");
+            return;
+          }
         }
         const res = await fetch(endpoint, {
           method: "PUT",
@@ -907,6 +1054,11 @@
 
       if (!synced) throw new Error(lastError || "Host write failed");
 
+      state.campaign = deepClone(payloadToPersist.campaign);
+      state.sessions = deepClone(payloadToPersist.sessions);
+      sortSessions(state.sessions);
+      render();
+      markLocalDraftClean();
       lastSyncedHash = nextHash;
       setSyncStatus(`Host synced at ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`);
     } catch (error) {
@@ -1040,18 +1192,19 @@
 
     const localDraft = loadDraft();
     let restoredLocal = false;
-    if (localDraft) {
+    if (localDraft && localDraft.state) {
       const remoteHash = getPersistableHash({
         campaign: deepClone(remoteData.campaign),
         sessions: deepClone(remoteData.sessions),
       });
       const localHash = getPersistableHash({
-        campaign: deepClone(localDraft.campaign || {}),
-        sessions: deepClone(localDraft.sessions || []),
+        campaign: deepClone(localDraft.state.campaign || {}),
+        sessions: deepClone(localDraft.state.sessions || []),
       });
-      const hasDraftSession = !!localDraft.draftSession;
-      if (hasDraftSession || localHash !== remoteHash) {
-        state = sanitizeData(localDraft);
+      const hasDraftSession = !!localDraft.state.draftSession;
+      const isDirty = !!(localDraft.meta && localDraft.meta.dirty);
+      if (isDirty && (hasDraftSession || localHash !== remoteHash)) {
+        state = sanitizeData(localDraft.state);
         restoredLocal = true;
       } else {
         state = remoteData;
@@ -1064,6 +1217,9 @@
       campaign: deepClone(state.campaign),
       sessions: deepClone(state.sessions),
     });
+    if (!restoredLocal) {
+      markLocalDraftClean();
+    }
     render();
     if (restoredLocal) {
       setPageStatus("Recovered unsynced local edits. Review and sync.");
