@@ -176,13 +176,13 @@
       "menhirs": [
         {
           "location": "",
-          "value": "666",
-          "dial": "66"
+          "value": "160",
+          "dial": "1"
         },
         {
           "location": "",
-          "value": "333",
-          "dial": "22"
+          "value": "151",
+          "dial": "2"
         }
       ],
       "tasks": [
@@ -217,6 +217,10 @@
         {
           "tag": "153",
           "text": "将真圣杯带到图瓦坦（线索：找到欧林->去远郡->穿过神圣平原->找到小屋）"
+        },
+        {
+          "tag": "133",
+          "text": ""
         }
       ],
       "locationChanges": [
