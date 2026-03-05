@@ -13,3 +13,44 @@ header h1,
 nav a {
   font-family: "Uncial Antiqua", serif;
 }
+
+.collection-category {
+  margin: 26px 0 34px;
+}
+
+.category-title {
+  margin: 0 0 12px;
+  font-size: 1.65rem;
+  letter-spacing: 0.4px;
+  border-bottom: 2px solid rgba(58, 45, 26, 0.35);
+  padding-bottom: 6px;
+}
+
+.category-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.category-placeholder {
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: dashed;
+  border-width: 3px;
+  border-color: rgba(58, 45, 26, 0.45);
+  color: rgba(58, 45, 26, 0.7);
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
+  text-align: center;
+  background: rgba(255, 247, 226, 0.72);
+}
+
+body.torch-mode .category-title {
+  border-bottom-color: rgba(230, 194, 122, 0.5);
+}
+
+body.torch-mode .category-placeholder {
+  border-color: rgba(230, 194, 122, 0.65);
+  color: rgba(247, 231, 195, 0.88);
+  background: rgba(58, 45, 26, 0.45);
+}
