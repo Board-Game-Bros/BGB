@@ -247,5 +247,1318 @@
         "盘根树林知识第2部分未知（待探索）"
       ]
     }
+  ],
+  "statuses": [
+    {
+      "name": "Allies of Avalon",
+      "slots": [
+        {
+          "label": "1",
+          "owned": true
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Black Cauldron",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Burning Mystery",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": true
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": true
+        },
+        {
+          "label": "7",
+          "owned": false
+        },
+        {
+          "label": "8",
+          "owned": false
+        },
+        {
+          "label": "9",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Call from Beyond",
+      "slots": [
+        {
+          "label": "",
+          "owned": true
+        }
+      ]
+    },
+    {
+      "name": "Charred Knowledge",
+      "slots": [
+        {
+          "label": "",
+          "owned": true
+        }
+      ]
+    },
+    {
+      "name": "Cherished Belongings",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Cold Pyre",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Cosuil",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Deal Breaker",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Deep Secret",
+      "slots": [
+        {
+          "label": "",
+          "owned": true
+        }
+      ]
+    },
+    {
+      "name": "Diplomat",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Diplomatic Mission",
+      "slots": [
+        {
+          "label": "1",
+          "owned": true
+        },
+        {
+          "label": "2",
+          "owned": true
+        },
+        {
+          "label": "3",
+          "owned": true
+        },
+        {
+          "label": "4",
+          "owned": true
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Disturbing Information",
+      "slots": [
+        {
+          "label": "1",
+          "owned": true
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Dreams and Prophecies",
+      "slots": [
+        {
+          "label": "1",
+          "owned": true
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": true
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "End of the Road",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Enemies of Avalon",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Escalation",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Fael's Legacy",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Fall of Chivalry",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        },
+        {
+          "label": "8",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Farpoint Clues",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Fate of the Expedition",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        },
+        {
+          "label": "8",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Final Confrontations",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Final Lesson",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Fortunate Meetings",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "General Directions",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Gerraint's Successor",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Glen Ritual",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Guest of Honor",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Halfway Intrigue",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Helping Hand",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Helping the Knights",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Hidden Treasures",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        },
+        {
+          "label": "8",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Hunter's Mark",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Lady's Task",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Last Haven",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Left Behind",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        },
+        {
+          "label": "8",
+          "owned": false
+        },
+        {
+          "label": "9",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Lost and Fallen",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Maggot's Redemption",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Matricide",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Monastery Discovered",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Moonring Mission",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Morgaine's Task",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Mourning Song",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Mystery Solved",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Pathfinder",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        },
+        {
+          "label": "8",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Peace in Borough",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "People's Champion",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Pillager",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Reclamation",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Redemption",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Remedy",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Remnants",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Restoring the Order",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        },
+        {
+          "label": "8",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Riddle of the Oldsteel",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Saved by the Goddess",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Scrounger",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Secrets of the Forest",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Shelter in the Storm",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Shrine Secure",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Something is Watching",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Stonemason's Secret",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Strange Encounters",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        },
+        {
+          "label": "6",
+          "owned": false
+        },
+        {
+          "label": "7",
+          "owned": false
+        },
+        {
+          "label": "8",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Supplying the Revolt",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Tangleroot Knowledge",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Tracker",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Traveler",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Traveling Menhir",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Tuathan Exploration",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        },
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Underfern",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        },
+        {
+          "label": "5",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "War for Avalon",
+      "slots": [
+        {
+          "label": "1",
+          "owned": false
+        },
+        {
+          "label": "2",
+          "owned": false
+        },
+        {
+          "label": "3",
+          "owned": false
+        },
+        {
+          "label": "4",
+          "owned": false
+        }
+      ]
+    },
+    {
+      "name": "Winds of Wyrdness",
+      "slots": [
+        {
+          "label": "",
+          "owned": false
+        }
+      ]
+    }
   ]
 }
