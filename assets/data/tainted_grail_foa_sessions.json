@@ -147,6 +147,10 @@
         {
           "tag": "153",
           "text": "再向下穿过洞穴抵达最黑暗处（无视恶臭、寒冷）妮安特提及蕨海洞穴可能藏有圣杯的秘密"
+        },
+        {
+          "tag": "140",
+          "text": "调查修道院（后期）"
         }
       ],
       "locationChanges": [
@@ -166,7 +170,7 @@
       "notes": [
         "法埃尔：原大骑士加拉哈德（叛逃）",
         "与妮安特的对话得知天母教（目前未知）",
-        "盘根树林知识第2部分未知（待探索）"
+        "盘根树林知识第1部分未知（待探索）"
       ]
     },
     {
@@ -244,7 +248,7 @@
       "notes": [
         "法埃尔：原大骑士加拉哈德（叛逃）",
         "与妮安特的对话得知天母教（目前未知）",
-        "盘根树林知识第2部分未知（待探索）"
+        "盘根树林知识第1部分未知（待探索）"
       ]
     }
   ],
@@ -583,7 +587,7 @@
     },
     {
       "name": "Fall of Chivalry",
-      "note": "",
+      "note": "When you have any six parts of this status, go to BoS, Verse 525.",
       "slots": [
         {
           "label": "1",
@@ -1409,7 +1413,7 @@
     },
     {
       "name": "Something is Watching",
-      "note": "",
+      "note": "When you have all four parts of this status, resolve Special Event C.",
       "slots": [
         {
           "label": "",
