@@ -251,6 +251,7 @@
   "statuses": [
     {
       "name": "Allies of Avalon",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -276,6 +277,7 @@
     },
     {
       "name": "Black Cauldron",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -293,6 +295,7 @@
     },
     {
       "name": "Burning Mystery",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -334,6 +337,7 @@
     },
     {
       "name": "Call from Beyond",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -343,6 +347,7 @@
     },
     {
       "name": "Charred Knowledge",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -352,6 +357,7 @@
     },
     {
       "name": "Cherished Belongings",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -361,6 +367,7 @@
     },
     {
       "name": "Cold Pyre",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -370,6 +377,7 @@
     },
     {
       "name": "Cosuil",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -395,6 +403,7 @@
     },
     {
       "name": "Deal Breaker",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -404,6 +413,7 @@
     },
     {
       "name": "Deep Secret",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -413,6 +423,7 @@
     },
     {
       "name": "Diplomat",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -430,6 +441,7 @@
     },
     {
       "name": "Diplomatic Mission",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -459,6 +471,7 @@
     },
     {
       "name": "Disturbing Information",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -476,6 +489,7 @@
     },
     {
       "name": "Dreams and Prophecies",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -504,11 +518,16 @@
         {
           "label": "7",
           "owned": false
+        },
+        {
+          "label": "8",
+          "owned": true
         }
       ]
     },
     {
       "name": "End of the Road",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -518,6 +537,7 @@
     },
     {
       "name": "Enemies of Avalon",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -535,6 +555,7 @@
     },
     {
       "name": "Escalation",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -552,15 +573,17 @@
     },
     {
       "name": "Fael's Legacy",
+      "note": "",
       "slots": [
         {
           "label": "",
-          "owned": false
+          "owned": true
         }
       ]
     },
     {
       "name": "Fall of Chivalry",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -580,7 +603,7 @@
         },
         {
           "label": "5",
-          "owned": false
+          "owned": true
         },
         {
           "label": "6",
@@ -598,6 +621,7 @@
     },
     {
       "name": "Farpoint Clues",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -623,6 +647,7 @@
     },
     {
       "name": "Fate of the Expedition",
+      "note": "When you have parts 1-8 of this status, go to BoS, Verse 405.",
       "slots": [
         {
           "label": "1",
@@ -655,11 +680,16 @@
         {
           "label": "8",
           "owned": false
+        },
+        {
+          "label": "9",
+          "owned": false
         }
       ]
     },
     {
       "name": "Final Confrontations",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -693,6 +723,7 @@
     },
     {
       "name": "Final Lesson",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -718,6 +749,7 @@
     },
     {
       "name": "Fortunate Meetings",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -743,6 +775,7 @@
     },
     {
       "name": "General Directions",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -752,6 +785,7 @@
     },
     {
       "name": "Gerraint's Successor",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -769,6 +803,7 @@
     },
     {
       "name": "Glen Ritual",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -782,6 +817,7 @@
     },
     {
       "name": "Guest of Honor",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -791,6 +827,7 @@
     },
     {
       "name": "Halfway Intrigue",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -808,6 +845,7 @@
     },
     {
       "name": "Helping Hand",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -837,6 +875,7 @@
     },
     {
       "name": "Helping the Knights",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -858,6 +897,7 @@
     },
     {
       "name": "Hidden Treasures",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -895,6 +935,7 @@
     },
     {
       "name": "Hunter's Mark",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -904,6 +945,7 @@
     },
     {
       "name": "Lady's Task",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -913,6 +955,7 @@
     },
     {
       "name": "Last Haven",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -938,6 +981,7 @@
     },
     {
       "name": "Left Behind",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -979,6 +1023,7 @@
     },
     {
       "name": "Lost and Fallen",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1012,6 +1057,7 @@
     },
     {
       "name": "Maggot's Redemption",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1021,6 +1067,7 @@
     },
     {
       "name": "Matricide",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1030,6 +1077,7 @@
     },
     {
       "name": "Monastery Discovered",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1039,6 +1087,7 @@
     },
     {
       "name": "Moonring Mission",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1048,6 +1097,7 @@
     },
     {
       "name": "Morgaine's Task",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1057,6 +1107,7 @@
     },
     {
       "name": "Mourning Song",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1070,6 +1121,7 @@
     },
     {
       "name": "Mystery Solved",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1079,6 +1131,7 @@
     },
     {
       "name": "Pathfinder",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1116,6 +1169,7 @@
     },
     {
       "name": "Peace in Borough",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1125,6 +1179,7 @@
     },
     {
       "name": "People's Champion",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1134,6 +1189,7 @@
     },
     {
       "name": "Pillager",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1159,6 +1215,7 @@
     },
     {
       "name": "Reclamation",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1168,6 +1225,7 @@
     },
     {
       "name": "Redemption",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1193,6 +1251,7 @@
     },
     {
       "name": "Remedy",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1214,6 +1273,7 @@
     },
     {
       "name": "Remnants",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1239,6 +1299,7 @@
     },
     {
       "name": "Restoring the Order",
+      "note": "When you have any six parts of this status, go to BoS, Verse 512.",
       "slots": [
         {
           "label": "1",
@@ -1276,6 +1337,7 @@
     },
     {
       "name": "Riddle of the Oldsteel",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1285,6 +1347,7 @@
     },
     {
       "name": "Saved by the Goddess",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1294,6 +1357,7 @@
     },
     {
       "name": "Scrounger",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1303,6 +1367,7 @@
     },
     {
       "name": "Secrets of the Forest",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1324,6 +1389,7 @@
     },
     {
       "name": "Shelter in the Storm",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1333,6 +1399,7 @@
     },
     {
       "name": "Shrine Secure",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1342,6 +1409,7 @@
     },
     {
       "name": "Something is Watching",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1363,6 +1431,7 @@
     },
     {
       "name": "Stonemason's Secret",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1372,6 +1441,7 @@
     },
     {
       "name": "Strange Encounters",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1409,6 +1479,7 @@
     },
     {
       "name": "Supplying the Revolt",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1430,6 +1501,7 @@
     },
     {
       "name": "Tangleroot Knowledge",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1443,6 +1515,7 @@
     },
     {
       "name": "Tracker",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1452,6 +1525,7 @@
     },
     {
       "name": "Traveler",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1469,6 +1543,7 @@
     },
     {
       "name": "Traveling Menhir",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1482,6 +1557,7 @@
     },
     {
       "name": "Tuathan Exploration",
+      "note": "",
       "slots": [
         {
           "label": "",
@@ -1507,6 +1583,7 @@
     },
     {
       "name": "Underfern",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1532,6 +1609,7 @@
     },
     {
       "name": "War for Avalon",
+      "note": "",
       "slots": [
         {
           "label": "1",
@@ -1553,6 +1631,7 @@
     },
     {
       "name": "Winds of Wyrdness",
+      "note": "",
       "slots": [
         {
           "label": "",
