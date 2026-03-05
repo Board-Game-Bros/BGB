@@ -1079,25 +1079,74 @@
     return `no:${no}|date:${date}`;
   }
 
-  function mergePersistablePayload(remotePayloadLike, localPayloadLike) {
+  function mergeStatusRows(remoteRowsLike, localRowsLike) {
+    const remoteRows = sanitizeStatusRows(remoteRowsLike);
+    const localRows = sanitizeStatusRows(localRowsLike);
+    const byName = new Map();
+    const merged = [];
+
+    remoteRows.forEach((row) => {
+      const key = String(row.name || "").trim().toLowerCase();
+      const clone = deepClone(row);
+      if (key) byName.set(key, clone);
+      merged.push(clone);
+    });
+
+    localRows.forEach((row) => {
+      const key = String(row.name || "").trim().toLowerCase();
+      if (!key) return;
+      const target = byName.get(key);
+      if (!target) {
+        const clone = deepClone(row);
+        byName.set(key, clone);
+        merged.push(clone);
+        return;
+      }
+      const targetSlots = Array.isArray(target.slots) ? target.slots : [];
+      const localSlots = Array.isArray(row.slots) ? row.slots : [];
+      const maxLen = Math.max(targetSlots.length, localSlots.length);
+      target.slots = Array.from({ length: maxLen }, (_v, idx) => {
+        const remoteSlot = targetSlots[idx] || {};
+        const localSlot = localSlots[idx] || {};
+        const remoteLabel = String(remoteSlot.label || "");
+        const localLabel = String(localSlot.label || "");
+        return {
+          label: remoteLabel || localLabel,
+          owned: !!(remoteSlot.owned || localSlot.owned),
+        };
+      });
+      if (!target.note && row.note) target.note = String(row.note);
+    });
+
+    return sanitizeStatusRows(merged);
+  }
+
+  function mergePersistablePayload(remotePayloadLike, localPayloadLike, options) {
     const remoteSafe = sanitizeData(remotePayloadLike || {});
     const localSafe = sanitizeData(localPayloadLike || {});
+    const opts = options && typeof options === "object" ? options : {};
+    const preferLocalForExistingSessions = !!opts.preferLocalForExistingSessions;
     const mergedSessionsByKey = new Map();
 
     remoteSafe.sessions.forEach((s) => {
       mergedSessionsByKey.set(sessionMergeKey(s), deepClone(s));
     });
     localSafe.sessions.forEach((s) => {
-      mergedSessionsByKey.set(sessionMergeKey(s), deepClone(s));
+      const key = sessionMergeKey(s);
+      if (!mergedSessionsByKey.has(key) || preferLocalForExistingSessions) {
+        mergedSessionsByKey.set(key, deepClone(s));
+      }
     });
 
     const mergedSessions = Array.from(mergedSessionsByKey.values());
     sortSessions(mergedSessions);
-    const mergedStatuses = sanitizeStatusRows(localSafe.statuses && localSafe.statuses.length
-      ? localSafe.statuses
-      : remoteSafe.statuses);
+    const mergedStatuses = mergeStatusRows(remoteSafe.statuses, localSafe.statuses);
     return {
-      campaign: deepClone(localSafe.campaign || remoteSafe.campaign),
+      campaign: deepClone(
+        remoteSafe.campaign && Object.keys(remoteSafe.campaign).length
+          ? remoteSafe.campaign
+          : localSafe.campaign
+      ),
       sessions: mergedSessions,
       statuses: mergedStatuses,
     };
@@ -1229,7 +1278,9 @@
           if (!remotePayload) {
             throw new Error("Host data changed remotely. Refresh page before syncing.");
           }
-          payloadToPersist = mergePersistablePayload(remotePayload, payloadToPersist);
+          payloadToPersist = mergePersistablePayload(remotePayload, payloadToPersist, {
+            preferLocalForExistingSessions: true,
+          });
           content = persistableText(payloadToPersist);
           nextHash = quickHash(content);
           if (nextHash === snapshot.hash) {
@@ -1426,7 +1477,9 @@
       const hasDraftSession = !!localDraft.state.draftSession;
       const isDirty = !!(localDraft.meta && localDraft.meta.dirty);
       if (isDirty && (hasDraftSession || localHash !== remoteHash)) {
-        state = sanitizeData(localDraft.state);
+        state = mergePersistablePayload(remoteData, localDraft.state, {
+          preferLocalForExistingSessions: false,
+        });
         restoredLocal = true;
       } else {
         state = remoteData;
@@ -1451,4 +1504,3 @@
 
   void init();
 })();
-
