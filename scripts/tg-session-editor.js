@@ -14,7 +14,7 @@
   const useLocalDraft = true;
   const tokenKey = "bgb_github_sync_token_v1";
 
-  let state = { campaign: {}, sessions: [], draftSession: null };
+  let state = { campaign: {}, sessions: [], statuses: [], draftSession: null };
   let editingSessionId = "";
   let editGateStatusNode = null;
   let syncStatusNode = null;
@@ -26,6 +26,137 @@
   let syncQueued = false;
   let syncTimer = null;
   let lastSyncedHash = "";
+
+  function buildDefaultStatuses() {
+    const make = (name, size, numbered) => ({
+      name: String(name || ""),
+      slots: Array.from({ length: Math.max(0, Number(size) || 0) }, (_v, i) => ({
+        label: numbered ? String(i + 1) : "",
+        owned: false,
+      })),
+    });
+    return [
+      make("Allies of Avalon", 5, true),
+      make("Black Cauldron", 3, true),
+      make("Burning Mystery", 9, true),
+      make("Call from Beyond", 1, false),
+      make("Charred Knowledge", 1, false),
+      make("Cherished Belongings", 1, false),
+      make("Cold Pyre", 1, false),
+      make("Cosuil", 5, true),
+      make("Deal Breaker", 1, false),
+      make("Deep Secret", 1, false),
+      make("Diplomat", 3, true),
+      make("Diplomatic Mission", 6, true),
+      make("Disturbing Information", 3, true),
+      make("Dreams and Prophecies", 7, true),
+      make("End of the Road", 1, false),
+      make("Enemies of Avalon", 3, true),
+      make("Escalation", 3, true),
+      make("Fael's Legacy", 1, false),
+      make("Fall of Chivalry", 8, true),
+      make("Farpoint Clues", 5, true),
+      make("Fate of the Expedition", 8, true),
+      make("Final Confrontations", 7, true),
+      make("Final Lesson", 5, true),
+      make("Fortunate Meetings", 5, true),
+      make("General Directions", 1, false),
+      make("Gerraint's Successor", 3, true),
+      make("Glen Ritual", 2, true),
+      make("Guest of Honor", 1, false),
+      make("Halfway Intrigue", 3, true),
+      make("Helping Hand", 6, true),
+      make("Helping the Knights", 4, false),
+      make("Hidden Treasures", 8, true),
+      make("Hunter's Mark", 1, false),
+      make("Lady's Task", 1, false),
+      make("Last Haven", 5, true),
+      make("Left Behind", 9, true),
+      make("Lost and Fallen", 7, true),
+      make("Maggot's Redemption", 1, false),
+      make("Matricide", 1, false),
+      make("Monastery Discovered", 1, false),
+      make("Moonring Mission", 1, false),
+      make("Morgaine's Task", 1, false),
+      make("Mourning Song", 2, true),
+      make("Mystery Solved", 1, false),
+      make("Pathfinder", 8, true),
+      make("Peace in Borough", 1, false),
+      make("People's Champion", 1, false),
+      make("Pillager", 5, true),
+      make("Reclamation", 1, false),
+      make("Redemption", 5, false),
+      make("Remedy", 4, true),
+      make("Remnants", 5, true),
+      make("Restoring the Order", 8, true),
+      make("Riddle of the Oldsteel", 1, false),
+      make("Saved by the Goddess", 1, false),
+      make("Scrounger", 1, false),
+      make("Secrets of the Forest", 4, true),
+      make("Shelter in the Storm", 1, false),
+      make("Shrine Secure", 1, false),
+      make("Something is Watching", 4, false),
+      make("Stonemason's Secret", 1, false),
+      make("Strange Encounters", 8, true),
+      make("Supplying the Revolt", 4, false),
+      make("Tangleroot Knowledge", 2, true),
+      make("Tracker", 1, false),
+      make("Traveler", 3, true),
+      make("Traveling Menhir", 2, true),
+      make("Tuathan Exploration", 5, false),
+      make("Underfern", 5, true),
+      make("War for Avalon", 4, true),
+      make("Winds of Wyrdness", 1, false),
+    ];
+  }
+
+  const defaultStatuses = buildDefaultStatuses();
+
+  function sanitizeStatusRows(rawRows) {
+    const defaults = deepClone(defaultStatuses);
+    const incoming = Array.isArray(rawRows) ? rawRows : [];
+    const incomingByName = new Map();
+
+    incoming.forEach((row) => {
+      if (!row || typeof row !== "object") return;
+      const name = String(row.name || "").trim();
+      if (!name) return;
+      incomingByName.set(name, row);
+    });
+
+    const normalized = defaults.map((template) => {
+      const source = incomingByName.get(template.name) || {};
+      const sourceSlots = Array.isArray(source.slots) ? source.slots : [];
+      const slots = template.slots.map((slotTemplate, idx) => {
+        const sourceSlot = sourceSlots[idx] && typeof sourceSlots[idx] === "object" ? sourceSlots[idx] : null;
+        return {
+          label: sourceSlot && String(sourceSlot.label || "").trim()
+            ? String(sourceSlot.label || "").trim()
+            : String(slotTemplate.label || ""),
+          owned: !!(sourceSlot && (sourceSlot.owned || sourceSlot.checked)),
+        };
+      });
+      return { name: template.name, slots };
+    });
+
+    incoming.forEach((row) => {
+      if (!row || typeof row !== "object") return;
+      const name = String(row.name || "").trim();
+      if (!name) return;
+      if (defaults.some((d) => d.name === name)) return;
+      const sourceSlots = Array.isArray(row.slots) ? row.slots : [];
+      const slots = sourceSlots.map((slot) => {
+        const safeSlot = slot && typeof slot === "object" ? slot : {};
+        return {
+          label: String(safeSlot.label || "").trim(),
+          owned: !!(safeSlot.owned || safeSlot.checked),
+        };
+      });
+      normalized.push({ name, slots });
+    });
+
+    return normalized;
+  }
 
   function normalizeSyncConfig(raw) {
     if (!raw || typeof raw !== "object") return null;
@@ -86,6 +217,7 @@
         summary: String(campaign.summary || ""),
       },
       sessions: sessions.map((s, i) => sanitizeSession(s, i + 1)),
+      statuses: sanitizeStatusRows(safe.statuses),
       draftSession,
     };
   }
@@ -228,6 +360,7 @@
     lastSyncedHash = getPersistableHash({
       campaign: deepClone(state.campaign),
       sessions: deepClone(state.sessions),
+      statuses: deepClone(state.statuses),
     });
     if (nextToken) {
       refreshSyncUi("Host connected. Pending first sync...");
@@ -801,6 +934,68 @@
     return block;
   }
 
+  function setStatusSlotVisual(slotButton, owned) {
+    if (!slotButton) return;
+    slotButton.classList.toggle("is-owned", !!owned);
+    slotButton.setAttribute("aria-pressed", owned ? "true" : "false");
+  }
+
+  function toggleStatusSlot(statusIndex, slotIndex, slotButton) {
+    if (!canEditNow()) {
+      setPageStatus("当前为锁定状态，先点 Edit Page 解锁");
+      return;
+    }
+    const rows = Array.isArray(state.statuses) ? state.statuses : [];
+    const row = rows[statusIndex];
+    if (!row || !Array.isArray(row.slots)) return;
+    const slot = row.slots[slotIndex];
+    if (!slot || typeof slot !== "object") return;
+    slot.owned = !slot.owned;
+    setStatusSlotVisual(slotButton, slot.owned);
+    saveDraft();
+  }
+
+  function renderStatusBoard() {
+    const block = el("div", "tg-block tg-status-board");
+    block.appendChild(el("div", "tg-title", "Statuses"));
+
+    const rows = sanitizeStatusRows(state.statuses);
+    state.statuses = rows;
+    const splitIndex = Math.ceil(rows.length / 2);
+    const left = rows.slice(0, splitIndex);
+    const right = rows.slice(splitIndex);
+
+    const board = el("div", "tg-status-columns");
+    const renderColumn = (list, offset) => {
+      const col = el("div", "tg-status-col");
+      list.forEach((row, localIndex) => {
+        const rowIndex = offset + localIndex;
+        const line = el("div", "tg-status-row");
+        line.appendChild(el("span", "tg-status-name", row.name || ""));
+        const slotsWrap = el("div", "tg-status-slots");
+        (row.slots || []).forEach((slot, slotIndex) => {
+          const slotButton = document.createElement("button");
+          slotButton.type = "button";
+          slotButton.className = "tg-status-slot";
+          slotButton.disabled = !canEditNow();
+          slotButton.textContent = String((slot && slot.label) || "");
+          setStatusSlotVisual(slotButton, !!(slot && slot.owned));
+          slotButton.addEventListener("click", () => {
+            toggleStatusSlot(rowIndex, slotIndex, slotButton);
+          });
+          slotsWrap.appendChild(slotButton);
+        });
+        line.appendChild(slotsWrap);
+        col.appendChild(line);
+      });
+      return col;
+    };
+
+    board.append(renderColumn(left, 0), renderColumn(right, splitIndex));
+    block.appendChild(board);
+    return block;
+  }
+
   function encodeBase64Utf8(text) {
     const bytes = new TextEncoder().encode(text);
     let binary = "";
@@ -833,6 +1028,7 @@
     return {
       campaign: deepClone(state.campaign),
       sessions: deepClone(state.sessions),
+      statuses: deepClone(state.statuses),
     };
   }
 
@@ -853,6 +1049,7 @@
       return {
         campaign: deepClone(parsed.campaign),
         sessions: deepClone(parsed.sessions),
+        statuses: deepClone(parsed.statuses),
       };
     } catch (_error) {
       return null;
@@ -882,9 +1079,13 @@
 
     const mergedSessions = Array.from(mergedSessionsByKey.values());
     sortSessions(mergedSessions);
+    const mergedStatuses = sanitizeStatusRows(localSafe.statuses && localSafe.statuses.length
+      ? localSafe.statuses
+      : remoteSafe.statuses);
     return {
       campaign: deepClone(localSafe.campaign || remoteSafe.campaign),
       sessions: mergedSessions,
+      statuses: mergedStatuses,
     };
   }
 
@@ -901,6 +1102,7 @@
     const persistHash = getPersistableHash({
       campaign: deepClone(safeState.campaign),
       sessions: deepClone(safeState.sessions),
+      statuses: deepClone(safeState.statuses),
     });
     const opts = options && typeof options === "object" ? options : {};
     const dirty = typeof opts.forceDirty === "boolean"
@@ -1019,6 +1221,7 @@
           if (nextHash === snapshot.hash) {
             state.campaign = deepClone(payloadToPersist.campaign);
             state.sessions = deepClone(payloadToPersist.sessions);
+            state.statuses = sanitizeStatusRows(payloadToPersist.statuses);
             sortSessions(state.sessions);
             render();
             markLocalDraftClean();
@@ -1056,6 +1259,7 @@
 
       state.campaign = deepClone(payloadToPersist.campaign);
       state.sessions = deepClone(payloadToPersist.sessions);
+      state.statuses = sanitizeStatusRows(payloadToPersist.statuses);
       sortSessions(state.sessions);
       render();
       markLocalDraftClean();
@@ -1171,6 +1375,8 @@
       logsCard.appendChild(renderSessionEditable(state.draftSession, { isDraft: true }));
     }
 
+    logsCard.appendChild(renderStatusBoard());
+
     pageStatusNode = el("div", "tg-page-status", "");
     logsCard.appendChild(pageStatusNode);
 
@@ -1181,7 +1387,7 @@
   }
 
   async function init() {
-    let remoteData = { campaign: {}, sessions: [], draftSession: null };
+    let remoteData = { campaign: {}, sessions: [], statuses: [], draftSession: null };
     try {
       const res = await fetch(`${dataSource}?v=${Date.now()}`);
       if (!res.ok) throw new Error("fetch failed");
@@ -1196,10 +1402,12 @@
       const remoteHash = getPersistableHash({
         campaign: deepClone(remoteData.campaign),
         sessions: deepClone(remoteData.sessions),
+        statuses: deepClone(remoteData.statuses),
       });
       const localHash = getPersistableHash({
         campaign: deepClone(localDraft.state.campaign || {}),
         sessions: deepClone(localDraft.state.sessions || []),
+        statuses: deepClone(localDraft.state.statuses || []),
       });
       const hasDraftSession = !!localDraft.state.draftSession;
       const isDirty = !!(localDraft.meta && localDraft.meta.dirty);
@@ -1216,6 +1424,7 @@
     lastSyncedHash = getPersistableHash({
       campaign: deepClone(state.campaign),
       sessions: deepClone(state.sessions),
+      statuses: deepClone(state.statuses),
     });
     if (!restoredLocal) {
       markLocalDraftClean();

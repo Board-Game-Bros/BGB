@@ -41,6 +41,7 @@ body.torch-mode .card,
 body.torch-mode .session-status li,
 body.torch-mode .session-notes,
 body.torch-mode .tg-block,
+body.torch-mode .tg-status-row,
 body.torch-mode .tg-title,
 body.torch-mode .tg-tag,
 body.torch-mode .tg-text,
@@ -91,4 +92,17 @@ body.torch-mode .session textarea::placeholder {
   color: rgba(110, 82, 47, 0.55);
   -webkit-text-fill-color: rgba(110, 82, 47, 0.55);
   text-shadow: none;
+}
+
+body.torch-mode .tg-status-slot {
+  background: rgba(246, 224, 186, 0.9);
+  color: #332311;
+  border-color: rgba(85, 58, 28, 0.78);
+  text-shadow: none;
+}
+
+body.torch-mode .tg-status-slot.is-owned {
+  background: linear-gradient(180deg, rgba(182, 125, 60, 0.95) 0%, rgba(120, 80, 34, 0.95) 100%);
+  color: #f9e5bf;
+  border-color: rgba(246, 214, 155, 0.82);
 }
