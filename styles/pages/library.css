@@ -27,12 +27,35 @@ nav a {
 }
 
 .category-grid {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: block;
+  column-gap: 18px;
+  column-count: 1;
+}
+
+.category-grid .game-card {
+  width: 100%;
+  display: inline-flex;
+  margin: 0 0 18px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+}
+
+@media (min-width: 760px) {
+  .category-grid {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1080px) {
+  .category-grid {
+    column-count: 3;
+  }
 }
 
 .category-placeholder {
   min-height: 110px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   border-style: dashed;
