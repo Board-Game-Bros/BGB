@@ -154,15 +154,25 @@
 
 .tg-status-row {
   display: grid;
-  grid-template-columns: minmax(190px, 1fr) auto;
-  align-items: center;
-  gap: 10px;
+  gap: 4px;
   padding-bottom: 4px;
   border-bottom: 1px solid rgba(88, 63, 31, 0.24);
 }
 
+.tg-status-row-main {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
 .tg-status-name {
   letter-spacing: 0.01em;
+}
+
+.tg-status-note {
+  font-size: 0.86rem;
+  opacity: 0.82;
 }
 
 .tg-status-slots {

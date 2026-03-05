@@ -28,8 +28,9 @@
   let lastSyncedHash = "";
 
   function buildDefaultStatuses() {
-    const make = (name, size, numbered) => ({
+    const make = (name, size, numbered, note) => ({
       name: String(name || ""),
+      note: String(note || ""),
       slots: Array.from({ length: Math.max(0, Number(size) || 0) }, (_v, i) => ({
         label: numbered ? String(i + 1) : "",
         owned: false,
@@ -49,14 +50,14 @@
       make("Diplomat", 3, true),
       make("Diplomatic Mission", 6, true),
       make("Disturbing Information", 3, true),
-      make("Dreams and Prophecies", 7, true),
+      make("Dreams and Prophecies", 8, true),
       make("End of the Road", 1, false),
       make("Enemies of Avalon", 3, true),
       make("Escalation", 3, true),
       make("Fael's Legacy", 1, false),
       make("Fall of Chivalry", 8, true),
       make("Farpoint Clues", 5, true),
-      make("Fate of the Expedition", 8, true),
+      make("Fate of the Expedition", 9, true, "When you have parts 1-8 of this status, go to BoS, Verse 405."),
       make("Final Confrontations", 7, true),
       make("Final Lesson", 5, true),
       make("Fortunate Meetings", 5, true),
@@ -88,7 +89,7 @@
       make("Redemption", 5, false),
       make("Remedy", 4, true),
       make("Remnants", 5, true),
-      make("Restoring the Order", 8, true),
+      make("Restoring the Order", 8, true, "When you have any six parts of this status, go to BoS, Verse 512."),
       make("Riddle of the Oldsteel", 1, false),
       make("Saved by the Goddess", 1, false),
       make("Scrounger", 1, false),
@@ -136,7 +137,11 @@
           owned: !!(sourceSlot && (sourceSlot.owned || sourceSlot.checked)),
         };
       });
-      return { name: template.name, slots };
+      return {
+        name: template.name,
+        note: String((source && source.note) || template.note || ""),
+        slots,
+      };
     });
 
     incoming.forEach((row) => {
@@ -152,7 +157,11 @@
           owned: !!(safeSlot.owned || safeSlot.checked),
         };
       });
-      normalized.push({ name, slots });
+      normalized.push({
+        name,
+        note: String(row.note || "").trim(),
+        slots,
+      });
     });
 
     return normalized;
@@ -971,7 +980,8 @@
       list.forEach((row, localIndex) => {
         const rowIndex = offset + localIndex;
         const line = el("div", "tg-status-row");
-        line.appendChild(el("span", "tg-status-name", row.name || ""));
+        const main = el("div", "tg-status-row-main");
+        main.appendChild(el("span", "tg-status-name", row.name || ""));
         const slotsWrap = el("div", "tg-status-slots");
         (row.slots || []).forEach((slot, slotIndex) => {
           const slotButton = document.createElement("button");
@@ -985,7 +995,11 @@
           });
           slotsWrap.appendChild(slotButton);
         });
-        line.appendChild(slotsWrap);
+        main.appendChild(slotsWrap);
+        line.appendChild(main);
+        if (row.note) {
+          line.appendChild(el("div", "tg-status-note", row.note));
+        }
         col.appendChild(line);
       });
       return col;
