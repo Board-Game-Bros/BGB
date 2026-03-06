@@ -51,7 +51,7 @@
     btn.setAttribute("type", "button");
 
     const img = document.createElement("img");
-    img.src = cfg.torchIconSrc || "assets/icon/torch.svg";
+    img.src = cfg.torchIconSrc || "/assets/icon/torch.svg";
     img.alt = "Torch Mode";
     btn.appendChild(img);
     return btn;
@@ -63,7 +63,7 @@
 
     if (cfg.showLogo !== false) {
       const logo = document.createElement("img");
-      logo.src = cfg.logoSrc || "assets/icon/BGB_transparent.png";
+      logo.src = cfg.logoSrc || "/assets/icon/BGB_transparent.png";
       logo.alt = cfg.logoAlt || "BGB Logo";
       logo.className = "logo";
       header.appendChild(logo);

@@ -3,7 +3,7 @@
   const root = document.getElementById("tg-campaign-root");
   if (!root) return;
 
-  const dataSource = String(root.getAttribute("data-source") || "assets/data/tainted_grail_foa_sessions.json");
+  const dataSource = String(root.getAttribute("data-source") || "/assets/data/tainted_grail_foa_sessions.json");
   const syncConfig = normalizeSyncConfig(window.TG_FOA_SYNC || {});
   const configuredEditPassword = String(window.TG_FOA_EDIT_PASSWORD || "").trim();
   const editPassword = String(configuredEditPassword || "bgbzhangyan2026");

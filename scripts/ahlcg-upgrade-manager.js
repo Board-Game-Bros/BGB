@@ -1,8 +1,8 @@
 (function () {
   function initAhlcgUpgradeManager(config) {
     const options = config || {};
-    const cardDir = options.cardDir || "assets/boardgames/ahlcg_cards";
-    const investigatorDir = options.investigatorDir || "assets/boardgames/ahlcg_investigators";
+    const cardDir = options.cardDir || "/assets/boardgames/ahlcg_cards";
+    const investigatorDir = options.investigatorDir || "/assets/boardgames/ahlcg_investigators";
     const cardImageFiles = Array.isArray(options.cardImageFiles) ? options.cardImageFiles : [];
     const standardCardNames = Array.isArray(options.standardCardNames) ? options.standardCardNames : [];
     const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
