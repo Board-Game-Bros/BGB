@@ -1,16 +1,160 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirecting...</title>
-  <meta http-equiv="refresh" content="0; url=/library/" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BGB - Library</title>
   <script>
-    window.location.replace('/library/');
+    window.BGB_SHELL = { title: "Board Game Library", activeNav: "library" };
   </script>
+  <link rel="stylesheet" href="/styles/pages/library.css">
 </head>
 <body>
-  <p>Redirecting to <a href="/library/">/library/</a>...</p>
+<div class="container">
+  <h2 class="section-title collection-banner">Game Collection</h2>
+
+  <section class="collection-category">
+    <h3 class="category-title">Currently Active</h3>
+    <div class="grid category-grid">
+      <div class="card game-card">
+        <a href="/arkham_horror_lcg/" class="cover-link">
+          <img src="/assets/boardgames/arkham_horror_lcg.png" alt="Arkham Horror LCG Cover" class="game-cover wide-cover" />
+          <h3>Arkham Horror: The Card Game</h3>
+        </a>
+        <a class="more-info-btn" href="https://www.fantasyflightgames.com/en/products/arkham-horror-the-card-game/" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="/tainted_grail_foa/" class="cover-link">
+          <img src="/assets/boardgames/tainted_grail_foa.png" alt="Tainted Grail: the Fall of Avalon Cover" class="game-cover wide-cover" />
+          <h3>Tainted Grail: The Fall of Avalon</h3>
+        </a>
+        <a class="more-info-btn" href="https://awakenrealms.com/games/awaken-realms/tainted-grail" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="collection-category">
+    <h3 class="category-title">Cooperative</h3>
+    <div class="grid category-grid">
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/gloomhaven.png" alt="Gloomhaven Cover" class="game-cover wide-cover" />
+          <h3>Gloomhaven</h3>
+        </a>
+        <a class="more-info-btn" href="https://cephalofair.com/collections/gloomhaven" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="collection-category">
+    <h3 class="category-title">Euro-Strategy</h3>
+    <div class="grid category-grid">
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/wingspan.png" alt="Wingspan Cover" class="game-cover wide-cover" />
+          <h3>Wingspan</h3>
+        </a>
+        <a class="more-info-btn" href="https://stonemaiergames.com/games/wingspan" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/terraforming_mars.png" alt="Terraforming Mars Cover" class="game-cover wide-cover" />
+          <h3>Terraforming Mars</h3>
+        </a>
+        <a class="more-info-btn" href="https://fryxgames.se/product/terraforming-mars" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/terra_mystica.png" alt="Terra Mystica Cover" class="game-cover wide-cover" />
+          <h3>Terra Mystica</h3>
+        </a>
+        <a class="more-info-btn" href="https://capstone-games.com/products/terra-mystica" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/power_grid.png" alt="Power Grid Cover" class="game-cover wide-cover" />
+          <h3>Power Grid</h3>
+        </a>
+        <a class="more-info-btn" href="https://www.riograndegames.com/games/power-grid-recharged" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/nucleum.png" alt="Nucleum Cover" class="game-cover wide-cover" />
+          <h3>Nucleum</h3>
+        </a>
+        <a class="more-info-btn" href="https://boardanddice.com/product/nucleum" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/great_western_trail.png" alt="Great Western Trail Cover" class="game-cover wide-cover" />
+          <h3>Great Western Trail</h3>
+        </a>
+        <a class="more-info-btn" href="https://store.asmodee.com/products/great-western-trail" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/dune_imperium.png" alt="Dune: Imperium Cover" class="game-cover wide-cover" />
+          <h3>Dune: Imperium</h3>
+        </a>
+        <a class="more-info-btn" href="https://www.direwolfdigital.com/dune-imperium" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/concordia.png" alt="Concordia Cover" class="game-cover wide-cover" />
+          <h3>Concordia</h3>
+        </a>
+        <a class="more-info-btn" href="https://www.riograndegames.com/games/concordia" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/caverna.png" alt="Caverna Cover" class="game-cover wide-cover" />
+          <h3>Caverna</h3>
+        </a>
+        <a class="more-info-btn" href="https://www.lookout-spiele.de/en/games/caverna.html" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/agricola.png" alt="Agricola Cover" class="game-cover wide-cover" />
+          <h3>Agricola</h3>
+        </a>
+        <a class="more-info-btn" href="https://www.lookout-spiele.de/en/games/agricolare.html" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+
+      <div class="card game-card">
+        <a href="#" class="cover-link">
+          <img src="/assets/boardgames/a_feast_for_odin.png" alt="A Feast for Odin Cover" class="game-cover wide-cover" />
+          <h3>A Feast for Odin</h3>
+        </a>
+        <a class="more-info-btn" href="https://store.asmodee.com/products/a-feast-for-odin" target="_blank" rel="noopener noreferrer">More Info</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="collection-category">
+    <h3 class="category-title">TTRPG</h3>
+    <div class="grid category-grid">
+      <div class="card game-card category-placeholder">Add game covers here</div>
+    </div>
+  </section>
+
+  <section class="collection-category">
+    <h3 class="category-title">Party</h3>
+    <div class="grid category-grid">
+      <div class="card game-card category-placeholder">Add game covers here</div>
+    </div>
+  </section>
+</div>
+<script src="/scripts/shell-layout.js"></script>
+<script src="/scripts/main.js"></script>
 </body>
 </html>
-
