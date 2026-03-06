@@ -10,7 +10,7 @@
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
     const configuredPassword = typeof options.editPassword === "string" ? options.editPassword : "";
-    const onTcuPage = /arkham_horror_lcg_tcu_20260215\.html$/i.test(String(window.location.pathname || ""));
+    const onTcuPage = /arkham_horror_lcg_tcu_20260215(?:\.html)?\/?$/i.test(String(window.location.pathname || ""));
     const fallbackPassword = onTcuPage ? "bgbzhangyan2026" : "";
     const editPassword = String(configuredPassword || fallbackPassword);
     const requireEditPassword = editPassword.length > 0;

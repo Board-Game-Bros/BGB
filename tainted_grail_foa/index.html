@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tainted Grail: The Fall of Avalon</title>
+  <script>
+    window.BGB_SHELL = { title: "Board Game Bros", activeNav: "library" };
+    window.TG_FOA_SYNC = {
+      provider: "github",
+      owner: "Board-Game-Bros",
+      repo: "BGB",
+      branch: "main",
+      filePath: "assets/data/tainted_grail_foa_sessions.json"
+    };
+  </script>
+  <link rel="stylesheet" href="/styles/pages/tainted_grail_foa.css?v=20260305b" />
+</head>
+
+<body>
+  <main class="container">
+    <h1 class="page-title">Tainted Grail: The Fall of Avalon</h1>
+
+    <div class="subnav">
+      <a href="#overview">Overview</a>
+      <a href="#logs">Campaign Logs</a>
+    </div>
+
+    <section id="overview">
+      <h2 class="section-title">Campaign</h2>
+      <div id="tg-campaign-root" data-source="assets/data/tainted_grail_foa_sessions.json"></div>
+    </section>
+
+    <div class="back-link-wrap">
+      <a href="/library/" class="back-link">Back to Library</a>
+    </div>
+  </main>
+
+  <script src="/scripts/shell-layout.js"></script>
+  <script src="/scripts/main.js"></script>
+  <script src="/scripts/shared-edit-sync-gate.js?v=20260228a"></script>
+  <script src="/scripts/tg-session-editor.js?v=20260305b"></script>
+</body>
+</html>
+

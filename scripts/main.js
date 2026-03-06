@@ -173,7 +173,7 @@ setupHoverImagePreview();
 
 // 2.4 Deck panel preview for investigator deck pages.
 const setupDeckPanelPreview = () => {
-  const isInvestigatorDeckPage = /arkham_horror_lcg_tcu_(harvey_walters|michael_mcglen|wendy_adams)_20260214\.html$/i
+  const isInvestigatorDeckPage = /arkham_horror_lcg_tcu_(harvey_walters|michael_mcglen|wendy_adams)_20260214(?:\.html)?\/?$/i
     .test(String(window.location.pathname || ""));
   if (!isInvestigatorDeckPage) {
     document.body.classList.remove("deck-panel-mode");

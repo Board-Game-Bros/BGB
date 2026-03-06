@@ -3,15 +3,22 @@
   const cfg = window.BGB_SHELL || {};
 
   const navItems = [
-    { key: "home", href: "index.html", label: "Home" },
-    { key: "library", href: "library.html", label: "Library" },
-    { key: "news", href: "news.html", label: "News" },
-    { key: "daily", href: "daily.html", label: "Daily" },
+    { key: "home", href: "/", label: "Home" },
+    { key: "library", href: "/library/", label: "Library" },
+    { key: "news", href: "/news/", label: "News" },
+    { key: "daily", href: "/daily/", label: "Daily" },
   ];
 
   const resolveActiveNav = () => {
     if (cfg.activeNav) return String(cfg.activeNav).toLowerCase();
-    const file = ((window.location.pathname || "").split("/").pop() || "index.html").toLowerCase();
+    const pathname = String(window.location.pathname || "/").toLowerCase();
+    const segments = pathname.split("/").filter(Boolean);
+    const file = (segments[segments.length - 1] || "index.html").toLowerCase();
+    const directory = pathname.endsWith("/") ? (segments[segments.length - 1] || "") : "";
+
+    if (directory === "library") return "library";
+    if (directory === "news") return "news";
+    if (directory === "daily") return "daily";
     if (file === "index.html") return "home";
     if (file === "news.html") return "news";
     if (file === "daily.html") return "daily";
