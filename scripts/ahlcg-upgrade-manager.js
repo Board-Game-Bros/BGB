@@ -20,6 +20,9 @@
       ? options.remoteSyncTokenStorageKey.trim()
       : "bgb_github_sync_token_v1";
     const remoteSyncDebounceMs = Number(options.remoteSyncDebounceMs) > 0 ? Number(options.remoteSyncDebounceMs) : 2800;
+    const localStateEnvelope = window.BGBLocalStateEnvelope && typeof window.BGBLocalStateEnvelope === "object"
+      ? window.BGBLocalStateEnvelope
+      : null;
 
     const cardCatalog = cardImageFiles.map((file) => ({
       file,
@@ -49,6 +52,7 @@
     let lastSyncedHtmlHash = "";
     let remoteSyncReady = false;
     let lastSavedStateRaw = "";
+    let sourceStateHashAtLoad = "";
     let entryUidCounter = 1;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
@@ -2025,7 +2029,21 @@
     function saveUpgradeState() {
       try {
         const state = buildCurrentUpgradeState();
-        const nextRaw = JSON.stringify(state);
+        const envelope = localStateEnvelope && typeof localStateEnvelope.createEnvelope === "function"
+          ? localStateEnvelope.createEnvelope({
+            sourceHash: sourceStateHashAtLoad || "",
+            savedAt: Date.now(),
+            state,
+          })
+          : {
+            __bgbLocalStateEnvelope: 1,
+            version: 1,
+            sourceHash: sourceStateHashAtLoad || "",
+            savedAt: Date.now(),
+            meta: {},
+            state,
+          };
+        const nextRaw = JSON.stringify(envelope);
         if (nextRaw === lastSavedStateRaw) return;
         window.localStorage.setItem(storageKey, nextRaw);
         lastSavedStateRaw = nextRaw;
@@ -2055,8 +2073,52 @@
       try {
         const raw = window.localStorage.getItem(storageKey);
         if (!raw) return;
-        const state = JSON.parse(raw);
+        const parsedEnvelope = localStateEnvelope && typeof localStateEnvelope.parseEnvelope === "function"
+          ? localStateEnvelope.parseEnvelope(raw)
+          : null;
+        const parsedFallback = parsedEnvelope ? parsedEnvelope.parsed : JSON.parse(raw);
+        const parsed = parsedFallback && typeof parsedFallback === "object" ? parsedFallback : null;
+        if (!parsed) return;
+
+        const isNewEnvelope = !!(parsedEnvelope && parsedEnvelope.isEnvelope);
+        const isOldEnvelope = parsed.__bgbUpgradeStateEnvelope === 1
+          && parsed.state
+          && typeof parsed.state === "object";
+        const isEnvelope = isNewEnvelope || isOldEnvelope;
+        const state = isEnvelope
+          ? (isNewEnvelope ? parsedEnvelope.state : parsed.state)
+          : parsed;
         if (!state || typeof state !== "object") return;
+
+        const savedSourceHash = isNewEnvelope
+          ? String(parsedEnvelope.sourceHash || "")
+          : (isOldEnvelope && typeof parsed.sourceStateHash === "string" ? parsed.sourceStateHash : "");
+        const hasSourceMismatch = localStateEnvelope && typeof localStateEnvelope.isSourceHashMismatch === "function"
+          ? localStateEnvelope.isSourceHashMismatch(savedSourceHash, sourceStateHashAtLoad)
+          : (!!savedSourceHash && !!sourceStateHashAtLoad && savedSourceHash !== sourceStateHashAtLoad);
+
+        if (hasSourceMismatch) {
+          if (localStateEnvelope && typeof localStateEnvelope.backupAndClear === "function") {
+            localStateEnvelope.backupAndClear({ storageKey, rawValue: raw });
+          } else {
+            window.localStorage.setItem(storageKey + "__stale_backup_v1", raw);
+            window.localStorage.removeItem(storageKey);
+          }
+          return;
+        }
+
+        if (!isEnvelope && remoteSync && sourceStateHashAtLoad) {
+          const legacyStateHash = makeQuickHash(JSON.stringify(state));
+          if (legacyStateHash !== sourceStateHashAtLoad) {
+            if (localStateEnvelope && typeof localStateEnvelope.backupAndClear === "function") {
+              localStateEnvelope.backupAndClear({ storageKey, rawValue: raw });
+            } else {
+              window.localStorage.setItem(storageKey + "__stale_backup_v1", raw);
+              window.localStorage.removeItem(storageKey);
+            }
+            return;
+          }
+        }
 
         document.querySelectorAll(".upgrade-card").forEach((card) => {
           const name = getCardOwnerName(card);
@@ -2066,7 +2128,21 @@
             upgradeList.innerHTML = state[name];
           }
         });
-        lastSavedStateRaw = JSON.stringify(state);
+        const restoredEnvelope = localStateEnvelope && typeof localStateEnvelope.createEnvelope === "function"
+          ? localStateEnvelope.createEnvelope({
+            sourceHash: sourceStateHashAtLoad || "",
+            savedAt: Number(isOldEnvelope ? parsed.updatedAt : (isNewEnvelope ? parsedEnvelope.savedAt : Date.now())) || Date.now(),
+            state,
+          })
+          : {
+            __bgbLocalStateEnvelope: 1,
+            version: 1,
+            sourceHash: sourceStateHashAtLoad || "",
+            savedAt: Date.now(),
+            meta: {},
+            state,
+          };
+        lastSavedStateRaw = JSON.stringify(restoredEnvelope);
       } catch (_error) {
         // Ignore malformed storage.
       }
@@ -2667,6 +2743,11 @@
       applyAdaptivePreviewSize();
     }, { passive: true });
 
+    try {
+      sourceStateHashAtLoad = makeQuickHash(JSON.stringify(buildCurrentUpgradeState()));
+    } catch (_error) {
+      sourceStateHashAtLoad = "";
+    }
     restoreUpgradeState();
     normalizeExistingCardNames();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
@@ -2694,7 +2775,21 @@
     }
     watchUpgradeChanges();
     try {
-      lastSavedStateRaw = JSON.stringify(buildCurrentUpgradeState());
+      const currentEnvelope = localStateEnvelope && typeof localStateEnvelope.createEnvelope === "function"
+        ? localStateEnvelope.createEnvelope({
+          sourceHash: sourceStateHashAtLoad || "",
+          savedAt: Date.now(),
+          state: buildCurrentUpgradeState(),
+        })
+        : {
+          __bgbLocalStateEnvelope: 1,
+          version: 1,
+          sourceHash: sourceStateHashAtLoad || "",
+          savedAt: Date.now(),
+          meta: {},
+          state: buildCurrentUpgradeState(),
+        };
+      lastSavedStateRaw = JSON.stringify(currentEnvelope);
     } catch (_error) {
       // Ignore serialization failures.
     }
