@@ -1188,9 +1188,15 @@
       editUnlocked = false;
       stopInactivityTimer();
       clearUndo({ forceClearPending: true, skipSave: true });
-      document.querySelectorAll(".upgrade-entry-editor, .upgrade-entry-draft").forEach((node) => {
+      document.querySelectorAll(".upgrade-entry-editor").forEach((node) => {
         node.remove();
       });
+      document.querySelectorAll(".upgrade-entry-draft").forEach((draftEntry) => {
+        const linkedTrauma = findLinkedTraumaRow(draftEntry);
+        if (linkedTrauma) linkedTrauma.remove();
+        draftEntry.remove();
+      });
+      normalizeScenarioTraumaRows();
       document.querySelectorAll(".upgrade-entry").forEach((entry) => {
         ensureEntryActions(entry);
       });
@@ -2677,14 +2683,23 @@
       document.querySelectorAll(".upgrade-entry").forEach((entry) => {
         ensureEntryUid(entry);
       });
-      document.querySelectorAll(".scenario-trauma").forEach((row) => {
-        renderTraumaRow(row);
-        if (!row.dataset.entryUidLink) {
-          const prevEntry = row.previousElementSibling;
-          if (prevEntry && prevEntry.classList.contains("upgrade-entry")) {
-            row.dataset.entryUidLink = ensureEntryUid(prevEntry);
+      document.querySelectorAll(".upgrade-list").forEach((upgradeList) => {
+        const validEntryUids = new Set(
+          Array.from(upgradeList.querySelectorAll(".upgrade-entry")).map((entry) => ensureEntryUid(entry))
+        );
+        upgradeList.querySelectorAll(".scenario-trauma").forEach((row) => {
+          renderTraumaRow(row);
+          if (!row.dataset.entryUidLink) {
+            const prevEntry = row.previousElementSibling;
+            if (prevEntry && prevEntry.classList.contains("upgrade-entry")) {
+              row.dataset.entryUidLink = ensureEntryUid(prevEntry);
+            }
           }
-        }
+          const linkedUid = String(row.dataset.entryUidLink || "").trim();
+          if (!linkedUid || !validEntryUids.has(linkedUid)) {
+            row.remove();
+          }
+        });
       });
     }
 
