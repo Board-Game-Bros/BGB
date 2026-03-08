@@ -748,8 +748,11 @@
       if (!entry) return "";
       const existing = String(entry.dataset.entryUid || "").trim();
       if (existing) return existing;
-      const next = "e" + entryUidCounter;
-      entryUidCounter += 1;
+      let next = "";
+      do {
+        next = "e" + entryUidCounter;
+        entryUidCounter += 1;
+      } while (document.querySelector(`.upgrade-entry[data-entry-uid="${next}"]`));
       entry.dataset.entryUid = next;
       return next;
     }
@@ -2680,25 +2683,78 @@
     }
 
     function normalizeScenarioTraumaRows() {
-      document.querySelectorAll(".upgrade-entry").forEach((entry) => {
-        ensureEntryUid(entry);
-      });
       document.querySelectorAll(".upgrade-list").forEach((upgradeList) => {
-        const validEntryUids = new Set(
-          Array.from(upgradeList.querySelectorAll(".upgrade-entry")).map((entry) => ensureEntryUid(entry))
-        );
-        upgradeList.querySelectorAll(".scenario-trauma").forEach((row) => {
-          renderTraumaRow(row);
-          if (!row.dataset.entryUidLink) {
-            const prevEntry = row.previousElementSibling;
-            if (prevEntry && prevEntry.classList.contains("upgrade-entry")) {
-              row.dataset.entryUidLink = ensureEntryUid(prevEntry);
+        const seenUids = new Set();
+        upgradeList.querySelectorAll(".upgrade-entry").forEach((entry) => {
+          let uid = String(entry.dataset.entryUid || "").trim();
+          if (!uid || seenUids.has(uid)) {
+            entry.removeAttribute("data-entry-uid");
+            uid = ensureEntryUid(entry);
+          }
+          seenUids.add(uid);
+        });
+
+        const entryTraumaMap = new Map();
+        let currentEntry = null;
+
+        Array.from(upgradeList.children).forEach((node) => {
+          if (!(node instanceof HTMLElement)) return;
+
+          if (node.classList.contains("upgrade-entry")) {
+            ensureEntryUid(node);
+            currentEntry = node;
+            return;
+          }
+
+          if (!node.classList.contains("scenario-trauma")) return;
+
+          renderTraumaRow(node);
+          if (!currentEntry) {
+            node.remove();
+            return;
+          }
+
+          const entryUid = ensureEntryUid(currentEntry);
+          if (entryTraumaMap.has(entryUid)) {
+            node.remove();
+            return;
+          }
+
+          const head = currentEntry.querySelector(".upgrade-entry-head");
+          const scenarioLabel = getScenarioLabelFromHead(head ? head.textContent : "");
+          node.dataset.entryUidLink = entryUid;
+          if (scenarioLabel) {
+            node.dataset.traumaLabel = `Trauma (Scenario ${scenarioLabel}):`;
+          }
+          renderTraumaRow(node);
+
+          if (node.previousElementSibling !== currentEntry) {
+            const anchor = currentEntry.nextSibling;
+            if (anchor) {
+              upgradeList.insertBefore(node, anchor);
+            } else {
+              upgradeList.appendChild(node);
             }
           }
-          const linkedUid = String(row.dataset.entryUidLink || "").trim();
-          if (!linkedUid || !validEntryUids.has(linkedUid)) {
-            row.remove();
+
+          entryTraumaMap.set(entryUid, node);
+        });
+
+        upgradeList.querySelectorAll(".upgrade-entry").forEach((entry) => {
+          const entryUid = ensureEntryUid(entry);
+          if (entryTraumaMap.has(entryUid)) return;
+          const head = entry.querySelector(".upgrade-entry-head");
+          const scenarioLabel = getScenarioLabelFromHead(head ? head.textContent : "");
+          if (!scenarioLabel) return;
+          const row = createScenarioTraumaRow(scenarioLabel);
+          row.dataset.entryUidLink = entryUid;
+          const anchor = entry.nextSibling;
+          if (anchor) {
+            upgradeList.insertBefore(row, anchor);
+          } else {
+            upgradeList.appendChild(row);
           }
+          entryTraumaMap.set(entryUid, row);
         });
       });
     }
