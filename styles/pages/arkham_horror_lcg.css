@@ -158,18 +158,11 @@ nav a,
 }
 
 .campaign-log-crossed {
-  position: relative;
   opacity: 0.78;
-}
-
-.campaign-log-crossed::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 52%;
-  border-top: 1.5px solid rgba(90, 68, 39, 0.78);
-  pointer-events: none;
+  text-decoration-line: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: rgba(90, 68, 39, 0.78);
+  text-decoration-skip-ink: none;
 }
 
 .upgrade-grid {
@@ -714,8 +707,8 @@ body.torch-mode .campaign-log-highlight {
   border-color: rgba(230, 194, 122, 0.62);
 }
 
-body.torch-mode .campaign-log-crossed::after {
-  border-top-color: rgba(230, 194, 122, 0.62);
+body.torch-mode .campaign-log-crossed {
+  text-decoration-color: rgba(230, 194, 122, 0.62);
 }
 
 body.torch-mode .scenario-log + .scenario-log {
