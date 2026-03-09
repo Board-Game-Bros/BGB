@@ -157,6 +157,21 @@ nav a,
   list-style-position: inside;
 }
 
+.campaign-log-crossed {
+  position: relative;
+  opacity: 0.78;
+}
+
+.campaign-log-crossed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 52%;
+  border-top: 1.5px solid rgba(90, 68, 39, 0.78);
+  pointer-events: none;
+}
+
 .upgrade-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -697,6 +712,10 @@ body.torch-mode .status-chip,
 body.torch-mode .campaign-log-highlight {
   background: linear-gradient(180deg, rgba(96, 72, 40, 0.9) 0%, rgba(76, 56, 30, 0.9) 100%);
   border-color: rgba(230, 194, 122, 0.62);
+}
+
+body.torch-mode .campaign-log-crossed::after {
+  border-top-color: rgba(230, 194, 122, 0.62);
 }
 
 body.torch-mode .scenario-log + .scenario-log {
