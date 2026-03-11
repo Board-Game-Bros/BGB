@@ -255,7 +255,13 @@
       "id": "draft-1773194584760",
       "sessionNo": 5,
       "date": "2026-03-10",
-      "menhirs": [],
+      "menhirs": [
+        {
+          "location": "",
+          "value": "",
+          "dial": ""
+        }
+      ],
       "tasks": [
         {
           "tag": "116",
