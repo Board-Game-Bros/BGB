@@ -1533,7 +1533,7 @@
       "slots": [
         {
           "label": "1",
-          "owned": false
+          "owned": true
         },
         {
           "label": "2",
