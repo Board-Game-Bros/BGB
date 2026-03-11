@@ -366,7 +366,7 @@
         },
         {
           "label": "9",
-          "owned": false
+          "owned": true
         }
       ]
     },
@@ -552,7 +552,7 @@
         },
         {
           "label": "7",
-          "owned": false
+          "owned": true
         },
         {
           "label": "8",
