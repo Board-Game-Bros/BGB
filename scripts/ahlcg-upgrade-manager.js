@@ -19,6 +19,9 @@
     const remoteSyncTokenStorageKey = typeof options.remoteSyncTokenStorageKey === "string" && options.remoteSyncTokenStorageKey.trim()
       ? options.remoteSyncTokenStorageKey.trim()
       : "bgb_github_sync_token_v1";
+    const localStateEnvelope = window.BGBLocalStateEnvelope && typeof window.BGBLocalStateEnvelope === "object"
+      ? window.BGBLocalStateEnvelope
+      : null;
 
     const cardCatalog = cardImageFiles.map((file) => ({
       file,
@@ -47,6 +50,7 @@
     let lastSyncedHtmlHash = "";
     let remoteSyncReady = false;
     let lastSavedStateRaw = "";
+    let sourceStateHashAtLoad = "";
     let entryUidCounter = 1;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
@@ -742,8 +746,11 @@
       if (!entry) return "";
       const existing = String(entry.dataset.entryUid || "").trim();
       if (existing) return existing;
-      const next = "e" + entryUidCounter;
-      entryUidCounter += 1;
+      let next = "";
+      do {
+        next = "e" + entryUidCounter;
+        entryUidCounter += 1;
+      } while (document.querySelector(`.upgrade-entry[data-entry-uid="${next}"]`));
       entry.dataset.entryUid = next;
       return next;
     }
@@ -1182,9 +1189,15 @@
       editUnlocked = false;
       stopInactivityTimer();
       clearUndo({ forceClearPending: true, skipSave: true });
-      document.querySelectorAll(".upgrade-entry-editor, .upgrade-entry-draft").forEach((node) => {
+      document.querySelectorAll(".upgrade-entry-editor").forEach((node) => {
         node.remove();
       });
+      document.querySelectorAll(".upgrade-entry-draft").forEach((draftEntry) => {
+        const linkedTrauma = findLinkedTraumaRow(draftEntry);
+        if (linkedTrauma) linkedTrauma.remove();
+        draftEntry.remove();
+      });
+      normalizeScenarioTraumaRows();
       document.querySelectorAll(".upgrade-entry").forEach((entry) => {
         ensureEntryActions(entry);
       });
@@ -2020,7 +2033,21 @@
     function saveUpgradeState() {
       try {
         const state = buildCurrentUpgradeState();
-        const nextRaw = JSON.stringify(state);
+        const envelope = localStateEnvelope && typeof localStateEnvelope.createEnvelope === "function"
+          ? localStateEnvelope.createEnvelope({
+            sourceHash: sourceStateHashAtLoad || "",
+            savedAt: Date.now(),
+            state,
+          })
+          : {
+            __bgbLocalStateEnvelope: 1,
+            version: 1,
+            sourceHash: sourceStateHashAtLoad || "",
+            savedAt: Date.now(),
+            meta: {},
+            state,
+          };
+        const nextRaw = JSON.stringify(envelope);
         if (nextRaw === lastSavedStateRaw) return;
         window.localStorage.setItem(storageKey, nextRaw);
         lastSavedStateRaw = nextRaw;
@@ -2049,8 +2076,52 @@
       try {
         const raw = window.localStorage.getItem(storageKey);
         if (!raw) return;
-        const state = JSON.parse(raw);
+        const parsedEnvelope = localStateEnvelope && typeof localStateEnvelope.parseEnvelope === "function"
+          ? localStateEnvelope.parseEnvelope(raw)
+          : null;
+        const parsedFallback = parsedEnvelope ? parsedEnvelope.parsed : JSON.parse(raw);
+        const parsed = parsedFallback && typeof parsedFallback === "object" ? parsedFallback : null;
+        if (!parsed) return;
+
+        const isNewEnvelope = !!(parsedEnvelope && parsedEnvelope.isEnvelope);
+        const isOldEnvelope = parsed.__bgbUpgradeStateEnvelope === 1
+          && parsed.state
+          && typeof parsed.state === "object";
+        const isEnvelope = isNewEnvelope || isOldEnvelope;
+        const state = isEnvelope
+          ? (isNewEnvelope ? parsedEnvelope.state : parsed.state)
+          : parsed;
         if (!state || typeof state !== "object") return;
+
+        const savedSourceHash = isNewEnvelope
+          ? String(parsedEnvelope.sourceHash || "")
+          : (isOldEnvelope && typeof parsed.sourceStateHash === "string" ? parsed.sourceStateHash : "");
+        const hasSourceMismatch = localStateEnvelope && typeof localStateEnvelope.isSourceHashMismatch === "function"
+          ? localStateEnvelope.isSourceHashMismatch(savedSourceHash, sourceStateHashAtLoad)
+          : (!!savedSourceHash && !!sourceStateHashAtLoad && savedSourceHash !== sourceStateHashAtLoad);
+
+        if (hasSourceMismatch) {
+          if (localStateEnvelope && typeof localStateEnvelope.backupAndClear === "function") {
+            localStateEnvelope.backupAndClear({ storageKey, rawValue: raw });
+          } else {
+            window.localStorage.setItem(storageKey + "__stale_backup_v1", raw);
+            window.localStorage.removeItem(storageKey);
+          }
+          return;
+        }
+
+        if (!isEnvelope && remoteSync && sourceStateHashAtLoad) {
+          const legacyStateHash = makeQuickHash(JSON.stringify(state));
+          if (legacyStateHash !== sourceStateHashAtLoad) {
+            if (localStateEnvelope && typeof localStateEnvelope.backupAndClear === "function") {
+              localStateEnvelope.backupAndClear({ storageKey, rawValue: raw });
+            } else {
+              window.localStorage.setItem(storageKey + "__stale_backup_v1", raw);
+              window.localStorage.removeItem(storageKey);
+            }
+            return;
+          }
+        }
 
         document.querySelectorAll(".upgrade-card").forEach((card) => {
           const name = getCardOwnerName(card);
@@ -2060,7 +2131,21 @@
             upgradeList.innerHTML = state[name];
           }
         });
-        lastSavedStateRaw = JSON.stringify(state);
+        const restoredEnvelope = localStateEnvelope && typeof localStateEnvelope.createEnvelope === "function"
+          ? localStateEnvelope.createEnvelope({
+            sourceHash: sourceStateHashAtLoad || "",
+            savedAt: Number(isOldEnvelope ? parsed.updatedAt : (isNewEnvelope ? parsedEnvelope.savedAt : Date.now())) || Date.now(),
+            state,
+          })
+          : {
+            __bgbLocalStateEnvelope: 1,
+            version: 1,
+            sourceHash: sourceStateHashAtLoad || "",
+            savedAt: Date.now(),
+            meta: {},
+            state,
+          };
+        lastSavedStateRaw = JSON.stringify(restoredEnvelope);
       } catch (_error) {
         // Ignore malformed storage.
       }
@@ -2592,17 +2677,79 @@
     }
 
     function normalizeScenarioTraumaRows() {
-      document.querySelectorAll(".upgrade-entry").forEach((entry) => {
-        ensureEntryUid(entry);
-      });
-      document.querySelectorAll(".scenario-trauma").forEach((row) => {
-        renderTraumaRow(row);
-        if (!row.dataset.entryUidLink) {
-          const prevEntry = row.previousElementSibling;
-          if (prevEntry && prevEntry.classList.contains("upgrade-entry")) {
-            row.dataset.entryUidLink = ensureEntryUid(prevEntry);
+      document.querySelectorAll(".upgrade-list").forEach((upgradeList) => {
+        const seenUids = new Set();
+        upgradeList.querySelectorAll(".upgrade-entry").forEach((entry) => {
+          let uid = String(entry.dataset.entryUid || "").trim();
+          if (!uid || seenUids.has(uid)) {
+            entry.removeAttribute("data-entry-uid");
+            uid = ensureEntryUid(entry);
           }
-        }
+          seenUids.add(uid);
+        });
+
+        const entryTraumaMap = new Map();
+        let currentEntry = null;
+
+        Array.from(upgradeList.children).forEach((node) => {
+          if (!(node instanceof HTMLElement)) return;
+
+          if (node.classList.contains("upgrade-entry")) {
+            ensureEntryUid(node);
+            currentEntry = node;
+            return;
+          }
+
+          if (!node.classList.contains("scenario-trauma")) return;
+
+          renderTraumaRow(node);
+          if (!currentEntry) {
+            node.remove();
+            return;
+          }
+
+          const entryUid = ensureEntryUid(currentEntry);
+          if (entryTraumaMap.has(entryUid)) {
+            node.remove();
+            return;
+          }
+
+          const head = currentEntry.querySelector(".upgrade-entry-head");
+          const scenarioLabel = getScenarioLabelFromHead(head ? head.textContent : "");
+          node.dataset.entryUidLink = entryUid;
+          if (scenarioLabel) {
+            node.dataset.traumaLabel = `Trauma (Scenario ${scenarioLabel}):`;
+          }
+          renderTraumaRow(node);
+
+          if (node.previousElementSibling !== currentEntry) {
+            const anchor = currentEntry.nextSibling;
+            if (anchor) {
+              upgradeList.insertBefore(node, anchor);
+            } else {
+              upgradeList.appendChild(node);
+            }
+          }
+
+          entryTraumaMap.set(entryUid, node);
+        });
+
+        upgradeList.querySelectorAll(".upgrade-entry").forEach((entry) => {
+          const entryUid = ensureEntryUid(entry);
+          if (entryTraumaMap.has(entryUid)) return;
+          const head = entry.querySelector(".upgrade-entry-head");
+          const scenarioLabel = getScenarioLabelFromHead(head ? head.textContent : "");
+          if (!scenarioLabel) return;
+          const row = createScenarioTraumaRow(scenarioLabel);
+          row.dataset.entryUidLink = entryUid;
+          const anchor = entry.nextSibling;
+          if (anchor) {
+            upgradeList.insertBefore(row, anchor);
+          } else {
+            upgradeList.appendChild(row);
+          }
+          entryTraumaMap.set(entryUid, row);
+        });
       });
     }
 
@@ -2661,6 +2808,11 @@
       applyAdaptivePreviewSize();
     }, { passive: true });
 
+    try {
+      sourceStateHashAtLoad = makeQuickHash(JSON.stringify(buildCurrentUpgradeState()));
+    } catch (_error) {
+      sourceStateHashAtLoad = "";
+    }
     restoreUpgradeState();
     normalizeExistingCardNames();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
@@ -2688,7 +2840,21 @@
     }
     watchUpgradeChanges();
     try {
-      lastSavedStateRaw = JSON.stringify(buildCurrentUpgradeState());
+      const currentEnvelope = localStateEnvelope && typeof localStateEnvelope.createEnvelope === "function"
+        ? localStateEnvelope.createEnvelope({
+          sourceHash: sourceStateHashAtLoad || "",
+          savedAt: Date.now(),
+          state: buildCurrentUpgradeState(),
+        })
+        : {
+          __bgbLocalStateEnvelope: 1,
+          version: 1,
+          sourceHash: sourceStateHashAtLoad || "",
+          savedAt: Date.now(),
+          meta: {},
+          state: buildCurrentUpgradeState(),
+        };
+      lastSavedStateRaw = JSON.stringify(currentEnvelope);
     } catch (_error) {
       // Ignore serialization failures.
     }

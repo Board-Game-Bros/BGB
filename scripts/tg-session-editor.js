@@ -11,6 +11,10 @@
 
   const draftKey = "bgb_tg_foa_sessions_draft_v4";
   const legacyDraftKey = "bgb_tg_foa_sessions_draft_v3";
+  const staleDraftBackupKey = `${draftKey}__stale_backup_v1`;
+  const localStateEnvelope = window.BGBLocalStateEnvelope && typeof window.BGBLocalStateEnvelope === "object"
+    ? window.BGBLocalStateEnvelope
+    : null;
   const useLocalDraft = true;
   const tokenKey = "bgb_github_sync_token_v1";
 
@@ -25,6 +29,7 @@
   let syncInFlight = false;
   let syncQueued = false;
   let lastSyncedHash = "";
+  let sourcePersistHashAtLoad = "";
 
   function buildDefaultStatuses() {
     const make = (name, size, numbered, note) => ({
@@ -399,6 +404,19 @@
     try {
       const raw = localStorage.getItem(draftKey);
       if (raw) {
+        const parsedEnvelope = localStateEnvelope && typeof localStateEnvelope.parseEnvelope === "function"
+          ? localStateEnvelope.parseEnvelope(raw)
+          : null;
+        if (parsedEnvelope && parsedEnvelope.isEnvelope) {
+          return {
+            state: sanitizeData(parsedEnvelope.state),
+            meta: {
+              dirty: !!parsedEnvelope.meta.dirty,
+              persistHash: String(parsedEnvelope.meta.persistHash || ""),
+              sourcePersistHash: String(parsedEnvelope.sourceHash || ""),
+            },
+          };
+        }
         const parsed = JSON.parse(raw);
         if (parsed && parsed.state && parsed.meta && typeof parsed.meta === "object") {
           return {
@@ -406,6 +424,7 @@
             meta: {
               dirty: !!parsed.meta.dirty,
               persistHash: String(parsed.meta.persistHash || ""),
+              sourcePersistHash: String(parsed.meta.sourcePersistHash || ""),
             },
           };
         }
@@ -424,6 +443,7 @@
         meta: {
           dirty: true,
           persistHash: "",
+          sourcePersistHash: "",
         },
       };
       try {
@@ -1155,12 +1175,26 @@
     const dirty = typeof opts.forceDirty === "boolean"
       ? opts.forceDirty
       : (!!safeState.draftSession || !lastSyncedHash || persistHash !== lastSyncedHash);
+    if (localStateEnvelope && typeof localStateEnvelope.createEnvelope === "function") {
+      return localStateEnvelope.createEnvelope({
+        version: 1,
+        sourceHash: sourcePersistHashAtLoad || "",
+        savedAt: Date.now(),
+        meta: {
+          dirty,
+          persistHash,
+        },
+        state: safeState,
+      });
+    }
     return {
+      __bgbLocalStateEnvelope: 1,
       version: 1,
+      sourceHash: sourcePersistHashAtLoad || "",
+      savedAt: Date.now(),
       meta: {
         dirty,
         persistHash,
-        savedAt: Date.now(),
       },
       state: safeState,
     };
@@ -1179,6 +1213,25 @@
       } else {
         writeDraftEnvelope({ forceDirty: false });
       }
+    } catch (_error) {
+      // Ignore.
+    }
+  }
+
+  function backupAndClearStaleDraft() {
+    if (!useLocalDraft) return;
+    try {
+      if (localStateEnvelope && typeof localStateEnvelope.backupAndClear === "function") {
+        localStateEnvelope.backupAndClear({
+          storageKey: draftKey,
+          backupSuffix: "__stale_backup_v1",
+        });
+      } else {
+        const raw = localStorage.getItem(draftKey);
+        if (raw) localStorage.setItem(staleDraftBackupKey, raw);
+        localStorage.removeItem(draftKey);
+      }
+      clearLegacyDraft();
     } catch (_error) {
       // Ignore.
     }
@@ -1450,14 +1503,24 @@
       remoteData = sanitizeData(remoteData);
     }
 
+    const remoteHash = getPersistableHash({
+      campaign: deepClone(remoteData.campaign),
+      sessions: deepClone(remoteData.sessions),
+      statuses: deepClone(remoteData.statuses),
+    });
+    sourcePersistHashAtLoad = remoteHash;
+
     const localDraft = loadDraft();
     let restoredLocal = false;
     if (localDraft && localDraft.state) {
-      const remoteHash = getPersistableHash({
-        campaign: deepClone(remoteData.campaign),
-        sessions: deepClone(remoteData.sessions),
-        statuses: deepClone(remoteData.statuses),
-      });
+      const savedSourceHash = String((localDraft.meta && localDraft.meta.sourcePersistHash) || "");
+      const hasSourceMismatch = localStateEnvelope && typeof localStateEnvelope.isSourceHashMismatch === "function"
+        ? localStateEnvelope.isSourceHashMismatch(savedSourceHash, remoteHash)
+        : (!!savedSourceHash && savedSourceHash !== remoteHash);
+      if (hasSourceMismatch) {
+        backupAndClearStaleDraft();
+        state = remoteData;
+      } else {
       const localHash = getPersistableHash({
         campaign: deepClone(localDraft.state.campaign || {}),
         sessions: deepClone(localDraft.state.sessions || []),
@@ -1465,13 +1528,14 @@
       });
       const hasDraftSession = !!localDraft.state.draftSession;
       const isDirty = !!(localDraft.meta && localDraft.meta.dirty);
-      if (isDirty && (hasDraftSession || localHash !== remoteHash)) {
-        state = mergePersistablePayload(remoteData, localDraft.state, {
-          preferLocalForExistingSessions: false,
-        });
-        restoredLocal = true;
-      } else {
-        state = remoteData;
+        if (isDirty && (hasDraftSession || localHash !== remoteHash)) {
+          state = mergePersistablePayload(remoteData, localDraft.state, {
+            preferLocalForExistingSessions: false,
+          });
+          restoredLocal = true;
+        } else {
+          state = remoteData;
+        }
       }
     } else {
       state = remoteData;

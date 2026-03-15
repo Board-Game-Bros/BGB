@@ -186,7 +186,7 @@
         {
           "location": "",
           "value": "151",
-          "dial": "2"
+          "dial": "3"
         }
       ],
       "tasks": [
@@ -249,6 +249,90 @@
         "法埃尔：原大骑士加拉哈德（叛逃）",
         "与妮安特的对话得知天母教（目前未知）",
         "盘根树林知识第1部分未知（待探索）"
+      ]
+    },
+    {
+      "id": "draft-1773194584760",
+      "sessionNo": 5,
+      "date": "2026-03-10",
+      "menhirs": [
+        {
+          "location": "",
+          "value": "111",
+          "dial": "2"
+        },
+        {
+          "location": "",
+          "value": "106",
+          "dial": "5"
+        },
+        {
+          "location": "",
+          "value": "118",
+          "dial": "2"
+        }
+      ],
+      "tasks": [
+        {
+          "tag": "116",
+          "text": "前往南部平原调查那里发生了什么"
+        },
+        {
+          "tag": "115",
+          "text": "找到失踪的隐士"
+        },
+        {
+          "tag": "119",
+          "text": "调查大船的秘密（后期）"
+        },
+        {
+          "tag": "112",
+          "text": "让卡梅洛（190）的人阻止仪式，或者前往月环阵（133）调查德鲁伊的阴谋"
+        },
+        {
+          "tag": "149",
+          "text": "去蛆林（108）找到螺旋指环"
+        },
+        {
+          "tag": "154",
+          "text": "找到让两个圆桌骑士开口的办法"
+        },
+        {
+          "tag": "140",
+          "text": "调查修道院（后期）"
+        },
+        {
+          "tag": "153",
+          "text": "将真圣杯带到图瓦坦（线索：找到欧林->去远郡->穿过神圣平原->找到小屋）目前小队在奔涌平原"
+        },
+        {
+          "tag": "133",
+          "text": "阿莫金的任务：秘密牌65任务计数达到5，回来找阿莫金"
+        },
+        {
+          "tag": "133",
+          "text": "选择一名候选人（铁匠/僧侣），可以前往库瓦赫石塔（136）或者白化村（107）询问他们的事迹来做决定"
+        }
+      ],
+      "locationChanges": [
+        {
+          "from": "108",
+          "to": "110"
+        },
+        {
+          "from": "136",
+          "to": "149"
+        },
+        {
+          "from": "138",
+          "to": "142"
+        }
+      ],
+      "notes": [
+        "法埃尔：原大骑士加拉哈德（叛逃）",
+        "与妮安特的对话得知天母教（目前未知）",
+        "盘根树林知识第1部分未知（待探索）",
+        "奔涌平原有马戈特的final lesson status"
       ]
     }
   ],
@@ -315,7 +399,7 @@
         },
         {
           "label": "4",
-          "owned": false
+          "owned": true
         },
         {
           "label": "5",
@@ -335,7 +419,7 @@
         },
         {
           "label": "9",
-          "owned": false
+          "owned": true
         }
       ]
     },
@@ -385,23 +469,23 @@
       "slots": [
         {
           "label": "1",
-          "owned": false
+          "owned": true
         },
         {
           "label": "2",
-          "owned": false
+          "owned": true
         },
         {
           "label": "3",
-          "owned": false
+          "owned": true
         },
         {
           "label": "4",
-          "owned": false
+          "owned": true
         },
         {
           "label": "5",
-          "owned": false
+          "owned": true
         }
       ]
     },
@@ -505,7 +589,7 @@
         },
         {
           "label": "3",
-          "owned": false
+          "owned": true
         },
         {
           "label": "4",
@@ -521,7 +605,7 @@
         },
         {
           "label": "7",
-          "owned": false
+          "owned": true
         },
         {
           "label": "8",
@@ -815,7 +899,7 @@
         },
         {
           "label": "2",
-          "owned": false
+          "owned": true
         }
       ]
     },
@@ -1453,7 +1537,7 @@
         },
         {
           "label": "2",
-          "owned": false
+          "owned": true
         },
         {
           "label": "3",
@@ -1461,7 +1545,7 @@
         },
         {
           "label": "4",
-          "owned": false
+          "owned": true
         },
         {
           "label": "5",
@@ -1533,7 +1617,7 @@
       "slots": [
         {
           "label": "1",
-          "owned": false
+          "owned": true
         },
         {
           "label": "2",
@@ -1617,7 +1701,7 @@
       "slots": [
         {
           "label": "1",
-          "owned": false
+          "owned": true
         },
         {
           "label": "2",
