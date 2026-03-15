@@ -19,7 +19,6 @@
     const remoteSyncTokenStorageKey = typeof options.remoteSyncTokenStorageKey === "string" && options.remoteSyncTokenStorageKey.trim()
       ? options.remoteSyncTokenStorageKey.trim()
       : "bgb_github_sync_token_v1";
-    const remoteSyncDebounceMs = Number(options.remoteSyncDebounceMs) > 0 ? Number(options.remoteSyncDebounceMs) : 2800;
 
     const cardCatalog = cardImageFiles.map((file) => ({
       file,
@@ -43,7 +42,6 @@
     let editGateStatus = null;
     let remoteSyncButton = null;
     let remoteSyncStatus = null;
-    let remoteSyncTimer = null;
     let remoteSyncInFlight = false;
     let remoteSyncQueued = false;
     let lastSyncedHtmlHash = "";
@@ -1268,8 +1266,12 @@
         getEditUnlocked: () => isEditEnabled(),
         getSyncConnected: () => !!getRemoteSyncToken(),
         onEditToggle: (currentlyUnlocked) => {
-          if (currentlyUnlocked) lockEditMode();
-          else tryUnlockEditMode();
+          if (currentlyUnlocked) {
+            lockEditMode();
+            void runRemoteSyncNow();
+          } else {
+            tryUnlockEditMode();
+          }
         },
         onSyncClick: () => {
           handleRemoteSyncButtonClick();
@@ -1869,17 +1871,19 @@
     }
 
     async function seedRemoteSyncBaseline() {
-      if (!remoteSync) return;
+      if (!remoteSync) return false;
       const token = getRemoteSyncToken();
-      if (!token) return;
+      if (!token) return false;
       try {
         const fileMeta = await requestGitHubFileMeta(token);
         if (fileMeta && typeof fileMeta.hash === "string") {
           lastSyncedHtmlHash = fileMeta.hash;
+          return true;
         }
       } catch (_error) {
         // Keep existing baseline when remote metadata cannot be read.
       }
+      return false;
     }
 
     async function pushHtmlToGitHub(state) {
@@ -1944,9 +1948,19 @@
         remoteSyncQueued = true;
         return;
       }
+      if (!getRemoteSyncToken()) {
+        refreshRemoteSyncUi("Host token missing");
+        return;
+      }
       remoteSyncInFlight = true;
       refreshRemoteSyncUi("Syncing HTML to Host...");
       try {
+        if (!lastSyncedHtmlHash) {
+          const seeded = await seedRemoteSyncBaseline();
+          if (!seeded) {
+            throw new Error("Host baseline unavailable. Reconnect sync and retry.");
+          }
+        }
         const state = buildCurrentUpgradeState();
         const result = await pushHtmlToGitHub(state);
         if (result && result.status === "no_change") {
@@ -1969,23 +1983,6 @@
           }, 300);
         }
       }
-    }
-
-    function scheduleRemoteSync() {
-      if (!remoteSync) return;
-      if (!remoteSyncReady) return;
-      if (requireEditPassword && !isEditEnabled()) return;
-      if (!getRemoteSyncToken()) {
-        refreshRemoteSyncUi();
-        return;
-      }
-      if (remoteSyncTimer) {
-        window.clearTimeout(remoteSyncTimer);
-      }
-      remoteSyncTimer = window.setTimeout(() => {
-        remoteSyncTimer = null;
-        void runRemoteSyncNow();
-      }, remoteSyncDebounceMs);
     }
 
     function handleRemoteSyncButtonClick() {
@@ -2013,10 +2010,8 @@
       setRemoteSyncToken(nextToken);
       lastSyncedHtmlHash = "";
       if (nextToken) {
-        refreshRemoteSyncUi("Host connected. Pending first sync...");
-        void seedRemoteSyncBaseline().finally(() => {
-          scheduleRemoteSync();
-        });
+        refreshRemoteSyncUi("Host connected. Lock Edit or click Sync to upload.");
+        void seedRemoteSyncBaseline();
       } else {
         refreshRemoteSyncUi("Host sync disconnected");
       }
@@ -2029,7 +2024,6 @@
         if (nextRaw === lastSavedStateRaw) return;
         window.localStorage.setItem(storageKey, nextRaw);
         lastSavedStateRaw = nextRaw;
-        scheduleRemoteSync();
       } catch (_error) {
         // Ignore storage failures.
       }

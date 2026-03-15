@@ -24,7 +24,6 @@
   let editUnlocked = !requireEditPassword;
   let syncInFlight = false;
   let syncQueued = false;
-  let syncTimer = null;
   let lastSyncedHash = "";
 
   function buildDefaultStatuses() {
@@ -335,19 +334,6 @@
     setSyncStatus(`Host sync ready (${getSyncConfigLabel()})`);
   }
 
-  function scheduleSync() {
-    if (!syncConfig) return;
-    if (!getToken()) {
-      refreshSyncUi();
-      return;
-    }
-    if (syncTimer) window.clearTimeout(syncTimer);
-    syncTimer = window.setTimeout(() => {
-      syncTimer = null;
-      void syncNow();
-    }, 2800);
-  }
-
   function openSyncPrompt() {
     if (!syncConfig) {
       refreshSyncUi("Host sync config invalid");
@@ -372,8 +358,7 @@
       statuses: deepClone(state.statuses),
     });
     if (nextToken) {
-      refreshSyncUi("Host connected. Pending first sync...");
-      scheduleSync();
+      refreshSyncUi("Host connected. Lock Edit or click Sync to upload.");
     } else {
       refreshSyncUi("Host sync disconnected");
     }
@@ -407,7 +392,6 @@
         setPageStatus("本地草稿保存失败");
       }
     }
-    scheduleSync();
   }
 
   function loadDraft() {
@@ -1361,14 +1345,19 @@
       getEditUnlocked: () => isEditUnlocked(),
       getSyncConnected: () => !!getToken(),
       onEditToggle: (currentlyUnlocked) => {
+        let autoSyncAfterRender = false;
         if (currentlyUnlocked) {
           setEditUnlocked(false);
           editingSessionId = "";
+          autoSyncAfterRender = true;
         } else {
           if (!tryUnlockEdit()) return false;
           setEditUnlocked(true);
         }
         render();
+        if (autoSyncAfterRender) {
+          void syncNow();
+        }
         return false;
       },
       onSyncClick: () => {
