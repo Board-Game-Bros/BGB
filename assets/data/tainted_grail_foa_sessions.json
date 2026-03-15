@@ -1073,7 +1073,7 @@
       "slots": [
         {
           "label": "1",
-          "owned": true
+          "owned": false
         },
         {
           "label": "2",
