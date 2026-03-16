@@ -115,7 +115,11 @@ nav a,
   border-radius: 8px;
   border: 1px solid rgba(58, 45, 26, 0.45);
   background: linear-gradient(180deg, rgba(236, 213, 170, 0.82) 0%, rgba(216, 185, 133, 0.78) 100%);
-  font-size: 0.9rem;
+  font-size: 1.08rem;
+  color: #8f111b;
+  text-shadow:
+    0 1px 0 rgba(255, 234, 214, 0.28),
+    0 0 8px rgba(120, 10, 20, 0.18);
 }
 
 .story-note {
@@ -766,6 +770,13 @@ body.torch-mode .scenario-log h3 {
   text-shadow:
     0 0 6px rgba(255, 112, 120, 0.55),
     0 0 16px rgba(196, 28, 46, 0.4);
+}
+
+body.torch-mode .meta-item {
+  color: #ff7b84;
+  text-shadow:
+    0 0 5px rgba(255, 122, 132, 0.55),
+    0 0 12px rgba(196, 28, 46, 0.34);
 }
 
 @media (max-width: 720px) {
