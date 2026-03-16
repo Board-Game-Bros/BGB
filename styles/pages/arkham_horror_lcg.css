@@ -115,6 +115,10 @@ nav a,
   border-radius: 8px;
   border: 1px solid rgba(58, 45, 26, 0.45);
   background: linear-gradient(180deg, rgba(236, 213, 170, 0.82) 0%, rgba(216, 185, 133, 0.78) 100%);
+  font-size: 0.9rem;
+}
+
+#story-notes .record-card > .record-meta .meta-item {
   font-size: 1.08rem;
   color: #8f111b;
   text-shadow:
@@ -772,7 +776,7 @@ body.torch-mode .scenario-log h3 {
     0 0 16px rgba(196, 28, 46, 0.4);
 }
 
-body.torch-mode .meta-item {
+body.torch-mode #story-notes .record-card > .record-meta .meta-item {
   color: #ff7b84;
   text-shadow:
     0 0 5px rgba(255, 122, 132, 0.55),
