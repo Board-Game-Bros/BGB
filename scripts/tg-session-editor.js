@@ -116,6 +116,85 @@
   }
 
   const defaultStatuses = buildDefaultStatuses();
+  const statusZhMap = {
+    "Allies of Avalon": "阿瓦隆之友",
+    "Black Cauldron": "神锅",
+    "Burning Mystery": "奥秘",
+    "Call from Beyond": "遥远的呼唤",
+    "Charred Knowledge": "烧焦的知识",
+    "Cherished Belongings": "珍重之物",
+    "Cold Pyre": "寒焰余烬",
+    Cosuil: "科绥尔",
+    "Deal Breaker": "毁约",
+    "Deep Secret": "深层秘密",
+    Diplomat: "外交官",
+    "Diplomatic Mission": "外交任务",
+    "Disturbing Information": "扰人的消息",
+    "Dreams and Prophecies": "梦境与预言",
+    "End of the Road": "旅途的终点",
+    "Enemies of Avalon": "阿瓦隆之敌",
+    Escalation: "提升",
+    "Fael's Legacy": "法埃尔的遗产",
+    "Fall of Chivalry": "骑士的陨落",
+    "Farpoint Clues": "海崖的线索",
+    "Fate of the Expedition": "远征的命运",
+    "Final Confrontations": "最后的冲突",
+    "Final Lesson": "最后一课",
+    "Fortunate Meetings": "幸运的会面",
+    "General Directions": "大致方向",
+    "Gerraint's Successor": "杰兰特的继任者",
+    "Glen Ritual": "峡谷的仪式",
+    "Guest of Honor": "贵宾",
+    "Halfway Intrigue": "半路阴谋",
+    "Helping Hand": "帮手",
+    "Helping the Knights": "帮助骑士",
+    "Hidden Treasures": "秘宝",
+    "Hunter's Mark": "猎人的印记",
+    "Lady's Task": "女士的任务",
+    "Last Haven": "最后的避难所",
+    "Left Behind": "遗留",
+    "Lost and Fallen": "迷失与陨落",
+    "Maggot's Redemption": "蛆虫的救赎",
+    Matricide: "弑母",
+    "Monastery Discovered": "发现修道院",
+    "Moonring Mission": "月环任务",
+    "Morgaine's Task": "莫盖恩的任务",
+    "Mourning Song": "哀悼曲",
+    "Mystery Solved": "真案",
+    Pathfinder: "探路者",
+    "Peace in Borough": "城区安宁",
+    "People's Champion": "人民英雄",
+    Pillager: "掠夺者",
+    Reclamation: "收回",
+    Redemption: "救赎",
+    Remedy: "解药",
+    Remnants: "残余",
+    "Restoring the Order": "重建骑士团",
+    "Riddle of the Oldsteel": "古钢的谜题",
+    "Saved by the Goddess": "天母的拯救",
+    Scrounger: "拾荒者",
+    "Secrets of the Forest": "森林的秘密",
+    "Shelter in the Storm": "暴风避难",
+    "Shrine Secure": "圣殿的安危",
+    "Something is Watching": "某物在观察",
+    "Stonemason's Secret": "石匠的秘密",
+    "Strange Encounters": "怪异的遭遇",
+    "Supplying the Revolt": "支援叛乱",
+    "Tangleroot Knowledge": "盘根树林知识",
+    Tracker: "追踪者",
+    Traveler: "旅者",
+    "Traveling Menhir": "旅行的巨神柱",
+    "Tuathan Exploration": "图瓦坦探索",
+    Underfern: "蕨海洞穴",
+    "War for Avalon": "阿瓦隆战争",
+    "Winds of Wyrdness": "诡异之风",
+  };
+  const statusNoteZhMap = {
+    "When you have any six parts of this status, go to BoS, Verse 525.": "当你获得该状态任意 6 个部分时，前往 BoS 第 525 段。",
+    "When you have parts 1-8 of this status, go to BoS, Verse 405.": "当你获得该状态第 1-8 部分时，前往 BoS 第 405 段。",
+    "When you have any six parts of this status, go to BoS, Verse 512.": "当你获得该状态任意 6 个部分时，前往 BoS 第 512 段。",
+    "When you have all four parts of this status, resolve Special Event C.": "当你获得该状态全部 4 个部分时，结算特殊事件 C。",
+  };
 
   function sanitizeStatusRows(rawRows) {
     const defaults = deepClone(defaultStatuses);
@@ -970,7 +1049,7 @@
 
   function renderStatusBoard() {
     const block = el("div", "tg-block tg-status-board");
-    block.appendChild(el("div", "tg-title", "Statuses"));
+    block.appendChild(el("div", "tg-title", "状态"));
 
     const rows = sanitizeStatusRows(state.statuses);
     state.statuses = rows;
@@ -985,7 +1064,8 @@
         const rowIndex = offset + localIndex;
         const line = el("div", "tg-status-row");
         const main = el("div", "tg-status-row-main");
-        main.appendChild(el("span", "tg-status-name", row.name || ""));
+        const statusName = String(row.name || "");
+        main.appendChild(el("span", "tg-status-name", statusZhMap[statusName] || statusName));
         const slotsWrap = el("div", "tg-status-slots");
         (row.slots || []).forEach((slot, slotIndex) => {
           const slotButton = document.createElement("button");
@@ -1002,7 +1082,8 @@
         main.appendChild(slotsWrap);
         line.appendChild(main);
         if (row.note) {
-          line.appendChild(el("div", "tg-status-note", row.note));
+          const statusNote = String(row.note || "");
+          line.appendChild(el("div", "tg-status-note", statusNoteZhMap[statusNote] || statusNote));
         }
         col.appendChild(line);
       });
