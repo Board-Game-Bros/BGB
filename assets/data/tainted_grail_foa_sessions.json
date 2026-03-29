@@ -334,6 +334,33 @@
         "盘根树林知识第1部分未知（待探索）",
         "奔涌平原有马戈特的final lesson status"
       ]
+    },
+    {
+      "id": "draft-1774812609430",
+      "sessionNo": 6,
+      "date": "2026-03-29",
+      "menhirs": [],
+      "tasks": [],
+      "locationChanges": [
+        {
+          "from": "108",
+          "to": "110"
+        },
+        {
+          "from": "136",
+          "to": "149"
+        },
+        {
+          "from": "138",
+          "to": "142"
+        }
+      ],
+      "notes": [
+        "法埃尔：原大骑士加拉哈德（叛逃）",
+        "与妮安特的对话得知天母教（目前未知）",
+        "盘根树林知识第1部分未知（待探索）",
+        "奔涌平原有马戈特的final lesson status"
+      ]
     }
   ],
   "statuses": [
@@ -387,7 +414,7 @@
       "slots": [
         {
           "label": "1",
-          "owned": false
+          "owned": true
         },
         {
           "label": "2",
@@ -495,7 +522,7 @@
       "slots": [
         {
           "label": "",
-          "owned": false
+          "owned": true
         }
       ]
     },
