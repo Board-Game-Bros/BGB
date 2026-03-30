@@ -557,7 +557,7 @@
       sessionNo: getNextSessionNo(),
       date: todayIso(),
       menhirs: [],
-      tasks: [],
+      tasks: latest ? deepClone(latest.tasks || []) : [],
       locationChanges: latest ? deepClone(latest.locationChanges || []) : [],
       notes: latest ? deepClone(latest.notes || []) : [],
     };
