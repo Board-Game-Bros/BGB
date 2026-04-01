@@ -1,0 +1,136 @@
+{
+  "pageTitle": "Game Collection",
+  "categories": [
+    {
+      "title": "Currently Active",
+      "items": [
+        {
+          "href": "/arkham_horror_lcg/",
+          "imageSrc": "/assets/boardgames/arkham_horror_lcg.png",
+          "imageAlt": "Arkham Horror LCG Cover",
+          "title": "Arkham Horror: The Card Game",
+          "moreInfoHref": "https://www.fantasyflightgames.com/en/products/arkham-horror-the-card-game/"
+        },
+        {
+          "href": "/tainted_grail_foa/",
+          "imageSrc": "/assets/boardgames/tainted_grail_foa.png",
+          "imageAlt": "Tainted Grail: the Fall of Avalon Cover",
+          "title": "Tainted Grail: The Fall of Avalon",
+          "moreInfoHref": "https://awakenrealms.com/games/awaken-realms/tainted-grail"
+        }
+      ]
+    },
+    {
+      "title": "Cooperative",
+      "items": [
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/gloomhaven.png",
+          "imageAlt": "Gloomhaven Cover",
+          "title": "Gloomhaven",
+          "moreInfoHref": "https://cephalofair.com/collections/gloomhaven"
+        }
+      ]
+    },
+    {
+      "title": "Euro-Strategy",
+      "items": [
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/wingspan.png",
+          "imageAlt": "Wingspan Cover",
+          "title": "Wingspan",
+          "moreInfoHref": "https://stonemaiergames.com/games/wingspan"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/terraforming_mars.png",
+          "imageAlt": "Terraforming Mars Cover",
+          "title": "Terraforming Mars",
+          "moreInfoHref": "https://fryxgames.se/product/terraforming-mars"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/terra_mystica.png",
+          "imageAlt": "Terra Mystica Cover",
+          "title": "Terra Mystica",
+          "moreInfoHref": "https://capstone-games.com/products/terra-mystica"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/power_grid.png",
+          "imageAlt": "Power Grid Cover",
+          "title": "Power Grid",
+          "moreInfoHref": "https://www.riograndegames.com/games/power-grid-recharged"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/nucleum.png",
+          "imageAlt": "Nucleum Cover",
+          "title": "Nucleum",
+          "moreInfoHref": "https://boardanddice.com/product/nucleum"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/great_western_trail.png",
+          "imageAlt": "Great Western Trail Cover",
+          "title": "Great Western Trail",
+          "moreInfoHref": "https://store.asmodee.com/products/great-western-trail"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/dune_imperium.png",
+          "imageAlt": "Dune: Imperium Cover",
+          "title": "Dune: Imperium",
+          "moreInfoHref": "https://www.direwolfdigital.com/dune-imperium"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/concordia.png",
+          "imageAlt": "Concordia Cover",
+          "title": "Concordia",
+          "moreInfoHref": "https://www.riograndegames.com/games/concordia"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/caverna.png",
+          "imageAlt": "Caverna Cover",
+          "title": "Caverna",
+          "moreInfoHref": "https://www.lookout-spiele.de/en/games/caverna.html"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/agricola.png",
+          "imageAlt": "Agricola Cover",
+          "title": "Agricola",
+          "moreInfoHref": "https://www.lookout-spiele.de/en/games/agricolare.html"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/a_feast_for_odin.png",
+          "imageAlt": "A Feast for Odin Cover",
+          "title": "A Feast for Odin",
+          "moreInfoHref": "https://store.asmodee.com/products/a-feast-for-odin"
+        }
+      ]
+    },
+    {
+      "title": "TTRPG",
+      "items": [
+        {
+          "placeholder": true,
+          "text": "Add game covers here"
+        }
+      ]
+    },
+    {
+      "title": "Party",
+      "items": [
+        {
+          "placeholder": true,
+          "text": "Add game covers here"
+        }
+      ]
+    }
+  ]
+}

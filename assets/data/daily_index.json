@@ -1,0 +1,11 @@
+{
+  "title": "BGB - Weekly Events",
+  "heading": "Event Photos",
+  "layout": "photo-grid",
+  "items": [
+    {
+      "imageSrc": "/assets/daily/photo1.jpg",
+      "imageAlt": "Event Photo 1"
+    }
+  ]
+}

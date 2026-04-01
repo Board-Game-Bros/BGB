@@ -4,7 +4,12 @@
   if (!root) return;
 
   const dataSource = String(root.getAttribute("data-source") || "/assets/data/tainted_grail_foa_sessions.json");
-  const syncConfig = normalizeSyncConfig(window.TG_FOA_SYNC || {});
+  const githubSync = window.BGBGitHubSync && typeof window.BGBGitHubSync === "object"
+    ? window.BGBGitHubSync
+    : null;
+  const syncConfig = githubSync && typeof githubSync.normalizeConfig === "function"
+    ? githubSync.normalizeConfig(window.TG_FOA_SYNC || {})
+    : null;
   const configuredEditPassword = String(window.TG_FOA_EDIT_PASSWORD || "").trim();
   const editPassword = String(configuredEditPassword || "bgbzhangyan2026");
   const requireEditPassword = editPassword.length > 0;
@@ -250,18 +255,6 @@
     return normalized;
   }
 
-  function normalizeSyncConfig(raw) {
-    if (!raw || typeof raw !== "object") return null;
-    const provider = String(raw.provider || "").trim().toLowerCase();
-    if (provider !== "github") return null;
-    const owner = String(raw.owner || "").trim();
-    const repo = String(raw.repo || "").trim();
-    const branch = String(raw.branch || "main").trim();
-    const filePath = String(raw.filePath || "").trim().replace(/^\/+/, "");
-    if (!owner || !repo || !filePath) return null;
-    return { owner, repo, branch, filePath };
-  }
-
   function deepClone(v) {
     return JSON.parse(JSON.stringify(v));
   }
@@ -358,25 +351,20 @@
   }
 
   function getToken() {
-    try {
-      return String(localStorage.getItem(tokenKey) || "").trim();
-    } catch (_error) {
-      return "";
-    }
+    return githubSync && typeof githubSync.getToken === "function"
+      ? githubSync.getToken(tokenKey)
+      : "";
   }
 
   function setToken(nextToken) {
-    try {
-      if (nextToken) localStorage.setItem(tokenKey, nextToken);
-      else localStorage.removeItem(tokenKey);
-    } catch (_error) {
-      // Ignore.
-    }
+    if (!githubSync || typeof githubSync.setToken !== "function") return;
+    githubSync.setToken(tokenKey, nextToken);
   }
 
   function getSyncConfigLabel() {
-    if (!syncConfig) return "";
-    return `${syncConfig.owner}/${syncConfig.repo}:${syncConfig.branch}`;
+    return githubSync && typeof githubSync.getConfigLabel === "function"
+      ? githubSync.getConfigLabel(syncConfig)
+      : "";
   }
 
   function setPageStatus(text) {
@@ -1095,32 +1083,10 @@
     return block;
   }
 
-  function encodeBase64Utf8(text) {
-    const bytes = new TextEncoder().encode(text);
-    let binary = "";
-    bytes.forEach((b) => { binary += String.fromCharCode(b); });
-    return btoa(binary);
-  }
-
-  function decodeBase64Utf8(base64Text) {
-    const binary = atob(base64Text);
-    const bytes = Uint8Array.from(binary, (ch) => ch.charCodeAt(0));
-    return new TextDecoder().decode(bytes);
-  }
-
-  function delay(ms) {
-    return new Promise((resolve) => {
-      window.setTimeout(resolve, ms);
-    });
-  }
-
   function quickHash(text) {
-    let hash = 2166136261;
-    for (let i = 0; i < text.length; i += 1) {
-      hash ^= text.charCodeAt(i);
-      hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-    }
-    return (hash >>> 0).toString(16);
+    return githubSync && typeof githubSync.quickHash === "function"
+      ? githubSync.quickHash(text)
+      : "";
   }
 
   function getPersistablePayload() {
@@ -1319,7 +1285,9 @@
   }
 
   async function fetchRemoteSnapshot(cfg, token) {
-    const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeURIComponent(cfg.filePath).replace(/%2F/g, "/")}?ref=${encodeURIComponent(cfg.branch)}`;
+    const endpoint = githubSync && typeof githubSync.buildContentsEndpoint === "function"
+      ? githubSync.buildContentsEndpoint(cfg)
+      : "";
     const res = await fetch(endpoint, {
       method: "GET",
       headers: {
@@ -1332,26 +1300,15 @@
     if (!payload || typeof payload.sha !== "string") throw new Error("Host response missing file SHA");
     let text = "";
     if (typeof payload.content === "string" && payload.content) {
-      text = decodeBase64Utf8(String(payload.content).replace(/\n/g, ""));
+      text = githubSync && typeof githubSync.decodeBase64Utf8 === "function"
+        ? githubSync.decodeBase64Utf8(String(payload.content).replace(/\n/g, ""))
+        : "";
     }
     return {
       sha: payload.sha,
       text,
       hash: quickHash(text),
     };
-  }
-
-  async function parseHostError(res) {
-    if (!res) return "";
-    try {
-      const payload = await res.json();
-      if (payload && typeof payload.message === "string" && payload.message.trim()) {
-        return payload.message.trim();
-      }
-    } catch (_error) {
-      // Ignore non-JSON payloads.
-    }
-    return "";
   }
 
   async function syncNow() {
@@ -1378,7 +1335,9 @@
     setSyncStatus("Syncing JSON to Host...");
 
     try {
-      const endpoint = `https://api.github.com/repos/${encodeURIComponent(syncConfig.owner)}/${encodeURIComponent(syncConfig.repo)}/contents/${encodeURIComponent(syncConfig.filePath).replace(/%2F/g, "/")}`;
+      const endpoint = githubSync && typeof githubSync.buildContentsEndpoint === "function"
+        ? githubSync.buildContentsEndpoint(syncConfig).replace(/\?ref=.*$/, "")
+        : "";
       const message = `update tainted grail sessions ${new Date().toISOString().slice(0, 19)}Z`;
 
       let synced = false;
@@ -1422,7 +1381,9 @@
           },
           body: JSON.stringify({
             message,
-            content: encodeBase64Utf8(content),
+            content: githubSync && typeof githubSync.encodeBase64Utf8 === "function"
+              ? githubSync.encodeBase64Utf8(content)
+              : "",
             branch: syncConfig.branch,
             sha: snapshot.sha,
           }),
@@ -1432,10 +1393,14 @@
           break;
         }
 
-        const detail = await parseHostError(res);
+        const detail = githubSync && typeof githubSync.parseHostError === "function"
+          ? await githubSync.parseHostError(res)
+          : "";
         lastError = detail ? `Host write failed (${res.status}): ${detail}` : `Host write failed (${res.status})`;
         if (res.status !== 409 || attempt === 3) break;
-        await delay(220 * attempt);
+        if (githubSync && typeof githubSync.delay === "function") {
+          await githubSync.delay(220 * attempt);
+        }
       }
 
       if (!synced) throw new Error(lastError || "Host write failed");

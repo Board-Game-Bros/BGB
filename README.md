@@ -1,150 +1,115 @@
 # Board Game Bros (BGB)
 
-Welcome to **Board Game Bros (BGB)** — a medieval-themed board game club website designed to document our weekly activities, maintain our game library, and track board game news & crowdfunding updates.
+Static website for the BGB board game club.
 
-This repository hosts the source code of the official BGB website.
+The repo currently mixes hand-authored pages with small data-driven renderers for Arkham Horror and Tainted Grail tracking pages.
 
----
+## Structure
 
-## 🏰 Project Structure
-
-```
-/
-├── index.html          # Main website entry page
-├── main.css            # Global styles (medieval parchment theme)
+```text
+.
+├── archive/                         # Archived files no longer used by active pages
+├── assets/
+│   ├── Arkham_Horror_Decks/         # Linked deck PDFs
+│   ├── boardgames/                  # Game covers, investigator art, card images
+│   ├── daily/                       # Photo assets
+│   ├── data/                        # JSON data for rendered pages
+│   ├── icon/
+│   └── misc/
 ├── scripts/
-│   ├── main.js         # Shared site interactions
-│   └── ahlcg-upgrade-manager.js  # Reusable Arkham deck-upgrade module
+│   ├── main.js                      # Shared site interactions
+│   ├── shell-layout.js              # Shared header/nav/footer shell
+│   ├── shared-edit-sync-gate.js     # Shared edit/sync UI controls
+│   ├── shared-local-state-envelope.js
+│   ├── shared-github-sync.js        # Shared GitHub sync helpers
+│   ├── arkham-campaign-page.js      # Arkham index page renderer
+│   ├── arkham-deck-page.js          # Investigator deck renderer
+│   ├── arkham-deck-preview.js       # Investigator deck hover panel
+│   ├── ahlcg-standard-library.js
+│   ├── ahlcg-upgrade-manager.js
+│   ├── tg-session-editor.js
+│   └── sync_arkhamdb_collection.py
+├── styles/
+│   ├── base.css
+│   ├── modules/
+│   └── pages/
+└── */index.html                     # Page entry points
+```
+
+## Active Pages
+
+- `/`
+- `/library/`
+- `/news/`
+- `/daily/`
+- `/arkham_horror_lcg/`
+- `/arkham_horror_lcg_tcu_20260215/`
+- `/arkham_horror_lcg_tcu_harvey_walters_20260214/`
+- `/arkham_horror_lcg_tcu_michael_mcglen_20260214/`
+- `/arkham_horror_lcg_tcu_wendy_adams_20260214/`
+- `/tainted_grail_foa/`
+
+## Data-Driven Pages
+
+Arkham investigator deck pages are now rendered from JSON:
+
+- `assets/data/arkham_harvey_walters_20260214.json`
+- `assets/data/arkham_michael_mcglen_20260214.json`
+- `assets/data/arkham_wendy_adams_20260214.json`
+
+Arkham campaign index is rendered from:
+
+- `assets/data/arkham_horror_lcg_index.json`
+
+Library page is rendered from:
+
+- `assets/data/library_index.json`
+
+Simple content pages are rendered from:
+
+- `assets/data/daily_index.json`
+- `assets/data/news_index.json`
+
+Template for new investigator deck pages:
+
+- `assets/data/templates/arkham_investigator_deck_template.json`
+- `archive/arkham_investigator_page_shell.template.html`
+
+Typical workflow for adding a new investigator deck page:
+
+1. Copy `assets/data/templates/arkham_investigator_deck_template.json`
+2. Fill in the investigator/deck data
+3. Create a thin `index.html` page pointing `data-source` to that JSON
+4. Add the new deck link/card to `assets/data/arkham_horror_lcg_index.json`
 
 ## AHLCG Collection Sync
-Use the script below to bulk-sync AHLCG images + standard name library from ArkhamDB:
+
+Refresh AHLCG images and the standard-name library from ArkhamDB:
 
 ```bash
 python3 scripts/sync_arkhamdb_collection.py --project-root .
 ```
 
 Optional:
-- include encounter cards too:
+
 ```bash
 python3 scripts/sync_arkhamdb_collection.py --project-root . --include-encounter
 ```
-├── assets/
-│   ├── icon/           # Logos and icons (ex: BGB.png)
-│   ├── games/          # Board game cover images
-│   ├── daily/          # Weekly event photos
-│   └── misc/           # Other static resources
-└── README.md
-```
 
----
+## Local Run
 
-## 🌟 Features
-
-### ✔ Home Page  
-Introduction to the club and quick access to key sections.
-
-### ✔ Game Library  
-A visual catalog of all board games owned by BGB.  
-Each entry may include:
-- Game name  
-- Player count  
-- Category (Strategy, Eurogame, Party, etc.)
-- Play time  
-- Complexity  
-- Status (in library / borrowed / new arrival)
-
-### ✔ News  
-A section dedicated to:
-- Latest board game releases  
-- Kickstarter & Gamefound crowdfunding updates  
-- Notable hobby news  
-
-### ✔ Weekly Events (Daily Page)  
-A photo log of our weekly meetups including:
-- Event photos  
-- Match results  
-- Attendance  
-- Featured games
-
----
-
-## 🎨 Design Style
-
-The entire website follows a **medieval parchment aesthetic**:
-- Warm beige parchment background  
-- Deep brown typography  
-- Logo featuring monk & knight  
-- Castle and scroll motifs  
-- Textured handmade illustration style  
-
----
-
-## 🚀 How to Run Locally
-
-No build tools required — this is a pure static site.
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AnthonyZhangYan/boardgamebros.git
-   ```
-2. Open the project folder:
-   ```bash
-   cd boardgamebros
-   ```
-3. Open `index.html` in any browser.
-
-Optional (live preview):
+No build step is required.
 
 ```bash
 python3 -m http.server
-# visit http://localhost:8000
 ```
 
----
+Then visit:
 
-## 📸 Adding Content
+- `http://localhost:8000`
 
-### Add new game cover:
-```
-assets/games/
-```
+## Notes
 
-### Add weekly event photos:
-```
-assets/daily/
-```
-
-### Update library or event info:
-Edit `index.html` directly.
-
----
-
-## 🔧 Future Improvements
-
-Planned enhancements:
-- Game ratings  
-- Borrowing / inventory system  
-- Event signup  
-- Automated news + crowdfunding scraping  
-- Multi-page version  
-- Dark mode (torch-light medieval style)  
-
----
-
-## 📜 License
-
-This project is for personal/club use.  
-If you need a formal open-source license (MIT, Apache-2.0, GPL), I can generate one.
-
----
-
-## 🤝 Contributions
-
-Internal contributions from BGB members are welcome.  
-Pull requests and ideas are appreciated.
-
----
-
-## 🛡️ Board Game Bros (BGB)
-
-Bringing people together through tabletop adventures — one quest at a time.
+- Root-level `*.html` files are mostly compatibility redirects to directory pages.
+- Archived files should go under `archive/`, not back into active `styles/` or `scripts/`.
+- `tainted_grail_foa/` and `arkham_horror_lcg_tcu_20260215/` contain edit/sync flows that can write back to GitHub when configured with a token.

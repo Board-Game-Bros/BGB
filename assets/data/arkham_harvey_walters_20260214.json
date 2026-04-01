@@ -1,0 +1,85 @@
+{
+  "pageTitle": "Harvey Walters - Deck Build (02/14/2026)",
+  "title": "Harvey Walters Deck - 02/14/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/harvey_walters_the_professor.png",
+    "imageAlt": "Harvey Walters",
+    "heading": "Harvey Walters",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "8 packs required",
+      "Class: Seeker",
+      "Built by Yan on 02/14/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (23)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 2, "name": "Alchemical Distillation ★", "imageSrc": "/assets/boardgames/ahlcg_cards/alchemical_distillation.png", "imageAlt": "Alchemical Distillation" },
+            { "qty": 2, "name": "Archaic Glyphs", "imageSrc": "/assets/boardgames/ahlcg_cards/archaic_glyphs_untranslated.png", "imageAlt": "Archaic Glyphs" },
+            { "qty": 1, "name": "Archive of Conduits", "imageSrc": "/assets/boardgames/ahlcg_cards/archive_of_conduits_unidentified.png", "imageAlt": "Archive of Conduits" },
+            { "qty": 2, "name": "Magnifying Glass", "imageSrc": "/assets/boardgames/ahlcg_cards/magnifying_glass.png", "imageAlt": "Magnifying Glass" },
+            { "qty": 2, "name": "Microscope", "imageSrc": "/assets/boardgames/ahlcg_cards/microscope.png", "imageAlt": "Microscope" },
+            { "qty": 2, "name": "Old Book of Lore", "imageSrc": "/assets/boardgames/ahlcg_cards/old_book_of_lore.png", "imageAlt": "Old Book of Lore" }
+          ]
+        },
+        {
+          "label": "Arcane",
+          "cards": [
+            { "qty": 2, "name": "Feed the Mind", "imageSrc": "/assets/boardgames/ahlcg_cards/feed_the_mind.png", "imageAlt": "Feed the Mind" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Dr. Milan Christopher", "imageSrc": "/assets/boardgames/ahlcg_cards/dr_milan_christopher_professor_of_entomology.png", "imageAlt": "Dr. Milan Christopher" },
+            { "qty": 2, "name": "Laboratory Assistant", "imageSrc": "/assets/boardgames/ahlcg_cards/laboratory_assistant.png", "imageAlt": "Laboratory Assistant" },
+            { "qty": 2, "name": "Research Librarian", "imageSrc": "/assets/boardgames/ahlcg_cards/research_librarian.png", "imageAlt": "Research Librarian" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 1, "name": "Hyperawareness", "imageSrc": "/assets/boardgames/ahlcg_cards/hyperawareness.png", "imageAlt": "Hyperawareness" },
+            { "qty": 2, "name": "Strange Solution", "imageSrc": "/assets/boardgames/ahlcg_cards/strange_solution_unidentified.png", "imageAlt": "Strange Solution" },
+            { "qty": 1, "name": "Vault of Knowledge ★", "imageSrc": "/assets/boardgames/ahlcg_cards/vault_of_knowledge.png", "imageAlt": "Vault of Knowledge" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (4)",
+          "cards": [
+            { "qty": 2, "name": "Mind over Matter", "imageSrc": "/assets/boardgames/ahlcg_cards/mind_over_matter.png", "imageAlt": "Mind over Matter" },
+            { "qty": 2, "name": "Shortcut ?", "imageSrc": "/assets/boardgames/ahlcg_cards/shortcut.png", "imageAlt": "Shortcut" }
+          ]
+        },
+        {
+          "title": "Skill (4)",
+          "cards": [
+            { "qty": 2, "name": "Deduction", "imageSrc": "/assets/boardgames/ahlcg_cards/deduction.png", "imageAlt": "Deduction" },
+            { "qty": 2, "name": "Inquiring Mind ?", "imageSrc": "/assets/boardgames/ahlcg_cards/inquiring_mind.png", "imageAlt": "Inquiring Mind" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "Random Basic Weakness ★", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" },
+            { "qty": 1, "name": "Thrice-Damned Curiosity ★", "imageSrc": "/assets/boardgames/ahlcg_cards/thrice_damned_curiosity.png", "imageAlt": "Thrice-Damned Curiosity" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Harvey-Walters-DeckBuild-20260214-Yan.pdf",
+    "label": "Open Harvey Deck PDF"
+  }
+}

@@ -7,7 +7,7 @@ This project now uses a page-entry + module architecture.
 - `styles/pages/`: one entry file per HTML page.
 - `styles/modules/`: reusable feature modules shared by pages.
 - `styles/base.css`: global foundation (layout, header/nav, container, footer, torch mode).
-- `styles/_legacy/`: archived old styles (do not edit for active pages).
+- `archive/`: archived files that are no longer part of the active styles/scripts surface.
 
 ## How to edit styles
 
@@ -27,5 +27,5 @@ This project now uses a page-entry + module architecture.
 
 ## Notes
 
-- Legacy monolithic stylesheet has been archived to `styles/_legacy/main.css`.
+- Legacy monolithic stylesheet has been archived to `archive/styles_legacy_main.css`.
 - Do not re-link archived files from HTML.

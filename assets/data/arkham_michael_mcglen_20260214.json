@@ -1,0 +1,91 @@
+{
+  "pageTitle": "Michael McGlen - Deck Build (02/14/2026)",
+  "title": "Michael McGlen Deck - 02/14/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/michael_mcglen_the_gangster.png",
+    "imageAlt": "Michael McGlen",
+    "heading": "Michael McGlen",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "10 packs required",
+      "Class: Rogue",
+      "Built by Shengbo on 02/14/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (13)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 2, "name": "Luger P08", "imageSrc": "/assets/boardgames/ahlcg_cards/luger_p08.png", "imageAlt": "Luger P08" },
+            { "qty": 2, "name": "Mauser C96", "imageSrc": "/assets/boardgames/ahlcg_cards/mauser_c96.png", "imageAlt": "Mauser C96" },
+            { "qty": 2, "name": "Remington Model 1858", "imageSrc": "/assets/boardgames/ahlcg_cards/remington_model_1858.png", "imageAlt": "Remington Model 1858" }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            { "qty": 1, "name": "\"Viola\" Case ★", "imageSrc": "/assets/boardgames/ahlcg_cards/viola_case.png", "imageAlt": "\"Viola\" Case" }
+          ]
+        },
+        {
+          "label": "Body",
+          "cards": [
+            { "qty": 2, "name": "Heavy Furs", "imageSrc": "/assets/boardgames/ahlcg_cards/heavy_furs.png", "imageAlt": "Heavy Furs" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Lonnie Ritter", "imageSrc": "/assets/boardgames/ahlcg_cards/lonnie_ritter_feisty_mechanic.png", "imageAlt": "Lonnie Ritter" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 1, "name": "Hard Knocks", "imageSrc": "/assets/boardgames/ahlcg_cards/hard_knocks.png", "imageAlt": "Hard Knocks" },
+            { "qty": 1, "name": "Well Connected", "imageSrc": "/assets/boardgames/ahlcg_cards/well_connected.png", "imageAlt": "Well Connected" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (12)",
+          "cards": [
+            { "qty": 1, "name": "\"Let God sort them out...\"", "imageSrc": "/assets/boardgames/ahlcg_cards/let_god_sort_them_out.png", "imageAlt": "\"Let God sort them out...\"" },
+            { "qty": 2, "name": "21 or Bust", "imageSrc": "/assets/boardgames/ahlcg_cards/21_or_bust.png", "imageAlt": "21 or Bust" },
+            { "qty": 2, "name": "Cheap Shot", "imageSrc": "/assets/boardgames/ahlcg_cards/cheap_shot.png", "imageAlt": "Cheap Shot" },
+            { "qty": 2, "name": "Coup de Grace", "imageSrc": "/assets/boardgames/ahlcg_cards/coup_de_grace.png", "imageAlt": "Coup de Grace" },
+            { "qty": 2, "name": "Primed for Action", "imageSrc": "/assets/boardgames/ahlcg_cards/primed_for_action.png", "imageAlt": "Primed for Action" },
+            { "qty": 2, "name": "Sleight of Hand", "imageSrc": "/assets/boardgames/ahlcg_cards/sleight_of_hand.png", "imageAlt": "Sleight of Hand" },
+            { "qty": 1, "name": "Warning Shot", "imageSrc": "/assets/boardgames/ahlcg_cards/warning_shot.png", "imageAlt": "Warning Shot" }
+          ]
+        },
+        {
+          "title": "Skill (6)",
+          "cards": [
+            { "qty": 2, "name": "\"Watch this!\"", "imageSrc": "/assets/boardgames/ahlcg_cards/watch_this.png", "imageAlt": "\"Watch this!\"" },
+            { "qty": 2, "name": "Crack Shot", "imageSrc": "/assets/boardgames/ahlcg_cards/crack_shot.png", "imageAlt": "Crack Shot" },
+            { "qty": 2, "name": "Overpower", "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png", "imageAlt": "Overpower" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "Confiscation ★", "imageSrc": "/assets/boardgames/ahlcg_cards/confiscation.png", "imageAlt": "Confiscation" },
+            { "qty": 1, "name": "Random Basic Weakness ★", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Michael-Mcglen-DeckBuild-20260214-Shengbo.pdf",
+    "label": "Open Michael Deck PDF"
+  }
+}

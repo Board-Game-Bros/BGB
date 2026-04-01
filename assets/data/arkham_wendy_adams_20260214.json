@@ -1,0 +1,87 @@
+{
+  "pageTitle": "Wendy Adams - Deck Build (02/14/2026)",
+  "title": "Wendy Adams Deck - 02/14/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/wendy_adams_the_urchin.png",
+    "imageAlt": "Wendy Adams",
+    "heading": "Wendy Adams",
+    "details": [
+      "Alternate back: Wendy Adams (Red Tide Rising)",
+      "Alternate front: Wendy Adams (Red Tide Rising)",
+      "30 cards (33 total)",
+      "0 experience required",
+      "6 packs required",
+      "Class: Survivor",
+      "Built by LL on 02/14/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (9)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 2, "name": "Flashlight", "imageSrc": "/assets/boardgames/ahlcg_cards/flashlight.png", "imageAlt": "Flashlight" }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            { "qty": 1, "name": "Wendy's Amulet ★", "imageSrc": "/assets/boardgames/ahlcg_cards/wendys_amulet.png", "imageAlt": "Wendy's Amulet" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Granny Orne", "imageSrc": "/assets/boardgames/ahlcg_cards/granny_orne_tough_old_bird.png", "imageAlt": "Granny Orne" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 2, "name": "Sparrow Mask", "imageSrc": "/assets/boardgames/ahlcg_cards/sparrow_mask_the_wanderers_companion.png", "imageAlt": "Sparrow Mask" },
+            { "qty": 2, "name": "Track Shoes", "imageSrc": "/assets/boardgames/ahlcg_cards/track_shoes.png", "imageAlt": "Track Shoes" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (16)",
+          "cards": [
+            { "qty": 2, "name": "A Test of Will", "imageSrc": "/assets/boardgames/ahlcg_cards/a_test_of_will.png", "imageAlt": "A Test of Will" },
+            { "qty": 1, "name": "Cunning Distraction", "imageSrc": "/assets/boardgames/ahlcg_cards/cunning_distraction.png", "imageAlt": "Cunning Distraction" },
+            { "qty": 2, "name": "Emergency Cache", "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png", "imageAlt": "Emergency Cache" },
+            { "qty": 2, "name": "Guided by Faith", "imageSrc": "/assets/boardgames/ahlcg_cards/guided_by_faith.png", "imageAlt": "Guided by Faith" },
+            { "qty": 2, "name": "Hand of Fate", "imageSrc": "/assets/boardgames/ahlcg_cards/hand_of_fate.png", "imageAlt": "Hand of Fate" },
+            { "qty": 1, "name": "Keep Faith", "imageSrc": "/assets/boardgames/ahlcg_cards/keep_faith.png", "imageAlt": "Keep Faith" },
+            { "qty": 2, "name": "Lucky!", "imageSrc": "/assets/boardgames/ahlcg_cards/lucky.png", "imageAlt": "Lucky!" },
+            { "qty": 2, "name": "Ward of Radiance", "imageSrc": "/assets/boardgames/ahlcg_cards/ward_of_radiance.png", "imageAlt": "Ward of Radiance" },
+            { "qty": 2, "name": "Waylay", "imageSrc": "/assets/boardgames/ahlcg_cards/waylay.png", "imageAlt": "Waylay" }
+          ]
+        },
+        {
+          "title": "Skill (6)",
+          "cards": [
+            { "qty": 2, "name": "Beloved", "imageSrc": "/assets/boardgames/ahlcg_cards/beloved.png", "imageAlt": "Beloved" },
+            { "qty": 2, "name": "Guts", "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png", "imageAlt": "Guts" },
+            { "qty": 2, "name": "Manual Dexterity", "imageSrc": "/assets/boardgames/ahlcg_cards/manual_dexterity.png", "imageAlt": "Manual Dexterity" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "Abandoned and Alone ★", "imageSrc": "/assets/boardgames/ahlcg_cards/abandoned_and_alone.png", "imageAlt": "Abandoned and Alone" },
+            { "qty": 1, "name": "Random Basic Weakness ★ ?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Wendy-Adams-DeckBuild-20260214-LL.pdf",
+    "label": "Open Wendy Deck PDF"
+  }
+}

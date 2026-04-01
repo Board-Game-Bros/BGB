@@ -9,16 +9,22 @@ window.addEventListener("scroll", () => {
 });
 
 // 2. Smooth Scrolling for Anchor Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener("click", function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    if (!target) return;
-    target.scrollIntoView({
-      behavior: "smooth"
+const setupSmoothScrollLinks = () => {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    if (anchor.dataset.smoothScrollBound === "1") return;
+    anchor.dataset.smoothScrollBound = "1";
+    anchor.addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (!target) return;
+      target.scrollIntoView({
+        behavior: "smooth"
+      });
     });
   });
-});
+};
+
+setupSmoothScrollLinks();
 
 // 2.1 Highlight active subnav pill on click/scroll
 const setupSubnavActiveState = () => {
@@ -38,6 +44,8 @@ const setupSubnavActiveState = () => {
   };
 
   subnavLinks.forEach((link) => {
+    if (link.dataset.subnavActiveBound === "1") return;
+    link.dataset.subnavActiveBound = "1";
     link.addEventListener("click", () => {
       const targetId = link.getAttribute("href").slice(1);
       markActive(targetId);
@@ -171,85 +179,39 @@ const setupHoverImagePreview = () => {
 
 setupHoverImagePreview();
 
-// 2.4 Deck panel preview for investigator deck pages.
-const setupDeckPanelPreview = () => {
-  const isInvestigatorDeckPage = /arkham_horror_lcg_tcu_(harvey_walters|michael_mcglen|wendy_adams)_20260214(?:\.html)?\/?$/i
-    .test(String(window.location.pathname || ""));
-  if (!isInvestigatorDeckPage) {
-    document.body.classList.remove("deck-panel-mode");
-    return;
-  }
-  document.body.classList.add("deck-panel-mode");
-
-  const grids = Array.from(document.querySelectorAll(".deck-list-grid[data-deck-preview]"));
-  if (!grids.length) return;
-
-  const getPreviewSource = (ref) => {
-    const img = ref ? ref.querySelector("img.card-preview") : null;
-    return img ? (img.getAttribute("src") || "") : "";
-  };
-
-  grids.forEach((grid) => {
-    if (grid.dataset.deckPanelBound === "1") return;
-    grid.dataset.deckPanelBound = "1";
-
-    const panelImg = grid.querySelector("[data-deck-preview-image]");
-    if (!panelImg) return;
-    const defaultSrc = panelImg.getAttribute("data-default-src") || panelImg.getAttribute("src") || "";
-
-    const setPanelSrc = (src) => {
-      panelImg.setAttribute("src", src || defaultSrc);
-    };
-
-    setPanelSrc(defaultSrc);
-
-    const activateFromTarget = (target) => {
-      const ref = target && typeof target.closest === "function" ? target.closest(".card-ref") : null;
-      if (!ref || !grid.contains(ref)) {
-        setPanelSrc(defaultSrc);
-        return;
-      }
-      const src = getPreviewSource(ref);
-      setPanelSrc(src || defaultSrc);
-    };
-
-    grid.addEventListener("pointerover", (event) => {
-      activateFromTarget(event.target);
-    });
-    grid.addEventListener("focusin", (event) => {
-      activateFromTarget(event.target);
-    });
-    grid.addEventListener("pointerleave", () => {
-      setPanelSrc(defaultSrc);
-    });
-    grid.addEventListener("focusout", () => {
-      window.requestAnimationFrame(() => {
-        const active = document.activeElement;
-        const activeRef = active && typeof active.closest === "function" ? active.closest(".card-ref") : null;
-        if (!activeRef || !grid.contains(activeRef)) {
-          setPanelSrc(defaultSrc);
-        }
-      });
-    });
-  });
-};
-
-setupDeckPanelPreview();
-
 // 3. Page Fade-in Animation
-window.onload = () => {
+window.addEventListener("load", () => {
   document.body.classList.add("loaded");
-};
+});
 
 // 4. Dark Mode Toggle (Medieval Torchlight Theme)
+let torchFlickerTimer = 0;
+
+const startTorchFlicker = () => {
+  if (torchFlickerTimer) return;
+  torchFlickerTimer = window.setInterval(() => {
+    if (!document.body.classList.contains("torch-mode")) return;
+    document.body.style.filter = `brightness(${0.9 + Math.random() * 0.2})`;
+  }, 200);
+};
+
+const stopTorchFlicker = () => {
+  if (!torchFlickerTimer) return;
+  window.clearInterval(torchFlickerTimer);
+  torchFlickerTimer = 0;
+};
+
 const enableTorchMode = () => {
   document.body.classList.add("torch-mode");
   localStorage.setItem("torchMode", "enabled");
+  startTorchFlicker();
 };
 
 const disableTorchMode = () => {
   document.body.classList.remove("torch-mode");
   localStorage.setItem("torchMode", "disabled");
+  stopTorchFlicker();
+  document.body.style.filter = "brightness(1)";
 };
 
 // Restore saved mode
@@ -264,21 +226,15 @@ if (torchBtn) {
   });
 }
 
-// 5. Light flicker effect for dark mode
-setInterval(() => {
-  if (document.body.classList.contains("torch-mode")) {
-    document.body.style.filter = `brightness(${0.9 + Math.random() * 0.2})`;
-  } else {
-    document.body.style.filter = "brightness(1)";
-  }
-}, 200);
+if (document.body.classList.contains("torch-mode")) {
+  startTorchFlicker();
+}
 
-// 6. Placeholder expandable functions for future features
+// 5. Shared helpers used by page-specific scripts.
 window.BGB = {
   ...(window.BGB || {}),
+  setupSmoothScrollLinks,
+  setupSubnavActiveState,
+  setupHoverImagePreview,
   resetHoverPreviewStyles,
-  addGameToLibrary: () => {},       // future expansion
-  loadNewsFeed: () => {},           // API hooks for board game news
-  loadCrowdfundingUpdates: () => {}, // Kickstarter/Gamefound integration
-  addWeeklyEvent: () => {},         // dynamic event logging
 };

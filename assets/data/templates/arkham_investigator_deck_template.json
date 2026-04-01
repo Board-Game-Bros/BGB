@@ -1,0 +1,46 @@
+{
+  "pageTitle": "Investigator Name - Deck Build (MM/DD/YYYY)",
+  "title": "Investigator Name Deck - MM/DD/YYYY",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/example.png",
+    "imageAlt": "Investigator Name",
+    "heading": "Investigator Name",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "X packs required",
+      "Class: Example",
+      "Built by Name on MM/DD/YYYY"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (0)",
+          "label": "Hand",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Example Card",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/example_card.png",
+              "imageAlt": "Example Card"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (0)",
+          "cards": []
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/example.pdf",
+    "label": "Open Deck PDF"
+  }
+}

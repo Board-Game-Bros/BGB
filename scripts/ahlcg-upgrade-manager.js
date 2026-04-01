@@ -1,6 +1,9 @@
 (function () {
   function initAhlcgUpgradeManager(config) {
     const options = config || {};
+    const githubSync = window.BGBGitHubSync && typeof window.BGBGitHubSync === "object"
+      ? window.BGBGitHubSync
+      : null;
     const cardDir = options.cardDir || "/assets/boardgames/ahlcg_cards";
     const investigatorDir = options.investigatorDir || "/assets/boardgames/ahlcg_investigators";
     const cardImageFiles = Array.isArray(options.cardImageFiles) ? options.cardImageFiles : [];
@@ -15,7 +18,9 @@
     const editPassword = String(configuredPassword || fallbackPassword);
     const requireEditPassword = editPassword.length > 0;
     const inactivityMs = Number(options.inactivityMs) > 0 ? Number(options.inactivityMs) : 120000;
-    const remoteSync = normalizeRemoteSync(options.remoteSync);
+    const remoteSync = githubSync && typeof githubSync.normalizeConfig === "function"
+      ? githubSync.normalizeConfig(options.remoteSync)
+      : null;
     const remoteSyncTokenStorageKey = typeof options.remoteSyncTokenStorageKey === "string" && options.remoteSyncTokenStorageKey.trim()
       ? options.remoteSyncTokenStorageKey.trim()
       : "bgb_github_sync_token_v1";
@@ -68,43 +73,20 @@
         .replace(/\s+/g, " ");
     }
 
-    function normalizeRemoteSync(rawConfig) {
-      if (!rawConfig || typeof rawConfig !== "object") return null;
-      const provider = String(rawConfig.provider || "").trim().toLowerCase();
-      if (provider !== "github") return null;
-      const owner = String(rawConfig.owner || "").trim();
-      const repo = String(rawConfig.repo || "").trim();
-      const branch = String(rawConfig.branch || "main").trim();
-      const filePath = String(rawConfig.filePath || "").trim().replace(/^\/+/, "");
-      if (!owner || !repo || !filePath) return null;
-      return { provider, owner, repo, branch, filePath };
-    }
-
     function getRemoteSyncToken() {
-      if (!remoteSync) return "";
-      try {
-        return String(window.localStorage.getItem(remoteSyncTokenStorageKey) || "").trim();
-      } catch (_error) {
-        return "";
-      }
+      if (!remoteSync || !githubSync || typeof githubSync.getToken !== "function") return "";
+      return githubSync.getToken(remoteSyncTokenStorageKey);
     }
 
     function setRemoteSyncToken(nextToken) {
-      if (!remoteSync) return;
-      try {
-        if (nextToken) {
-          window.localStorage.setItem(remoteSyncTokenStorageKey, nextToken);
-        } else {
-          window.localStorage.removeItem(remoteSyncTokenStorageKey);
-        }
-      } catch (_error) {
-        // Ignore storage failures.
-      }
+      if (!remoteSync || !githubSync || typeof githubSync.setToken !== "function") return;
+      githubSync.setToken(remoteSyncTokenStorageKey, nextToken);
     }
 
     function getRemoteSyncConfigLabel() {
-      if (!remoteSync) return "";
-      return `${remoteSync.owner}/${remoteSync.repo}:${remoteSync.branch}`;
+      return githubSync && typeof githubSync.getConfigLabel === "function"
+        ? githubSync.getConfigLabel(remoteSync)
+        : "";
     }
 
     function refreshRemoteSyncUi(textOverride) {
@@ -122,41 +104,6 @@
           remoteSyncStatus.textContent = `Host sync ready (${getRemoteSyncConfigLabel()})`;
         }
       }
-    }
-
-    function toBase64Utf8(value) {
-      const bytes = new TextEncoder().encode(String(value || ""));
-      let binary = "";
-      const chunkSize = 0x8000;
-      for (let i = 0; i < bytes.length; i += chunkSize) {
-        const chunk = bytes.subarray(i, i + chunkSize);
-        binary += String.fromCharCode(...chunk);
-      }
-      return window.btoa(binary);
-    }
-
-    function sleep(ms) {
-      return new Promise((resolve) => {
-        window.setTimeout(resolve, ms);
-      });
-    }
-
-    function fromBase64Utf8(value) {
-      const binary = window.atob(String(value || ""));
-      const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i += 1) {
-        bytes[i] = binary.charCodeAt(i);
-      }
-      return new TextDecoder().decode(bytes);
-    }
-
-    function makeQuickHash(value) {
-      let hash = 5381;
-      const text = String(value || "");
-      for (let i = 0; i < text.length; i += 1) {
-        hash = ((hash << 5) + hash) ^ text.charCodeAt(i);
-      }
-      return String(hash >>> 0);
     }
 
     function getLevelFromFileName(fileName) {
@@ -1846,7 +1793,9 @@
 
     async function requestGitHubFileMeta(token) {
       if (!remoteSync) return "";
-      const endpoint = `https://api.github.com/repos/${encodeURIComponent(remoteSync.owner)}/${encodeURIComponent(remoteSync.repo)}/contents/${encodeURIComponent(remoteSync.filePath).replace(/%2F/g, "/")}?ref=${encodeURIComponent(remoteSync.branch)}`;
+      const endpoint = githubSync && typeof githubSync.buildContentsEndpoint === "function"
+        ? githubSync.buildContentsEndpoint(remoteSync)
+        : "";
       const response = await window.fetch(endpoint, {
         method: "GET",
         headers: {
@@ -1862,25 +1811,16 @@
         throw new Error("Host response missing file SHA");
       }
       const encodedContent = typeof payload.content === "string" ? payload.content : "";
-      const sourceHtml = encodedContent ? fromBase64Utf8(encodedContent.replace(/\n/g, "")) : "";
+      const sourceHtml = encodedContent && githubSync && typeof githubSync.decodeBase64Utf8 === "function"
+        ? githubSync.decodeBase64Utf8(encodedContent.replace(/\n/g, ""))
+        : "";
       return {
         sha: payload.sha,
         sourceHtml,
-        hash: makeQuickHash(sourceHtml),
+        hash: githubSync && typeof githubSync.quickHash === "function"
+          ? githubSync.quickHash(sourceHtml)
+          : "",
       };
-    }
-
-    async function parseHostError(response) {
-      if (!response) return "";
-      try {
-        const payload = await response.json();
-        if (payload && typeof payload.message === "string" && payload.message.trim()) {
-          return payload.message.trim();
-        }
-      } catch (_error) {
-        // Ignore non-JSON payloads.
-      }
-      return "";
     }
 
     async function seedRemoteSyncBaseline() {
@@ -1907,7 +1847,9 @@
         return { status: "token_missing" };
       }
 
-      const endpoint = `https://api.github.com/repos/${encodeURIComponent(remoteSync.owner)}/${encodeURIComponent(remoteSync.repo)}/contents/${encodeURIComponent(remoteSync.filePath).replace(/%2F/g, "/")}`;
+      const endpoint = githubSync && typeof githubSync.buildContentsEndpoint === "function"
+        ? githubSync.buildContentsEndpoint(remoteSync).replace(/\?ref=.*$/, "")
+        : "";
       const now = new Date();
       const message = `auto-sync deck upgrade ${now.toISOString().slice(0, 19)}Z`;
       let lastError = "";
@@ -1915,7 +1857,9 @@
       for (let attempt = 1; attempt <= 3; attempt += 1) {
         const fileMeta = await requestGitHubFileMeta(token);
         const htmlText = buildPersistableHtml(fileMeta.sourceHtml, state);
-        const nextHash = makeQuickHash(htmlText);
+        const nextHash = githubSync && typeof githubSync.quickHash === "function"
+          ? githubSync.quickHash(htmlText)
+          : "";
 
         if (nextHash === fileMeta.hash) {
           lastSyncedHtmlHash = nextHash;
@@ -1934,7 +1878,9 @@
           },
           body: JSON.stringify({
             message,
-            content: toBase64Utf8(htmlText),
+            content: githubSync && typeof githubSync.encodeBase64Utf8 === "function"
+              ? githubSync.encodeBase64Utf8(htmlText)
+              : "",
             branch: remoteSync.branch,
             sha: fileMeta.sha,
           }),
@@ -1944,12 +1890,16 @@
           return { status: "synced" };
         }
 
-        const detail = await parseHostError(response);
+        const detail = githubSync && typeof githubSync.parseHostError === "function"
+          ? await githubSync.parseHostError(response)
+          : "";
         lastError = detail
           ? `Host write failed (${response.status}): ${detail}`
           : `Host write failed (${response.status})`;
         if (response.status !== 409 || attempt === 3) break;
-        await sleep(220 * attempt);
+        if (githubSync && typeof githubSync.delay === "function") {
+          await githubSync.delay(220 * attempt);
+        }
       }
 
       throw new Error(lastError || "Host write failed");
@@ -2111,7 +2061,9 @@
         }
 
         if (!isEnvelope && remoteSync && sourceStateHashAtLoad) {
-          const legacyStateHash = makeQuickHash(JSON.stringify(state));
+          const legacyStateHash = githubSync && typeof githubSync.quickHash === "function"
+            ? githubSync.quickHash(JSON.stringify(state))
+            : "";
           if (legacyStateHash !== sourceStateHashAtLoad) {
             if (localStateEnvelope && typeof localStateEnvelope.backupAndClear === "function") {
               localStateEnvelope.backupAndClear({ storageKey, rawValue: raw });
@@ -2809,7 +2761,9 @@
     }, { passive: true });
 
     try {
-      sourceStateHashAtLoad = makeQuickHash(JSON.stringify(buildCurrentUpgradeState()));
+      sourceStateHashAtLoad = githubSync && typeof githubSync.quickHash === "function"
+        ? githubSync.quickHash(JSON.stringify(buildCurrentUpgradeState()))
+        : "";
     } catch (_error) {
       sourceStateHashAtLoad = "";
     }

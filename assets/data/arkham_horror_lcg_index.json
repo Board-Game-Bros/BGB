@@ -1,0 +1,40 @@
+{
+  "pageTitle": "Arkham Horror: The Card Game",
+  "campaigns": [
+    {
+      "title": "The Circle Undone Campaign",
+      "href": "https://www.fantasyflightgames.com/en/products/arkham-horror-the-card-game/products/circle-undone/",
+      "hoverPreviewSrc": "/assets/boardgames/the_circle_undone.png",
+      "hoverPreviewAlt": "The Circle Undone Campaign",
+      "sessions": [
+        {
+          "href": "/arkham_horror_lcg_tcu_20260215/",
+          "label": "02/15/2026 Campaign"
+        }
+      ],
+      "investigators": [
+        {
+          "href": "/arkham_horror_lcg_tcu_harvey_walters_20260214/",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/harvey_walters_the_professor.png",
+          "imageAlt": "Harvey Walters",
+          "builderName": "Built by Yan",
+          "buildDate": "Built: 02/14/2026 · XP: 0"
+        },
+        {
+          "href": "/arkham_horror_lcg_tcu_michael_mcglen_20260214/",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/michael_mcglen_the_gangster.png",
+          "imageAlt": "Michael McGlen",
+          "builderName": "Built by Shengbo",
+          "buildDate": "Built: 02/14/2026 · XP: 0"
+        },
+        {
+          "href": "/arkham_horror_lcg_tcu_wendy_adams_20260214/",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/wendy_adams_the_urchin.png",
+          "imageAlt": "Wendy Adams",
+          "builderName": "Built by LL",
+          "buildDate": "Built: 02/14/2026 · XP: 0"
+        }
+      ]
+    }
+  ]
+}
