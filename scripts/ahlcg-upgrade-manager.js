@@ -2188,8 +2188,7 @@
 
         const overflowLeft = rect.left < previewMargin;
         const overflowRight = rect.right > (viewportWidth - previewMargin);
-        const overflowTop = rect.top < previewMargin;
-        if (!(overflowLeft || overflowRight || overflowTop)) {
+        if (!(overflowLeft || overflowRight)) {
           // Keep default CSS hover behavior when within viewport.
           preview.style.removeProperty("display");
           preview.style.removeProperty("visibility");
@@ -2206,10 +2205,7 @@
         left = clamp(left, previewMargin, viewportWidth - width - previewMargin);
 
         let top = anchor.top - previewGap - height;
-        if (top < previewMargin) {
-          top = anchor.bottom + previewGap;
-        }
-        top = clamp(top, previewMargin, viewportHeight - height - previewMargin);
+        top = Math.min(top, viewportHeight - height - previewMargin);
 
         preview.style.position = "fixed";
         preview.style.left = Math.round(left) + "px";
