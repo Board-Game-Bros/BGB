@@ -3,6 +3,7 @@
 
 // 1. Sticky Navigation on Scroll
 let stickyNavStart = null;
+const stickyNavOverlapBuffer = 18;
 
 const syncStickyNav = () => {
   const nav = document.querySelector("nav");
@@ -19,7 +20,7 @@ const syncStickyNav = () => {
   const content = nav.nextElementSibling;
   if (shouldStick) {
     if (content) {
-      content.style.marginTop = `${nav.offsetHeight}px`;
+      content.style.marginTop = `${nav.offsetHeight + stickyNavOverlapBuffer}px`;
     }
   } else {
     if (content) {
