@@ -2,11 +2,23 @@
 // Medieval-themed interactions and future expansion hooks
 
 // 1. Sticky Navigation on Scroll
-window.addEventListener("scroll", () => {
+const syncStickyNav = () => {
   const nav = document.querySelector("nav");
-  if (window.scrollY > 80) nav.classList.add("sticky");
-  else nav.classList.remove("sticky");
-});
+  if (!nav) return;
+
+  const shouldStick = window.scrollY > 80;
+  nav.classList.toggle("sticky", shouldStick);
+
+  if (shouldStick) {
+    document.body.style.paddingTop = `${nav.offsetHeight}px`;
+  } else {
+    document.body.style.paddingTop = "";
+  }
+};
+
+window.addEventListener("scroll", syncStickyNav, { passive: true });
+window.addEventListener("resize", syncStickyNav, { passive: true });
+syncStickyNav();
 
 // 2. Smooth Scrolling for Anchor Links
 const setupSmoothScrollLinks = () => {
