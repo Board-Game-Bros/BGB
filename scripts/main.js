@@ -1,42 +1,7 @@
 // ===================== MAIN.JS =====================
 // Medieval-themed interactions and future expansion hooks
 
-// 1. Sticky Navigation on Scroll
-let stickyNavStart = null;
-const stickyNavOverlapBuffer = 18;
-
-const syncStickyNav = () => {
-  const nav = document.querySelector("nav");
-  if (!nav) return;
-
-  if (stickyNavStart === null || !nav.classList.contains("sticky")) {
-    const navTop = nav.getBoundingClientRect().top + window.scrollY;
-    stickyNavStart = Math.max(0, Math.round(navTop));
-  }
-
-  const shouldStick = window.scrollY >= stickyNavStart;
-  nav.classList.toggle("sticky", shouldStick);
-
-  const content = nav.nextElementSibling;
-  if (shouldStick) {
-    if (content) {
-      content.style.marginTop = `${nav.offsetHeight + stickyNavOverlapBuffer}px`;
-    }
-  } else {
-    if (content) {
-      content.style.marginTop = "";
-    }
-  }
-};
-
-window.addEventListener("scroll", syncStickyNav, { passive: true });
-window.addEventListener("resize", () => {
-  stickyNavStart = null;
-  syncStickyNav();
-}, { passive: true });
-syncStickyNav();
-
-// 2. Smooth Scrolling for Anchor Links
+// 1. Smooth Scrolling for Anchor Links
 const setupSmoothScrollLinks = () => {
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     if (anchor.dataset.smoothScrollBound === "1") return;
@@ -54,7 +19,7 @@ const setupSmoothScrollLinks = () => {
 
 setupSmoothScrollLinks();
 
-// 2.1 Highlight active subnav pill on click/scroll
+// 1.1 Highlight active subnav pill on click/scroll
 const setupSubnavActiveState = () => {
   const subnavLinks = Array.from(document.querySelectorAll(".subnav a"));
   if (!subnavLinks.length || typeof IntersectionObserver === "undefined") return;
@@ -98,7 +63,7 @@ const setupSubnavActiveState = () => {
 
 setupSubnavActiveState();
 
-// 2.2 Shared hover-preview reset helper.
+// 1.2 Shared hover-preview reset helper.
 const resetHoverPreviewStyles = (previewEl) => {
   if (!previewEl) return;
   previewEl.style.position = "";
@@ -112,7 +77,7 @@ const resetHoverPreviewStyles = (previewEl) => {
   previewEl.style.zIndex = "";
 };
 
-// 2.3 Generic hover image preview for elements with data-hover-preview-src.
+// 1.3 Generic hover image preview for elements with data-hover-preview-src.
 const setupHoverImagePreview = () => {
   const targets = Array.from(document.querySelectorAll("[data-hover-preview-src]"));
   if (!targets.length) return;
@@ -207,12 +172,12 @@ const setupHoverImagePreview = () => {
 
 setupHoverImagePreview();
 
-// 3. Page Fade-in Animation
+// 2. Page Fade-in Animation
 window.addEventListener("load", () => {
   document.body.classList.add("loaded");
 });
 
-// 4. Dark Mode Toggle (Medieval Torchlight Theme)
+// 3. Dark Mode Toggle (Medieval Torchlight Theme)
 let torchFlickerTimer = 0;
 
 const startTorchFlicker = () => {
@@ -258,7 +223,7 @@ if (document.body.classList.contains("torch-mode")) {
   startTorchFlicker();
 }
 
-// 5. Shared helpers used by page-specific scripts.
+// 4. Shared helpers used by page-specific scripts.
 window.BGB = {
   ...(window.BGB || {}),
   setupSmoothScrollLinks,

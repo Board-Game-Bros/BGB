@@ -56,9 +56,12 @@ nav {
   flex-wrap: wrap;
   gap: 35px;
   padding: 18px 12px;
+  margin-bottom: 18px;
   border-bottom: 10px solid #2a1f12;
   border-top: 10px solid #2a1f12;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 999;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
@@ -104,15 +107,6 @@ nav a:hover {
     0 0 8px rgba(255, 230, 160, 0.9),
     0 0 20px rgba(255, 200, 120, 0.7),
     0 0 30px rgba(255, 180, 80, 0.5);
-}
-
-nav.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 999;
-  background: url("../assets/misc/dark_wood_texture.jpg");
-  background-size: cover;
 }
 
 .container {

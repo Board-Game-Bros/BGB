@@ -1738,7 +1738,7 @@
     function sanitizeRuntimeNodesFromDoc(doc) {
       if (!doc) return;
       doc.querySelectorAll(".edit-gate").forEach((node) => node.remove());
-      doc.querySelectorAll("#torch-toggle, header.site-header, nav.sticky, footer").forEach((node) => node.remove());
+      doc.querySelectorAll("#torch-toggle, header.site-header, nav, footer").forEach((node) => node.remove());
       doc.querySelectorAll("#hl-aria-live-message-container, #hl-aria-live-alert-container").forEach((node) => node.remove());
       doc.querySelectorAll("grammarly-desktop-integration").forEach((node) => node.remove());
 
