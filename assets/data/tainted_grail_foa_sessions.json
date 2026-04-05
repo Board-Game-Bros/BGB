@@ -472,7 +472,7 @@
         },
         {
           "label": "5",
-          "owned": false
+          "owned": true
         },
         {
           "label": "6",
@@ -1188,11 +1188,11 @@
         },
         {
           "label": "2",
-          "owned": false
+          "owned": true
         },
         {
           "label": "3",
-          "owned": false
+          "owned": true
         },
         {
           "label": "4",
@@ -1550,7 +1550,7 @@
       "slots": [
         {
           "label": "",
-          "owned": false
+          "owned": true
         }
       ]
     },
@@ -1610,7 +1610,7 @@
         },
         {
           "label": "3",
-          "owned": false
+          "owned": true
         },
         {
           "label": "4",
@@ -1792,7 +1792,7 @@
       "slots": [
         {
           "label": "",
-          "owned": false
+          "owned": true
         }
       ]
     }
