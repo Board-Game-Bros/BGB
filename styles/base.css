@@ -52,7 +52,7 @@ header {
 }
 
 nav {
-  background: url("../assets/misc/dark_wood_texture.jpg");
+  background: #4f3b24 url("../assets/misc/dark_wood_texture.jpg");
   background-size: cover;
   display: flex;
   justify-content: center;
