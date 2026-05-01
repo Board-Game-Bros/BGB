@@ -37,6 +37,29 @@
     return card;
   }
 
+  function renderSession(session) {
+    const sessionEl = el("section", "campaign-run");
+
+    const sessionHead = el("div", "campaign-run-head");
+    const link = el("a", "campaign-meta-link pill-btn", String(session.label || ""));
+    link.href = String(session.href || "#");
+    sessionHead.appendChild(link);
+    sessionEl.appendChild(sessionHead);
+
+    const investigators = Array.isArray(session.investigators) ? session.investigators : [];
+    if (!investigators.length) {
+      sessionEl.appendChild(el("p", "campaign-run-empty", "Investigators to be added."));
+      return sessionEl;
+    }
+
+    const grid = el("div", "grid");
+    investigators.forEach((item) => {
+      grid.appendChild(renderInvestigatorCard(item || {}));
+    });
+    sessionEl.appendChild(grid);
+    return sessionEl;
+  }
+
   function renderCampaign(group) {
     const groupEl = el("div", "campaign-group");
     const subtitleWrap = el("div", "campaign-subtitle-wrapper");
@@ -54,20 +77,25 @@
     subtitle.appendChild(titleLink);
     subtitleWrap.appendChild(subtitle);
 
-    const sessions = el("div", "campaign-session-links");
-    (Array.isArray(group.sessions) ? group.sessions : []).forEach((session) => {
-      const link = el("a", "campaign-meta-link pill-btn", String(session.label || ""));
-      link.href = String(session.href || "#");
-      sessions.appendChild(link);
-    });
-    subtitleWrap.appendChild(sessions);
     groupEl.appendChild(subtitleWrap);
 
-    const grid = el("div", "grid");
-    (Array.isArray(group.investigators) ? group.investigators : []).forEach((item) => {
-      grid.appendChild(renderInvestigatorCard(item || {}));
-    });
-    groupEl.appendChild(grid);
+    const sessionsWrap = el("div", "campaign-sessions");
+    const sessions = Array.isArray(group.sessions) ? group.sessions : [];
+
+    if (sessions.length) {
+      sessions.forEach((session) => {
+        sessionsWrap.appendChild(renderSession(session || {}));
+      });
+    } else {
+      const fallbackSession = {
+        href: group.href || "#",
+        label: String(group.title || "Campaign"),
+        investigators: Array.isArray(group.investigators) ? group.investigators : [],
+      };
+      sessionsWrap.appendChild(renderSession(fallbackSession));
+    }
+
+    groupEl.appendChild(sessionsWrap);
     return groupEl;
   }
 

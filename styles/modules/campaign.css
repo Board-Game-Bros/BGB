@@ -40,6 +40,38 @@
   margin: 0 0 20px;
 }
 
+.campaign-sessions {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.campaign-run {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.campaign-run + .campaign-run {
+  padding-top: 20px;
+  border-top: 1px solid rgba(58, 45, 26, 0.22);
+}
+
+.campaign-run-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.campaign-run-empty {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(58, 45, 26, 0.35);
+  background: linear-gradient(180deg, rgba(236, 214, 174, 0.74) 0%, rgba(215, 183, 131, 0.7) 100%);
+  font-size: 1rem;
+}
+
 .campaign-subtitle {
   font-family: 'Great Vibes', cursive;
   font-size: 2.8rem;
