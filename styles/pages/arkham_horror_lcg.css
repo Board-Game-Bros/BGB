@@ -401,6 +401,15 @@ nav a,
   border-bottom: 1px dashed rgba(58, 45, 26, 0.55);
 }
 
+.card-name-token {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: 0.18em;
+  vertical-align: -0.08em;
+  object-fit: contain;
+}
+
 .investigator-pill.card-ref {
   border-bottom: 1px solid rgba(58, 45, 26, 0.52);
 }

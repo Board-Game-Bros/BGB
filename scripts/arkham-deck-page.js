@@ -18,6 +18,14 @@
     item.appendChild(document.createTextNode(`${Number(card.qty || 0)}x `));
 
     const ref = el("span", "card-ref", String(card.name || ""));
+    if (card.suffixIconSrc) {
+      const icon = document.createElement("img");
+      icon.className = "card-name-token";
+      icon.src = String(card.suffixIconSrc || "");
+      icon.alt = String(card.suffixIconAlt || "");
+      ref.appendChild(document.createTextNode(" "));
+      ref.appendChild(icon);
+    }
     const img = document.createElement("img");
     img.className = "card-preview";
     img.src = String(card.imageSrc || "");

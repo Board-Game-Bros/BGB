@@ -48,7 +48,7 @@
         {
           "label": "Other",
           "cards": [
-            { "qty": 2, "name": "Drawing Thin (3) q", "imageSrc": "/assets/boardgames/ahlcg_cards/drawing_thin.png", "imageAlt": "Drawing Thin (3)" },
+            { "qty": 2, "name": "Drawing Thin (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/drawing_thin.png", "imageAlt": "Drawing Thin (3)", "suffixIconSrc": "/assets/icon/chaos_token.png", "suffixIconAlt": "Chaos token" },
             { "qty": 1, "name": "Plucky (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/plucky_3.png", "imageAlt": "Plucky (3)" },
             { "qty": 1, "name": "Track Shoes", "imageSrc": "/assets/boardgames/ahlcg_cards/track_shoes.png", "imageAlt": "Track Shoes" }
           ]
@@ -56,7 +56,7 @@
         {
           "title": "Permanent (3)",
           "cards": [
-            { "qty": 1, "name": "Ancient Covenant (2) q", "imageSrc": "/assets/boardgames/ahlcg_cards/ancient_covenant_2.png", "imageAlt": "Ancient Covenant (2)" },
+            { "qty": 1, "name": "Ancient Covenant (2)", "imageSrc": "/assets/boardgames/ahlcg_cards/ancient_covenant_2.png", "imageAlt": "Ancient Covenant (2)", "suffixIconSrc": "/assets/icon/chaos_token.png", "suffixIconAlt": "Chaos token" },
             { "qty": 1, "name": "Charisma (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/charisma_3.png", "imageAlt": "Charisma (3)" },
             { "qty": 1, "name": "Versatile (2)", "imageSrc": "/assets/boardgames/ahlcg_cards/versatile_2.png", "imageAlt": "Versatile (2)" }
           ]
@@ -81,7 +81,7 @@
             { "qty": 2, "name": "Long Shot", "imageSrc": "/assets/boardgames/ahlcg_cards/long_shot.png", "imageAlt": "Long Shot" },
             { "qty": 2, "name": "Overpower", "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png", "imageAlt": "Overpower" },
             { "qty": 2, "name": "Purified", "imageSrc": "/assets/boardgames/ahlcg_cards/purified.png", "imageAlt": "Purified" },
-            { "qty": 2, "name": "Quick Thinking q", "imageSrc": "/assets/boardgames/ahlcg_cards/quick_thinking.png", "imageAlt": "Quick Thinking" },
+            { "qty": 2, "name": "Quick Thinking", "imageSrc": "/assets/boardgames/ahlcg_cards/quick_thinking.png", "imageAlt": "Quick Thinking", "suffixIconSrc": "/assets/icon/chaos_token.png", "suffixIconAlt": "Chaos token" },
             { "qty": 2, "name": "Resourceful", "imageSrc": "/assets/boardgames/ahlcg_cards/resourceful.png", "imageAlt": "Resourceful" },
             { "qty": 2, "name": "Sharp Vision (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/sharp_vision_1.png", "imageAlt": "Sharp Vision (1)" },
             { "qty": 2, "name": "Strong-Armed (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/strong_armed_1.png", "imageAlt": "Strong-Armed (1)" },
