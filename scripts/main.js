@@ -110,8 +110,10 @@ const setupHoverImagePreview = () => {
     if (!popupWidth || !popupHeight) return;
 
     const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
-    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-    if (!viewportWidth || !viewportHeight) return;
+    if (!viewportWidth) return;
+
+    const scrollX = window.scrollX || window.pageXOffset || 0;
+    const scrollY = window.scrollY || window.pageYOffset || 0;
 
     let left = anchor.right + gap;
     if (left + popupWidth > viewportWidth - margin) {
@@ -122,13 +124,11 @@ const setupHoverImagePreview = () => {
     left = Math.min(Math.max(left, minLeft), maxLeft);
 
     const centerY = anchor.top + (anchor.height / 2);
-    let top = centerY - (popupHeight / 2);
-    const minTop = margin;
-    const maxTop = Math.max(minTop, viewportHeight - popupHeight - margin);
-    top = Math.min(Math.max(top, minTop), maxTop);
+    const top = scrollY + centerY - (popupHeight / 2);
 
-    wrap.style.left = `${Math.round(left)}px`;
-    wrap.style.top = `${Math.round(top)}px`;
+    wrap.style.position = "absolute";
+    wrap.style.left = `${Math.round(scrollX + left)}px`;
+    wrap.style.top = `${Math.round(Math.max(margin, top))}px`;
   };
 
   targets.forEach((target) => {

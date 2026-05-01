@@ -98,7 +98,7 @@
 }
 
 .hover-preview-pop {
-  position: fixed;
+  position: absolute;
   z-index: 2147483000;
   opacity: 0;
   visibility: hidden;
