@@ -1,0 +1,112 @@
+{
+  "pageTitle": "Silas Marsh - Deck Build (05/01/2026)",
+  "title": "Silas Marsh Deck - 05/01/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/silas_marsh_the_sailor.png",
+    "imageAlt": "Silas Marsh",
+    "heading": "Silas Marsh",
+    "details": [
+      "35 cards",
+      "27 experience required",
+      "21 packs required",
+      "Class: Survivor",
+      "Built by Yan on 05/01/2026",
+      "Taboo List (2025-07-11)"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (12)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 2, "name": "Meat Cleaver", "imageSrc": "/assets/boardgames/ahlcg_cards/meat_cleaver.png", "imageAlt": "Meat Cleaver" },
+            { "qty": 1, "name": "Sea Change Harpoon ★", "imageSrc": "/assets/boardgames/ahlcg_cards/sea_change_harpoon.png", "imageAlt": "Sea Change Harpoon" },
+            { "qty": 1, "name": "Silas's Net ★", "imageSrc": "/assets/boardgames/ahlcg_cards/silass_net.png", "imageAlt": "Silas's Net" }
+          ]
+        },
+        {
+          "label": "Arcane",
+          "cards": [
+            { "qty": 1, "name": "Dream-Enhancing Serum", "imageSrc": "/assets/boardgames/ahlcg_cards/dream_enhancing_serum.png", "imageAlt": "Dream-Enhancing Serum" }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            { "qty": 1, "name": "The Silver Moth ★", "imageSrc": "/assets/boardgames/ahlcg_cards/the_silver_moth.png", "imageAlt": "The Silver Moth" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 1, "name": "Jessica Hyde (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/jessica_hyde_wrong_place_wrong_time_1.png", "imageAlt": "Jessica Hyde (1)" },
+            { "qty": 1, "name": "Peter Sylvestre (2)", "imageSrc": "/assets/boardgames/ahlcg_cards/peter_sylvestre_big_man_on_campus_2.png", "imageAlt": "Peter Sylvestre (2)" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 2, "name": "Drawing Thin (3) q", "imageSrc": "/assets/boardgames/ahlcg_cards/drawing_thin.png", "imageAlt": "Drawing Thin (3)" },
+            { "qty": 1, "name": "Plucky (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/plucky_3.png", "imageAlt": "Plucky (3)" },
+            { "qty": 1, "name": "Track Shoes", "imageSrc": "/assets/boardgames/ahlcg_cards/track_shoes.png", "imageAlt": "Track Shoes" }
+          ]
+        },
+        {
+          "title": "Permanent (3)",
+          "cards": [
+            { "qty": 1, "name": "Ancient Covenant (2) q", "imageSrc": "/assets/boardgames/ahlcg_cards/ancient_covenant_2.png", "imageAlt": "Ancient Covenant (2)" },
+            { "qty": 1, "name": "Charisma (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/charisma_3.png", "imageAlt": "Charisma (3)" },
+            { "qty": 1, "name": "Versatile (2)", "imageSrc": "/assets/boardgames/ahlcg_cards/versatile_2.png", "imageAlt": "Versatile (2)" }
+          ]
+        },
+        {
+          "title": "Event (2)",
+          "cards": [
+            { "qty": 2, "name": "At a Crossroads (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/at_a_crossroads_1.png", "imageAlt": "At a Crossroads (1)" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Skill (24)",
+          "cards": [
+            { "qty": 2, "name": "Daring", "imageSrc": "/assets/boardgames/ahlcg_cards/daring.png", "imageAlt": "Daring" },
+            { "qty": 2, "name": "Eureka!", "imageSrc": "/assets/boardgames/ahlcg_cards/eureka.png", "imageAlt": "Eureka!" },
+            { "qty": 2, "name": "Guts", "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png", "imageAlt": "Guts" },
+            { "qty": 1, "name": "Helping Hand", "imageSrc": "/assets/boardgames/ahlcg_cards/helping_hand.png", "imageAlt": "Helping Hand" },
+            { "qty": 2, "name": "Long Shot", "imageSrc": "/assets/boardgames/ahlcg_cards/long_shot.png", "imageAlt": "Long Shot" },
+            { "qty": 2, "name": "Overpower", "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png", "imageAlt": "Overpower" },
+            { "qty": 2, "name": "Purified", "imageSrc": "/assets/boardgames/ahlcg_cards/purified.png", "imageAlt": "Purified" },
+            { "qty": 2, "name": "Quick Thinking q", "imageSrc": "/assets/boardgames/ahlcg_cards/quick_thinking.png", "imageAlt": "Quick Thinking" },
+            { "qty": 2, "name": "Resourceful", "imageSrc": "/assets/boardgames/ahlcg_cards/resourceful.png", "imageAlt": "Resourceful" },
+            { "qty": 2, "name": "Sharp Vision (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/sharp_vision_1.png", "imageAlt": "Sharp Vision (1)" },
+            { "qty": 2, "name": "Strong-Armed (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/strong_armed_1.png", "imageAlt": "Strong-Armed (1)" },
+            { "qty": 1, "name": "Stunning Blow", "imageSrc": "/assets/boardgames/ahlcg_cards/stunning_blow.png", "imageAlt": "Stunning Blow" },
+            { "qty": 2, "name": "Unrelenting (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/unrelenting_1.png", "imageAlt": "Unrelenting (1)" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "Siren Call ★", "imageSrc": "/assets/boardgames/ahlcg_cards/siren_call.png", "imageAlt": "Siren Call" },
+            { "qty": 1, "name": "The 13th Vision ★", "imageSrc": "/assets/boardgames/ahlcg_cards/the_13th_vision.png", "imageAlt": "The 13th Vision" }
+          ]
+        },
+        {
+          "title": "Enemy (1)",
+          "cards": [
+            { "qty": 1, "name": "Mob Enforcer ★", "imageSrc": "/assets/boardgames/ahlcg_cards/mob_enforcer.png", "imageAlt": "Mob Enforcer" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Silas-Marsh-DeckBuild-20260501-Yan.pdf",
+    "label": "Open Silas Deck PDF"
+  }
+}
