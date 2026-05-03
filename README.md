@@ -52,7 +52,7 @@ The repo currently mixes hand-authored pages with small data-driven renderers fo
 - `/arkham_horror_lcg_tcu_harvey_walters_20260214/`
 - `/arkham_horror_lcg_tcu_michael_mcglen_20260214/`
 - `/arkham_horror_lcg_tcu_wendy_adams_20260214/`
-- `/arkham_horror_lcg_tde_20260502/`
+- `/arkham_horror_lcg_tde_20260503/`
 - `/arkham_horror_lcg_tde_silas_marsh_20260503/`
 - `/tainted_grail_foa/`
 
@@ -114,7 +114,7 @@ python3 scripts/create_arkham_deck_page.py \
   --total-deck-size 33 \
   --xp-required 0 \
   --index-campaign-title "The Dream-Eaters Campaign" \
-  --index-session-label "05/02/2026 Campaign"
+  --index-session-label "05/03/2026 Campaign"
 ```
 
 2. Fill in the generated JSON deck contents.
@@ -144,7 +144,7 @@ Typical workflow for adding a new Arkham campaign session:
 
 1. Add or update the campaign entry inside `assets/data/arkham_horror_lcg_index.json`
 2. Add a new session object under that campaign's `sessions` array
-3. Create the detailed campaign record page under its own directory, for example `arkham_horror_lcg_tde_20260502/index.html`
+3. Create the detailed campaign record page under its own directory, for example `arkham_horror_lcg_tde_20260503/index.html`
 4. Add the matching root-level redirect file if you need compatibility with non-directory URLs
 
 ## AHLCG Collection Sync

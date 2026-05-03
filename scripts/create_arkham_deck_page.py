@@ -76,7 +76,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--redirect-template", default="archive/redirect_page.template.html", help="Redirect page template path relative to repo root.")
     parser.add_argument("--index-json", default="assets/data/arkham_horror_lcg_index.json", help="Campaign index JSON to update when index arguments are provided.")
     parser.add_argument("--index-campaign-title", help="Existing campaign title inside the index JSON, for example 'The Dream-Eaters Campaign'.")
-    parser.add_argument("--index-session-label", help="Existing session label inside the chosen campaign, for example '05/02/2026 Campaign'.")
+    parser.add_argument("--index-session-label", help="Existing session label inside the chosen campaign, for example '05/03/2026 Campaign'.")
     parser.add_argument("--force", action="store_true", help="Overwrite existing generated files.")
     return parser.parse_args()
 
