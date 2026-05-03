@@ -1,0 +1,84 @@
+{
+  "pageTitle": "Mandy Thompson - Deck Build (05/03/2026)",
+  "title": "Mandy Thompson Deck - 05/03/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/mandy_thompson_the_researcher.png",
+    "imageAlt": "Mandy Thompson",
+    "heading": "Mandy Thompson",
+    "details": [
+      "30 cards (36 total)",
+      "0 experience required",
+      "11 packs required",
+      "Class: Seeker",
+      "Built by LL on 05/03/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (10)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 2, "name": "Fingerprint Kit", "imageSrc": "/assets/boardgames/ahlcg_cards/fingerprint_kit.png", "imageAlt": "Fingerprint Kit" },
+            { "qty": 2, "name": "Hawk-Eye Folding Camera", "imageSrc": "/assets/boardgames/ahlcg_cards/hawk_eye_folding_camera.png", "imageAlt": "Hawk-Eye Folding Camera" },
+            { "qty": 2, "name": "Magnifying Glass", "imageSrc": "/assets/boardgames/ahlcg_cards/magnifying_glass.png", "imageAlt": "Magnifying Glass" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Mr. \"Rook\"", "imageSrc": "/assets/boardgames/ahlcg_cards/mr_rook_dealer_in_secrets.png", "imageAlt": "Mr. \"Rook\"" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 2, "name": "Higher Education", "imageSrc": "/assets/boardgames/ahlcg_cards/higher_education.png", "imageAlt": "Higher Education" }
+          ]
+        },
+        {
+          "title": "Permanent (1)",
+          "cards": [
+            { "qty": 1, "name": "Plumb the Depths ★", "imageSrc": "/assets/boardgames/arkham_horror_lcg_backcover.png", "imageAlt": "Plumb the Depths" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (17)",
+          "cards": [
+            { "qty": 3, "name": "Astounding Revelation", "imageSrc": "/assets/boardgames/ahlcg_cards/astounding_revelation.png", "imageAlt": "Astounding Revelation" },
+            { "qty": 2, "name": "Crack the Case", "imageSrc": "/assets/boardgames/ahlcg_cards/crack_the_case.png", "imageAlt": "Crack the Case" },
+            { "qty": 2, "name": "Deny Existence", "imageSrc": "/assets/boardgames/ahlcg_cards/deny_existence.png", "imageAlt": "Deny Existence" },
+            { "qty": 3, "name": "Occult Evidence ★", "imageSrc": "/assets/boardgames/ahlcg_cards/occult_evidence.png", "imageAlt": "Occult Evidence" },
+            { "qty": 3, "name": "Open Gate", "imageSrc": "/assets/boardgames/ahlcg_cards/open_gate.png", "imageAlt": "Open Gate" },
+            { "qty": 2, "name": "Shortcut", "imageSrc": "/assets/boardgames/ahlcg_cards/shortcut.png", "imageAlt": "Shortcut" },
+            { "qty": 2, "name": "Transmogrify", "imageSrc": "/assets/boardgames/ahlcg_cards/transmogrify.png", "imageAlt": "Transmogrify" }
+          ]
+        },
+        {
+          "title": "Skill (6)",
+          "cards": [
+            { "qty": 2, "name": "Deduction", "imageSrc": "/assets/boardgames/ahlcg_cards/deduction.png", "imageAlt": "Deduction" },
+            { "qty": 2, "name": "Enraptured", "imageSrc": "/assets/boardgames/ahlcg_cards/enraptured.png", "imageAlt": "Enraptured" },
+            { "qty": 2, "name": "Inquiring Mind", "imageSrc": "/assets/boardgames/ahlcg_cards/inquiring_mind.png", "imageAlt": "Inquiring Mind" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" },
+            { "qty": 1, "name": "Shocking Discovery ★", "imageSrc": "/assets/boardgames/ahlcg_cards/shocking_discovery.png", "imageAlt": "Shocking Discovery" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Mandy-Thompson-DeckBuild-20260503-LL.pdf",
+    "label": "Open Mandy Deck PDF"
+  }
+}
