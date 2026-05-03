@@ -54,6 +54,7 @@ The repo currently mixes hand-authored pages with small data-driven renderers fo
 - `/arkham_horror_lcg_tcu_wendy_adams_20260214/`
 - `/arkham_horror_lcg_tde_20260503/`
 - `/arkham_horror_lcg_tde_silas_marsh_20260503/`
+- `/arkham_horror_lcg_tde_wilson_richards_20260503/`
 - `/tainted_grail_foa/`
 
 ## Data-Driven Pages
@@ -67,6 +68,7 @@ Arkham investigator deck pages are rendered from JSON:
 - `assets/data/arkham_harvey_walters_20260214.json`
 - `assets/data/arkham_michael_mcglen_20260214.json`
 - `assets/data/arkham_silas_marsh_20260503.json`
+- `assets/data/arkham_wilson_richards_20260503.json`
 - `assets/data/arkham_wendy_adams_20260214.json`
 
 Library page is rendered from:

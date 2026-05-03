@@ -1,0 +1,88 @@
+{
+  "pageTitle": "Wilson Richards - Deck Build (05/03/2026)",
+  "title": "Wilson Richards Deck - 05/03/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/wilson_richards_the_handyman.png",
+    "imageAlt": "Wilson Richards",
+    "heading": "Wilson Richards",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "12 packs required",
+      "Class: Guardian",
+      "Built by Shengbo on 05/03/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (12)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 1, "name": "Fingerprint Kit", "imageSrc": "/assets/boardgames/ahlcg_cards/fingerprint_kit.png", "imageAlt": "Fingerprint Kit" },
+            { "qty": 1, "name": "Lockpicks", "imageSrc": "/assets/boardgames/ahlcg_cards/lockpicks.png", "imageAlt": "Lockpicks" },
+            { "qty": 1, "name": "Pocket Multi Tool ★", "imageSrc": "/assets/boardgames/ahlcg_cards/pocket_multi_tool.png", "imageAlt": "Pocket Multi Tool" },
+            { "qty": 2, "name": "Pitchfork", "imageSrc": "/assets/boardgames/ahlcg_cards/pitchfork.png", "imageAlt": "Pitchfork" },
+            { "qty": 2, "name": "Sledgehammer", "imageSrc": "/assets/boardgames/ahlcg_cards/sledgehammer.png", "imageAlt": "Sledgehammer" }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            { "qty": 1, "name": "Hallowed Mirror", "imageSrc": "/assets/boardgames/ahlcg_cards/hallowed_mirror.png", "imageAlt": "Hallowed Mirror" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Tetsuo Mori", "imageSrc": "/assets/boardgames/ahlcg_cards/tetsuo_mori_too_noble_for_his_own_good.png", "imageAlt": "Tetsuo Mori" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 1, "name": "Enchanted Blade", "imageSrc": "/assets/boardgames/ahlcg_cards/enchanted_blade.png", "imageAlt": "Enchanted Blade" },
+            { "qty": 1, "name": "Wolf Mask", "imageSrc": "/assets/boardgames/ahlcg_cards/wolf_mask_the_moons_sire.png", "imageAlt": "Wolf Mask" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (11)",
+          "cards": [
+            { "qty": 1, "name": "Ad Hoc ★", "imageSrc": "/assets/boardgames/ahlcg_cards/ad_hoc.png", "imageAlt": "Ad Hoc" },
+            { "qty": 2, "name": "Emergency Cache", "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png", "imageAlt": "Emergency Cache" },
+            { "qty": 1, "name": "Glory", "imageSrc": "/assets/boardgames/ahlcg_cards/glory.png", "imageAlt": "Glory" },
+            { "qty": 2, "name": "Pushed to the Limit", "imageSrc": "/assets/boardgames/ahlcg_cards/pushed_to_the_limit.png", "imageAlt": "Pushed to the Limit" },
+            { "qty": 1, "name": "Refine", "imageSrc": "/assets/boardgames/ahlcg_cards/refine.png", "imageAlt": "Refine" },
+            { "qty": 2, "name": "Tinker", "imageSrc": "/assets/boardgames/ahlcg_cards/tinker.png", "imageAlt": "Tinker" },
+            { "qty": 2, "name": "Toe to Toe", "imageSrc": "/assets/boardgames/ahlcg_cards/toe_to_toe.png", "imageAlt": "Toe to Toe" }
+          ]
+        },
+        {
+          "title": "Skill (8)",
+          "cards": [
+            { "qty": 2, "name": "Daring", "imageSrc": "/assets/boardgames/ahlcg_cards/daring.png", "imageAlt": "Daring" },
+            { "qty": 2, "name": "Overpower", "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png", "imageAlt": "Overpower" },
+            { "qty": 2, "name": "Unexpected Courage", "imageSrc": "/assets/boardgames/ahlcg_cards/unexpected_courage.png", "imageAlt": "Unexpected Courage" },
+            { "qty": 2, "name": "Vicious Blow", "imageSrc": "/assets/boardgames/ahlcg_cards/vicious_blow.png", "imageAlt": "Vicious Blow" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "Hasty Repairs ★", "imageSrc": "/assets/boardgames/ahlcg_cards/hasty_repairs.png", "imageAlt": "Hasty Repairs" },
+            { "qty": 1, "name": "Random Basic Weakness ★", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Wilson-Richards-DeckBuild-20260503-Shengbo.pdf",
+    "label": "Open Wilson Deck PDF"
+  }
+}

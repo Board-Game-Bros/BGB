@@ -16,21 +16,21 @@
               "imageSrc": "/assets/boardgames/ahlcg_investigators/harvey_walters_the_professor.png",
               "imageAlt": "Harvey Walters",
               "builderName": "Built by Yan",
-              "buildDate": "Built: 02/14/2026 · XP: 0"
+              "buildDate": "Built: 02/14/2026 \u00b7 XP: 0"
             },
             {
               "href": "/arkham_horror_lcg_tcu_michael_mcglen_20260214/",
               "imageSrc": "/assets/boardgames/ahlcg_investigators/michael_mcglen_the_gangster.png",
               "imageAlt": "Michael McGlen",
               "builderName": "Built by Shengbo",
-              "buildDate": "Built: 02/14/2026 · XP: 0"
+              "buildDate": "Built: 02/14/2026 \u00b7 XP: 0"
             },
             {
               "href": "/arkham_horror_lcg_tcu_wendy_adams_20260214/",
               "imageSrc": "/assets/boardgames/ahlcg_investigators/wendy_adams_the_urchin.png",
               "imageAlt": "Wendy Adams",
               "builderName": "Built by LL",
-              "buildDate": "Built: 02/14/2026 · XP: 0"
+              "buildDate": "Built: 02/14/2026 \u00b7 XP: 0"
             }
           ]
         }
@@ -51,7 +51,14 @@
               "imageSrc": "/assets/boardgames/ahlcg_investigators/silas_marsh_the_sailor.png",
               "imageAlt": "Silas Marsh",
               "builderName": "Built by Yan",
-              "buildDate": "Built: 05/03/2026 · XP: 0"
+              "buildDate": "Built: 05/03/2026 \u00b7 XP: 0"
+            },
+            {
+              "href": "/arkham_horror_lcg_tde_wilson_richards_20260503/",
+              "imageSrc": "/assets/boardgames/ahlcg_investigators/wilson_richards_the_handyman.png",
+              "imageAlt": "Wilson Richards",
+              "builderName": "Built by Shengbo",
+              "buildDate": "Built: 05/03/2026 \u00b7 XP: 0"
             }
           ]
         }
