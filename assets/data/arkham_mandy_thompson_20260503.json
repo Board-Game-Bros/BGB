@@ -40,7 +40,7 @@
         {
           "title": "Permanent (1)",
           "cards": [
-            { "qty": 1, "name": "Plumb the Depths ★", "imageSrc": "/assets/boardgames/arkham_horror_lcg_backcover.png", "imageAlt": "Plumb the Depths" }
+            { "qty": 1, "name": "Plumb the Depths ★", "imageSrc": "/assets/boardgames/ahlcg_cards/plumb_the_depths.png", "imageAlt": "Plumb the Depths" }
           ]
         }
       ]
