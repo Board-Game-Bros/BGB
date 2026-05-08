@@ -2,11 +2,26 @@
   "pageTitle": "The Dream-Eaters Campaign - 05/03/2026",
   "headerTitle": "The Dream-Eaters - 05/03/2026 Campaign",
   "subnav": [
-    { "href": "#story-notes", "label": "Overview" },
-    { "href": "#timeline", "label": "Timeline" },
-    { "href": "#dream-quest", "label": "Dream-Quest" },
-    { "href": "#web-of-dreams", "label": "Web of Dreams" },
-    { "href": "#upgrade-history", "label": "Upgrade History" }
+    {
+      "href": "#story-notes",
+      "label": "Overview"
+    },
+    {
+      "href": "#timeline",
+      "label": "Timeline"
+    },
+    {
+      "href": "#dream-quest",
+      "label": "Dream-Quest"
+    },
+    {
+      "href": "#web-of-dreams",
+      "label": "Web of Dreams"
+    },
+    {
+      "href": "#upgrade-history",
+      "label": "Upgrade History"
+    }
   ],
   "overview": {
     "title": "Campaign Overview",
@@ -65,14 +80,38 @@
   "timeline": {
     "title": "Interwoven Timeline",
     "steps": [
-      { "title": "1. Dream-Quest Prologue -> Scenario I-A", "text": "Shared-dream phenomenon established in Arkham; proceed to Beyond the Gates of Sleep for the dreamlands team." },
-      { "title": "2. Web of Dreams Scenario I", "text": "Opening chapter for Campaign B." },
-      { "title": "3. Dream-Quest Scenario II", "text": "Resolve A-side follow-up before returning to B." },
-      { "title": "4. Web of Dreams Scenario II", "text": "Second chapter for the waking-world line." },
-      { "title": "5. Dream-Quest Scenario III", "text": "Late-campaign A branch and cross-campaign consequences." },
-      { "title": "6. Web of Dreams Scenario III", "text": "Late-campaign B branch and cross-campaign consequences." },
-      { "title": "7. Dream-Quest Scenario IV", "text": "Campaign A finale." },
-      { "title": "8. Web of Dreams Scenario IV", "text": "Campaign B finale and full-run resolution." }
+      {
+        "title": "1. Dream-Quest Prologue -> Scenario I-A",
+        "text": "Shared-dream phenomenon established in Arkham; proceed to Beyond the Gates of Sleep for the dreamlands team."
+      },
+      {
+        "title": "2. Web of Dreams Scenario I",
+        "text": "Opening chapter for Campaign B."
+      },
+      {
+        "title": "3. Dream-Quest Scenario II",
+        "text": "Resolve A-side follow-up before returning to B."
+      },
+      {
+        "title": "4. Web of Dreams Scenario II",
+        "text": "Second chapter for the waking-world line."
+      },
+      {
+        "title": "5. Dream-Quest Scenario III",
+        "text": "Late-campaign A branch and cross-campaign consequences."
+      },
+      {
+        "title": "6. Web of Dreams Scenario III",
+        "text": "Late-campaign B branch and cross-campaign consequences."
+      },
+      {
+        "title": "7. Dream-Quest Scenario IV",
+        "text": "Campaign A finale."
+      },
+      {
+        "title": "8. Web of Dreams Scenario IV",
+        "text": "Campaign B finale and full-run resolution."
+      }
     ],
     "crossNotes": {
       "title": "Cross-Campaign Notes",
@@ -80,7 +119,8 @@
       "items": [
         "Track any story effects that explicitly carry from one line into the other here.",
         "Keep separate chaos bag updates inside each track unless a rule specifically says the other line changes.",
-        "Use the alternating order above when adding scenario records and upgrade entries."
+        "Use the alternating order above when adding scenario records and upgrade entries.",
+        "Dream-Quest Scenario I-A already recorded that the dreamers strayed from the path and that the chaos bag reached three skull tokens by scenario end."
       ]
     }
   },
@@ -118,13 +158,47 @@
             "The party decides to recreate Virgil's dream conditions and split responsibilities: one team will travel into the dreamlands while the other remains in the waking world to observe and protect them.",
             "Dream-Quest prologue instruction: proceed to Scenario I-A, Beyond the Gates of Sleep."
           ]
+        },
+        {
+          "title": "Scenario I-A Setup Notes",
+          "items": [
+            "At scenario start, each investigator chose a different dream entry as instructed.",
+            "Silas Marsh chose the Survivor dream and was instructed to search his deck for a Survivor card and play it, paying its cost.",
+            "Mandy Thompson chose the Miskatonic / Scholar dream and was instructed to search her deck for a Tome card and play it, paying its cost.",
+            "Wilson Richards chose the Guardian dream and was instructed to search his deck for a Guardian card and play it, paying its cost.",
+            "Special setup rule: there was no encounter deck at the start of the scenario, and act 1a prevented drawing encounter cards during the mythos phase until the encounter deck was formed later in the scenario."
+          ]
+        },
+        {
+          "title": "Scenario I-A Result Summary",
+          "items": [
+            "Scenario result: Resolution 1.",
+            "Campaign log record added during the scenario: the dreamers strayed from the path.",
+            "Chaos bag end-state recorded from the app: the bag contained three skull tokens by scenario end.",
+            "All three Dream-Quest investigators survived the scenario: Wilson Richards, Silas Marsh, and Mandy Thompson.",
+            "Resolution 1 record added: the cats collected their tribute from the Zoogs.",
+            "Wilson Richards took the optional story asset and earned Randolph Carter (Expert Dreamer).",
+            "Victory display total recorded from the run: 13, so each investigator earned 13 XP from the scenario."
+          ]
         }
       ],
       "scenarios": [
-        { "title": "Prologue -> Scenario I-A", "text": "Shared-dream outbreak established in Arkham. The Dream-Quest party enters the dreamlands next in Beyond the Gates of Sleep." },
-        { "title": "Scenario II", "text": "Awaiting Campaign A second chapter." },
-        { "title": "Scenario III", "text": "Awaiting Campaign A third chapter." },
-        { "title": "Scenario IV", "text": "Awaiting Campaign A finale." }
+        {
+          "title": "Prologue -> Scenario I-A",
+          "text": "Shared-dream outbreak established in Arkham, the Dream-Quest party entered Beyond the Gates of Sleep, each investigator chose a different dream, and the run ended at Resolution 1 with the dreamers straying from the path."
+        },
+        {
+          "title": "Scenario II",
+          "text": "Awaiting Campaign A second chapter."
+        },
+        {
+          "title": "Scenario III",
+          "text": "Awaiting Campaign A third chapter."
+        },
+        {
+          "title": "Scenario IV",
+          "text": "Awaiting Campaign A finale."
+        }
       ]
     },
     {
@@ -151,10 +225,22 @@
         }
       ],
       "scenarios": [
-        { "title": "Scenario I", "text": "Pending Web of Dreams opening scenario." },
-        { "title": "Scenario II", "text": "Pending Campaign B second chapter." },
-        { "title": "Scenario III", "text": "Pending Campaign B third chapter." },
-        { "title": "Scenario IV", "text": "Pending Campaign B finale." }
+        {
+          "title": "Scenario I",
+          "text": "Pending Web of Dreams opening scenario."
+        },
+        {
+          "title": "Scenario II",
+          "text": "Pending Campaign B second chapter."
+        },
+        {
+          "title": "Scenario III",
+          "text": "Pending Campaign B third chapter."
+        },
+        {
+          "title": "Scenario IV",
+          "text": "Pending Campaign B finale."
+        }
       ]
     }
   ],
@@ -175,16 +261,16 @@
           "name": "Wilson Richards",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/wilson_richards_the_handyman.png",
           "imageAlt": "Wilson Richards: The Handyman",
-          "currentXp": "Current XP: 0",
-          "upgradeHtml": "",
+          "currentXp": "Current XP: 13",
+          "upgradeHtml": "<div class=\"upgrade-entry\" data-entry-uid=\"e2\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Randolph Carter (Expert Dreamer) (Story Asset)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/randolph_carter_expert_dreamer.png\" alt=\"Randolph Carter (Expert Dreamer) (Story Asset)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e2\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         },
         {
           "name": "Mandy Thompson",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/mandy_thompson_the_researcher.png",
           "imageAlt": "Mandy Thompson: The Researcher",
-          "currentXp": "Current XP: 0",
-          "upgradeHtml": "",
+          "currentXp": "Current XP: 13",
+          "upgradeHtml": "<div class=\"upgrade-entry\" data-entry-uid=\"e3\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e3\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         }
       ]
