@@ -56,9 +56,9 @@
           "cards": [
             {
               "qty": 2,
-              "name": "Leo De Luca",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/leo_de_luca_the_louisiana_lion.png",
-              "imageAlt": "Leo De Luca"
+              "name": "Guard Dog",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/guard_dog.png",
+              "imageAlt": "Guard Dog"
             }
           ]
         },
