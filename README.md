@@ -151,6 +151,17 @@ Typical workflow for adding a new Arkham campaign session:
 3. Create the detailed campaign record page under its own directory, for example `arkham_horror_lcg_tde_20260503/index.html`
 4. Add the matching root-level redirect file if you need compatibility with non-directory URLs
 
+For editable campaign upgrade pages that use `scripts/ahlcg-upgrade-manager.js`, you can now auto-inject the opening deck note for every investigator card by passing:
+
+```js
+campaignStartNote: {
+  date: "05/03/2026",
+  runName: "Dream-Eaters",
+}
+```
+
+This renders `Campaign Start (...): Base deck recorded for the ... run.` at the top of each `.upgrade-list`, so the note no longer needs to be repeated manually in static HTML.
+
 ## AHLCG Collection Sync
 
 Refresh AHLCG images and the standard-name library from ArkhamDB:

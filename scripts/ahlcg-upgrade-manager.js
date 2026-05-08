@@ -27,6 +27,15 @@
     const localStateEnvelope = window.BGBLocalStateEnvelope && typeof window.BGBLocalStateEnvelope === "object"
       ? window.BGBLocalStateEnvelope
       : null;
+    const campaignStartNote = options.campaignStartNote && typeof options.campaignStartNote === "object"
+      ? options.campaignStartNote
+      : null;
+    const campaignStartDate = campaignStartNote && typeof campaignStartNote.date === "string"
+      ? campaignStartNote.date.trim()
+      : "";
+    const campaignStartRunName = campaignStartNote && typeof campaignStartNote.runName === "string"
+      ? campaignStartNote.runName.trim()
+      : "";
 
     const cardCatalog = cardImageFiles.map((file) => ({
       file,
@@ -76,6 +85,11 @@
     function getRemoteSyncToken() {
       if (!remoteSync || !githubSync || typeof githubSync.getToken !== "function") return "";
       return githubSync.getToken(remoteSyncTokenStorageKey);
+    }
+
+    function getCampaignStartNoteText() {
+      if (!campaignStartDate || !campaignStartRunName) return "";
+      return `Campaign Start (${campaignStartDate}): Base deck recorded for the ${campaignStartRunName} run.`;
     }
 
     function setRemoteSyncToken(nextToken) {
@@ -2701,6 +2715,42 @@
       });
     }
 
+    function ensureCampaignStartNotes() {
+      const noteText = getCampaignStartNoteText();
+      if (!noteText) return;
+
+      document.querySelectorAll(".upgrade-card .upgrade-list").forEach((upgradeList) => {
+        if (!(upgradeList instanceof HTMLElement)) return;
+
+        const existingNotes = Array.from(upgradeList.querySelectorAll(":scope > .campaign-start-note"));
+        let noteNode = existingNotes[0] || null;
+
+        if (!noteNode) {
+          const firstParagraph = upgradeList.querySelector(":scope > p");
+          if (firstParagraph && /^Campaign Start\s*\(/i.test(String(firstParagraph.textContent || "").trim())) {
+            noteNode = firstParagraph;
+            noteNode.classList.add("campaign-start-note");
+          }
+        }
+
+        if (!noteNode) {
+          noteNode = document.createElement("p");
+          noteNode.className = "campaign-start-note";
+          upgradeList.insertBefore(noteNode, upgradeList.firstChild);
+        }
+
+        noteNode.textContent = noteText;
+
+        existingNotes.slice(1).forEach((node) => node.remove());
+        Array.from(upgradeList.querySelectorAll(":scope > p")).forEach((node) => {
+          if (node === noteNode) return;
+          if (/^Campaign Start\s*\(/i.test(String(node.textContent || "").trim())) {
+            node.remove();
+          }
+        });
+      });
+    }
+
     function parseAllXpFromCard(card) {
       const earned = computeEarnedXp(card, null);
       let spent = 0;
@@ -2756,6 +2806,7 @@
       applyAdaptivePreviewSize();
     }, { passive: true });
 
+    ensureCampaignStartNotes();
     try {
       sourceStateHashAtLoad = githubSync && typeof githubSync.quickHash === "function"
         ? githubSync.quickHash(JSON.stringify(buildCurrentUpgradeState()))
@@ -2764,6 +2815,7 @@
       sourceStateHashAtLoad = "";
     }
     restoreUpgradeState();
+    ensureCampaignStartNotes();
     normalizeExistingCardNames();
     document.querySelectorAll(".upgrade-entry").forEach((entry) => {
       normalizeStaticEntryCardRows(entry);
