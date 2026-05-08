@@ -53,9 +53,9 @@ The repo currently mixes hand-authored pages with small data-driven renderers fo
 - `/arkham_horror_lcg_tcu_michael_mcglen_20260214/`
 - `/arkham_horror_lcg_tcu_wendy_adams_20260214/`
 - `/arkham_horror_lcg_tde_20260503/`
-- `/arkham_horror_lcg_tde_silas_marsh_20260503/`
+- `/arkham_horror_lcg_tde_silas_marsh_20260508/`
 - `/arkham_horror_lcg_tde_wilson_richards_20260503/`
-- `/arkham_horror_lcg_tde_mandy_thompson_20260503/`
+- `/arkham_horror_lcg_tde_mandy_thompson_20260508/`
 - `/tainted_grail_foa/`
 
 ## Data-Driven Pages
@@ -67,9 +67,9 @@ Arkham campaign index is rendered from:
 Arkham investigator deck pages are rendered from JSON:
 
 - `assets/data/arkham_harvey_walters_20260214.json`
-- `assets/data/arkham_mandy_thompson_20260503.json`
+- `assets/data/arkham_mandy_thompson_20260508.json`
 - `assets/data/arkham_michael_mcglen_20260214.json`
-- `assets/data/arkham_silas_marsh_20260503.json`
+- `assets/data/arkham_silas_marsh_20260508.json`
 - `assets/data/arkham_wilson_richards_20260503.json`
 - `assets/data/arkham_wendy_adams_20260214.json`
 
@@ -108,12 +108,12 @@ python3 scripts/create_arkham_deck_page.py \
   --project-root . \
   --campaign-code tde \
   --investigator "Silas Marsh" \
-  --date 2026-05-03 \
+  --date 2026-05-08 \
   --builder Yan \
   --class-name Survivor \
   --image-src /assets/boardgames/ahlcg_investigators/silas_marsh_the_sailor.png \
-  --pdf-path assets/Arkham_Horror_Decks/Silas-Marsh-DeckBuild-20260503-Yan.pdf \
-  --packs-required 11 \
+  --pdf-path assets/Arkham_Horror_Decks/Silas-Marsh-DeckBuild-20260508-Yan.pdf \
+  --packs-required 10 \
   --main-deck-size 30 \
   --total-deck-size 33 \
   --xp-required 0 \

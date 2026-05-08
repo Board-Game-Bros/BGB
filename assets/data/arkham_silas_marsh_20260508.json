@@ -1,18 +1,16 @@
 {
-  "pageTitle": "Silas Marsh - Deck Build (05/03/2026)",
-  "title": "Silas Marsh Deck - 05/03/2026",
+  "pageTitle": "Silas Marsh - Deck Build (05/08/2026)",
+  "title": "Silas Marsh Deck - 05/08/2026",
   "overview": {
     "imageSrc": "/assets/boardgames/ahlcg_investigators/silas_marsh_the_sailor.png",
     "imageAlt": "Silas Marsh",
     "heading": "Silas Marsh",
     "details": [
-      "Ch1 True Solo | Grindstone Sailor (TIC)",
       "30 cards (33 total)",
       "0 experience required",
-      "11 packs required",
+      "10 packs required",
       "Class: Survivor",
-      "Built by Yan on 05/03/2026",
-      "Taboo List (2025-07-11)"
+      "Built by Yan on 05/08/2026"
     ]
   },
   "deckColumns": [
@@ -44,7 +42,11 @@
           "cards": [
             { "qty": 2, "name": "Track Shoes", "imageSrc": "/assets/boardgames/ahlcg_cards/track_shoes.png", "imageAlt": "Track Shoes" }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "sections": [
         {
           "title": "Event (6)",
           "cards": [
@@ -52,11 +54,7 @@
             { "qty": 2, "name": "Emergency Cache", "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png", "imageAlt": "Emergency Cache" },
             { "qty": 2, "name": "Lucky!", "imageSrc": "/assets/boardgames/ahlcg_cards/lucky.png", "imageAlt": "Lucky!" }
           ]
-        }
-      ]
-    },
-    {
-      "sections": [
+        },
         {
           "title": "Skill (14)",
           "cards": [
@@ -64,16 +62,10 @@
             { "qty": 2, "name": "Desperate Search", "imageSrc": "/assets/boardgames/ahlcg_cards/desperate_search.png", "imageAlt": "Desperate Search" },
             { "qty": 1, "name": "Dreams of the Deep ★", "imageSrc": "/assets/boardgames/ahlcg_cards/dreams_of_the_deep_the_deep_gate.png", "imageAlt": "Dreams of the Deep" },
             { "qty": 2, "name": "Fearless", "imageSrc": "/assets/boardgames/ahlcg_cards/fearless.png", "imageAlt": "Fearless" },
-            { "qty": 2, "name": "Inquiring Mind", "imageSrc": "/assets/boardgames/ahlcg_cards/inquiring_mind.png", "imageAlt": "Inquiring Mind" },
             { "qty": 1, "name": "Nautical Prowess ★", "imageSrc": "/assets/boardgames/ahlcg_cards/nautical_prowess.png", "imageAlt": "Nautical Prowess" },
+            { "qty": 2, "name": "Rise to the Occasion", "imageSrc": "/assets/boardgames/ahlcg_cards/rise_to_the_occasion.png", "imageAlt": "Rise to the Occasion" },
             { "qty": 2, "name": "Take Heart", "imageSrc": "/assets/boardgames/ahlcg_cards/take_heart.png", "imageAlt": "Take Heart" },
             { "qty": 2, "name": "Unexpected Courage", "imageSrc": "/assets/boardgames/ahlcg_cards/unexpected_courage.png", "imageAlt": "Unexpected Courage" }
-          ]
-        },
-        {
-          "title": "Permanent (1)",
-          "cards": [
-            { "qty": 1, "name": "Charisma (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/charisma_3.png", "imageAlt": "Charisma (3)" }
           ]
         },
         {
@@ -86,7 +78,7 @@
     }
   ],
   "pdf": {
-    "href": "/assets/Arkham_Horror_Decks/Silas-Marsh-DeckBuild-20260503-Yan.pdf",
+    "href": "/assets/Arkham_Horror_Decks/Silas-Marsh-DeckBuild-20260508-Yan.pdf",
     "label": "Open Silas Deck PDF"
   }
 }

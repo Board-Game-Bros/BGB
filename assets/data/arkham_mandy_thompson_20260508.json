@@ -1,16 +1,16 @@
 {
-  "pageTitle": "Mandy Thompson - Deck Build (05/03/2026)",
-  "title": "Mandy Thompson Deck - 05/03/2026",
+  "pageTitle": "Mandy Thompson - Deck Build (05/08/2026)",
+  "title": "Mandy Thompson Deck - 05/08/2026",
   "overview": {
     "imageSrc": "/assets/boardgames/ahlcg_investigators/mandy_thompson_the_researcher.png",
     "imageAlt": "Mandy Thompson",
     "heading": "Mandy Thompson",
     "details": [
-      "30 cards (36 total)",
+      "30 cards (35 total)",
       "0 experience required",
-      "11 packs required",
+      "10 packs required",
       "Class: Seeker",
-      "Built by LL on 05/03/2026"
+      "Built by LL on 05/08/2026"
     ]
   },
   "deckColumns": [
@@ -35,12 +35,6 @@
           "label": "Other",
           "cards": [
             { "qty": 2, "name": "Higher Education", "imageSrc": "/assets/boardgames/ahlcg_cards/higher_education.png", "imageAlt": "Higher Education" }
-          ]
-        },
-        {
-          "title": "Permanent (1)",
-          "cards": [
-            { "qty": 1, "name": "Plumb the Depths ★", "imageSrc": "/assets/boardgames/ahlcg_cards/plumb_the_depths.png", "imageAlt": "Plumb the Depths" }
           ]
         }
       ]
@@ -78,7 +72,7 @@
     }
   ],
   "pdf": {
-    "href": "/assets/Arkham_Horror_Decks/Mandy-Thompson-DeckBuild-20260503-LL.pdf",
+    "href": "/assets/Arkham_Horror_Decks/Mandy-Thompson-DeckBuild-20260508-LL.pdf",
     "label": "Open Mandy Deck PDF"
   }
 }
