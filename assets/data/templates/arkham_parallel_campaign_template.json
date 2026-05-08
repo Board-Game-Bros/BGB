@@ -1,0 +1,121 @@
+{
+  "pageTitle": "Parallel Campaign Title",
+  "headerTitle": "Parallel Campaign Heading",
+  "subnav": [
+    { "href": "#story-notes", "label": "Overview" },
+    { "href": "#timeline", "label": "Timeline" },
+    { "href": "#track-a", "label": "Track A" },
+    { "href": "#track-b", "label": "Track B" },
+    { "href": "#upgrade-history", "label": "Upgrade History" }
+  ],
+  "overview": {
+    "title": "Campaign Overview",
+    "statusChips": [],
+    "metaItems": [],
+    "sections": [
+      {
+        "title": "Run Structure",
+        "metaItems": [],
+        "notes": [
+          {
+            "title": "How This Page Is Organized",
+            "items": []
+          }
+        ]
+      }
+    ],
+    "teamColumns": [
+      {
+        "title": "Track A Team",
+        "items": [],
+        "text": ""
+      },
+      {
+        "title": "Track B Team",
+        "items": [],
+        "text": ""
+      }
+    ]
+  },
+  "timeline": {
+    "title": "Interwoven Timeline",
+    "steps": [
+      { "title": "1. Track A Scenario I", "text": "" },
+      { "title": "2. Track B Scenario I", "text": "" }
+    ],
+    "crossNotes": {
+      "title": "Cross-Campaign Notes",
+      "listClass": "campaign-log-list",
+      "items": []
+    }
+  },
+  "trackSectionTitle": "Parallel Campaign Tracks",
+  "tracks": [
+    {
+      "id": "track-a",
+      "title": "Campaign A",
+      "subtitle": "",
+      "statusChips": [],
+      "metaItems": [],
+      "notes": [
+        {
+          "title": "Track Notes",
+          "items": []
+        }
+      ],
+      "scenarios": [
+        { "title": "Scenario I", "text": "" },
+        { "title": "Scenario II", "text": "" },
+        { "title": "Scenario III", "text": "" },
+        { "title": "Scenario IV", "text": "" }
+      ]
+    },
+    {
+      "id": "track-b",
+      "title": "Campaign B",
+      "subtitle": "",
+      "statusChips": [],
+      "metaItems": [],
+      "notes": [
+        {
+          "title": "Track Notes",
+          "items": []
+        }
+      ],
+      "scenarios": [
+        { "title": "Scenario I", "text": "" },
+        { "title": "Scenario II", "text": "" },
+        { "title": "Scenario III", "text": "" },
+        { "title": "Scenario IV", "text": "" }
+      ]
+    }
+  ],
+  "upgradeHistoryTitle": "Deck Upgrade History",
+  "upgradeTracks": [
+    {
+      "title": "Campaign A",
+      "cards": []
+    },
+    {
+      "title": "Campaign B",
+      "emptyNote": {
+        "title": "Upgrade Slots Reserved",
+        "items": []
+      }
+    }
+  ],
+  "backHref": "/arkham_horror_lcg/",
+  "backLabel": "Back to Arkham Horror LCG",
+  "upgradeManager": {
+    "storageKey": "ahlcg_parallel_campaign_upgrade_state_v1",
+    "editPassword": "",
+    "campaignStartNote": {
+      "date": "MM/DD/YYYY",
+      "runName": "Campaign Name"
+    },
+    "inactivityMs": 120000,
+    "remoteSync": null,
+    "remoteSyncTokenStorageKey": "bgb_github_sync_token_v1",
+    "remoteSyncDebounceMs": 2800
+  }
+}

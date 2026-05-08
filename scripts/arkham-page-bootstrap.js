@@ -18,6 +18,17 @@
         "/scripts/arkham-deck-preview.js?v=20260401a",
       ],
     },
+    "parallel-campaign": {
+      rootId: "arkham-parallel-campaign-root",
+      scripts: [
+        "/scripts/ahlcg-standard-library.js",
+        "/scripts/shared-github-sync.js?v=20260401a",
+        "/scripts/shared-edit-sync-gate.js?v=20260228a",
+        "/scripts/shared-local-state-envelope.js?v=20260306a",
+        "/scripts/ahlcg-upgrade-manager.js?v=20260508a",
+        "/scripts/arkham-parallel-campaign-page.js?v=20260508a",
+      ],
+    },
   };
 
   const config = pageConfigs[pageType];

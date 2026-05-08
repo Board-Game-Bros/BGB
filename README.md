@@ -85,7 +85,9 @@ Simple content pages are rendered from:
 Template for new investigator deck pages:
 
 - `assets/data/templates/arkham_investigator_deck_template.json`
+- `assets/data/templates/arkham_parallel_campaign_template.json`
 - `archive/arkham_investigator_page_shell.template.html`
+- `archive/arkham_parallel_campaign_page_shell.template.html`
 - `archive/redirect_page.template.html`
 
 ## Arkham Page Conventions
@@ -94,9 +96,11 @@ Lightweight Arkham pages now use shared bootstraps instead of repeating static H
 
 - `scripts/arkham-page-bootstrap.js` loads shared CSS, shell, base scripts, and the correct page renderer based on `data-arkham-page`.
 - `scripts/redirect-page.js` handles root-level compatibility redirects based on `data-redirect-to`.
+- `scripts/arkham-parallel-campaign-page.js` renders linked multi-track campaign record pages such as Dream-Eaters from JSON data.
 - `scripts/create_arkham_deck_page.py` scaffolds the standard JSON page, directory page, and root-level redirect for new investigator deck pages, and can optionally append the investigator to an existing campaign session in the index JSON.
 - `arkham_horror_lcg/index.html` is the campaign index entry page.
 - Investigator deck pages such as `arkham_horror_lcg_tcu_harvey_walters_20260214/index.html` are thin wrappers that only declare page type, title, and JSON source.
+- Parallel campaign record pages such as `arkham_horror_lcg_tde_20260503/index.html` are thin wrappers that declare `data-arkham-page="parallel-campaign"` and point at a JSON record file.
 - Root-level `arkham_horror_lcg*.html` files are thin wrappers that only declare a redirect target.
 
 Recommended workflow for adding a new investigator deck page:
@@ -141,7 +145,9 @@ When both index arguments are supplied, the script adds or replaces the investig
 Manual fallback if you do not want to use the script:
 
 - `assets/data/templates/arkham_investigator_deck_template.json`
+- `assets/data/templates/arkham_parallel_campaign_template.json`
 - `archive/arkham_investigator_page_shell.template.html`
+- `archive/arkham_parallel_campaign_page_shell.template.html`
 - `archive/redirect_page.template.html`
 
 Typical workflow for adding a new Arkham campaign session:
@@ -150,6 +156,15 @@ Typical workflow for adding a new Arkham campaign session:
 2. Add a new session object under that campaign's `sessions` array
 3. Create the detailed campaign record page under its own directory, for example `arkham_horror_lcg_tde_20260503/index.html`
 4. Add the matching root-level redirect file if you need compatibility with non-directory URLs
+
+For special cases like Dream-Eaters that run as two linked campaign tracks, prefer the parallel-campaign renderer instead of hand-authoring the page:
+
+1. Copy `assets/data/templates/arkham_parallel_campaign_template.json`
+2. Fill in the overview, timeline, tracks, and upgrade sections
+3. Point a thin wrapper page at that JSON using `data-arkham-page="parallel-campaign"`
+4. Keep upgrade-manager settings in the JSON under `upgradeManager`
+
+For JSON-backed parallel campaign pages, set `upgradeManager.remoteSync.filePath` to the JSON data file, not the wrapper `index.html`. The renderer will keep investigator upgrade HTML, XP, and trauma status synchronized back into that JSON file.
 
 For editable campaign upgrade pages that use `scripts/ahlcg-upgrade-manager.js`, you can now auto-inject the opening deck note for every investigator card by passing:
 

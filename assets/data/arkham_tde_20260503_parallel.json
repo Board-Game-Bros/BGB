@@ -1,0 +1,213 @@
+{
+  "pageTitle": "The Dream-Eaters Campaign - 05/03/2026",
+  "headerTitle": "The Dream-Eaters - 05/03/2026 Campaign",
+  "subnav": [
+    { "href": "#story-notes", "label": "Overview" },
+    { "href": "#timeline", "label": "Timeline" },
+    { "href": "#dream-quest", "label": "Dream-Quest" },
+    { "href": "#web-of-dreams", "label": "Web of Dreams" },
+    { "href": "#upgrade-history", "label": "Upgrade History" }
+  ],
+  "overview": {
+    "title": "Campaign Overview",
+    "statusChips": [
+      "Difficulty: Standard",
+      "Mode: Interconnected 8-Part Campaign",
+      "Recorded Decks: 3",
+      "Campaign Start: 05/03/2026"
+    ],
+    "metaItems": [
+      "Date: 05/03/2026",
+      "Structure: Two Parallel Campaigns",
+      "Play Order: A1 - B1 - A2 - B2 - A3 - B3 - A4 - B4"
+    ],
+    "sections": [
+      {
+        "title": "Run Structure",
+        "metaItems": [
+          "Status: In Progress",
+          "Campaign A: The Dream-Quest",
+          "Campaign B: The Web of Dreams"
+        ],
+        "notes": [
+          {
+            "title": "How This Page Is Organized",
+            "items": [
+              "The Dream-Eaters runs as two linked four-scenario campaigns played in alternating order instead of one continuous line.",
+              "This page keeps one shared overview and timeline, then splits the run into separate Dream-Quest and Web of Dreams track sections.",
+              "Each track should keep its own story notes, campaign log, chaos bag notes, scenario results, and deck upgrade history."
+            ]
+          }
+        ]
+      }
+    ],
+    "teamColumns": [
+      {
+        "title": "Dream-Quest Team",
+        "items": [
+          "Silas Marsh",
+          "Wilson Richards",
+          "Mandy Thompson"
+        ],
+        "text": "The currently recorded decks are parked under Campaign A for now."
+      },
+      {
+        "title": "Web of Dreams Team",
+        "items": [
+          "Investigator roster pending",
+          "Deck pages pending",
+          "Upgrade history pending"
+        ],
+        "text": "Add the second line investigators here once their deck pages are ready."
+      }
+    ]
+  },
+  "timeline": {
+    "title": "Interwoven Timeline",
+    "steps": [
+      { "title": "1. Dream-Quest Scenario I", "text": "Opening chapter for Campaign A." },
+      { "title": "2. Web of Dreams Scenario I", "text": "Opening chapter for Campaign B." },
+      { "title": "3. Dream-Quest Scenario II", "text": "Resolve A-side follow-up before returning to B." },
+      { "title": "4. Web of Dreams Scenario II", "text": "Second chapter for the waking-world line." },
+      { "title": "5. Dream-Quest Scenario III", "text": "Late-campaign A branch and cross-campaign consequences." },
+      { "title": "6. Web of Dreams Scenario III", "text": "Late-campaign B branch and cross-campaign consequences." },
+      { "title": "7. Dream-Quest Scenario IV", "text": "Campaign A finale." },
+      { "title": "8. Web of Dreams Scenario IV", "text": "Campaign B finale and full-run resolution." }
+    ],
+    "crossNotes": {
+      "title": "Cross-Campaign Notes",
+      "listClass": "campaign-log-list",
+      "items": [
+        "Track any story effects that explicitly carry from one line into the other here.",
+        "Keep separate chaos bag updates inside each track unless a rule specifically says the other line changes.",
+        "Use the alternating order above when adding scenario records and upgrade entries."
+      ]
+    }
+  },
+  "trackSectionTitle": "Parallel Campaign Tracks",
+  "tracks": [
+    {
+      "id": "dream-quest",
+      "title": "Campaign A: The Dream-Quest",
+      "subtitle": "Current recorded roster and scenario log for the dream-side track.",
+      "statusChips": [
+        "Track Status: Active",
+        "Recorded Investigators: 3",
+        "Chaos Bag: Track A"
+      ],
+      "metaItems": [
+        "Investigators: Silas Marsh, Wilson Richards, Mandy Thompson",
+        "Next Step: Scenario I"
+      ],
+      "notes": [
+        {
+          "title": "Track Notes",
+          "items": [
+            "This is the currently populated side of the Dream-Eaters run.",
+            "Use this column for Campaign A scenario records, campaign log changes, and chaos bag updates.",
+            "Deck upgrade cards for the currently recorded team are grouped under the Dream-Quest heading below."
+          ]
+        }
+      ],
+      "scenarios": [
+        { "title": "Scenario I", "text": "Pending first Dream-Quest scenario record." },
+        { "title": "Scenario II", "text": "Awaiting Campaign A second chapter." },
+        { "title": "Scenario III", "text": "Awaiting Campaign A third chapter." },
+        { "title": "Scenario IV", "text": "Awaiting Campaign A finale." }
+      ]
+    },
+    {
+      "id": "web-of-dreams",
+      "title": "Campaign B: The Web of Dreams",
+      "subtitle": "Parallel roster and scenario log for the waking-world track.",
+      "statusChips": [
+        "Track Status: Pending Roster",
+        "Recorded Investigators: 0",
+        "Chaos Bag: Track B"
+      ],
+      "metaItems": [
+        "Investigators: Pending",
+        "Next Step: Add second-line decks"
+      ],
+      "notes": [
+        {
+          "title": "Track Notes",
+          "items": [
+            "This column is reserved for the second Dream-Eaters party.",
+            "Add the remaining investigators here once their deck pages are ready.",
+            "Keep Campaign B story progress, chaos bag changes, and upgrades separate from Dream-Quest."
+          ]
+        }
+      ],
+      "scenarios": [
+        { "title": "Scenario I", "text": "Pending Web of Dreams opening scenario." },
+        { "title": "Scenario II", "text": "Pending Campaign B second chapter." },
+        { "title": "Scenario III", "text": "Pending Campaign B third chapter." },
+        { "title": "Scenario IV", "text": "Pending Campaign B finale." }
+      ]
+    }
+  ],
+  "upgradeHistoryTitle": "Deck Upgrade History",
+  "upgradeTracks": [
+    {
+      "title": "Campaign A: The Dream-Quest",
+      "cards": [
+        {
+          "name": "Silas Marsh",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/silas_marsh_the_sailor.png",
+          "imageAlt": "Silas Marsh: The Sailor",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "<div class=\"upgrade-entry\" data-entry-uid=\"e1\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Flashlight (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/flashlight.png\" alt=\"Flashlight (x2)\"></span></li><li><span class=\"card-ref\">Meat Cleaver (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/meat_cleaver.png\" alt=\"Meat Cleaver (x2)\"></span></li><li><span class=\"card-ref\">Old Keyring (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/old_keyring.png\" alt=\"Old Keyring (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Brute Force (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/brute_force_1.png\" alt=\"Brute Force (1) (x2)\"></span></li><li><span class=\"card-ref\">Unexpected Courage (2) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/unexpected_courage_2.png\" alt=\"Unexpected Courage (2) (x2)\"></span></li><li><span class=\"card-ref\">Scrapper (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/scrapper_3.png\" alt=\"Scrapper (3)\"></span></li><li><span class=\"card-ref\">Last Chance (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/last_chance_3.png\" alt=\"Last Chance (3)\"></span></li><li><span class=\"card-ref\">Five of Pentacles: From the Brink (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/five_of_pentacles_from_the_brink_1.png\" alt=\"Five of Pentacles: From the Brink (1)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e1\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        },
+        {
+          "name": "Wilson Richards",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/wilson_richards_the_handyman.png",
+          "imageAlt": "Wilson Richards: The Handyman",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        },
+        {
+          "name": "Mandy Thompson",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/mandy_thompson_the_researcher.png",
+          "imageAlt": "Mandy Thompson: The Researcher",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        }
+      ]
+    },
+    {
+      "title": "Campaign B: The Web of Dreams",
+      "emptyNote": {
+        "title": "Upgrade Slots Reserved",
+        "items": [
+          "Add the second-line investigators here once their deck pages are ready.",
+          "Keep Campaign B upgrades fully separate from the Dream-Quest team above.",
+          "The shared campaign-start note will auto-apply when investigator upgrade cards are added."
+        ]
+      }
+    }
+  ],
+  "backHref": "/arkham_horror_lcg/",
+  "backLabel": "Back to Arkham Horror LCG",
+  "upgradeManager": {
+    "storageKey": "ahlcg_tde_20260503_upgrade_state_v1",
+    "editPassword": "bgbzhangyan2026",
+    "campaignStartNote": {
+      "date": "05/03/2026",
+      "runName": "Dream-Eaters"
+    },
+    "inactivityMs": 120000,
+    "remoteSync": {
+      "provider": "github",
+      "owner": "Board-Game-Bros",
+      "repo": "BGB",
+      "branch": "main",
+      "filePath": "assets/data/arkham_tde_20260503_parallel.json"
+    },
+    "remoteSyncTokenStorageKey": "bgb_github_sync_token_v1",
+    "remoteSyncDebounceMs": 2800
+  }
+}

@@ -24,6 +24,9 @@
     const remoteSyncTokenStorageKey = typeof options.remoteSyncTokenStorageKey === "string" && options.remoteSyncTokenStorageKey.trim()
       ? options.remoteSyncTokenStorageKey.trim()
       : "bgb_github_sync_token_v1";
+    const buildPersistableContent = typeof options.buildPersistableContent === "function"
+      ? options.buildPersistableContent
+      : null;
     const localStateEnvelope = window.BGBLocalStateEnvelope && typeof window.BGBLocalStateEnvelope === "object"
       ? window.BGBLocalStateEnvelope
       : null;
@@ -1805,6 +1808,13 @@
       return "<!DOCTYPE html>\n" + sourceDoc.documentElement.outerHTML;
     }
 
+    function buildPersistableRemoteContent(sourceContent, state) {
+      if (buildPersistableContent) {
+        return buildPersistableContent(state, sourceContent);
+      }
+      return buildPersistableHtml(sourceContent, state);
+    }
+
     async function requestGitHubFileMeta(token) {
       if (!remoteSync) return "";
       const endpoint = githubSync && typeof githubSync.buildContentsEndpoint === "function"
@@ -1825,14 +1835,14 @@
         throw new Error("Host response missing file SHA");
       }
       const encodedContent = typeof payload.content === "string" ? payload.content : "";
-      const sourceHtml = encodedContent && githubSync && typeof githubSync.decodeBase64Utf8 === "function"
+      const sourceContent = encodedContent && githubSync && typeof githubSync.decodeBase64Utf8 === "function"
         ? githubSync.decodeBase64Utf8(encodedContent.replace(/\n/g, ""))
         : "";
       return {
         sha: payload.sha,
-        sourceHtml,
+        sourceContent,
         hash: githubSync && typeof githubSync.quickHash === "function"
-          ? githubSync.quickHash(sourceHtml)
+          ? githubSync.quickHash(sourceContent)
           : "",
       };
     }
@@ -1870,9 +1880,9 @@
 
       for (let attempt = 1; attempt <= 3; attempt += 1) {
         const fileMeta = await requestGitHubFileMeta(token);
-        const htmlText = buildPersistableHtml(fileMeta.sourceHtml, state);
+        const nextContent = buildPersistableRemoteContent(fileMeta.sourceContent, state);
         const nextHash = githubSync && typeof githubSync.quickHash === "function"
-          ? githubSync.quickHash(htmlText)
+          ? githubSync.quickHash(nextContent)
           : "";
 
         if (nextHash === fileMeta.hash) {
@@ -1893,7 +1903,7 @@
           body: JSON.stringify({
             message,
             content: githubSync && typeof githubSync.encodeBase64Utf8 === "function"
-              ? githubSync.encodeBase64Utf8(htmlText)
+              ? githubSync.encodeBase64Utf8(nextContent)
               : "",
             branch: remoteSync.branch,
             sha: fileMeta.sha,
