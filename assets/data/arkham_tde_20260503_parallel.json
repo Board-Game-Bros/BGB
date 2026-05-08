@@ -65,7 +65,7 @@
   "timeline": {
     "title": "Interwoven Timeline",
     "steps": [
-      { "title": "1. Dream-Quest Scenario I", "text": "Opening chapter for Campaign A." },
+      { "title": "1. Dream-Quest Prologue -> Scenario I-A", "text": "Shared-dream phenomenon established in Arkham; proceed to Beyond the Gates of Sleep for the dreamlands team." },
       { "title": "2. Web of Dreams Scenario I", "text": "Opening chapter for Campaign B." },
       { "title": "3. Dream-Quest Scenario II", "text": "Resolve A-side follow-up before returning to B." },
       { "title": "4. Web of Dreams Scenario II", "text": "Second chapter for the waking-world line." },
@@ -97,7 +97,7 @@
       ],
       "metaItems": [
         "Investigators: Silas Marsh, Wilson Richards, Mandy Thompson",
-        "Next Step: Scenario I"
+        "Next Step: Scenario I-A, Beyond the Gates of Sleep"
       ],
       "notes": [
         {
@@ -107,10 +107,21 @@
             "Use this column for Campaign A scenario records, campaign log changes, and chaos bag updates.",
             "Deck upgrade cards for the currently recorded team are grouped under the Dream-Quest heading below."
           ]
+        },
+        {
+          "title": "Prologue Summary",
+          "items": [
+            "Date card shown in the campaign guide: Friday, February 13th, 1925.",
+            "A strange shared-dream phenomenon is spreading through Arkham after Virgil Gray published an account of an impossible dream journey in Tales from Nevermore.",
+            "Multiple readers reported experiencing the exact same dream, drawing the attention of both the Arkham Advertiser and local experts.",
+            "Virgil Gray and many others were committed for treatment, but the investigators remain unconvinced that the events can be explained away as ordinary delusion or shared hysteria.",
+            "The party decides to recreate Virgil's dream conditions and split responsibilities: one team will travel into the dreamlands while the other remains in the waking world to observe and protect them.",
+            "Dream-Quest prologue instruction: proceed to Scenario I-A, Beyond the Gates of Sleep."
+          ]
         }
       ],
       "scenarios": [
-        { "title": "Scenario I", "text": "Pending first Dream-Quest scenario record." },
+        { "title": "Prologue -> Scenario I-A", "text": "Shared-dream outbreak established in Arkham. The Dream-Quest party enters the dreamlands next in Beyond the Gates of Sleep." },
         { "title": "Scenario II", "text": "Awaiting Campaign A second chapter." },
         { "title": "Scenario III", "text": "Awaiting Campaign A third chapter." },
         { "title": "Scenario IV", "text": "Awaiting Campaign A finale." }
