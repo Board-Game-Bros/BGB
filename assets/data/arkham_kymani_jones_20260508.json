@@ -1,0 +1,190 @@
+{
+  "pageTitle": "Kymani Jones - Deck Build (05/08/2026)",
+  "title": "Kymani Jones Deck - 05/08/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/kymani_jones_the_security_consultant.png",
+    "imageAlt": "Kymani Jones",
+    "heading": "Kymani Jones",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "9 packs required",
+      "Class: Rogue",
+      "Built by Shengbo on 05/08/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (13)",
+          "label": "Hand",
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Grappling Hook \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/grappling_hook.png",
+              "imageAlt": "Grappling Hook"
+            },
+            {
+              "qty": 2,
+              "name": "Lockpicks",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/lockpicks.png",
+              "imageAlt": "Lockpicks"
+            },
+            {
+              "qty": 1,
+              "name": "Pocket Multi Tool \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/pocket_multi_tool.png",
+              "imageAlt": "Pocket Multi Tool"
+            },
+            {
+              "qty": 2,
+              "name": "Thieves' Kit",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/thieves_kit.png",
+              "imageAlt": "Thieves' Kit"
+            }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Lucky Cigarette Case",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/lucky_cigarette_case.png",
+              "imageAlt": "Lucky Cigarette Case"
+            }
+          ]
+        },
+        {
+          "label": "Body",
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Backpack",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/backpack.png",
+              "imageAlt": "Backpack"
+            }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Leo De Luca",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/leo_de_luca_the_louisiana_lion.png",
+              "imageAlt": "Leo De Luca"
+            }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Fox Mask",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/fox_mask_the_wise_trickster.png",
+              "imageAlt": "Fox Mask"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (12)",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Backstab",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/backstab.png",
+              "imageAlt": "Backstab"
+            },
+            {
+              "qty": 2,
+              "name": "Breaking and Entering",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/breaking_and_entering.png",
+              "imageAlt": "Breaking and Entering"
+            },
+            {
+              "qty": 2,
+              "name": "Cheap Shot",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/cheap_shot.png",
+              "imageAlt": "Cheap Shot"
+            },
+            {
+              "qty": 2,
+              "name": "Emergency Cache",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png",
+              "imageAlt": "Emergency Cache"
+            },
+            {
+              "qty": 2,
+              "name": "Pilfer",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/pilfer.png",
+              "imageAlt": "Pilfer"
+            },
+            {
+              "qty": 2,
+              "name": "Refine",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/refine.png",
+              "imageAlt": "Refine"
+            }
+          ]
+        },
+        {
+          "title": "Skill (6)",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "\"Watch this!\"",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/watch_this.png",
+              "imageAlt": "\"Watch this!\""
+            },
+            {
+              "qty": 2,
+              "name": "Manual Dexterity",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/manual_dexterity.png",
+              "imageAlt": "Manual Dexterity"
+            },
+            {
+              "qty": 2,
+              "name": "Unexpected Courage",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/unexpected_courage.png",
+              "imageAlt": "Unexpected Courage"
+            }
+          ]
+        },
+        {
+          "title": "Treachery (1)",
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Random Basic Weakness \u2605?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Random Basic Weakness"
+            }
+          ]
+        },
+        {
+          "title": "Enemy (1)",
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Agent Fletcher \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/agent_fletcher.png",
+              "imageAlt": "Agent Fletcher"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Kymani-Jones-DeckBuild-20260508-Shengbo.pdf",
+    "label": "Open Kymani Deck PDF"
+  }
+}

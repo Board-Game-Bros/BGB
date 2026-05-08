@@ -76,7 +76,22 @@
             {
               "title": "The Web of Dreams",
               "subtitle": "Campaign B \u00b7 Waking-world team",
-              "investigators": []
+              "investigators": [
+                {
+                  "href": "/arkham_horror_lcg_tde_zoey_samaras_20260508/",
+                  "imageSrc": "/assets/boardgames/ahlcg_investigators/zoey_samaras_the_chef.png",
+                  "imageAlt": "Zoey Samaras",
+                  "builderName": "Built by Yan",
+                  "buildDate": "Built: 05/08/2026 \u00b7 XP: 0"
+                },
+                {
+                  "href": "/arkham_horror_lcg_tde_kymani_jones_20260508/",
+                  "imageSrc": "/assets/boardgames/ahlcg_investigators/kymani_jones_the_security_consultant.png",
+                  "imageAlt": "Kymani Jones",
+                  "builderName": "Built by Shengbo",
+                  "buildDate": "Built: 05/08/2026 \u00b7 XP: 0"
+                }
+              ]
             }
           ]
         }

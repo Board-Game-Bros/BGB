@@ -1,0 +1,180 @@
+{
+  "pageTitle": "Zoey Samaras - Deck Build (05/08/2026)",
+  "title": "Zoey Samaras Deck - 05/08/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/zoey_samaras_the_chef.png",
+    "imageAlt": "Zoey Samaras",
+    "heading": "Zoey Samaras",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "10 packs required",
+      "Class: Guardian",
+      "Built by Yan on 05/08/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (10)",
+          "label": "Hand",
+          "cards": [
+            {
+              "qty": 2,
+              "name": ".45 Automatic",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/45_automatic.png",
+              "imageAlt": ".45 Automatic"
+            },
+            {
+              "qty": 2,
+              "name": "Sledgehammer",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/sledgehammer.png",
+              "imageAlt": "Sledgehammer"
+            }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Holy Rosary",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/holy_rosary.png",
+              "imageAlt": "Holy Rosary"
+            },
+            {
+              "qty": 1,
+              "name": "Zoey's Cross \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/zoeys_cross_symbol_of_righteousness.png",
+              "imageAlt": "Zoey's Cross"
+            }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Leo De Luca",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/leo_de_luca_the_louisiana_lion.png",
+              "imageAlt": "Leo De Luca"
+            }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Smoking Pipe",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/smoking_pipe.png",
+              "imageAlt": "Smoking Pipe"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (15)",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "\"Get behind me!\"",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/get_behind_me.png",
+              "imageAlt": "\"Get behind me!\""
+            },
+            {
+              "qty": 2,
+              "name": "\"If it bleeds...\"",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/if_it_bleeds.png",
+              "imageAlt": "\"If it bleeds...\""
+            },
+            {
+              "qty": 2,
+              "name": "Emergency Cache",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png",
+              "imageAlt": "Emergency Cache"
+            },
+            {
+              "qty": 1,
+              "name": "Jury-Rig",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/jury_rig.png",
+              "imageAlt": "Jury-Rig"
+            },
+            {
+              "qty": 2,
+              "name": "On the Hunt",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/on_the_hunt.png",
+              "imageAlt": "On the Hunt"
+            },
+            {
+              "qty": 2,
+              "name": "Prepared for the Worst",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png",
+              "imageAlt": "Prepared for the Worst"
+            },
+            {
+              "qty": 2,
+              "name": "Scene of the Crime",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/scene_of_the_crime.png",
+              "imageAlt": "Scene of the Crime"
+            },
+            {
+              "qty": 2,
+              "name": "Taunt",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/taunt.png",
+              "imageAlt": "Taunt"
+            }
+          ]
+        },
+        {
+          "title": "Skill (6)",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Guts",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png",
+              "imageAlt": "Guts"
+            },
+            {
+              "qty": 2,
+              "name": "Overpower",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png",
+              "imageAlt": "Overpower"
+            },
+            {
+              "qty": 2,
+              "name": "Vicious Blow",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/vicious_blow.png",
+              "imageAlt": "Vicious Blow"
+            }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Random Basic Weakness \u2605?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Random Basic Weakness"
+            },
+            {
+              "qty": 1,
+              "name": "Smite the Wicked \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/smite_the_wicked.png",
+              "imageAlt": "Smite the Wicked"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Zoey-Samaras-DeckBuild-20260508-Yan.pdf",
+    "label": "Open Zoey Deck PDF"
+  }
+}

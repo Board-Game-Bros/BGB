@@ -28,7 +28,7 @@
     "statusChips": [
       "Difficulty: Standard",
       "Mode: Interconnected 8-Part Campaign",
-      "Recorded Decks: 3",
+      "Recorded Decks: 5",
       "Campaign Start: 05/03/2026"
     ],
     "metaItems": [
@@ -69,11 +69,11 @@
       {
         "title": "Web of Dreams Team",
         "items": [
-          "Investigator roster pending",
-          "Deck pages pending",
-          "Upgrade history pending"
+          "Zoey Samaras",
+          "Kymani Jones",
+          "Additional investigators pending"
         ],
-        "text": "Add the second line investigators here once their deck pages are ready."
+        "text": "Campaign B now has two recorded waking-world investigators. Add the remaining second-line investigators here as their deck pages are ready."
       }
     ]
   },
@@ -206,20 +206,20 @@
       "title": "Campaign B: The Web of Dreams",
       "subtitle": "Parallel roster and scenario log for the waking-world track.",
       "statusChips": [
-        "Track Status: Pending Roster",
-        "Recorded Investigators: 0",
+        "Track Status: Active",
+        "Recorded Investigators: 2",
         "Chaos Bag: Track B"
       ],
       "metaItems": [
-        "Investigators: Pending",
-        "Next Step: Add second-line decks"
+        "Investigators: Zoey Samaras, Kymani Jones",
+        "Next Step: Add remaining second-line decks"
       ],
       "notes": [
         {
           "title": "Track Notes",
           "items": [
-            "This column is reserved for the second Dream-Eaters party.",
-            "Add the remaining investigators here once their deck pages are ready.",
+            "This column tracks the waking-world side of the Dream-Eaters run.",
+            "Zoey Samaras and Kymani Jones are now recorded as the first two Web of Dreams investigators.",
             "Keep Campaign B story progress, chaos bag changes, and upgrades separate from Dream-Quest."
           ]
         }
@@ -277,14 +277,24 @@
     },
     {
       "title": "Campaign B: The Web of Dreams",
-      "emptyNote": {
-        "title": "Upgrade Slots Reserved",
-        "items": [
-          "Add the second-line investigators here once their deck pages are ready.",
-          "Keep Campaign B upgrades fully separate from the Dream-Quest team above.",
-          "The shared campaign-start note will auto-apply when investigator upgrade cards are added."
-        ]
-      }
+      "cards": [
+        {
+          "name": "Zoey Samaras",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/zoey_samaras_the_chef.png",
+          "imageAlt": "Zoey Samaras: The Chef",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        },
+        {
+          "name": "Kymani Jones",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/kymani_jones_the_security_consultant.png",
+          "imageAlt": "Kymani Jones: The Security Consultant",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        }
+      ]
     }
   ],
   "backHref": "/arkham_horror_lcg/",
