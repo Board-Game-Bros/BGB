@@ -6,7 +6,7 @@
     "imageAlt": "Silas Marsh",
     "heading": "Silas Marsh",
     "details": [
-      "30 cards (33 total)",
+      "30 cards (34 total)",
       "0 experience required",
       "10 packs required",
       "Class: Survivor",
@@ -17,12 +17,14 @@
     {
       "sections": [
         {
-          "title": "Asset (12)",
+          "title": "Asset (14)",
           "label": "Hand",
           "cards": [
             { "qty": 2, "name": "Flashlight", "imageSrc": "/assets/boardgames/ahlcg_cards/flashlight.png", "imageAlt": "Flashlight" },
             { "qty": 2, "name": "Meat Cleaver", "imageSrc": "/assets/boardgames/ahlcg_cards/meat_cleaver.png", "imageAlt": "Meat Cleaver" },
-            { "qty": 2, "name": "Old Keyring", "imageSrc": "/assets/boardgames/ahlcg_cards/old_keyring.png", "imageAlt": "Old Keyring" }
+            { "qty": 2, "name": "Old Keyring", "imageSrc": "/assets/boardgames/ahlcg_cards/old_keyring.png", "imageAlt": "Old Keyring" },
+            { "qty": 1, "name": "Sea Change Harpoon ★", "imageSrc": "/assets/boardgames/ahlcg_cards/sea_change_harpoon.png", "imageAlt": "Sea Change Harpoon" },
+            { "qty": 1, "name": "Silas's Net ★", "imageSrc": "/assets/boardgames/ahlcg_cards/silass_net.png", "imageAlt": "Silas's Net" }
           ]
         },
         {
@@ -56,22 +58,21 @@
           ]
         },
         {
-          "title": "Skill (14)",
+          "title": "Skill (12)",
           "cards": [
             { "qty": 2, "name": "Defiance", "imageSrc": "/assets/boardgames/ahlcg_cards/defiance.png", "imageAlt": "Defiance" },
             { "qty": 2, "name": "Desperate Search", "imageSrc": "/assets/boardgames/ahlcg_cards/desperate_search.png", "imageAlt": "Desperate Search" },
-            { "qty": 1, "name": "Dreams of the Deep ★", "imageSrc": "/assets/boardgames/ahlcg_cards/dreams_of_the_deep_the_deep_gate.png", "imageAlt": "Dreams of the Deep" },
             { "qty": 2, "name": "Fearless", "imageSrc": "/assets/boardgames/ahlcg_cards/fearless.png", "imageAlt": "Fearless" },
-            { "qty": 1, "name": "Nautical Prowess ★", "imageSrc": "/assets/boardgames/ahlcg_cards/nautical_prowess.png", "imageAlt": "Nautical Prowess" },
             { "qty": 2, "name": "Rise to the Occasion", "imageSrc": "/assets/boardgames/ahlcg_cards/rise_to_the_occasion.png", "imageAlt": "Rise to the Occasion" },
             { "qty": 2, "name": "Take Heart", "imageSrc": "/assets/boardgames/ahlcg_cards/take_heart.png", "imageAlt": "Take Heart" },
             { "qty": 2, "name": "Unexpected Courage", "imageSrc": "/assets/boardgames/ahlcg_cards/unexpected_courage.png", "imageAlt": "Unexpected Courage" }
           ]
         },
         {
-          "title": "Treachery (1)",
+          "title": "Treachery (2)",
           "cards": [
-            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" },
+            { "qty": 1, "name": "Siren Call ★", "imageSrc": "/assets/boardgames/ahlcg_cards/siren_call.png", "imageAlt": "Siren Call" }
           ]
         }
       ]
