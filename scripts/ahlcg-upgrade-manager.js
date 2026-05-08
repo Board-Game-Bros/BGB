@@ -8,6 +8,7 @@
     const investigatorDir = options.investigatorDir || "/assets/boardgames/ahlcg_investigators";
     const cardImageFiles = Array.isArray(options.cardImageFiles) ? options.cardImageFiles : [];
     const standardCardNames = Array.isArray(options.standardCardNames) ? options.standardCardNames : [];
+    const myriadCardNames = Array.isArray(options.myriadCardNames) ? options.myriadCardNames : [];
     const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
@@ -48,8 +49,14 @@
     const exceptionalCatalogKeys = exceptionalCardNames
       .map((name) => getCatalogKey(name))
       .filter(Boolean);
+    const myriadCatalogKeys = myriadCardNames
+      .map((name) => getCatalogKey(name))
+      .filter(Boolean);
     const exceptionalNameOnlySet = new Set(
       exceptionalCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
+    );
+    const myriadNameOnlySet = new Set(
+      myriadCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
     );
 
     let activeUndo = null;
@@ -600,12 +607,47 @@
       });
     }
 
+    function isMyriadCardName(cardName) {
+      const key = getCatalogKey(cardName);
+      if (!key) return false;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return false;
+      if (myriadNameOnlySet.has(nameOnly)) return true;
+      return myriadCatalogKeys.some((mk) => {
+        const mNameOnly = getNameOnly(mk);
+        if (!mNameOnly) return false;
+        return (
+          nameOnly === mNameOnly ||
+          nameOnly.startsWith(mNameOnly + " ") ||
+          mNameOnly.startsWith(nameOnly + " ")
+        );
+      });
+    }
+
     function sumAddedCostsFromCardNames(cardNames) {
-      return (cardNames || []).reduce((acc, name) => {
+      const groupedMyriad = new Map();
+      let total = 0;
+      (cardNames || []).forEach((name) => {
         const qty = getCardQuantity(name);
         const cost = getAddedCardCost(name);
-        return acc + qty * cost;
-      }, 0);
+        if (!isMyriadCardName(name)) {
+          total += qty * cost;
+          return;
+        }
+        const parsed = parseTrailingQuantity(name);
+        const key = getCatalogKey(parsed.base || name);
+        if (!key) {
+          total += cost;
+          return;
+        }
+        if (!groupedMyriad.has(key)) {
+          groupedMyriad.set(key, cost);
+        }
+      });
+      groupedMyriad.forEach((cost) => {
+        total += cost;
+      });
+      return total;
     }
 
     function sumRemovedValuesFromCardNames(cardNames) {

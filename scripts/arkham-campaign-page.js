@@ -37,6 +37,33 @@
     return card;
   }
 
+  function renderInvestigatorGrid(items) {
+    const grid = el("div", "grid");
+    (Array.isArray(items) ? items : []).forEach((item) => {
+      grid.appendChild(renderInvestigatorCard(item || {}));
+    });
+    return grid;
+  }
+
+  function renderSessionTrack(track) {
+    const trackEl = el("div", "campaign-track");
+    const head = el("div", "campaign-track-head");
+    head.appendChild(el("h4", "campaign-track-title", String(track.title || "")));
+    if (track.subtitle) {
+      head.appendChild(el("p", "campaign-track-subtitle", String(track.subtitle || "")));
+    }
+    trackEl.appendChild(head);
+
+    const investigators = Array.isArray(track.investigators) ? track.investigators : [];
+    if (!investigators.length) {
+      trackEl.appendChild(el("p", "campaign-run-empty", "Investigators to be added."));
+      return trackEl;
+    }
+
+    trackEl.appendChild(renderInvestigatorGrid(investigators));
+    return trackEl;
+  }
+
   function renderSession(session) {
     const sessionEl = el("section", "campaign-run");
 
@@ -46,17 +73,23 @@
     sessionHead.appendChild(link);
     sessionEl.appendChild(sessionHead);
 
+    const tracks = Array.isArray(session.tracks) ? session.tracks : [];
+    if (tracks.length) {
+      const trackGrid = el("div", "campaign-track-grid");
+      tracks.forEach((track) => {
+        trackGrid.appendChild(renderSessionTrack(track || {}));
+      });
+      sessionEl.appendChild(trackGrid);
+      return sessionEl;
+    }
+
     const investigators = Array.isArray(session.investigators) ? session.investigators : [];
     if (!investigators.length) {
       sessionEl.appendChild(el("p", "campaign-run-empty", "Investigators to be added."));
       return sessionEl;
     }
 
-    const grid = el("div", "grid");
-    investigators.forEach((item) => {
-      grid.appendChild(renderInvestigatorCard(item || {}));
-    });
-    sessionEl.appendChild(grid);
+    sessionEl.appendChild(renderInvestigatorGrid(investigators));
     return sessionEl;
   }
 

@@ -185,6 +185,8 @@ Refresh AHLCG images and the standard-name library from ArkhamDB:
 python3 scripts/sync_arkhamdb_collection.py --project-root .
 ```
 
+The generated `scripts/ahlcg-standard-library.js` now carries card image filenames, standard display names, and `myriadCardNames`. Upgrade-history XP calculation uses that `myriad` metadata so cards like `Segment of Onyx (1)` are charged once for up to three copies added in the same purchase.
+
 Optional:
 
 ```bash

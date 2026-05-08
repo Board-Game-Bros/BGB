@@ -234,6 +234,7 @@
         investigatorDir: String(upgradeConfig.investigatorDir || "/assets/boardgames/ahlcg_investigators"),
         cardImageFiles: ahlcgLibrary.cardImageFiles || [],
         standardCardNames: ahlcgLibrary.standardCardNames || [],
+        myriadCardNames: ahlcgLibrary.myriadCardNames || [],
         exceptionalCardNames: ahlcgLibrary.exceptionalCardNames || [],
         campaignStartNote: upgradeConfig.campaignStartNote || null,
         inactivityMs: Number(upgradeConfig.inactivityMs) > 0 ? Number(upgradeConfig.inactivityMs) : 120000,

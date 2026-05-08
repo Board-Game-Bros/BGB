@@ -63,6 +63,42 @@
   gap: 8px;
 }
 
+.campaign-track-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.campaign-track {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.campaign-track-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.campaign-track-title {
+  margin: 0;
+  font-family: "Eater", serif;
+  font-weight: 400;
+  font-size: 1.4rem;
+  letter-spacing: 0.8px;
+  color: #3a2518;
+  text-shadow: 1px 1px 0 rgba(255, 236, 206, 0.28);
+}
+
+.campaign-track-subtitle {
+  margin: 0;
+  font-size: 0.98rem;
+  font-style: italic;
+  color: rgba(58, 45, 26, 0.82);
+}
+
 .campaign-run-empty {
   margin: 0;
   padding: 12px 14px;

@@ -131,9 +131,11 @@ def write_standard_library(
     out_file: Path,
     card_image_files: Iterable[str],
     standard_names: Iterable[str],
+    myriad_names: Iterable[str],
 ) -> None:
     files = sorted(set(card_image_files))
     names = sorted(set(standard_names), key=lambda s: s.lower())
+    myriad = sorted(set(myriad_names), key=lambda s: s.lower())
 
     lines: List[str] = []
     lines.append("(function () {")
@@ -146,6 +148,12 @@ def write_standard_library(
     lines.append("    standardCardNames: [")
     for idx, n in enumerate(names):
         comma = "," if idx < len(names) - 1 else ""
+        escaped = n.replace("\\", "\\\\").replace('"', '\\"')
+        lines.append(f'      "{escaped}"{comma}')
+    lines.append("    ],")
+    lines.append("    myriadCardNames: [")
+    for idx, n in enumerate(myriad):
+        comma = "," if idx < len(myriad) - 1 else ""
         escaped = n.replace("\\", "\\\\").replace('"', '\\"')
         lines.append(f'      "{escaped}"{comma}')
     lines.append("    ]")
@@ -204,6 +212,7 @@ def main() -> int:
     files_seen: Dict[str, int] = {}
     card_image_files: List[str] = []
     standard_names: List[str] = []
+    myriad_names: List[str] = []
     investigator_names: List[str] = []
 
     downloaded = 0
@@ -215,6 +224,8 @@ def main() -> int:
         if not display:
             continue
         standard_names.append(display)
+        if bool(card.get("myriad")):
+            myriad_names.append(display)
         if card_is_investigator(card):
             investigator_names.append(display)
 
@@ -273,7 +284,7 @@ def main() -> int:
             time.sleep(args.sleep)
 
     if not args.audit_missing_only:
-        write_standard_library(lib_file, card_image_files, standard_names + investigator_names)
+        write_standard_library(lib_file, card_image_files, standard_names + investigator_names, myriad_names)
 
     if args.audit_missing_only:
         print("Audit mode: no image downloads performed.")
