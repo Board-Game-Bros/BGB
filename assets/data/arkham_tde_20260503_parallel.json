@@ -28,7 +28,7 @@
     "statusChips": [
       "Difficulty: Standard",
       "Mode: Interconnected 8-Part Campaign",
-      "Recorded Decks: 5",
+      "Recorded Decks: 6",
       "Campaign Start: 05/03/2026"
     ],
     "metaItems": [
@@ -71,9 +71,9 @@
         "items": [
           "Zoey Samaras",
           "Kymani Jones",
-          "Additional investigators pending"
+          "Joe Diamond"
         ],
-        "text": "Campaign B now has two recorded waking-world investigators. Add the remaining second-line investigators here as their deck pages are ready."
+        "text": "Campaign B now has three recorded waking-world investigators and is ready for the opening Web of Dreams scenario."
       }
     ]
   },
@@ -207,19 +207,19 @@
       "subtitle": "Parallel roster and scenario log for the waking-world track.",
       "statusChips": [
         "Track Status: Active",
-        "Recorded Investigators: 2",
+        "Recorded Investigators: 3",
         "Chaos Bag: Track B"
       ],
       "metaItems": [
-        "Investigators: Zoey Samaras, Kymani Jones",
-        "Next Step: Add remaining second-line decks"
+        "Investigators: Zoey Samaras, Kymani Jones, Joe Diamond",
+        "Next Step: Record Web of Dreams Scenario I"
       ],
       "notes": [
         {
           "title": "Track Notes",
           "items": [
             "This column tracks the waking-world side of the Dream-Eaters run.",
-            "Zoey Samaras and Kymani Jones are now recorded as the first two Web of Dreams investigators.",
+            "Zoey Samaras, Kymani Jones, and Joe Diamond are now recorded for the Web of Dreams roster.",
             "Keep Campaign B story progress, chaos bag changes, and upgrades separate from Dream-Quest."
           ]
         }
@@ -290,6 +290,14 @@
           "name": "Kymani Jones",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/kymani_jones_the_security_consultant.png",
           "imageAlt": "Kymani Jones: The Security Consultant",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        },
+        {
+          "name": "Joe Diamond",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/joe_diamond_the_private_investigator.png",
+          "imageAlt": "Joe Diamond: The Private Investigator",
           "currentXp": "Current XP: 0",
           "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."

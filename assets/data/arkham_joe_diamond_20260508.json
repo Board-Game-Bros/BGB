@@ -1,0 +1,174 @@
+{
+  "pageTitle": "Joe Diamond - Deck Build (05/08/2026)",
+  "title": "Joe Diamond Deck - 05/08/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/joe_diamond_the_private_investigator.png",
+    "imageAlt": "Joe Diamond",
+    "heading": "Joe Diamond",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "9 packs required",
+      "Class: Seeker",
+      "Built by LL on 05/08/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (16)",
+          "label": "Hand",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Fingerprint Kit",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/fingerprint_kit.png",
+              "imageAlt": "Fingerprint Kit"
+            },
+            {
+              "qty": 2,
+              "name": "M1911 ?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "M1911"
+            },
+            {
+              "qty": 2,
+              "name": "Magnifying Glass",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/magnifying_glass.png",
+              "imageAlt": "Magnifying Glass"
+            }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Cleaning Kit",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/cleaning_kit.png",
+              "imageAlt": "Cleaning Kit"
+            }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Alice Luxley",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/alice_luxley_fearless_flatfoot.png",
+              "imageAlt": "Alice Luxley"
+            },
+            {
+              "qty": 2,
+              "name": "Dorothy Simmons ?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Dorothy Simmons"
+            }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Endurance ?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Endurance"
+            },
+            {
+              "qty": 2,
+              "name": "Strange Solution",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/strange_solution.png",
+              "imageAlt": "Strange Solution"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (10)",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Crack the Case",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/crack_the_case.png",
+              "imageAlt": "Crack the Case"
+            },
+            {
+              "qty": 1,
+              "name": "Dead Ends ★ ?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Dead Ends"
+            },
+            {
+              "qty": 1,
+              "name": "Detective's Intuition ★ ?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Detective's Intuition"
+            },
+            {
+              "qty": 2,
+              "name": "Scene of the Crime",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/scene_of_the_crime.png",
+              "imageAlt": "Scene of the Crime"
+            },
+            {
+              "qty": 2,
+              "name": "Shortcut",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/shortcut.png",
+              "imageAlt": "Shortcut"
+            },
+            {
+              "qty": 2,
+              "name": "Through the Cracks ?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Through the Cracks"
+            }
+          ]
+        },
+        {
+          "title": "Skill (6)",
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Deduction",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/deduction.png",
+              "imageAlt": "Deduction"
+            },
+            {
+              "qty": 2,
+              "name": "Inquiring Mind",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/inquiring_mind.png",
+              "imageAlt": "Inquiring Mind"
+            },
+            {
+              "qty": 2,
+              "name": "Plan of Action",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/plan_of_action.png",
+              "imageAlt": "Plan of Action"
+            }
+          ]
+        },
+        {
+          "title": "Treachery (1)",
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Random Basic Weakness ★ ?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Random Basic Weakness"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Joe-Diamond-DeckBuild-20260508-LL.pdf",
+    "label": "Open Joe Deck PDF"
+  }
+}
