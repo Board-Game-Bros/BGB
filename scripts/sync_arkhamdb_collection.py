@@ -18,7 +18,7 @@ import sys
 import time
 import unicodedata
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urljoin
 from urllib.request import Request, urlopen
@@ -97,8 +97,58 @@ def card_is_investigator(card: Dict[str, Any]) -> bool:
     return str(card.get("type_code", "")).strip().lower() == "investigator"
 
 
-def output_filename_for_card(card: Dict[str, Any], display_name: str) -> str:
-    slug = slugify(display_name)
+def card_identity_signature(card: Dict[str, Any]) -> Tuple[Any, ...]:
+    fields = (
+        "type_code",
+        "subtype_code",
+        "faction_code",
+        "faction2_code",
+        "faction3_code",
+        "cost",
+        "slot",
+        "xp",
+        "health",
+        "sanity",
+        "skill_willpower",
+        "skill_intellect",
+        "skill_combat",
+        "skill_agility",
+        "traits",
+        "text",
+        "real_name",
+    )
+    return tuple(card.get(field) for field in fields)
+
+
+def card_exact_signature(card: Dict[str, Any]) -> Tuple[Any, ...]:
+    return (
+        card_display_name(card),
+        card_identity_signature(card),
+        normalize_whitespace(str(card.get("imagesrc") or "")),
+    )
+
+
+def build_variant_display_names(cards: Iterable[Dict[str, Any]]) -> Set[str]:
+    signatures_by_display: Dict[str, Set[Tuple[Any, ...]]] = {}
+    for card in cards:
+        display_name = card_display_name(card)
+        if not display_name:
+            continue
+        signatures_by_display.setdefault(display_name, set()).add(card_exact_signature(card))
+    return {
+        display_name
+        for display_name, signatures in signatures_by_display.items()
+        if len(signatures) > 1
+    }
+
+
+def output_filename_for_card(card: Dict[str, Any], display_name: str, variant_display_names: Set[str]) -> str:
+    if display_name in variant_display_names:
+        pack_code = normalize_whitespace(str(card.get("pack_code") or ""))
+        suffix = pack_code if pack_code else str(card.get("code") or "")
+        slug = slugify(f"{display_name} {suffix}")
+    else:
+        slug = slugify(display_name)
     if not slug:
         slug = slugify(str(card.get("code", ""))) or "card"
     return f"{slug}.png"
@@ -127,15 +177,50 @@ def fetch_cards(include_encounter: bool = False) -> List[Dict[str, Any]]:
     raise RuntimeError("Unexpected API payload format for cards endpoint.")
 
 
+def parse_library_array(text: str, key: str) -> List[str]:
+    pattern = rf"{re.escape(key)}:\s*\[(.*?)\]"
+    match = re.search(pattern, text, re.DOTALL)
+    if not match:
+        return []
+    body = match.group(1)
+    return re.findall(r'"((?:\\.|[^"])*)"', body)
+
+
+def read_existing_library(path: Path) -> Dict[str, List[str]]:
+    if not path.exists():
+        return {
+            "cardImageFiles": [],
+            "standardCardNames": [],
+            "myriadCardNames": [],
+            "exceptionalCardNames": [],
+        }
+    text = path.read_text(encoding="utf-8")
+    return {
+        "cardImageFiles": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "cardImageFiles")],
+        "standardCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "standardCardNames")],
+        "myriadCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "myriadCardNames")],
+        "exceptionalCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "exceptionalCardNames")],
+    }
+
+
+def matches_pack_filter(card: Dict[str, Any], pack_codes: Set[str]) -> bool:
+    if not pack_codes:
+        return True
+    pack_code = str(card.get("pack_code") or "").strip().lower()
+    return pack_code in pack_codes
+
+
 def write_standard_library(
     out_file: Path,
     card_image_files: Iterable[str],
     standard_names: Iterable[str],
     myriad_names: Iterable[str],
+    exceptional_names: Iterable[str],
 ) -> None:
     files = sorted(set(card_image_files))
     names = sorted(set(standard_names), key=lambda s: s.lower())
     myriad = sorted(set(myriad_names), key=lambda s: s.lower())
+    exceptional = sorted(set(exceptional_names), key=lambda s: s.lower())
 
     lines: List[str] = []
     lines.append("(function () {")
@@ -154,6 +239,12 @@ def write_standard_library(
     lines.append("    myriadCardNames: [")
     for idx, n in enumerate(myriad):
         comma = "," if idx < len(myriad) - 1 else ""
+        escaped = n.replace("\\", "\\\\").replace('"', '\\"')
+        lines.append(f'      "{escaped}"{comma}')
+    lines.append("    ],")
+    lines.append("    exceptionalCardNames: [")
+    for idx, n in enumerate(exceptional):
+        comma = "," if idx < len(exceptional) - 1 else ""
         escaped = n.replace("\\", "\\\\").replace('"', '\\"')
         lines.append(f'      "{escaped}"{comma}')
     lines.append("    ]")
@@ -199,20 +290,39 @@ def main() -> int:
         action="store_true",
         help="Do not download files. Only audit which cards are missing images in local collection.",
     )
+    parser.add_argument(
+        "--pack-codes",
+        default="",
+        help="Optional comma-separated ArkhamDB pack_code filter, for example 'core_2026,tom,car,and,mar,mig'.",
+    )
+    parser.add_argument(
+        "--skip-existing-standard-names",
+        action="store_true",
+        help="Skip downloads when the resolved target filename already exists locally. This avoids exact duplicate files while still allowing same-name variants to download.",
+    )
     args = parser.parse_args()
 
     root = Path(args.project_root).resolve()
     cards_dir = root / "assets" / "boardgames" / "ahlcg_cards"
     investigators_dir = root / "assets" / "boardgames" / "ahlcg_investigators"
     lib_file = root / "scripts" / "ahlcg-standard-library.js"
+    pack_codes = {
+        code.strip().lower()
+        for code in str(args.pack_codes or "").split(",")
+        if code.strip()
+    }
 
-    cards = fetch_cards(include_encounter=args.include_encounter)
+    all_cards = fetch_cards(include_encounter=args.include_encounter)
+    cards = [card for card in all_cards if matches_pack_filter(card, pack_codes)] if pack_codes else list(all_cards)
     print(f"Fetched {len(cards)} cards from API.")
 
+    existing_library = read_existing_library(lib_file)
+    variant_display_names = build_variant_display_names(all_cards)
     files_seen: Dict[str, int] = {}
-    card_image_files: List[str] = []
-    standard_names: List[str] = []
-    myriad_names: List[str] = []
+    card_image_files: List[str] = list(existing_library["cardImageFiles"])
+    standard_names: List[str] = list(existing_library["standardCardNames"])
+    myriad_names: List[str] = list(existing_library["myriadCardNames"])
+    exceptional_names: List[str] = list(existing_library["exceptionalCardNames"])
     investigator_names: List[str] = []
 
     downloaded = 0
@@ -243,7 +353,7 @@ def main() -> int:
             )
             continue
 
-        base_name = output_filename_for_card(card, display)
+        base_name = output_filename_for_card(card, display, variant_display_names)
         file_name = ensure_unique_filename(base_name, files_seen)
         target_dir = investigators_dir if card_is_investigator(card) else cards_dir
         dest = target_dir / file_name
@@ -261,6 +371,11 @@ def main() -> int:
                         "expected_path": str(dest),
                     }
                 )
+            continue
+
+        if args.skip_existing_standard_names and dest.exists():
+            if target_dir == cards_dir:
+                card_image_files.append(file_name)
             continue
 
         ok = download_file(img_url, dest)
@@ -284,7 +399,13 @@ def main() -> int:
             time.sleep(args.sleep)
 
     if not args.audit_missing_only:
-        write_standard_library(lib_file, card_image_files, standard_names + investigator_names, myriad_names)
+        write_standard_library(
+            lib_file,
+            card_image_files,
+            standard_names + investigator_names,
+            myriad_names,
+            exceptional_names,
+        )
 
     if args.audit_missing_only:
         print("Audit mode: no image downloads performed.")

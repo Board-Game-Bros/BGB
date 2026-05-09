@@ -2,7 +2,7 @@
   "pageTitle": "Joe Diamond - Deck Build (05/08/2026)",
   "title": "Joe Diamond Deck - 05/08/2026",
   "overview": {
-    "imageSrc": "/assets/boardgames/ahlcg_investigators/joe_diamond_the_private_investigator.png",
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/joe_diamond_the_private_investigator_core_2026.png",
     "imageAlt": "Joe Diamond",
     "heading": "Joe Diamond",
     "details": [
@@ -23,19 +23,19 @@
             {
               "qty": 2,
               "name": "Fingerprint Kit",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/fingerprint_kit.png",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/fingerprint_kit_core_2026.png",
               "imageAlt": "Fingerprint Kit"
             },
             {
               "qty": 2,
-              "name": "M1911 ?",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "name": "M1911",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/m1911_core_2026.png",
               "imageAlt": "M1911"
             },
             {
               "qty": 2,
               "name": "Magnifying Glass",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/magnifying_glass.png",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/magnifying_glass_core_2026.png",
               "imageAlt": "Magnifying Glass"
             }
           ]
@@ -62,8 +62,8 @@
             },
             {
               "qty": 2,
-              "name": "Dorothy Simmons ?",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "name": "Dorothy Simmons: Straight-A Student",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/dorothy_simmons_straight_a_student.png",
               "imageAlt": "Dorothy Simmons"
             }
           ]
@@ -73,8 +73,8 @@
           "cards": [
             {
               "qty": 2,
-              "name": "Endurance ?",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "name": "Endurance",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/endurance.png",
               "imageAlt": "Endurance"
             },
             {
@@ -100,20 +100,20 @@
             },
             {
               "qty": 1,
-              "name": "Dead Ends ★ ?",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "name": "Dead Ends ★",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/dead_ends.png",
               "imageAlt": "Dead Ends"
             },
             {
               "qty": 1,
-              "name": "Detective's Intuition ★ ?",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "name": "Detective's Intuition ★",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/detectives_intuition.png",
               "imageAlt": "Detective's Intuition"
             },
             {
               "qty": 2,
               "name": "Scene of the Crime",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/scene_of_the_crime.png",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/scene_of_the_crime_core_2026.png",
               "imageAlt": "Scene of the Crime"
             },
             {
@@ -124,8 +124,8 @@
             },
             {
               "qty": 2,
-              "name": "Through the Cracks ?",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "name": "Through the Cracks",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/through_the_cracks.png",
               "imageAlt": "Through the Cracks"
             }
           ]
@@ -136,7 +136,7 @@
             {
               "qty": 2,
               "name": "Deduction",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/deduction.png",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/deduction_core_2026.png",
               "imageAlt": "Deduction"
             },
             {
