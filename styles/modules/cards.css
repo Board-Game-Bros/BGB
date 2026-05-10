@@ -105,38 +105,16 @@
 .game-card .cover-link > h3::before {
   content: "";
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 18px;
-  height: 36px;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 0% 50%, rgba(79, 54, 27, 0.02), transparent 14%),
-    radial-gradient(circle at 100% 50%, rgba(79, 54, 27, 0.02), transparent 14%),
-    linear-gradient(90deg,
-      rgba(79, 54, 27, 0.06) 0%,
-      rgba(79, 54, 27, 0.42) 8%,
-      rgba(59, 40, 20, 0.96) 18%,
-      rgba(59, 40, 20, 0.96) 82%,
-      rgba(79, 54, 27, 0.42) 92%,
-      rgba(79, 54, 27, 0.06) 100%);
-  filter: blur(0.9px);
+  left: 10px;
+  right: 10px;
+  top: 8px;
+  height: 56px;
+  background-image: url("/assets/misc/library_title_brush.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
   opacity: 0.96;
   z-index: -1;
-}
-
-.game-card .cover-link > h3::after {
-  content: "";
-  position: absolute;
-  left: 32px;
-  right: 32px;
-  top: 22px;
-  height: 28px;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 0% 50%, rgba(255, 228, 176, 0.05), transparent 18%),
-    radial-gradient(circle at 100% 50%, rgba(255, 228, 176, 0.05), transparent 18%);
-  filter: blur(1.2px);
 }
 
 .game-card .more-info-btn {
