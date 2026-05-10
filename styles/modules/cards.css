@@ -97,22 +97,31 @@
 
 .game-card .cover-link > h3 {
   margin: 0;
-  padding: 22px 20px 10px;
+  padding: 16px 20px 8px;
   position: relative;
-  display: block;
+  display: flex;
+  justify-content: center;
 }
 
-.game-card .cover-link > h3::before {
+.game-card-title-brush {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.32em 1.55em 0.42em;
+  line-height: 1.08;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  z-index: 0;
+}
+
+.game-card-title-brush::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 6px;
-  height: 60px;
+  inset: -0.2em -1.2em -0.12em;
   background-image: url("/assets/misc/library_title_brush_transparent.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 112% 100%;
+  background-size: 100% 100%;
   opacity: 0.94;
   z-index: -1;
 }

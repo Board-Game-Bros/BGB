@@ -27,7 +27,10 @@
     image.alt = String(item.imageAlt || item.title || "");
     image.className = "game-cover wide-cover";
     link.appendChild(image);
-    link.appendChild(el("h3", "", String(item.title || "")));
+    const title = el("h3", "");
+    const titleText = el("span", "game-card-title-brush", String(item.title || ""));
+    title.appendChild(titleText);
+    link.appendChild(title);
     card.appendChild(link);
 
     const info = el("a", "more-info-btn", "More Info");
