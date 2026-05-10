@@ -109,12 +109,11 @@
   right: 0;
   top: 6px;
   height: 60px;
-  background-image: url("/assets/misc/library_title_brush.png");
+  background-image: url("/assets/misc/library_title_brush_transparent.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 112% 100%;
-  mix-blend-mode: multiply;
-  opacity: 0.88;
+  opacity: 0.94;
   z-index: -1;
 }
 
