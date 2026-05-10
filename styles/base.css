@@ -150,31 +150,9 @@ nav {
   margin: 0 0 28px;
   background:
     linear-gradient(180deg, rgba(95, 69, 40, 0.95) 0%, rgba(72, 52, 29, 0.96) 100%);
-  border-top: 14px solid transparent;
-  border-bottom: 14px solid transparent;
   box-shadow:
     0 10px 24px rgba(0, 0, 0, 0.22),
     inset 0 1px 0 rgba(255, 230, 179, 0.12);
-}
-
-nav::before,
-nav::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 18px;
-  background: url("../assets/misc/scroll_edge.png") repeat-x;
-  opacity: 0.95;
-  pointer-events: none;
-}
-
-nav::before {
-  top: -2px;
-}
-
-nav::after {
-  bottom: -2px;
 }
 
 nav a {
@@ -255,16 +233,7 @@ nav a:focus-visible {
 }
 
 .container::after {
-  content: "";
-  position: absolute;
-  left: 32px;
-  right: 32px;
-  top: 32px;
-  height: 30px;
-  background: url("../assets/misc/scroll_edge.png") repeat-x;
-  opacity: 0.9;
-  pointer-events: none;
-  z-index: 0;
+  content: none;
 }
 
 .container > * {
@@ -465,9 +434,7 @@ body.torch-mode a.pill-btn[href$=".pdf"] {
   }
 
   .container::after {
-    left: 18px;
-    right: 18px;
-    top: 20px;
+    content: none;
   }
 }
 
@@ -502,7 +469,7 @@ body.torch-mode a.pill-btn[href$=".pdf"] {
   }
 
   .container::after {
-    height: 22px;
+    content: none;
   }
 
   .torch-btn {
