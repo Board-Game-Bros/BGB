@@ -44,6 +44,14 @@ nav a,
   text-shadow: 1px 1px 0 rgba(255, 230, 180, 0.3);
 }
 
+body.torch-mode #campaigns .campaign-subtitle {
+  -webkit-text-fill-color: #f3d9a4;
+  color: #f3d9a4;
+  text-shadow:
+    0 0 4px rgba(255, 215, 145, 0.42),
+    0 0 12px rgba(255, 188, 92, 0.28);
+}
+
 .campaign-meta-link {
   margin-top: 8px;
   font-size: 1.06rem;
