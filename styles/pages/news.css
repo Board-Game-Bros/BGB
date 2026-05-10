@@ -13,3 +13,7 @@ header h1,
 nav a {
   font-family: "Uncial Antiqua", serif;
 }
+
+.container {
+  max-width: 980px;
+}

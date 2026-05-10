@@ -1,6 +1,19 @@
-/* Base: global layout, header/nav, container, footer, torch mode */
+/* Base: shared parchment shell, header/nav, containers, footer, torch mode */
 :root {
-  --frame-border-color: #3a2d1a;
+  --frame-border-color: #4e3920;
+  --frame-border-soft: rgba(116, 85, 48, 0.56);
+  --panel-bg: rgba(255, 245, 222, 0.94);
+  --panel-bg-soft: rgba(248, 235, 207, 0.9);
+  --ink: #362715;
+  --ink-soft: rgba(54, 39, 21, 0.78);
+  --gold-1: #f3deb0;
+  --gold-2: #ddb777;
+  --gold-3: #a87b3e;
+  --shadow-deep: 0 22px 48px rgba(21, 13, 7, 0.34);
+  --shadow-panel: 0 12px 28px rgba(34, 22, 11, 0.2);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
 }
 
 *,
@@ -16,56 +29,132 @@ body {
 
 html {
   overflow-x: hidden;
+  background: #2b2115;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
   font-family: "Cinzel", serif;
-  background: #e9dfc4 url("../assets/misc/parchment_texture.jpg");
-  background-size: cover;
-  color: #3a2d1a;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top, rgba(255, 236, 190, 0.08), transparent 30%),
+    radial-gradient(circle at 15% 25%, rgba(131, 93, 43, 0.12), transparent 26%),
+    linear-gradient(180deg, rgba(33, 23, 12, 0.92) 0%, rgba(57, 40, 21, 0.86) 19%, rgba(76, 56, 30, 0.74) 100%),
+    #e9dfc4 url("../assets/misc/parchment_texture.jpg");
+  background-size: auto, auto, auto, cover;
+  background-attachment: fixed, fixed, fixed, fixed;
   opacity: 0;
-  transition: opacity 1.2s ease;
+  transition: opacity 0.9s ease, background 0.4s ease;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255, 231, 178, 0.03), transparent 18%, transparent 82%, rgba(255, 231, 178, 0.03)),
+    linear-gradient(180deg, rgba(16, 9, 4, 0.2), transparent 18%, transparent 82%, rgba(16, 9, 4, 0.32));
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 120px rgba(20, 12, 6, 0.44),
+    inset 0 0 18px rgba(0, 0, 0, 0.25);
+  z-index: -1;
 }
 
 body.loaded {
   opacity: 1;
 }
 
+.site-header,
 header {
-  background: #3a2d1a;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(67, 48, 26, 0.96) 0%, rgba(51, 36, 19, 0.98) 100%);
   color: #f2e6c9;
-  padding: 20px;
+  padding: 26px 20px 34px;
   text-align: center;
-  border-bottom: 6px solid #2a1f12;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(237, 202, 142, 0.32);
+  box-shadow:
+    inset 0 -1px 0 rgba(255, 235, 196, 0.08),
+    0 18px 36px rgba(0, 0, 0, 0.3);
+}
+
+.site-header::before,
+.site-header::after,
+header::before,
+header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.site-header::before,
+header::before {
+  top: 0;
+  height: 100%;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 230, 173, 0.12), transparent 18%),
+    linear-gradient(90deg, transparent 0%, rgba(255, 228, 177, 0.06) 50%, transparent 100%);
+}
+
+.site-header::after,
+header::after {
+  bottom: 0;
+  height: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 223, 160, 0.18) 0%, rgba(255, 223, 160, 0.04) 35%, transparent 100%);
 }
 
 .logo {
-  height: 120px;
-  margin-bottom: 10px;
+  height: 116px;
+  margin: 0 auto 12px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  clip-path: none;
-  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.55));
+  filter:
+    drop-shadow(0 10px 14px rgba(0, 0, 0, 0.48))
+    drop-shadow(0 0 16px rgba(191, 144, 77, 0.18));
+}
+
+header h1,
+.site-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 3.3vw, 3.1rem);
+  letter-spacing: 0.4px;
+  color: #f6ead0;
+  text-shadow:
+    0 2px 0 rgba(33, 21, 10, 0.84),
+    0 0 22px rgba(225, 188, 111, 0.12);
 }
 
 nav {
-  background: #4f3b24 url("../assets/misc/dark_wood_texture.jpg");
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 35px;
-  padding: 18px 12px;
-  margin-bottom: 18px;
-  border-bottom: 10px solid #2a1f12;
-  border-top: 10px solid #2a1f12;
   position: sticky;
   top: 0;
   z-index: 999;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px 30px;
+  padding: 18px 16px;
+  margin: 0 0 28px;
+  background:
+    linear-gradient(180deg, rgba(95, 69, 40, 0.95) 0%, rgba(72, 52, 29, 0.96) 100%);
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 230, 179, 0.12);
 }
 
 nav::before,
@@ -76,66 +165,106 @@ nav::after {
   width: 100%;
   height: 18px;
   background: url("../assets/misc/scroll_edge.png") repeat-x;
-  opacity: 0.9;
+  opacity: 0.95;
+  pointer-events: none;
 }
 
 nav::before {
-  top: -18px;
+  top: -2px;
 }
 
 nav::after {
-  bottom: -18px;
+  bottom: -2px;
 }
 
 nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 126px;
+  padding: 10px 18px;
   color: #f7e6b0;
   text-decoration: none;
   font-weight: 900;
-  font-size: 20px;
-  padding: 6px 14px;
-  border-radius: 6px;
-  transition: all 0.25s ease;
+  font-size: 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(247, 223, 171, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 233, 190, 0.05) 0%, rgba(255, 233, 190, 0.01) 100%);
   text-shadow:
     0 1px 0 #000000,
     0 -1px 0 #3d2d16,
     2px 2px 3px rgba(0, 0, 0, 0.6),
-    -2px -2px 3px rgba(255, 255, 255, 0.2);
+    -2px -2px 3px rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.22s ease,
+    color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease;
 }
 
-nav a:hover {
-  background: rgba(255, 215, 100, 0.25);
-  box-shadow: 0 0 12px rgba(255, 204, 80, 0.55);
-  color: #fff6d5;
+nav a:hover,
+nav a[aria-current="page"] {
+  color: #fff4d8;
+  border-color: rgba(255, 223, 162, 0.44);
+  background:
+    linear-gradient(180deg, rgba(255, 220, 140, 0.16) 0%, rgba(255, 206, 116, 0.08) 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 226, 170, 0.1),
+    0 8px 20px rgba(20, 12, 7, 0.24),
+    inset 0 1px 0 rgba(255, 241, 208, 0.16);
+  transform: translateY(-1px);
   text-shadow:
     0 0 8px rgba(255, 230, 160, 0.9),
-    0 0 20px rgba(255, 200, 120, 0.7),
-    0 0 30px rgba(255, 180, 80, 0.5);
+    0 0 20px rgba(255, 200, 120, 0.5);
+}
+
+nav a:focus-visible {
+  outline: 2px solid #d5ae68;
+  outline-offset: 3px;
 }
 
 .container {
-  width: min(1100px, calc(100% - 24px));
+  width: min(1240px, calc(100% - 40px));
   max-width: 100%;
-  margin: 40px auto;
-  padding: 25px;
-  background: rgba(255, 243, 219, 0.92);
-  border: 5px solid var(--frame-border-color);
-  border-radius: 14px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(2px);
+  margin: 34px auto 56px;
+  padding: 30px 34px 34px;
   position: relative;
   isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 247, 228, 0.95) 0%, rgba(242, 228, 197, 0.93) 100%);
+  border: 5px solid var(--frame-border-color);
+  border-radius: 24px;
+  box-shadow: var(--shadow-deep);
 }
 
-.container::before,
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 18px;
+  border: 2px solid rgba(237, 202, 142, 0.88);
+  box-shadow:
+    inset 0 0 0 1px rgba(77, 57, 30, 0.34),
+    inset 0 18px 28px rgba(255, 250, 240, 0.32),
+    inset 0 -18px 28px rgba(110, 82, 44, 0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .container::after {
   content: "";
-  display: block;
-  height: 20px;
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  top: 32px;
+  height: 30px;
   background: url("../assets/misc/scroll_edge.png") repeat-x;
   opacity: 0.9;
-  position: relative;
-  z-index: 0;
   pointer-events: none;
+  z-index: 0;
 }
 
 .container > * {
@@ -143,12 +272,23 @@ nav a:hover {
   z-index: 1;
 }
 
+.container > .section-title:first-child,
+.container > .page-title:first-child {
+  margin-top: 28px;
+}
+
 .section-title {
-  font-size: 32px;
+  font-size: clamp(2rem, 3vw, 2.75rem);
   border-bottom: 4px solid var(--frame-border-color);
   padding-bottom: 6px;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.24);
+}
+
+.container p,
+.container li {
+  color: var(--ink-soft);
+  line-height: 1.55;
 }
 
 .back-link-wrap {
@@ -157,107 +297,105 @@ nav a:hover {
 
 .back-link,
 .pill-btn {
-  display: inline-block;
-  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 11px 20px;
   border-radius: 999px;
   text-decoration: none;
-  border: 2px solid #5a4427;
-  background: linear-gradient(180deg, #f5e8c9 0%, #ead6ad 100%);
-  color: #3a2d1a;
+  border: 2px solid #6a4d29;
+  background:
+    linear-gradient(180deg, #f8ecd0 0%, #e4c68f 100%);
+  color: #2f2213;
   font-weight: 700;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.24px;
   box-shadow:
-    0 2px 0 rgba(58, 45, 26, 0.45),
-    0 4px 10px rgba(0, 0, 0, 0.12);
-  transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
+    0 3px 0 rgba(58, 45, 26, 0.44),
+    0 10px 20px rgba(0, 0, 0, 0.14);
+  transition:
+    background 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease;
 }
 
 .back-link:hover,
 .pill-btn:hover {
-  background: linear-gradient(180deg, #f9efda 0%, #f0deb7 100%);
+  background: linear-gradient(180deg, #fbf2dd 0%, #efd29b 100%);
+  border-color: #7c5a31;
   transform: translateY(-2px);
   box-shadow:
-    0 2px 0 rgba(58, 45, 26, 0.5),
-    0 7px 15px rgba(0, 0, 0, 0.16);
+    0 3px 0 rgba(58, 45, 26, 0.48),
+    0 14px 24px rgba(0, 0, 0, 0.16);
 }
 
 .back-link:active,
 .pill-btn:active {
-  background: linear-gradient(180deg, #d9b87a 0%, #cfa461 100%);
-  color: #2a1f12;
+  background: linear-gradient(180deg, #d9b87a 0%, #c89a55 100%);
+  color: #261a10;
   transform: translateY(0);
   box-shadow:
-    inset 0 2px 5px rgba(42, 31, 18, 0.25),
-    0 2px 6px rgba(0, 0, 0, 0.18);
+    inset 0 2px 6px rgba(42, 31, 18, 0.26),
+    0 3px 8px rgba(0, 0, 0, 0.16);
 }
 
 .back-link:focus-visible,
 .pill-btn:focus-visible {
   outline: 2px solid #a6824a;
-  outline-offset: 2px;
-}
-
-body.torch-mode {
-  --frame-border-color: #e6c27a;
-  background: #2e2214 url("../assets/misc/dark_parchment.jpg");
-  background-size: cover;
-  color: #f7e7c3;
-  transition: background 0.4s ease;
-}
-
-body.torch-mode .container {
-  background: rgba(60, 45, 25, 0.8);
-  border-color: #e6c27a;
-}
-
-body.torch-mode nav {
-  background: #4f3b24;
-  border-color: #e6c27a;
-}
-
-/* Keep text under light game covers readable in torch mode. */
-body.torch-mode .game-card h3,
-body.torch-mode .game-card p,
-body.torch-mode .game-card .build-date {
-  color: #3a2d1a;
-  opacity: 1;
-  text-shadow: 0 1px 0 rgba(255, 244, 220, 0.35);
-}
-
-/* Torch mode: improve readability for deck PDF pill buttons. */
-body.torch-mode a.pill-btn[href$=".pdf"] {
-  color: #3a2d1a;
-  text-shadow: none;
+  outline-offset: 3px;
 }
 
 footer {
-  background: #3a2d1a;
+  position: relative;
+  margin-top: 48px;
+  padding: 22px 18px 28px;
+  background:
+    linear-gradient(180deg, rgba(58, 41, 22, 0.98) 0%, rgba(43, 30, 16, 0.99) 100%);
   color: #f2e6c9;
-  padding: 20px;
   text-align: center;
-  margin-top: 40px;
-  border-top: 5px solid #2a1f12;
-  box-shadow: 0 -5px 12px rgba(0, 0, 0, 0.25);
+  border-top: 1px solid rgba(237, 202, 142, 0.28);
+  box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.22);
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 227, 171, 0.14) 0%, transparent 100%);
+  pointer-events: none;
 }
 
 .torch-btn {
   position: fixed;
   top: 18px;
   right: 22px;
-  width: 42px;
-  height: 42px;
-  background: rgba(60, 40, 20, 0.6);
-  border: 3px solid #e6c27a;
+  width: 48px;
+  height: 48px;
+  background: rgba(49, 34, 17, 0.78);
+  border: 2px solid #e6c27a;
   border-radius: 50%;
-  backdrop-filter: blur(3px);
-  padding: 4px;
+  backdrop-filter: blur(4px);
+  padding: 7px;
   cursor: pointer;
   z-index: 9999;
-  transition: background 0.3s;
+  box-shadow:
+    0 10px 18px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 232, 183, 0.15);
+  transition: transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
 }
 
 .torch-btn:hover {
-  background: rgba(90, 60, 30, 0.8);
+  background: rgba(84, 57, 28, 0.92);
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 20px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 232, 183, 0.2);
 }
 
 .torch-btn img {
@@ -265,31 +403,113 @@ footer {
   height: 100%;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 0 6px #f7d987);
+  filter:
+    drop-shadow(0 0 6px #f7d987)
+    drop-shadow(0 0 16px rgba(255, 201, 89, 0.28));
+}
+
+body.torch-mode {
+  --frame-border-color: #dfbc77;
+  --frame-border-soft: rgba(223, 188, 119, 0.56);
+  --panel-bg: rgba(62, 46, 25, 0.92);
+  --panel-bg-soft: rgba(75, 55, 30, 0.88);
+  --ink: #f3ddb2;
+  --ink-soft: rgba(243, 221, 178, 0.84);
+  background:
+    radial-gradient(circle at top, rgba(255, 211, 123, 0.09), transparent 28%),
+    radial-gradient(circle at 20% 28%, rgba(133, 87, 32, 0.18), transparent 24%),
+    linear-gradient(180deg, rgba(25, 18, 9, 0.96) 0%, rgba(41, 29, 15, 0.96) 20%, rgba(55, 39, 21, 0.94) 100%),
+    #2e2214 url("../assets/misc/dark_parchment.jpg");
+  background-size: auto, auto, auto, cover;
+}
+
+body.torch-mode .container {
+  background:
+    linear-gradient(180deg, rgba(66, 49, 26, 0.92) 0%, rgba(49, 36, 19, 0.9) 100%);
+  box-shadow:
+    0 24px 56px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 231, 186, 0.05);
+}
+
+body.torch-mode nav {
+  background:
+    linear-gradient(180deg, rgba(74, 54, 29, 0.98) 0%, rgba(56, 40, 22, 0.98) 100%);
+}
+
+body.torch-mode .container p,
+body.torch-mode .container li,
+body.torch-mode .container .record-intro,
+body.torch-mode .campaign-track-subtitle,
+body.torch-mode .track-subtitle,
+body.torch-mode .campaign-meta,
+body.torch-mode .build-date {
+  color: rgba(243, 221, 178, 0.84);
+}
+
+body.torch-mode .game-card h3,
+body.torch-mode .game-card p,
+body.torch-mode .game-card .build-date,
+body.torch-mode a.pill-btn[href$=".pdf"] {
+  color: #3a2d1a;
+  text-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .container {
+    width: min(1240px, calc(100% - 24px));
+    padding: 24px 20px 26px;
+  }
+
+  .container::before {
+    inset: 8px;
+  }
+
+  .container::after {
+    left: 18px;
+    right: 18px;
+    top: 20px;
+  }
 }
 
 @media (max-width: 720px) {
+  .site-header,
   header {
-    padding: 14px 12px;
+    padding: 18px 12px 24px;
   }
 
   .logo {
-    height: 96px;
+    height: 90px;
+    margin-bottom: 8px;
   }
 
   nav {
-    gap: 12px 18px;
-    padding: 12px 10px;
+    gap: 10px 12px;
+    padding: 16px 10px;
+    margin-bottom: 20px;
   }
 
   nav a {
-    font-size: 17px;
-    padding: 6px 10px;
+    min-width: 0;
+    font-size: 1.02rem;
+    padding: 8px 12px;
   }
 
   .container {
-    margin: 22px auto;
-    padding: 18px;
+    margin: 18px auto 34px;
+    padding: 20px 16px 22px;
     border-width: 4px;
+    border-radius: 18px;
+  }
+
+  .container::after {
+    height: 22px;
+  }
+
+  .torch-btn {
+    top: 12px;
+    right: 14px;
+    width: 42px;
+    height: 42px;
+    padding: 6px;
   }
 }

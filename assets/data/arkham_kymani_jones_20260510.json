@@ -1,16 +1,16 @@
 {
-  "pageTitle": "Kymani Jones - Deck Build (05/08/2026)",
-  "title": "Kymani Jones Deck - 05/08/2026",
+  "pageTitle": "Kymani Jones - Deck Build (05/10/2026)",
+  "title": "Kymani Jones Deck - 05/10/2026",
   "overview": {
     "imageSrc": "/assets/boardgames/ahlcg_investigators/kymani_jones_the_security_consultant.png",
     "imageAlt": "Kymani Jones",
     "heading": "Kymani Jones",
     "details": [
       "30 cards (33 total)",
-      "0 experience required",
-      "9 packs required",
+      "5 experience required",
+      "11 packs required",
       "Class: Rogue",
-      "Built by Shengbo on 05/08/2026"
+      "Built by Shengbo on 05/10/2026"
     ]
   },
   "deckColumns": [
@@ -28,8 +28,8 @@
             },
             {
               "qty": 2,
-              "name": "Lockpicks",
-              "imageSrc": "/assets/boardgames/ahlcg_cards/lockpicks.png",
+              "name": "Lockpicks •",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/lockpicks_and.png",
               "imageAlt": "Lockpicks"
             },
             {
@@ -73,7 +73,7 @@
           "cards": [
             {
               "qty": 2,
-              "name": "Leo De Luca",
+              "name": "Leo De Luca •",
               "imageSrc": "/assets/boardgames/ahlcg_cards/leo_de_luca_the_louisiana_lion.png",
               "imageAlt": "Leo De Luca"
             }
@@ -184,7 +184,7 @@
     }
   ],
   "pdf": {
-    "href": "/assets/Arkham_Horror_Decks/Kymani-Jones-DeckBuild-20260508-Shengbo.pdf",
+    "href": "/assets/Arkham_Horror_Decks/Kymani-Jones-DeckBuild-20260510-Shengbo.pdf",
     "label": "Open Kymani Deck PDF"
   }
 }

@@ -12,3 +12,15 @@ header h1,
 nav a {
   font-family: "Uncial Antiqua", serif;
 }
+
+.container {
+  text-align: center;
+  max-width: 900px;
+}
+
+.container p {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
