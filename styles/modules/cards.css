@@ -105,15 +105,16 @@
 .game-card .cover-link > h3::before {
   content: "";
   position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 8px;
-  height: 56px;
+  left: 0;
+  right: 0;
+  top: 6px;
+  height: 60px;
   background-image: url("/assets/misc/library_title_brush.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100% 100%;
-  opacity: 0.96;
+  background-size: 112% 100%;
+  mix-blend-mode: multiply;
+  opacity: 0.88;
   z-index: -1;
 }
 
