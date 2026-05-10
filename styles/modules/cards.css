@@ -46,6 +46,20 @@
   z-index: 0;
 }
 
+.game-card::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  top: calc(var(--cover-height, 0px) + 12px);
+  border-radius: 0 0 12px 12px;
+  background:
+    linear-gradient(180deg, rgba(69, 48, 24, 0.96) 0%, rgba(54, 37, 18, 0.94) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .game-card:hover {
   transform: translateY(-4px);
   box-shadow:
@@ -77,13 +91,70 @@
   margin: 14px 16px 4px;
   text-align: center;
   font-size: 1.36rem;
-  color: #2f2213;
+  color: #f3d9a4;
+  text-shadow:
+    0 1px 0 rgba(24, 16, 8, 0.88),
+    0 0 10px rgba(255, 214, 138, 0.12);
 }
 
 .game-card p {
   margin: 0 16px 16px;
   opacity: 0.86;
   font-size: 0.98rem;
+}
+
+.game-card .cover-link > h3,
+.game-card .more-info-btn {
+  position: relative;
+  z-index: 1;
+}
+
+.game-card .cover-link > h3 {
+  margin: 0;
+  padding: 22px 20px 10px;
+  position: relative;
+  display: block;
+}
+
+.game-card .cover-link > h3::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 16px;
+  height: 42px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 0% 50%, rgba(79, 54, 27, 0.02), transparent 14%),
+    radial-gradient(circle at 100% 50%, rgba(79, 54, 27, 0.02), transparent 14%),
+    linear-gradient(90deg,
+      rgba(79, 54, 27, 0.06) 0%,
+      rgba(79, 54, 27, 0.42) 8%,
+      rgba(59, 40, 20, 0.96) 18%,
+      rgba(59, 40, 20, 0.96) 82%,
+      rgba(79, 54, 27, 0.42) 92%,
+      rgba(79, 54, 27, 0.06) 100%);
+  filter: blur(0.9px);
+  opacity: 0.96;
+  z-index: -1;
+}
+
+.game-card .cover-link > h3::after {
+  content: "";
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 20px;
+  height: 34px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 0% 50%, rgba(255, 228, 176, 0.05), transparent 18%),
+    radial-gradient(circle at 100% 50%, rgba(255, 228, 176, 0.05), transparent 18%);
+  filter: blur(1.2px);
+}
+
+.game-card .more-info-btn {
+  margin-top: 0;
 }
 
 .more-info-btn {
