@@ -93,6 +93,8 @@
     let lastSavedStateRaw = "";
     let sourceStateHashAtLoad = "";
     let entryUidCounter = 1;
+    let activeCustomizableOverlay = null;
+    let activeCustomizableOverlayRow = null;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
     const previewMargin = 8;
@@ -642,8 +644,17 @@
       return uniqueIds(added);
     }
 
+    function closeCustomizableEditorOverlay() {
+      if (activeCustomizableOverlay) {
+        activeCustomizableOverlay.remove();
+      }
+      activeCustomizableOverlay = null;
+      activeCustomizableOverlayRow = null;
+      document.body.classList.remove("customizable-overlay-open");
+    }
+
     function attachCustomizableEditor(row) {
-      if (!row || row.querySelector(".customizable-inline-editor")) return;
+      if (!row) return;
       const name = getRowCardName(row);
       const definition = getCustomizableDefinition(name);
       if (!definition) return;
@@ -651,20 +662,46 @@
       const mode = String(listEl && (listEl.getAttribute("data-edit-list") || listEl.getAttribute("data-list")) || "").toLowerCase();
       if (mode !== "added") return;
 
-      const panel = document.createElement("div");
-      panel.className = "customizable-inline-editor";
+      closeCustomizableEditorOverlay();
 
       const inheritedIds = parseCustomizableIdList(row.dataset.customizableInheritedIds || "");
       const currentAddedIds = getCustomizableUpgradeIdsForRow(row);
+      const inheritedSet = new Set(inheritedIds);
+      const currentAddedSet = new Set(currentAddedIds);
+      const countsByGroup = {};
+
+      const overlay = document.createElement("div");
+      overlay.className = "customizable-overlay";
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) closeCustomizableEditorOverlay();
+      });
+
+      const panel = document.createElement("div");
+      panel.className = "customizable-overlay-panel";
+      overlay.appendChild(panel);
+
+      const closeBtn = document.createElement("button");
+      closeBtn.type = "button";
+      closeBtn.className = "customizable-overlay-close";
+      closeBtn.setAttribute("aria-label", "Close customizable editor");
+      closeBtn.textContent = "×";
+      closeBtn.addEventListener("click", () => closeCustomizableEditorOverlay());
+      panel.appendChild(closeBtn);
+
+      const title = document.createElement("h4");
+      title.className = "customizable-overlay-title";
+      title.textContent = `${name} Checkboxes`;
+      panel.appendChild(title);
 
       const intro = document.createElement("p");
       intro.className = "customizable-inline-intro";
       intro.textContent = "Select upgrade checkboxes for this scenario. Existing checkboxes are locked and do not spend XP.";
       panel.appendChild(intro);
 
-      const inheritedSet = new Set(inheritedIds);
-      const currentAddedSet = new Set(currentAddedIds);
-      const countsByGroup = {};
+      const legend = document.createElement("p");
+      legend.className = "customizable-preview-legend";
+      legend.innerHTML = '<span class="legend-chip is-inherited">Existing</span><span class="legend-chip is-upgrade">This Upgrade</span>';
+      panel.appendChild(legend);
 
       (definition.groups || []).forEach((group) => {
         const ids = getCustomizableGroupIds(group);
@@ -673,7 +710,7 @@
         countsByGroup[group.id] = addedCount;
 
         const groupWrap = document.createElement("div");
-        groupWrap.className = "customizable-inline-group";
+        groupWrap.className = "customizable-inline-group customizable-overlay-group";
 
         const head = document.createElement("div");
         head.className = "customizable-inline-head";
@@ -700,7 +737,7 @@
             setCustomizableUpgradeIdsForRow(row, buildCustomizableAddedIdsFromCounts(definition, inheritedIds, countsByGroup));
             refreshCustomizableRowsInList(listEl, row.closest(".upgrade-entry"));
             refreshCurrentXp();
-            panel.remove();
+            closeCustomizableEditorOverlay();
             attachCustomizableEditor(row);
           });
           chips.appendChild(chip);
@@ -718,7 +755,10 @@
         panel.appendChild(groupWrap);
       });
 
-      row.appendChild(panel);
+      document.body.appendChild(overlay);
+      document.body.classList.add("customizable-overlay-open");
+      activeCustomizableOverlay = overlay;
+      activeCustomizableOverlayRow = row;
     }
 
     function ensureCustomizableActionButton(row) {
@@ -741,9 +781,8 @@
       btn.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        const existingPanel = row.querySelector(".customizable-inline-editor");
-        if (existingPanel) {
-          existingPanel.remove();
+        if (activeCustomizableOverlay && activeCustomizableOverlayRow === row) {
+          closeCustomizableEditorOverlay();
           return;
         }
         attachCustomizableEditor(row);

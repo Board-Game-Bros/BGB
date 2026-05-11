@@ -572,7 +572,8 @@ body.torch-mode #campaigns .campaign-subtitle {
   margin: 0 0 8px;
   font-family: "Uncial Antiqua", serif;
   font-size: 1rem;
-  color: #5a201a;
+  color: #4a2a18 !important;
+  text-shadow: none !important;
 }
 
 .customizable-preview-legend {
@@ -625,7 +626,20 @@ body.torch-mode #campaigns .campaign-subtitle {
 
 .customizable-group-label {
   font-weight: 700;
-  color: #2f1d12;
+  color: #4a2a18;
+  text-shadow: none;
+}
+
+.customizable-preview-panel .customizable-group-label,
+.customizable-preview-panel .customizable-group-text,
+.customizable-preview-panel .customizable-preview-legend,
+.customizable-preview-panel .legend-chip,
+.customizable-preview-panel .customizable-box {
+  text-shadow: none !important;
+}
+
+.customizable-preview-panel .customizable-group-label {
+  color: #4a2a18 !important;
 }
 
 .customizable-group-boxes,
@@ -641,12 +655,14 @@ body.torch-mode #campaigns .campaign-subtitle {
   font-size: 0.92rem;
   line-height: 1.35;
   color: rgba(47, 29, 18, 0.88);
+  text-shadow: none;
 }
 
 .customizable-row-summary {
   margin-top: 6px;
   font-size: 0.84rem;
   color: rgba(47, 29, 18, 0.78);
+  text-shadow: none;
 }
 
 .customizable-edit-btn {
@@ -673,6 +689,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   margin: 0 0 10px;
   font-size: 0.84rem;
   color: rgba(47, 29, 18, 0.82);
+  text-shadow: none;
 }
 
 .customizable-inline-group + .customizable-inline-group {
@@ -686,6 +703,11 @@ body.torch-mode #campaigns .campaign-subtitle {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+}
+
+.customizable-inline-head strong {
+  color: #4a2a18;
+  text-shadow: none;
 }
 
 .customizable-inline-chip {
@@ -710,6 +732,65 @@ body.torch-mode #campaigns .campaign-subtitle {
   background: linear-gradient(180deg, rgba(189, 159, 113, 0.92) 0%, rgba(158, 124, 74, 0.9) 100%);
   color: #fff6de;
   cursor: default;
+}
+
+.customizable-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 72px 28px 28px;
+  background: rgba(21, 12, 6, 0.38);
+  backdrop-filter: blur(3px);
+}
+
+.customizable-overlay-panel {
+  position: relative;
+  width: min(560px, calc(100vw - 48px));
+  max-height: calc(100vh - 100px);
+  overflow: auto;
+  padding: 18px 18px 16px;
+  border: 2px solid rgba(86, 60, 34, 0.46);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(248, 237, 211, 0.98) 0%, rgba(229, 205, 163, 0.96) 100%);
+  box-shadow:
+    0 18px 40px rgba(9, 5, 2, 0.42),
+    inset 0 1px 0 rgba(255, 249, 239, 0.85);
+}
+
+.customizable-overlay-title {
+  margin: 0 32px 10px 0;
+  font-family: "Uncial Antiqua", serif;
+  font-size: 1.1rem;
+  color: #4a2a18;
+  text-shadow: none;
+}
+
+.customizable-overlay-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(74, 42, 24, 0.86);
+  font: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.customizable-overlay-group + .customizable-overlay-group {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(90, 68, 39, 0.18);
+}
+
+body.customizable-overlay-open {
+  overflow: hidden;
 }
 
 .card-ref:hover .card-preview {
