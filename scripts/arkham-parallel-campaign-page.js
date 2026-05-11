@@ -96,6 +96,54 @@
     return wrap;
   }
 
+  function renderLinearStoryEntry(entry) {
+    const section = el("div", "scenario-log linear-story-entry");
+    section.appendChild(el("h3", "", String(entry.title || "")));
+
+    if (Array.isArray(entry.statusChips) && entry.statusChips.length) {
+      const status = el("div", "campaign-status");
+      appendItems(status, entry.statusChips, "status-chip");
+      section.appendChild(status);
+    }
+
+    if (Array.isArray(entry.metaItems) && entry.metaItems.length) {
+      const meta = el("div", "record-meta");
+      appendItems(meta, entry.metaItems, "meta-item");
+      section.appendChild(meta);
+    }
+
+    (Array.isArray(entry.notes) ? entry.notes : []).forEach((note) => {
+      section.appendChild(renderStoryNote(note || {}));
+    });
+
+    return section;
+  }
+
+  function renderCampaignLogSection(data, main) {
+    if (!data || !Array.isArray(data.sections) || !data.sections.length) return;
+    const section = el("section", "record-section");
+    section.id = "campaign-log";
+    section.appendChild(el("h2", "section-title", String(data.title || "Campaign Log")));
+    const card = el("div", "record-card");
+
+    (Array.isArray(data.sections) ? data.sections : []).forEach((entry) => {
+      const block = el("div", "scenario-log");
+      block.appendChild(el("h3", "", String(entry.title || "")));
+      if (Array.isArray(entry.metaItems) && entry.metaItems.length) {
+        const meta = el("div", "record-meta");
+        appendItems(meta, entry.metaItems, "meta-item");
+        block.appendChild(meta);
+      }
+      (Array.isArray(entry.notes) ? entry.notes : []).forEach((note) => {
+        block.appendChild(renderStoryNote(note || {}));
+      });
+      card.appendChild(block);
+    });
+
+    section.appendChild(card);
+    main.appendChild(section);
+  }
+
   function renderUpgradeCard(card) {
     const article = el("article", "upgrade-card");
     const heading = el("h3");
@@ -206,75 +254,88 @@
     appendItems(meta, overview.metaItems, "meta-item");
     overviewCard.appendChild(meta);
 
-    (Array.isArray(overview.sections) ? overview.sections : []).forEach((section) => {
-      const scenarioLog = el("div", "scenario-log");
-      scenarioLog.appendChild(el("h3", "", String(section.title || "")));
-      if (Array.isArray(section.metaItems) && section.metaItems.length) {
-        const innerMeta = el("div", "record-meta");
-        appendItems(innerMeta, section.metaItems, "meta-item");
-        scenarioLog.appendChild(innerMeta);
-      }
-      (Array.isArray(section.notes) ? section.notes : []).forEach((note) => {
-        scenarioLog.appendChild(renderStoryNote(note || {}));
+    const useLinearStoryLayout = Boolean(data.linearStoryLayout);
+    if (Array.isArray(data.storyNotes) && data.storyNotes.length) {
+      data.storyNotes.forEach((entry) => {
+        overviewCard.appendChild(renderLinearStoryEntry(entry || {}));
       });
-      overviewCard.appendChild(scenarioLog);
-    });
+      overviewSection.appendChild(overviewCard);
+      main.appendChild(overviewSection);
+    } else {
+      (Array.isArray(overview.sections) ? overview.sections : []).forEach((section) => {
+        const scenarioLog = el("div", "scenario-log");
+        scenarioLog.appendChild(el("h3", "", String(section.title || "")));
+        if (Array.isArray(section.metaItems) && section.metaItems.length) {
+          const innerMeta = el("div", "record-meta");
+          appendItems(innerMeta, section.metaItems, "meta-item");
+          scenarioLog.appendChild(innerMeta);
+        }
+        (Array.isArray(section.notes) ? section.notes : []).forEach((note) => {
+          scenarioLog.appendChild(renderStoryNote(note || {}));
+        });
+        overviewCard.appendChild(scenarioLog);
+      });
 
-    if (Array.isArray(overview.teamColumns) && overview.teamColumns.length) {
-      const teamGrid = el("div", "dream-eaters-overview-grid");
-      overview.teamColumns.forEach((note) => teamGrid.appendChild(renderStoryNote(note || {})));
-      overviewCard.appendChild(teamGrid);
+      if (Array.isArray(overview.teamColumns) && overview.teamColumns.length) {
+        const teamGrid = el("div", "dream-eaters-overview-grid");
+        overview.teamColumns.forEach((note) => teamGrid.appendChild(renderStoryNote(note || {})));
+        overviewCard.appendChild(teamGrid);
+      }
+      overviewSection.appendChild(overviewCard);
+      main.appendChild(overviewSection);
     }
-    overviewSection.appendChild(overviewCard);
-    main.appendChild(overviewSection);
 
-    const timeline = data.timeline || {};
-    const timelineSection = el("section", "record-section");
-    timelineSection.id = "timeline";
-    timelineSection.appendChild(el("h2", "section-title", String(timeline.title || "Interwoven Timeline")));
-    const timelineCard = el("div", "record-card");
-    const timelineGrid = el("div", "timeline-grid");
-    (Array.isArray(timeline.steps) ? timeline.steps : []).forEach((step) => {
-      timelineGrid.appendChild(renderStoryNote({
-        title: step.title || "",
-        text: step.text || "",
-      }));
-      timelineGrid.lastChild.classList.add("timeline-step");
-    });
-    timelineCard.appendChild(timelineGrid);
-    if (timeline.crossNotes) timelineCard.appendChild(renderStoryNote(timeline.crossNotes));
-    timelineSection.appendChild(timelineCard);
-    main.appendChild(timelineSection);
+    if (useLinearStoryLayout) {
+      renderCampaignLogSection(data.campaignLog || {}, main);
+    } else {
+      const timeline = data.timeline || {};
+      const timelineSection = el("section", "record-section");
+      timelineSection.id = "timeline";
+      timelineSection.appendChild(el("h2", "section-title", String(timeline.title || "Interwoven Timeline")));
+      const timelineCard = el("div", "record-card");
+      const timelineGrid = el("div", "timeline-grid");
+      (Array.isArray(timeline.steps) ? timeline.steps : []).forEach((step) => {
+        timelineGrid.appendChild(renderStoryNote({
+          title: step.title || "",
+          text: step.text || "",
+        }));
+        timelineGrid.lastChild.classList.add("timeline-step");
+      });
+      timelineCard.appendChild(timelineGrid);
+      if (timeline.crossNotes) timelineCard.appendChild(renderStoryNote(timeline.crossNotes));
+      timelineSection.appendChild(timelineCard);
+      main.appendChild(timelineSection);
 
-    const trackSection = el("section", "record-section");
-    trackSection.id = "parallel-campaigns";
-    trackSection.appendChild(el("h2", "section-title", String(data.trackSectionTitle || "Parallel Campaign Tracks")));
-    const trackGrid = el("div", "dream-track-grid");
-    (Array.isArray(data.tracks) ? data.tracks : []).forEach((track) => {
-      const article = el("article", "record-card dream-track-card");
-      if (track.id) article.id = String(track.id);
-      const header = el("div", "track-header");
-      header.appendChild(el("h3", "", String(track.title || "")));
-      if (track.subtitle) header.appendChild(el("p", "track-subtitle", String(track.subtitle)));
-      article.appendChild(header);
+      const trackSection = el("section", "record-section");
+      trackSection.id = "parallel-campaigns";
+      trackSection.appendChild(el("h2", "section-title", String(data.trackSectionTitle || "Parallel Campaign Tracks")));
+      const trackGrid = el("div", "dream-track-grid");
+      (Array.isArray(data.tracks) ? data.tracks : []).forEach((track) => {
+        const article = el("article", "record-card dream-track-card");
+        if (track.id) article.id = String(track.id);
+        const header = el("div", "track-header");
+        header.appendChild(el("h3", "", String(track.title || "")));
+        if (track.subtitle) header.appendChild(el("p", "track-subtitle", String(track.subtitle)));
+        article.appendChild(header);
 
-      const status = el("div", "campaign-status");
-      appendItems(status, track.statusChips, "status-chip");
-      article.appendChild(status);
+        const status = el("div", "campaign-status");
+        appendItems(status, track.statusChips, "status-chip");
+        article.appendChild(status);
 
-      const trackMeta = el("div", "record-meta");
-      appendItems(trackMeta, track.metaItems, "meta-item");
-      article.appendChild(trackMeta);
+        const trackMeta = el("div", "record-meta");
+        appendItems(trackMeta, track.metaItems, "meta-item");
+        article.appendChild(trackMeta);
 
-      (Array.isArray(track.notes) ? track.notes : []).forEach((note) => article.appendChild(renderStoryNote(note || {})));
+        (Array.isArray(track.notes) ? track.notes : []).forEach((note) => article.appendChild(renderStoryNote(note || {})));
 
-      const scenarioGrid = el("div", "track-scenario-grid");
-      (Array.isArray(track.scenarios) ? track.scenarios : []).forEach((note) => scenarioGrid.appendChild(renderStoryNote(note || {})));
-      article.appendChild(scenarioGrid);
-      trackGrid.appendChild(article);
-    });
-    trackSection.appendChild(trackGrid);
-    main.appendChild(trackSection);
+        const scenarioGrid = el("div", "track-scenario-grid");
+        (Array.isArray(track.scenarios) ? track.scenarios : []).forEach((note) => scenarioGrid.appendChild(renderStoryNote(note || {})));
+        article.appendChild(scenarioGrid);
+        trackGrid.appendChild(article);
+      });
+      trackSection.appendChild(trackGrid);
+      main.appendChild(trackSection);
+    }
 
     const upgradeSection = el("section", "record-section");
     upgradeSection.id = "upgrade-history";

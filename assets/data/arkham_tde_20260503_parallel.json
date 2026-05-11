@@ -4,27 +4,20 @@
   "subnav": [
     {
       "href": "#story-notes",
-      "label": "Overview"
+      "label": "Story Notes"
     },
     {
-      "href": "#timeline",
-      "label": "Timeline"
-    },
-    {
-      "href": "#dream-quest",
-      "label": "Dream-Quest"
-    },
-    {
-      "href": "#web-of-dreams",
-      "label": "Web of Dreams"
+      "href": "#campaign-log",
+      "label": "Campaign Log"
     },
     {
       "href": "#upgrade-history",
       "label": "Upgrade History"
     }
   ],
+  "linearStoryLayout": true,
   "overview": {
-    "title": "Campaign Overview",
+    "title": "Story Notes",
     "statusChips": [
       "Difficulty: Standard",
       "Mode: Interconnected 8-Part Campaign",
@@ -74,6 +67,211 @@
           "Joe Diamond"
         ],
         "text": "Campaign B now has three recorded waking-world investigators and is ready for the opening Web of Dreams scenario."
+      }
+    ]
+  },
+  "storyNotes": [
+    {
+      "title": "Prologue: The Shared Dream Begins",
+      "statusChips": [
+        "Status: Completed"
+      ],
+      "metaItems": [
+        "Date: 05/03/2026",
+        "Session: Prologue"
+      ],
+      "notes": [
+        {
+          "title": "Background",
+          "items": [
+            "Friday, February 13th, 1925. Virgil Gray's impossible dream account in Tales from Nevermore spreads through Arkham and triggers a wider outbreak of shared dreams.",
+            "Readers across town report the same dream, experts fail to explain it, and the investigators decide to test whether the Dreamlands are real.",
+            "The party splits into two linked teams: one group will cross into the Dreamlands, while the other stays in the waking world to observe and protect them."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario I-A: Beyond the Gates of Sleep",
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 13"
+      ],
+      "metaItems": [
+        "Date: 05/03/2026",
+        "Session: Scenario I-A",
+        "Track: Dream-Quest"
+      ],
+      "notes": [
+        {
+          "title": "Opening Events",
+          "items": [
+            "Each dreamlands investigator chose a different dream entry at setup: Silas Marsh took the Survivor dream, Mandy Thompson took the Miskatonic / Scholar dream, and Wilson Richards took the Guardian dream.",
+            "The scenario began without an encounter deck, creating an unusually quiet opening stretch before the mythos pressure arrived later."
+          ]
+        },
+        {
+          "title": "Campaign Log Results",
+          "items": [
+            "Resolution reached: Resolution 1.",
+            "Record: the dreamers strayed from the path.",
+            "Chaos bag end-state: 3 skull tokens were present by scenario end.",
+            "Record: the cats collected their tribute from the Zoogs.",
+            "Wilson Richards earned Randolph Carter: Expert Dreamer.",
+            "Each Dream-Quest investigator earned 13 XP from the scenario."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario I-B: Waking Nightmare",
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1 / 5 aftermath",
+        "Victory Display: 11"
+      ],
+      "metaItems": [
+        "Date: 05/10/2026",
+        "Session: Scenario I-B",
+        "Track: Web of Dreams"
+      ],
+      "notes": [
+        {
+          "title": "Hospital Crisis",
+          "items": [
+            "More than twenty-four hours after the dreamers fell asleep, the waking-world team carried their unconscious companions to St. Mary's Hospital.",
+            "Doctor Shivani Maheswaran joined the investigation as the patients' condition worsened and strange spiders began emerging from the ward."
+          ]
+        },
+        {
+          "title": "Campaign Log Results",
+          "items": [
+            "Resolution reached: Resolution 1, followed by the waking-world aftermath that leads into Resolution 5 story text.",
+            "All three investigators survived the scenario.",
+            "Record: Dr. Maheswaran is alive.",
+            "Record: your companions' condition has worsened.",
+            "Record: Randolph escaped the hospital with the investigators.",
+            "Because this is an interconnected run, Campaign A also records: the dreamers grow weaker.",
+            "Joe Diamond earned Randolph Carter: Chained to the Waking World.",
+            "Each Web of Dreams investigator earned 11 XP from the scenario."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Interlude I: The Black Cat",
+      "statusChips": [
+        "Type: Shared Interlude",
+        "Status: Completed"
+      ],
+      "metaItems": [
+        "Date: 05/10/2026",
+        "Session: Interlude I",
+        "Order: Resolve A side, then B side"
+      ],
+      "notes": [
+        {
+          "title": "Dream-Quest Side",
+          "items": [
+            "The dreamers traveled with Randolph Carter to Ulthar, met Virgil Gray, and were interrupted by the mysterious black cat.",
+            "For the interconnected campaign choice, the lead investigator chose: tell your companions that they are in danger, and that you are safe.",
+            "Record: the black cat warned the others.",
+            "Add 1 tablet token to Campaign A's chaos bag.",
+            "Proceed to Scenario II-A: The Search for Kadath."
+          ]
+        },
+        {
+          "title": "Web of Dreams Side",
+          "items": [
+            "Outside St. Mary's Hospital, the same black cat delivered the Dream-Quest message to the waking-world investigators.",
+            "The standalone Web of Dreams branch that would record the black cat is at your side was not used in this interconnected run.",
+            "Shared consequence applied: add 1 tablet token to the chaos bag as instructed.",
+            "Proceed to Scenario II-B: A Thousand Shapes of Horror."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario II-B: A Thousand Shapes of Horror",
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 6"
+      ],
+      "metaItems": [
+        "Date: 05/10/2026",
+        "Session: Scenario II-B",
+        "Track: Web of Dreams"
+      ],
+      "notes": [
+        {
+          "title": "Descent Into The Dreamlands",
+          "items": [
+            "The waking-world investigators forced their way physically into the Dreamlands with Randolph Carter and pursued the lost key that could open the Gate of Dreams.",
+            "The black cat challenged Randolph's failed sense of wonder, leading the party toward the abandoned house where he first lost the key."
+          ]
+        },
+        {
+          "title": "Campaign Log Results",
+          "items": [
+            "Resolution reached: Resolution 1.",
+            "All three investigators resigned alive.",
+            "Record: Randolph survived the descent.",
+            "Record: the investigators possess the Silver Key.",
+            "Zoey Samaras earned The Silver Key: Key to the Gate of Dreams.",
+            "Each investigator earned 6 XP from the scenario.",
+            "Ongoing effect: add 1 skull token to Campaign B's chaos bag for the remainder of the campaign.",
+            "Next chapter: Scenario III-B, Dark Side of the Moon."
+          ]
+        }
+      ]
+    }
+  ],
+  "campaignLog": {
+    "title": "Campaign Log",
+    "sections": [
+      {
+        "title": "Active Cross-Campaign Records",
+        "notes": [
+          {
+            "items": [
+              "The dreamers strayed from the path.",
+              "The dreamers grow weaker.",
+              "The black cat warned the others.",
+              "Dr. Maheswaran is alive.",
+              "Your companions' condition has worsened.",
+              "Randolph escaped the hospital with the investigators.",
+              "Randolph survived the descent.",
+              "The investigators possess the Silver Key."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Current Chaos Bag Notes",
+        "notes": [
+          {
+            "items": [
+              "Campaign A gained 1 tablet token from Interlude I.",
+              "Campaign B gained 1 tablet token from Interlude I.",
+              "Campaign B also gains 1 skull token for the remainder of the campaign after Scenario II-B.",
+              "Dream-Quest Scenario I-A previously ended with three skull tokens recorded in that bag."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Story Assets And Special Rewards",
+        "notes": [
+          {
+            "items": [
+              "Wilson Richards: Randolph Carter: Expert Dreamer.",
+              "Joe Diamond: Randolph Carter: Chained to the Waking World.",
+              "Zoey Samaras: The Silver Key: Key to the Gate of Dreams."
+            ]
+          }
+        ]
       }
     ]
   },
