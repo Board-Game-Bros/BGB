@@ -104,36 +104,6 @@
       ]
     },
     {
-      "title": "Prologue (Web of Dreams)",
-      "statusChips": [
-        "Status: Completed"
-      ],
-      "notes": [
-        {
-          "title": "Background",
-          "items": [
-            "Friday, February 13th, 1925. While the dreamers attempt to reproduce Virgil Gray's crossing, the waking-world investigators remain in Arkham to watch over them and respond if the experiment goes wrong.",
-            "Something does go wrong: the sleepers fail to wake naturally, their condition worsens, and the waking-world team is forced into its own linked investigation alongside the dream journey."
-          ]
-        },
-        {
-          "title": "Web Of Dreams Setup",
-          "items": [
-            "The waking-world team begins by studying the dreamers' physical condition, guarding them, and trying to understand whether the shared visions have opened some path between worlds.",
-            "This parallel campaign follows the consequences in Arkham while the Dream-Quest investigators disappear into the Dreamlands."
-          ]
-        },
-        {
-          "title": "Investigators Chosen For Campaign B",
-          "items": [
-            "Zoey Samaras",
-            "Kymani Jones",
-            "Joe Diamond"
-          ]
-        }
-      ]
-    },
-    {
       "title": "Scenario I-A: Beyond the Gates of Sleep",
       "statusChips": [
         "Status: Completed",
@@ -166,6 +136,36 @@
       "metaItems": [
         "Date: 05/10/2026",
         "Session: Prologue (Web of Dreams) + Scenario I-B + Interlude I + Scenario II-B"
+      ]
+    },
+    {
+      "title": "Prologue (Web of Dreams)",
+      "statusChips": [
+        "Status: Completed"
+      ],
+      "notes": [
+        {
+          "title": "Background",
+          "items": [
+            "Friday, February 13th, 1925. While the dreamers attempt to reproduce Virgil Gray's crossing, the waking-world investigators remain in Arkham to watch over them and respond if the experiment goes wrong.",
+            "Something does go wrong: the sleepers fail to wake naturally, their condition worsens, and the waking-world team is forced into its own linked investigation alongside the dream journey."
+          ]
+        },
+        {
+          "title": "Web Of Dreams Setup",
+          "items": [
+            "The waking-world team begins by studying the dreamers' physical condition, guarding them, and trying to understand whether the shared visions have opened some path between worlds.",
+            "This parallel campaign follows the consequences in Arkham while the Dream-Quest investigators disappear into the Dreamlands."
+          ]
+        },
+        {
+          "title": "Investigators Chosen For Campaign B",
+          "items": [
+            "Zoey Samaras",
+            "Kymani Jones",
+            "Joe Diamond"
+          ]
+        }
       ]
     },
     {
