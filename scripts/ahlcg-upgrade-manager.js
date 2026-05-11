@@ -10,6 +10,7 @@
     const standardCardNames = Array.isArray(options.standardCardNames) ? options.standardCardNames : [];
     const myriadCardNames = Array.isArray(options.myriadCardNames) ? options.myriadCardNames : [];
     const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
+    const customizableCardNames = Array.isArray(options.customizableCardNames) ? options.customizableCardNames : [];
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
@@ -57,6 +58,12 @@
     );
     const myriadNameOnlySet = new Set(
       myriadCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
+    );
+    const customizableCatalogKeys = customizableCardNames
+      .map((name) => getCatalogKey(name))
+      .filter(Boolean);
+    const customizableNameOnlySet = new Set(
+      customizableCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
     );
 
     let activeUndo = null;
@@ -550,6 +557,29 @@
       return Number.isFinite(value) && value > 0 ? value : 1;
     }
 
+    function getCustomizableCheckboxCount(cardName) {
+      const text = String(cardName || "");
+      const groups = text.match(/\(([^)]*)\)/g) || [];
+      for (let i = groups.length - 1; i >= 0; i -= 1) {
+        const inner = groups[i].replace(/[()]/g, "").trim();
+        if (!inner) continue;
+        if (/^x\s*\d+$/i.test(inner)) continue;
+        let match = inner.match(/^\+?\s*(\d+)\s*(?:check|checks|checkbox|checkboxes|box|boxes|mark|marks)$/i);
+        if (match) return Number(match[1]);
+        match = inner.match(/^customizable\s*:\s*\+?\s*(\d+)$/i);
+        if (match) return Number(match[1]);
+      }
+      return null;
+    }
+
+    function stripCustomizableCheckboxMarkers(cardName) {
+      return String(cardName || "")
+        .replace(/\(\s*\+?\s*\d+\s*(?:check|checks|checkbox|checkboxes|box|boxes|mark|marks)\s*\)/gi, " ")
+        .replace(/\(\s*customizable\s*:\s*\+?\s*\d+\s*\)/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
     function getCardLevel(cardName) {
       const text = String(cardName || "");
       const groups = text.match(/\(([^)]*)\)/g) || [];
@@ -624,11 +654,45 @@
       });
     }
 
+    function isCustomizableCardName(cardName) {
+      const key = getCatalogKey(cardName);
+      if (!key) return false;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return false;
+      if (customizableNameOnlySet.has(nameOnly)) return true;
+      return customizableCatalogKeys.some((ck) => {
+        const cNameOnly = getNameOnly(ck);
+        if (!cNameOnly) return false;
+        return (
+          nameOnly === cNameOnly ||
+          nameOnly.startsWith(cNameOnly + " ") ||
+          cNameOnly.startsWith(nameOnly + " ")
+        );
+      });
+    }
+
     function sumAddedCostsFromCardNames(cardNames) {
       const groupedMyriad = new Map();
+      const groupedCustomizable = new Map();
       let total = 0;
       (cardNames || []).forEach((name) => {
         const qty = getCardQuantity(name);
+        if (isCustomizableCardName(name)) {
+          const parsed = parseTrailingQuantity(name);
+          const key = getCatalogKey(parsed.base || name);
+          if (!key) return;
+          const checks = getCustomizableCheckboxCount(name);
+          const existing = groupedCustomizable.get(key) || {
+            explicitChecks: null,
+            qty: 0,
+            sampleName: parsed.base || name,
+          };
+          if (checks !== null) existing.explicitChecks = Math.max(0, checks);
+          existing.qty = Math.max(existing.qty, qty);
+          existing.sampleName = parsed.base || name;
+          groupedCustomizable.set(key, existing);
+          return;
+        }
         const cost = getAddedCardCost(name);
         if (!isMyriadCardName(name)) {
           total += qty * cost;
@@ -647,21 +711,71 @@
       groupedMyriad.forEach((cost) => {
         total += cost;
       });
+      groupedCustomizable.forEach((state) => {
+        if (state.explicitChecks !== null) {
+          total += state.explicitChecks;
+          return;
+        }
+        total += state.qty * getAddedCardCost(state.sampleName);
+      });
       return total;
     }
 
     function sumRemovedValuesFromCardNames(cardNames) {
       return (cardNames || []).reduce((acc, name) => {
+        if (isCustomizableCardName(name)) return acc;
         const qty = getCardQuantity(name);
         const cost = getRemovedCardValue(name);
         return acc + qty * cost;
       }, 0);
     }
 
+    function getCustomizableStateMap(cardNames) {
+      const map = new Map();
+      (cardNames || []).forEach((name) => {
+        if (!isCustomizableCardName(name)) return;
+        const parsed = parseTrailingQuantity(name);
+        const baseName = parsed.base || name;
+        const key = getCatalogKey(baseName);
+        if (!key) return;
+        const checks = getCustomizableCheckboxCount(name);
+        const qty = getCardQuantity(name);
+        const existing = map.get(key) || {
+          explicitChecks: null,
+          qty: 0,
+          sampleName: baseName,
+        };
+        if (checks !== null) existing.explicitChecks = Math.max(0, checks);
+        existing.qty = Math.max(existing.qty, qty);
+        existing.sampleName = baseName;
+        map.set(key, existing);
+      });
+      return map;
+    }
+
+    function computeCustomizableSpentXp(removedCardNames, addedCardNames) {
+      const removedMap = getCustomizableStateMap(removedCardNames);
+      const addedMap = getCustomizableStateMap(addedCardNames);
+      let total = 0;
+      addedMap.forEach((addedState, key) => {
+        if (addedState.explicitChecks !== null) {
+          const removedState = removedMap.get(key);
+          const beforeChecks = removedState && removedState.explicitChecks !== null
+            ? removedState.explicitChecks
+            : 0;
+          total += Math.max(0, addedState.explicitChecks - beforeChecks);
+          return;
+        }
+        total += addedState.qty * getAddedCardCost(addedState.sampleName);
+      });
+      return total;
+    }
+
     function computeNetSpentXp(removedCardNames, addedCardNames) {
       const removedValue = sumRemovedValuesFromCardNames(removedCardNames);
       const addedCost = sumAddedCostsFromCardNames(addedCardNames);
-      return Math.max(0, addedCost - removedValue);
+      const customizableSpent = computeCustomizableSpentXp(removedCardNames, addedCardNames);
+      return Math.max(0, addedCost - removedValue - customizableSpent) + customizableSpent;
     }
 
     function getEntryCardLists(entry) {
@@ -820,7 +934,7 @@
     }
 
     function getCatalogKey(name) {
-      return normalizeText(name)
+      return normalizeText(stripCustomizableCheckboxMarkers(name))
         .replace(/\bcampaign\b/g, " ")
         .replace(/\bstory\b/g, " ")
         .replace(/\basset\b/g, " ")

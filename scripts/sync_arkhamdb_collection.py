@@ -193,6 +193,7 @@ def read_existing_library(path: Path) -> Dict[str, List[str]]:
             "standardCardNames": [],
             "myriadCardNames": [],
             "exceptionalCardNames": [],
+            "customizableCardNames": [],
         }
     text = path.read_text(encoding="utf-8")
     return {
@@ -200,6 +201,7 @@ def read_existing_library(path: Path) -> Dict[str, List[str]]:
         "standardCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "standardCardNames")],
         "myriadCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "myriadCardNames")],
         "exceptionalCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "exceptionalCardNames")],
+        "customizableCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "customizableCardNames")],
     }
 
 
@@ -216,11 +218,13 @@ def write_standard_library(
     standard_names: Iterable[str],
     myriad_names: Iterable[str],
     exceptional_names: Iterable[str],
+    customizable_names: Iterable[str],
 ) -> None:
     files = sorted(set(card_image_files))
     names = sorted(set(standard_names), key=lambda s: s.lower())
     myriad = sorted(set(myriad_names), key=lambda s: s.lower())
     exceptional = sorted(set(exceptional_names), key=lambda s: s.lower())
+    customizable = sorted(set(customizable_names), key=lambda s: s.lower())
 
     lines: List[str] = []
     lines.append("(function () {")
@@ -245,6 +249,12 @@ def write_standard_library(
     lines.append("    exceptionalCardNames: [")
     for idx, n in enumerate(exceptional):
         comma = "," if idx < len(exceptional) - 1 else ""
+        escaped = n.replace("\\", "\\\\").replace('"', '\\"')
+        lines.append(f'      "{escaped}"{comma}')
+    lines.append("    ],")
+    lines.append("    customizableCardNames: [")
+    for idx, n in enumerate(customizable):
+        comma = "," if idx < len(customizable) - 1 else ""
         escaped = n.replace("\\", "\\\\").replace('"', '\\"')
         lines.append(f'      "{escaped}"{comma}')
     lines.append("    ]")
@@ -323,6 +333,7 @@ def main() -> int:
     standard_names: List[str] = list(existing_library["standardCardNames"])
     myriad_names: List[str] = list(existing_library["myriadCardNames"])
     exceptional_names: List[str] = list(existing_library["exceptionalCardNames"])
+    customizable_names: List[str] = list(existing_library["customizableCardNames"])
     investigator_names: List[str] = []
 
     downloaded = 0
@@ -336,6 +347,8 @@ def main() -> int:
         standard_names.append(display)
         if bool(card.get("myriad")):
             myriad_names.append(display)
+        if re.match(r"^Customizable\.", str(card.get("text") or "").strip()):
+            customizable_names.append(display)
         if card_is_investigator(card):
             investigator_names.append(display)
 
@@ -405,6 +418,7 @@ def main() -> int:
             standard_names + investigator_names,
             myriad_names,
             exceptional_names,
+            customizable_names,
         )
 
     if args.audit_missing_only:

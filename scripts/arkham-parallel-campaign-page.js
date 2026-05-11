@@ -236,6 +236,7 @@
         standardCardNames: ahlcgLibrary.standardCardNames || [],
         myriadCardNames: ahlcgLibrary.myriadCardNames || [],
         exceptionalCardNames: ahlcgLibrary.exceptionalCardNames || [],
+        customizableCardNames: ahlcgLibrary.customizableCardNames || [],
         campaignStartNote: upgradeConfig.campaignStartNote || null,
         inactivityMs: Number(upgradeConfig.inactivityMs) > 0 ? Number(upgradeConfig.inactivityMs) : 120000,
         remoteSync: upgradeConfig.remoteSync || null,

@@ -185,7 +185,15 @@ Refresh AHLCG images and the standard-name library from ArkhamDB:
 python3 scripts/sync_arkhamdb_collection.py --project-root .
 ```
 
-The generated `scripts/ahlcg-standard-library.js` now carries card image filenames, standard display names, and `myriadCardNames`. Upgrade-history XP calculation uses that `myriad` metadata so cards like `Segment of Onyx (1)` are charged once for up to three copies added in the same purchase.
+The generated `scripts/ahlcg-standard-library.js` now carries card image filenames, standard display names, plus keyword metadata such as `myriadCardNames`, `exceptionalCardNames`, and `customizableCardNames`.
+
+Upgrade-history XP calculation currently uses that metadata as follows:
+
+- `Myriad` cards such as `Segment of Onyx (1)` are charged once for up to three copies added in the same purchase.
+- `Exceptional` cards are charged at double their base XP cost.
+- `Customizable` cards are tracked by checkbox count, not by printed level. Record them in upgrade entries using a suffix like `Runic Axe (3 checks)` or `Hyperphysical Shotcaster: Theoretical Device (5 checkboxes)`.
+- When a customizable card appears in both `Removed` and `Added`, XP is calculated from the checkbox delta, for example `Removed: Runic Axe (2 checks)` -> `Added: Runic Axe (5 checks)` spends `3 XP`.
+- `Refine` is not treated as a customizable card for XP purposes; free checkboxes from `Refine` should stay in scenario/campaign log notes and not be charged here.
 
 Optional:
 
