@@ -119,11 +119,11 @@
           ]
         },
         {
-          "title": "Campaign Log Results",
+          "title": "The Investigators Achieved Resolution I.",
           "items": [
-            "Resolution reached: Resolution 1.",
+            "The investigators reached Resolution I at the end of the scenario.",
             "Record: the dreamers strayed from the path.",
-            "Chaos bag end-state: 3 skull tokens were present by scenario end.",
+            "By scenario end, the Dream-Quest chaos bag contained 3 skull tokens.",
             "Record: the cats collected their tribute from the Zoogs.",
             "Wilson Richards earned Randolph Carter: Expert Dreamer.",
             "Each Dream-Quest investigator earned 13 XP from the scenario."
@@ -184,10 +184,10 @@
           ]
         },
         {
-          "title": "Campaign Log Results",
+          "title": "The Investigators Achieved Resolution I.",
           "items": [
-            "Resolution reached: Resolution 1, followed by the waking-world aftermath that leads into Resolution 5 story text.",
-            "All three investigators survived the scenario.",
+            "The investigators reached Resolution I, followed by the waking-world aftermath that leads directly into the Resolution 5 story text.",
+            "All three waking-world investigators survived the scenario.",
             "Record: Dr. Maheswaran is alive.",
             "Record: your companions' condition has worsened.",
             "Record: Randolph escaped the hospital with the investigators.",
@@ -242,9 +242,9 @@
           ]
         },
         {
-          "title": "Campaign Log Results",
+          "title": "The Investigators Achieved Resolution I.",
           "items": [
-            "Resolution reached: Resolution 1.",
+            "The investigators reached Resolution I.",
             "All three investigators resigned alive.",
             "Record: Randolph survived the descent.",
             "Record: the investigators possess the Silver Key.",
