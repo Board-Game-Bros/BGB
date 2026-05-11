@@ -463,6 +463,8 @@ body.torch-mode #campaigns .campaign-subtitle {
 
 .draft-card-item {
   display: list-item;
+  position: relative;
+  overflow: visible;
 }
 
 .draft-card-inline {
@@ -683,11 +685,10 @@ body.torch-mode #campaigns .campaign-subtitle {
 }
 
 .customizable-inline-editor {
-  margin-top: 10px;
   padding: 10px 12px;
   border: 1px solid rgba(90, 68, 39, 0.34);
   border-radius: 12px;
-  background: linear-gradient(180deg, rgba(246, 235, 212, 0.92) 0%, rgba(227, 204, 165, 0.9) 100%);
+  background: linear-gradient(180deg, rgba(246, 235, 212, 0.98) 0%, rgba(227, 204, 165, 0.96) 100%);
 }
 
 .customizable-inline-intro {
@@ -715,19 +716,19 @@ body.torch-mode #campaigns .campaign-subtitle {
   text-shadow: none;
 }
 
-.customizable-overlay-panel,
-.customizable-overlay-panel p,
-.customizable-overlay-panel strong,
-.customizable-overlay-panel h4 {
+.customizable-popover,
+.customizable-popover p,
+.customizable-popover strong,
+.customizable-popover h4 {
   text-shadow: none !important;
 }
 
-.customizable-overlay-panel .customizable-inline-head strong,
-.customizable-overlay-panel .customizable-group-label {
+.customizable-popover .customizable-inline-head strong,
+.customizable-popover .customizable-group-label {
   color: #4a2a18 !important;
 }
 
-.customizable-overlay-panel .customizable-inline-text {
+.customizable-popover .customizable-inline-text {
   color: #fff2d6 !important;
 }
 
@@ -755,29 +756,29 @@ body.torch-mode #campaigns .campaign-subtitle {
   cursor: default;
 }
 
-.customizable-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 120;
-  background: rgba(21, 12, 6, 0.38);
-  backdrop-filter: blur(3px);
-}
-
-.customizable-overlay-panel {
-  position: fixed;
-  width: min(560px, calc(100vw - 48px));
-  max-height: calc(100vh - 100px);
+.customizable-popover {
+  position: absolute;
+  left: calc(100% + 16px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 560px;
   overflow: auto;
   overflow-anchor: none;
   scroll-behavior: auto;
+  z-index: 70;
   padding: 18px 18px 16px;
   border: 2px solid rgba(86, 60, 34, 0.46);
   border-radius: 18px;
   background:
-    linear-gradient(180deg, rgba(248, 237, 211, 0.98) 0%, rgba(229, 205, 163, 0.96) 100%);
+    linear-gradient(180deg, rgba(248, 237, 211, 0.985) 0%, rgba(229, 205, 163, 0.97) 100%);
   box-shadow:
     0 18px 40px rgba(9, 5, 2, 0.42),
     inset 0 1px 0 rgba(255, 249, 239, 0.85);
+}
+
+.customizable-popover.is-left-side {
+  left: auto;
+  right: calc(100% + 16px);
 }
 
 .customizable-overlay-title {
@@ -808,8 +809,8 @@ body.torch-mode #campaigns .campaign-subtitle {
   border-top: 1px solid rgba(90, 68, 39, 0.18);
 }
 
-body.customizable-overlay-open {
-  overflow: hidden;
+.has-customizable-popover {
+  z-index: 50;
 }
 
 .card-ref:hover .card-preview {

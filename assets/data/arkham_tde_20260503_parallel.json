@@ -330,7 +330,7 @@
   "backHref": "/arkham_horror_lcg/",
   "backLabel": "Back to Arkham Horror LCG",
   "upgradeManager": {
-    "storageKey": "ahlcg_tde_20260503_upgrade_state_v2",
+    "storageKey": "ahlcg_tde_20260503_upgrade_state_v3",
     "editPassword": "",
     "campaignStartNote": {
       "date": "05/03/2026",

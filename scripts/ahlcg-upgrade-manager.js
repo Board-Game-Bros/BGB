@@ -93,10 +93,11 @@
     let lastSavedStateRaw = "";
     let sourceStateHashAtLoad = "";
     let entryUidCounter = 1;
-    let activeCustomizableOverlay = null;
-    let activeCustomizableOverlayRow = null;
-    let activeCustomizableOverlayAnchor = null;
-    let customizableOverlayRepositionHandler = null;
+    let activeCustomizableEditor = null;
+    let activeCustomizableEditorRow = null;
+    let activeCustomizableEditorAnchor = null;
+    let customizableEditorOutsideHandler = null;
+    let customizableEditorEscapeHandler = null;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
     const previewMargin = 8;
@@ -646,59 +647,57 @@
       return uniqueIds(added);
     }
 
-    function closeCustomizableEditorOverlay() {
-      if (customizableOverlayRepositionHandler) {
-        window.removeEventListener("resize", customizableOverlayRepositionHandler);
-        window.removeEventListener("scroll", customizableOverlayRepositionHandler, true);
-        customizableOverlayRepositionHandler = null;
+    function closeCustomizableEditor() {
+      if (customizableEditorOutsideHandler) {
+        document.removeEventListener("mousedown", customizableEditorOutsideHandler, true);
+        customizableEditorOutsideHandler = null;
       }
-      if (activeCustomizableOverlay) {
-        activeCustomizableOverlay.remove();
+      if (customizableEditorEscapeHandler) {
+        document.removeEventListener("keydown", customizableEditorEscapeHandler, true);
+        customizableEditorEscapeHandler = null;
       }
-      activeCustomizableOverlay = null;
-      activeCustomizableOverlayRow = null;
-      activeCustomizableOverlayAnchor = null;
-      document.body.classList.remove("customizable-overlay-open");
+      if (activeCustomizableEditorRow) {
+        activeCustomizableEditorRow.classList.remove("has-customizable-popover");
+      }
+      if (activeCustomizableEditor) {
+        activeCustomizableEditor.remove();
+      }
+      activeCustomizableEditor = null;
+      activeCustomizableEditorRow = null;
+      activeCustomizableEditorAnchor = null;
     }
 
-    function positionCustomizableEditorOverlay() {
-      if (!activeCustomizableOverlay) return;
-      const panel = activeCustomizableOverlay.querySelector(".customizable-overlay-panel");
-      const button = activeCustomizableOverlayAnchor;
-      if (!panel || !button || !document.body.contains(button)) {
-        closeCustomizableEditorOverlay();
+    function positionCustomizableEditor() {
+      if (!activeCustomizableEditor || !activeCustomizableEditorRow || !activeCustomizableEditorAnchor) return;
+      const panel = activeCustomizableEditor;
+      const row = activeCustomizableEditorRow;
+      const button = activeCustomizableEditorAnchor;
+      if (!document.body.contains(row) || !row.contains(button) || !row.contains(panel)) {
+        closeCustomizableEditor();
         return;
       }
 
-      const buttonRect = button.getBoundingClientRect();
       const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
       const margin = 18;
-      const gap = 18;
-      const anchorCenterY = buttonRect.top + (buttonRect.height / 2);
+      const gap = 16;
+      const preferredWidth = Math.min(560, Math.max(360, viewportWidth - (margin * 2)));
+      const maxPanelHeight = Math.max(280, viewportHeight - (margin * 2));
 
-      const maxCenteredHeight = Math.max(
-        280,
-        Math.min(
-          viewportHeight - (margin * 2),
-          (Math.min(anchorCenterY - margin, viewportHeight - anchorCenterY - margin) * 2)
-        )
-      );
+      panel.style.width = `${Math.round(preferredWidth)}px`;
+      panel.style.maxHeight = `${Math.round(maxPanelHeight)}px`;
 
-      panel.style.maxHeight = `${Math.round(maxCenteredHeight)}px`;
+      const rowRect = row.getBoundingClientRect();
+      const buttonRect = button.getBoundingClientRect();
+      const buttonMidWithinRow = (buttonRect.top - rowRect.top) + (buttonRect.height / 2);
+
+      panel.classList.remove("is-left-side");
       const panelRect = panel.getBoundingClientRect();
-
-      let left = buttonRect.right + gap;
-      if (left + panelRect.width + margin > viewportWidth) {
-        left = buttonRect.left - panelRect.width - gap;
+      const canOpenRight = buttonRect.right + gap + panelRect.width + margin <= viewportWidth;
+      if (!canOpenRight) {
+        panel.classList.add("is-left-side");
       }
-      left = Math.max(margin, Math.min(left, viewportWidth - panelRect.width - margin));
-
-      let top = anchorCenterY - (panelRect.height / 2);
-      top = Math.max(margin, Math.min(top, viewportHeight - panelRect.height - margin));
-
-      panel.style.left = `${Math.round(left)}px`;
-      panel.style.top = `${Math.round(top)}px`;
+      panel.style.top = `${Math.round(buttonMidWithinRow)}px`;
     }
 
     function attachCustomizableEditor(row, anchorButton) {
@@ -710,7 +709,7 @@
       const mode = String(listEl && (listEl.getAttribute("data-edit-list") || listEl.getAttribute("data-list")) || "").toLowerCase();
       if (mode !== "added") return;
 
-      closeCustomizableEditorOverlay();
+      closeCustomizableEditor();
 
       const inheritedIds = parseCustomizableIdList(row.dataset.customizableInheritedIds || "");
       const currentAddedIds = getCustomizableUpgradeIdsForRow(row);
@@ -718,22 +717,15 @@
       const currentAddedSet = new Set(currentAddedIds);
       const countsByGroup = {};
 
-      const overlay = document.createElement("div");
-      overlay.className = "customizable-overlay";
-      overlay.addEventListener("click", (event) => {
-        if (event.target === overlay) closeCustomizableEditorOverlay();
-      });
-
       const panel = document.createElement("div");
-      panel.className = "customizable-overlay-panel";
-      overlay.appendChild(panel);
+      panel.className = "customizable-inline-editor customizable-popover";
 
       const closeBtn = document.createElement("button");
       closeBtn.type = "button";
       closeBtn.className = "customizable-overlay-close";
       closeBtn.setAttribute("aria-label", "Close customizable editor");
       closeBtn.textContent = "×";
-      closeBtn.addEventListener("click", () => closeCustomizableEditorOverlay());
+      closeBtn.addEventListener("click", () => closeCustomizableEditor());
       panel.appendChild(closeBtn);
 
       const title = document.createElement("h4");
@@ -785,8 +777,8 @@
             setCustomizableUpgradeIdsForRow(row, buildCustomizableAddedIdsFromCounts(definition, inheritedIds, countsByGroup));
             refreshCustomizableRowsInList(listEl, row.closest(".upgrade-entry"));
             refreshCurrentXp();
-            closeCustomizableEditorOverlay();
-            attachCustomizableEditor(row);
+            closeCustomizableEditor();
+            attachCustomizableEditor(row, anchorButton || row.querySelector(".customizable-edit-btn"));
           });
           chips.appendChild(chip);
         });
@@ -803,20 +795,31 @@
         panel.appendChild(groupWrap);
       });
 
-      document.body.appendChild(overlay);
-      document.body.classList.add("customizable-overlay-open");
-      activeCustomizableOverlay = overlay;
-      activeCustomizableOverlayRow = row;
-      activeCustomizableOverlayAnchor = anchorButton || row.querySelector(".customizable-edit-btn");
+      row.appendChild(panel);
+      row.classList.add("has-customizable-popover");
+      activeCustomizableEditor = panel;
+      activeCustomizableEditorRow = row;
+      activeCustomizableEditorAnchor = anchorButton || row.querySelector(".customizable-edit-btn");
       panel.scrollTop = 0;
-      customizableOverlayRepositionHandler = () => positionCustomizableEditorOverlay();
-      window.addEventListener("resize", customizableOverlayRepositionHandler);
-      window.addEventListener("scroll", customizableOverlayRepositionHandler, true);
-      positionCustomizableEditorOverlay();
+      positionCustomizableEditor();
       window.requestAnimationFrame(() => {
         panel.scrollTop = 0;
-        positionCustomizableEditorOverlay();
+        positionCustomizableEditor();
       });
+      customizableEditorOutsideHandler = (event) => {
+        const target = event.target;
+        if (panel.contains(target) || (activeCustomizableEditorAnchor && activeCustomizableEditorAnchor.contains(target))) {
+          return;
+        }
+        closeCustomizableEditor();
+      };
+      customizableEditorEscapeHandler = (event) => {
+        if (event.key === "Escape") {
+          closeCustomizableEditor();
+        }
+      };
+      document.addEventListener("mousedown", customizableEditorOutsideHandler, true);
+      document.addEventListener("keydown", customizableEditorEscapeHandler, true);
     }
 
     function ensureCustomizableActionButton(row) {
@@ -839,8 +842,8 @@
       btn.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        if (activeCustomizableOverlay && activeCustomizableOverlayRow === row) {
-          closeCustomizableEditorOverlay();
+        if (activeCustomizableEditor && activeCustomizableEditorRow === row) {
+          closeCustomizableEditor();
           return;
         }
         attachCustomizableEditor(row, btn);
@@ -921,7 +924,8 @@
     }
 
     function listCardRows(listEl) {
-      return Array.from(listEl.querySelectorAll("li"))
+      return Array.from(listEl.children || [])
+        .filter((node) => node && node.tagName === "LI")
         .map((row) => serializeCardRow(row))
         .filter((row) => row.name);
     }
@@ -2384,7 +2388,7 @@
 
     function sanitizeUpgradeListForSave(listEl) {
       const clone = listEl.cloneNode(true);
-      clone.querySelectorAll(".upgrade-toolbar, .undo-toast, .upgrade-entry-editor, .upgrade-entry-draft").forEach((node) => {
+      clone.querySelectorAll(".upgrade-toolbar, .undo-toast, .upgrade-entry-editor, .upgrade-entry-draft, .customizable-inline-editor, .customizable-popover").forEach((node) => {
         node.remove();
       });
       clone.querySelectorAll("[data-bound]").forEach((node) => {
@@ -2395,6 +2399,9 @@
         node.removeAttribute("data-bound");
         node.removeAttribute("data-card-remove-bound");
         node.removeAttribute("data-trauma-edit-bound");
+      });
+      clone.querySelectorAll(".has-customizable-popover").forEach((node) => {
+        node.classList.remove("has-customizable-popover");
       });
       clone.querySelectorAll(".card-preview").forEach((node) => {
         if (!(node instanceof HTMLElement)) return;
