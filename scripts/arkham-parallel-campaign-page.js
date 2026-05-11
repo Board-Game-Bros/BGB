@@ -96,6 +96,20 @@
     return wrap;
   }
 
+  function appendStoryNoteContent(parent, note) {
+    if (!note || typeof note !== "object") return;
+    if (note.title) parent.appendChild(el("h4", "", String(note.title)));
+    if (note.text) parent.appendChild(el("p", "", String(note.text)));
+    if (Array.isArray(note.items) && note.items.length) {
+      const list = el("ul", note.listClass || "");
+      note.items.forEach((item) => {
+        const li = el("li", item && item.className ? String(item.className) : "", String(item && item.text ? item.text : item || ""));
+        list.appendChild(li);
+      });
+      parent.appendChild(list);
+    }
+  }
+
   function renderLinearStoryEntry(entry) {
     if (String(entry.variant || "") === "session-meta") {
       const meta = el("div", "record-meta linear-session-meta");
@@ -117,9 +131,11 @@
       section.appendChild(meta);
     }
 
+    const storyNote = el("div", "story-note");
     (Array.isArray(entry.notes) ? entry.notes : []).forEach((note) => {
-      section.appendChild(renderStoryNote(note || {}));
+      appendStoryNoteContent(storyNote, note || {});
     });
+    section.appendChild(storyNote);
 
     return section;
   }
