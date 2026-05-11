@@ -211,8 +211,7 @@
             "The dreamers traveled with Randolph Carter to Ulthar, met Virgil Gray, and were interrupted by the mysterious black cat.",
             "For the interconnected campaign choice, the lead investigator chose: tell your companions that they are in danger, and that you are safe.",
             "Record: the black cat warned the others.",
-            "Add 1 tablet token to Campaign A's chaos bag.",
-            "Proceed to Scenario II-A: The Search for Kadath."
+            "Add 1 tablet token to Campaign A's chaos bag."
           ]
         },
         {
@@ -251,7 +250,7 @@
             "Zoey Samaras earned The Silver Key: Key to the Gate of Dreams.",
             "Each investigator earned 6 XP from the scenario.",
             "Ongoing effect: add 1 skull token to Campaign B's chaos bag for the remainder of the campaign.",
-            "Next chapter: Scenario III-B, Dark Side of the Moon."
+            "Next chapter: Scenario II-A, The Search for Kadath."
           ]
         }
       ]
@@ -426,8 +425,7 @@
             "Randolph told Virgil about the marvelous city beyond unknown Kadath, and the black cat interrupted the conversation with a warning that the dreamers could not yet return to the waking world.",
             "Because this run is an interconnected eight-part campaign, the lead investigator chose to tell the companions in the waking world that they were in danger and that the dreamers were safe.",
             "Campaign log record added from Interlude I: the black cat warned the others.",
-            "Dream-Quest effect applied: add 1 tablet token to Campaign A's chaos bag.",
-            "Proceed to Scenario II-A, The Search for Kadath."
+            "Dream-Quest effect applied: add 1 tablet token to Campaign A's chaos bag."
           ]
         }
       ],
@@ -461,7 +459,7 @@
       ],
       "metaItems": [
         "Investigators: Zoey Samaras, Kymani Jones, Joe Diamond",
-        "Next Step: Scenario III-B, Dark Side of the Moon"
+        "Next Step: Scenario II-A, The Search for Kadath"
       ],
       "notes": [
         {
@@ -525,7 +523,7 @@
             "Zoey Samaras took the optional story asset and earned The Silver Key: Key to the Gate of Dreams.",
             "Victory display total recorded from the run: 6, so each investigator earned 6 XP from Scenario II-B.",
             "Ongoing campaign effect: your body now walks within the slumbering Dreamlands; add 1 skull token to Campaign B's chaos bag for the remainder of the campaign.",
-            "Next chapter unlocked: proceed to Scenario III-B, Dark Side of the Moon."
+            "Next chapter unlocked: proceed to Scenario II-A, The Search for Kadath."
           ]
         },
         {
@@ -552,7 +550,7 @@
         },
         {
           "title": "Scenario III",
-          "text": "Scenario III-B, Dark Side of the Moon, is the next Web of Dreams chapter."
+          "text": "Scenario II-A, The Search for Kadath, is the next linked chapter after this Web of Dreams session."
         },
         {
           "title": "Scenario IV",
