@@ -95,6 +95,7 @@
     let entryUidCounter = 1;
     let activeCustomizableOverlay = null;
     let activeCustomizableOverlayRow = null;
+    let customizableOverlayRepositionHandler = null;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
     const previewMargin = 8;
@@ -645,12 +646,43 @@
     }
 
     function closeCustomizableEditorOverlay() {
+      if (customizableOverlayRepositionHandler) {
+        window.removeEventListener("resize", customizableOverlayRepositionHandler);
+        window.removeEventListener("scroll", customizableOverlayRepositionHandler, true);
+        customizableOverlayRepositionHandler = null;
+      }
       if (activeCustomizableOverlay) {
         activeCustomizableOverlay.remove();
       }
       activeCustomizableOverlay = null;
       activeCustomizableOverlayRow = null;
       document.body.classList.remove("customizable-overlay-open");
+    }
+
+    function positionCustomizableEditorOverlay() {
+      if (!activeCustomizableOverlay || !activeCustomizableOverlayRow) return;
+      const panel = activeCustomizableOverlay.querySelector(".customizable-overlay-panel");
+      const button = activeCustomizableOverlayRow.querySelector(".customizable-edit-btn");
+      if (!panel || !button) return;
+
+      const buttonRect = button.getBoundingClientRect();
+      const panelRect = panel.getBoundingClientRect();
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+      const margin = 18;
+      const gap = 18;
+
+      let left = buttonRect.right + gap;
+      if (left + panelRect.width + margin > viewportWidth) {
+        left = buttonRect.left - panelRect.width - gap;
+      }
+      left = Math.max(margin, Math.min(left, viewportWidth - panelRect.width - margin));
+
+      let top = buttonRect.top + (buttonRect.height / 2) - (panelRect.height / 2);
+      top = Math.max(margin, Math.min(top, viewportHeight - panelRect.height - margin));
+
+      panel.style.left = `${Math.round(left)}px`;
+      panel.style.top = `${Math.round(top)}px`;
     }
 
     function attachCustomizableEditor(row) {
@@ -759,6 +791,10 @@
       document.body.classList.add("customizable-overlay-open");
       activeCustomizableOverlay = overlay;
       activeCustomizableOverlayRow = row;
+      customizableOverlayRepositionHandler = () => positionCustomizableEditorOverlay();
+      window.addEventListener("resize", customizableOverlayRepositionHandler);
+      window.addEventListener("scroll", customizableOverlayRepositionHandler, true);
+      positionCustomizableEditorOverlay();
     }
 
     function ensureCustomizableActionButton(row) {

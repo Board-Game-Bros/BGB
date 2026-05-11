@@ -738,16 +738,12 @@ body.torch-mode #campaigns .campaign-subtitle {
   position: fixed;
   inset: 0;
   z-index: 120;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  padding: 72px 28px 28px;
   background: rgba(21, 12, 6, 0.38);
   backdrop-filter: blur(3px);
 }
 
 .customizable-overlay-panel {
-  position: relative;
+  position: fixed;
   width: min(560px, calc(100vw - 48px));
   max-height: calc(100vh - 100px);
   overflow: auto;
