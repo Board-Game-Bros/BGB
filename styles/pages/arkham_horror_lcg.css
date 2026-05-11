@@ -768,6 +768,8 @@ body.torch-mode #campaigns .campaign-subtitle {
   width: min(560px, calc(100vw - 48px));
   max-height: calc(100vh - 100px);
   overflow: auto;
+  overflow-anchor: none;
+  scroll-behavior: auto;
   padding: 18px 18px 16px;
   border: 2px solid rgba(86, 60, 34, 0.46);
   border-radius: 18px;

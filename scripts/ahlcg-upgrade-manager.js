@@ -95,6 +95,7 @@
     let entryUidCounter = 1;
     let activeCustomizableOverlay = null;
     let activeCustomizableOverlayRow = null;
+    let activeCustomizableOverlayAnchor = null;
     let customizableOverlayRepositionHandler = null;
     const previewBaseWidth = 420;
     const previewAspectRatio = 600 / 420;
@@ -656,14 +657,18 @@
       }
       activeCustomizableOverlay = null;
       activeCustomizableOverlayRow = null;
+      activeCustomizableOverlayAnchor = null;
       document.body.classList.remove("customizable-overlay-open");
     }
 
     function positionCustomizableEditorOverlay() {
-      if (!activeCustomizableOverlay || !activeCustomizableOverlayRow) return;
+      if (!activeCustomizableOverlay) return;
       const panel = activeCustomizableOverlay.querySelector(".customizable-overlay-panel");
-      const button = activeCustomizableOverlayRow.querySelector(".customizable-edit-btn");
-      if (!panel || !button) return;
+      const button = activeCustomizableOverlayAnchor;
+      if (!panel || !button || !document.body.contains(button)) {
+        closeCustomizableEditorOverlay();
+        return;
+      }
 
       const buttonRect = button.getBoundingClientRect();
       const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
@@ -696,7 +701,7 @@
       panel.style.top = `${Math.round(top)}px`;
     }
 
-    function attachCustomizableEditor(row) {
+    function attachCustomizableEditor(row, anchorButton) {
       if (!row) return;
       const name = getRowCardName(row);
       const definition = getCustomizableDefinition(name);
@@ -802,11 +807,16 @@
       document.body.classList.add("customizable-overlay-open");
       activeCustomizableOverlay = overlay;
       activeCustomizableOverlayRow = row;
+      activeCustomizableOverlayAnchor = anchorButton || row.querySelector(".customizable-edit-btn");
+      panel.scrollTop = 0;
       customizableOverlayRepositionHandler = () => positionCustomizableEditorOverlay();
       window.addEventListener("resize", customizableOverlayRepositionHandler);
       window.addEventListener("scroll", customizableOverlayRepositionHandler, true);
       positionCustomizableEditorOverlay();
-      window.requestAnimationFrame(() => positionCustomizableEditorOverlay());
+      window.requestAnimationFrame(() => {
+        panel.scrollTop = 0;
+        positionCustomizableEditorOverlay();
+      });
     }
 
     function ensureCustomizableActionButton(row) {
@@ -833,7 +843,7 @@
           closeCustomizableEditorOverlay();
           return;
         }
-        attachCustomizableEditor(row);
+        attachCustomizableEditor(row, btn);
       });
       inline.insertBefore(btn, inline.querySelector(".draft-card-remove"));
     }
