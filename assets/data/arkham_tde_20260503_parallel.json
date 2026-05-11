@@ -331,7 +331,7 @@
   "backLabel": "Back to Arkham Horror LCG",
   "upgradeManager": {
     "storageKey": "ahlcg_tde_20260503_upgrade_state_v2",
-    "editPassword": "bgbzhangyan2026",
+    "editPassword": "",
     "campaignStartNote": {
       "date": "05/03/2026",
       "runName": "Dream-Eaters"
