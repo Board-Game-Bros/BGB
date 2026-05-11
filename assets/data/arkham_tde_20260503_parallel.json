@@ -85,16 +85,16 @@
         "text": "Shared-dream phenomenon established in Arkham; proceed to Beyond the Gates of Sleep for the dreamlands team."
       },
       {
-        "title": "2. Web of Dreams Scenario I",
-        "text": "Opening chapter for Campaign B."
+        "title": "2. Web of Dreams Prologue -> Scenario I-B",
+        "text": "The waking-world team entered Waking Nightmare, convinced Doctor Maheswaran to join the investigation, and finished Scenario I-B at Resolution 1."
       },
       {
-        "title": "3. Dream-Quest Scenario II",
-        "text": "Resolve A-side follow-up before returning to B."
+        "title": "3. Interlude I -> Scenario II-A / II-B",
+        "text": "After both opening scenarios, Interlude I: The Black Cat was resolved as one linked cross-campaign event, then the run branched forward to The Search for Kadath and A Thousand Shapes of Horror on 05/10/2026."
       },
       {
-        "title": "4. Web of Dreams Scenario II",
-        "text": "Second chapter for the waking-world line."
+        "title": "4. Web of Dreams Scenario II-B",
+        "text": "A Thousand Shapes of Horror ended at Resolution 1. All three investigators resigned alive, Zoey Samaras claimed The Silver Key, the victory display reached 6, and Campaign B added 1 skull token for the remainder of the campaign."
       },
       {
         "title": "5. Dream-Quest Scenario III",
@@ -120,7 +120,8 @@
         "Track any story effects that explicitly carry from one line into the other here.",
         "Keep separate chaos bag updates inside each track unless a rule specifically says the other line changes.",
         "Use the alternating order above when adding scenario records and upgrade entries.",
-        "Dream-Quest Scenario I-A already recorded that the dreamers strayed from the path and that the chaos bag reached three skull tokens by scenario end."
+        "Dream-Quest Scenario I-A already recorded that the dreamers strayed from the path and that the chaos bag reached three skull tokens by scenario end.",
+        "Interlude I is one shared event for this run: resolve the Dream-Quest side first, then the Web of Dreams side, and apply the combined results across both campaign logs."
       ]
     }
   },
@@ -147,7 +148,7 @@
       ],
       "metaItems": [
         "Investigators: Silas Marsh, Wilson Richards, Mandy Thompson",
-        "Next Step: Scenario I-A, Beyond the Gates of Sleep"
+        "Next Step: Scenario II-A, The Search for Kadath"
       ],
       "notes": [
         {
@@ -190,6 +191,17 @@
             "Wilson Richards took the optional story asset and earned Randolph Carter: Expert Dreamer.",
             "Victory display total recorded from the run: 13, so each investigator earned 13 XP from the scenario."
           ]
+        },
+        {
+          "title": "Interlude I: The Black Cat (Dream-Quest Side)",
+          "items": [
+            "Following Scenario I-A, the dreamers traveled beyond the Enchanted Woods with Randolph Carter and reached Ulthar, where they finally met Virgil Gray at Einar's Place.",
+            "Randolph told Virgil about the marvelous city beyond unknown Kadath, and the black cat interrupted the conversation with a warning that the dreamers could not yet return to the waking world.",
+            "Because this run is an interconnected eight-part campaign, the lead investigator chose to tell the companions in the waking world that they were in danger and that the dreamers were safe.",
+            "Campaign log record added from Interlude I: the black cat warned the others.",
+            "Dream-Quest effect applied: add 1 tablet token to Campaign A's chaos bag.",
+            "Proceed to Scenario II-A, The Search for Kadath."
+          ]
         }
       ],
       "scenarios": [
@@ -198,8 +210,8 @@
           "text": "Shared-dream outbreak established in Arkham, the Dream-Quest party entered Beyond the Gates of Sleep, each investigator chose a different dream, and the run ended at Resolution 1 with the dreamers straying from the path."
         },
         {
-          "title": "Scenario II",
-          "text": "Awaiting Campaign A second chapter."
+          "title": "Interlude I -> Scenario II-A",
+          "text": "The Black Cat delivered the cross-campaign warning, Campaign A recorded that the black cat warned the others, a tablet token was added to the Dream-Quest chaos bag, and the dreamlands party moved on to The Search for Kadath."
         },
         {
           "title": "Scenario III",
@@ -222,7 +234,7 @@
       ],
       "metaItems": [
         "Investigators: Zoey Samaras, Kymani Jones, Joe Diamond",
-        "Next Step: Record Web of Dreams Scenario I"
+        "Next Step: Scenario III-B, Dark Side of the Moon"
       ],
       "notes": [
         {
@@ -230,7 +242,63 @@
           "items": [
             "This column tracks the waking-world side of the Dream-Eaters run.",
             "Zoey Samaras, Kymani Jones, and Joe Diamond are now recorded for the Web of Dreams roster.",
-            "Keep Campaign B story progress, chaos bag changes, and upgrades separate from Dream-Quest."
+            "Keep Campaign B story progress, chaos bag changes, and upgrades separate from Dream-Quest.",
+            "On 05/10/2026, the group advanced the waking-world side through Prologue, Scenario I-B, Interlude I, and Scenario II-B."
+          ]
+        },
+        {
+          "title": "Prologue Summary",
+          "items": [
+            "Date card shown in the campaign guide: Friday, February 13th, 1925.",
+            "A strange shared-dream phenomenon is spreading through Arkham after Virgil Gray published an account of an impossible dream journey in Tales from Nevermore.",
+            "Multiple readers reported experiencing the exact same dream, drawing the attention of both the Arkham Advertiser and local experts.",
+            "Virgil Gray and many others were committed for treatment, but the investigators remain unconvinced that the events can be explained away as ordinary delusion or shared hysteria.",
+            "The party decides to recreate Virgil's dream conditions and split responsibilities: one team will travel into the dreamlands while the other remains in the waking world to observe and protect them.",
+            "Web of Dreams prologue instruction: proceed to Scenario I-B, Waking Nightmare."
+          ]
+        },
+        {
+          "title": "Scenario I-B Setup Notes",
+          "items": [
+            "More than twenty-four hours after the dreamlands team fell asleep, the waking-world investigators brought their unconscious companions to St. Mary's Hospital in Arkham.",
+            "Nurse Greenberg admitted the patients for examination under Doctor Shivani Maheswaran, but the investigators received no clear explanation for their companions' worsening condition.",
+            "While waiting in the emergency ward, the investigators discovered strange spiders emerging from the patients' beds and the hospital began to feel increasingly abandoned and unsafe.",
+            "At the key story choice, the investigators convinced Doctor Maheswaran to come with them while they investigated, and the campaign log recorded that Dr. Maheswaran joined the investigation."
+          ]
+        },
+        {
+          "title": "Scenario I-B Result Summary",
+          "items": [
+            "Scenario result: Resolution 1, followed by the waking-world aftermath that led into Resolution 5 story text.",
+            "All three Web of Dreams investigators survived the scenario: Zoey Samaras, Joe Diamond, and Kymani Jones.",
+            "Campaign log records added: Dr. Maheswaran is alive; your companions' condition has worsened; Randolph escaped the hospital with the investigators.",
+            "Because the run is interconnected, Campaign A also records that the dreamers grow weaker.",
+            "Joe Diamond took the optional story asset and earned Randolph Carter: Chained to the Waking World.",
+            "Victory display total recorded from the run: 11, so each investigator earned 11 XP from Scenario I-B.",
+            "Cleanup instruction noted from the app: remove the infestation bag and all infestation tokens; they do not need to be kept or recorded."
+          ]
+        },
+        {
+          "title": "Interlude I: The Black Cat (Web of Dreams Side)",
+          "items": [
+            "Following Scenario I-B, the investigators were confronted outside St. Mary's Hospital by the same black cat, who carried a message from the dreamers.",
+            "Because this is an interconnected campaign, the Dream-Quest side was resolved first and the selected message delivered here was: tell your companions that they are in danger, and that you are safe.",
+            "Campaign log record added on the waking-world side: the black cat warned the others.",
+            "The Web of Dreams standalone branch that would record the black cat is at your side was not used for this linked run.",
+            "Shared interlude consequence applied: add 1 tablet token to the chaos bag as instructed.",
+            "Proceed to Scenario II-B, A Thousand Shapes of Horror."
+          ]
+        },
+        {
+          "title": "Scenario II-B Result Summary",
+          "items": [
+            "Scenario result: Resolution 1.",
+            "All three Web of Dreams investigators resigned alive at scenario end: Zoey Samaras, Joe Diamond, and Kymani Jones.",
+            "Campaign log records added: Randolph survived the descent; the investigators possess the Silver Key.",
+            "Zoey Samaras took the optional story asset and earned The Silver Key: Key to the Gate of Dreams.",
+            "Victory display total recorded from the run: 6, so each investigator earned 6 XP from Scenario II-B.",
+            "Ongoing campaign effect: your body now walks within the slumbering Dreamlands; add 1 skull token to Campaign B's chaos bag for the remainder of the campaign.",
+            "Next chapter unlocked: proceed to Scenario III-B, Dark Side of the Moon."
           ]
         },
         {
@@ -248,16 +316,16 @@
       ],
       "scenarios": [
         {
-          "title": "Scenario I",
-          "text": "Pending Web of Dreams opening scenario."
+          "title": "Prologue -> Scenario I-B",
+          "text": "The waking-world investigators brought their companions to St. Mary's Hospital, recruited Doctor Maheswaran to accompany them, and completed Waking Nightmare at Resolution 1 with the hospital escape aftermath recorded."
         },
         {
-          "title": "Scenario II",
-          "text": "Pending Campaign B second chapter."
+          "title": "Interlude I -> Scenario II-B",
+          "text": "After Waking Nightmare and the linked Black Cat interlude, the waking-world team entered A Thousand Shapes of Horror, resigned alive at Resolution 1, and carried The Silver Key forward into Campaign B."
         },
         {
           "title": "Scenario III",
-          "text": "Pending Campaign B third chapter."
+          "text": "Scenario III-B, Dark Side of the Moon, is the next Web of Dreams chapter."
         },
         {
           "title": "Scenario IV",
