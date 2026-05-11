@@ -260,43 +260,62 @@
     "title": "Campaign Log",
     "sections": [
       {
-        "title": "Active Cross-Campaign Records",
+        "title": "Campaign A",
         "notes": [
           {
+            "title": "Campaign Notes",
+            "listClass": "campaign-log-list",
             "items": [
               "The dreamers strayed from the path.",
+              "The cats collected their tribute from the Zoogs.",
               "The dreamers grow weaker.",
-              "The black cat warned the others.",
+              "The black cat warned the others."
+            ]
+          },
+          {
+            "title": "Player Card Entries",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Wilson Richards earns Randolph Carter: Expert Dreamer."
+            ]
+          },
+          {
+            "title": "Campaign Counters",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Evidence of Kadath: 0"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Campaign B",
+        "notes": [
+          {
+            "title": "Campaign Notes",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Dr. Maheswaran joined the investigation.",
               "Dr. Maheswaran is alive.",
               "Your companions' condition has worsened.",
               "Randolph escaped the hospital with the investigators.",
               "Randolph survived the descent.",
               "The investigators possess the Silver Key."
             ]
-          }
-        ]
-      },
-      {
-        "title": "Current Chaos Bag Notes",
-        "notes": [
+          },
           {
+            "title": "Player Card Entries",
+            "listClass": "campaign-log-list",
             "items": [
-              "Campaign A gained 1 tablet token from Interlude I.",
-              "Campaign B gained 1 tablet token from Interlude I.",
-              "Campaign B also gains 1 skull token for the remainder of the campaign after Scenario II-B.",
-              "Dream-Quest Scenario I-A previously ended with three skull tokens recorded in that bag."
+              "Joe Diamond earns Randolph Carter: Chained to the Waking World.",
+              "Zoey Samaras earns The Silver Key: Key to the Gate of Dreams."
             ]
-          }
-        ]
-      },
-      {
-        "title": "Story Assets And Special Rewards",
-        "notes": [
+          },
           {
+            "title": "Campaign Counters",
+            "listClass": "campaign-log-list",
             "items": [
-              "Wilson Richards: Randolph Carter: Expert Dreamer.",
-              "Joe Diamond: Randolph Carter: Chained to the Waking World.",
-              "Zoey Samaras: The Silver Key: Key to the Gate of Dreams."
+              "Steps of the Bridge: 0"
             ]
           }
         ]
