@@ -111,13 +111,19 @@
   line-height: 1.08;
   text-wrap: balance;
   overflow-wrap: anywhere;
+  --title-line-count: 1;
+  --title-brush-height: calc(1.18em + (var(--title-line-count) - 1) * 1.02em);
   z-index: 0;
 }
 
 .game-card-title-brush::before {
   content: "";
   position: absolute;
-  inset: -0.2em -2.1em -0.12em;
+  left: -2.1em;
+  right: -2.1em;
+  top: 50%;
+  height: var(--title-brush-height);
+  transform: translateY(-50%);
   background-image: url("/assets/misc/library_title_brush_transparent.png");
   background-repeat: no-repeat;
   background-position: center;

@@ -13,6 +13,20 @@
     return node;
   }
 
+  function applyTitleBrushMetrics(scope) {
+    const rootNode = scope || document;
+    rootNode.querySelectorAll(".game-card-title-brush").forEach((title) => {
+      const styles = window.getComputedStyle(title);
+      const lineHeight = Number.parseFloat(styles.lineHeight);
+      if (!Number.isFinite(lineHeight) || lineHeight <= 0) {
+        title.style.setProperty("--title-line-count", "1");
+        return;
+      }
+      const lines = Math.max(1, Math.round(title.getBoundingClientRect().height / lineHeight));
+      title.style.setProperty("--title-line-count", String(lines));
+    });
+  }
+
   function renderGameCard(item) {
     if (item.placeholder) {
       return el("div", "card game-card category-placeholder", String(item.text || ""));
@@ -60,6 +74,7 @@
     });
 
     root.appendChild(container);
+    applyTitleBrushMetrics(container);
   }
 
   async function init() {
@@ -76,6 +91,15 @@
       root.replaceChildren(container);
     }
   }
+
+  let resizeRaf = 0;
+  window.addEventListener("resize", () => {
+    if (resizeRaf) window.cancelAnimationFrame(resizeRaf);
+    resizeRaf = window.requestAnimationFrame(() => {
+      applyTitleBrushMetrics(root);
+      resizeRaf = 0;
+    });
+  });
 
   void init();
 })();
