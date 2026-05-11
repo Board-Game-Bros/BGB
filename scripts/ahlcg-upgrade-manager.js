@@ -666,11 +666,22 @@
       if (!panel || !button) return;
 
       const buttonRect = button.getBoundingClientRect();
-      const panelRect = panel.getBoundingClientRect();
       const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
       const margin = 18;
       const gap = 18;
+      const anchorCenterY = buttonRect.top + (buttonRect.height / 2);
+
+      const maxCenteredHeight = Math.max(
+        280,
+        Math.min(
+          viewportHeight - (margin * 2),
+          (Math.min(anchorCenterY - margin, viewportHeight - anchorCenterY - margin) * 2)
+        )
+      );
+
+      panel.style.maxHeight = `${Math.round(maxCenteredHeight)}px`;
+      const panelRect = panel.getBoundingClientRect();
 
       let left = buttonRect.right + gap;
       if (left + panelRect.width + margin > viewportWidth) {
@@ -678,7 +689,7 @@
       }
       left = Math.max(margin, Math.min(left, viewportWidth - panelRect.width - margin));
 
-      let top = buttonRect.top + (buttonRect.height / 2) - (panelRect.height / 2);
+      let top = anchorCenterY - (panelRect.height / 2);
       top = Math.max(margin, Math.min(top, viewportHeight - panelRect.height - margin));
 
       panel.style.left = `${Math.round(left)}px`;
@@ -795,6 +806,7 @@
       window.addEventListener("resize", customizableOverlayRepositionHandler);
       window.addEventListener("scroll", customizableOverlayRepositionHandler, true);
       positionCustomizableEditorOverlay();
+      window.requestAnimationFrame(() => positionCustomizableEditorOverlay());
     }
 
     function ensureCustomizableActionButton(row) {
