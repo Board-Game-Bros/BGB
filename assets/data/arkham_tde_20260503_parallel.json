@@ -124,6 +124,16 @@
       ]
     }
   },
+  "customizableState": [
+    {
+      "investigator": "Kymani Jones",
+      "card": "Pocket Multi Tool",
+      "checkedIds": [
+        "pry_bar.1",
+        "signal_mirror.1"
+      ]
+    }
+  ],
   "trackSectionTitle": "Parallel Campaign Tracks",
   "tracks": [
     {
@@ -222,6 +232,18 @@
             "Zoey Samaras, Kymani Jones, and Joe Diamond are now recorded for the Web of Dreams roster.",
             "Keep Campaign B story progress, chaos bag changes, and upgrades separate from Dream-Quest."
           ]
+        },
+        {
+          "customizableState": {
+            "title": "Scenario I-B Customizable Record",
+            "text": "Campaign start selected Pry Bar on Pocket Multi Tool. During Scenario I-B, Kymani Jones played Refine and checked the first Signal Mirror box for free.",
+            "investigator": "Kymani Jones",
+            "card": "Pocket Multi Tool",
+            "checkedIds": [
+              "pry_bar.1",
+              "signal_mirror.1"
+            ]
+          }
         }
       ],
       "scenarios": [
@@ -290,8 +312,8 @@
           "name": "Kymani Jones",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/kymani_jones_the_security_consultant.png",
           "imageAlt": "Kymani Jones: The Security Consultant",
-          "currentXp": "Current XP: 5",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p><p>Current deck page updated on 05/10/2026.</p><div class=\"upgrade-entry\" data-entry-uid=\"e9\">\n        <p class=\"upgrade-entry-head\">After Scenario I (+11 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Pilfer (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pilfer.png\" alt=\"Pilfer (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Pilfer (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pilfer_3.png\" alt=\"Pilfer (3) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e9\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e12\">\n        <p class=\"upgrade-entry-head\">After Scenario II (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">\"Watch this!\" (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/watch_this.png\" alt=\"&quot;Watch this!&quot; (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">\"Watch this!\" (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/watch_this_3.png\" alt=\"&quot;Watch this!&quot; (3) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e12\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p><p>Current deck page updated on 05/10/2026.</p><div class=\"upgrade-entry\" data-entry-uid=\"e9\">\n        <p class=\"upgrade-entry-head\">After Scenario I (+11 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Pilfer (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pilfer.png\" alt=\"Pilfer (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Pilfer (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pilfer_3.png\" alt=\"Pilfer (3) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e9\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e12\">\n        <p class=\"upgrade-entry-head\">After Scenario II (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">\"Watch this!\" (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/watch_this.png\" alt=\"&quot;Watch this!&quot; (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">\"Watch this!\" (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/watch_this_3.png\" alt=\"&quot;Watch this!&quot; (3) (x2)\"></span></li><li data-customizable-upgrade-ids=\"signal_mirror.2,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\"><span class=\"card-ref\">Pocket Multi Tool<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pocket_multi_tool.png\" alt=\"Pocket Multi Tool\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e12\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         },
         {

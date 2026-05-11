@@ -534,12 +534,195 @@ body.torch-mode #campaigns .campaign-subtitle {
   z-index: 30;
 }
 
+.customizable-preview {
+  width: min(760px, calc(100vw - 16px));
+  max-width: min(760px, calc(100vw - 16px));
+  padding: 12px;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(249, 238, 212, 0.98) 0%, rgba(226, 201, 155, 0.96) 100%);
+  display: none;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.customizable-preview-image {
+  display: block;
+  width: min(320px, 42vw);
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #3a2d1a;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(18, 12, 6, 0.28);
+  background: rgba(244, 233, 205, 0.94);
+}
+
+.customizable-preview-panel {
+  flex: 1 1 0;
+  min-width: 220px;
+  padding: 10px 12px;
+  border: 1px solid rgba(74, 52, 32, 0.45);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(242, 228, 196, 0.9) 0%, rgba(223, 196, 148, 0.84) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 250, 241, 0.78);
+}
+
+.customizable-preview-panel h4 {
+  margin: 0 0 8px;
+  font-family: "Uncial Antiqua", serif;
+  font-size: 1rem;
+  color: #5a201a;
+}
+
+.customizable-preview-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 10px;
+}
+
+.legend-chip,
+.customizable-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  height: 1.6rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(74, 52, 32, 0.42);
+  background: rgba(255, 247, 230, 0.72);
+  color: #4a3420;
+  font-size: 0.82rem;
+}
+
+.legend-chip.is-inherited,
+.customizable-box.is-inherited {
+  background: linear-gradient(180deg, rgba(189, 159, 113, 0.92) 0%, rgba(158, 124, 74, 0.9) 100%);
+  color: #fff6de;
+}
+
+.legend-chip.is-upgrade,
+.customizable-box.is-upgrade {
+  background: linear-gradient(180deg, rgba(145, 27, 38, 0.94) 0%, rgba(111, 17, 27, 0.92) 100%);
+  color: #fff3df;
+  box-shadow: 0 0 10px rgba(143, 17, 27, 0.22);
+}
+
+.customizable-group + .customizable-group {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(74, 52, 32, 0.18);
+}
+
+.customizable-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.customizable-group-label {
+  font-weight: 700;
+  color: #2f1d12;
+}
+
+.customizable-group-boxes,
+.customizable-inline-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.customizable-group-text,
+.customizable-inline-text {
+  margin: 6px 0 0;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  color: rgba(47, 29, 18, 0.88);
+}
+
+.customizable-row-summary {
+  margin-top: 6px;
+  font-size: 0.84rem;
+  color: rgba(47, 29, 18, 0.78);
+}
+
+.customizable-edit-btn {
+  appearance: none;
+  border: 1px solid rgba(90, 68, 39, 0.55);
+  background: linear-gradient(180deg, rgba(235, 213, 171, 0.9) 0%, rgba(212, 184, 132, 0.88) 100%);
+  color: #2f2316;
+  border-radius: 999px;
+  padding: 3px 9px;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.customizable-inline-editor {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(90, 68, 39, 0.34);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(246, 235, 212, 0.92) 0%, rgba(227, 204, 165, 0.9) 100%);
+}
+
+.customizable-inline-intro {
+  margin: 0 0 10px;
+  font-size: 0.84rem;
+  color: rgba(47, 29, 18, 0.82);
+}
+
+.customizable-inline-group + .customizable-inline-group {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(90, 68, 39, 0.18);
+}
+
+.customizable-inline-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.customizable-inline-chip {
+  appearance: none;
+  border: 1px solid rgba(90, 68, 39, 0.4);
+  background: rgba(255, 248, 233, 0.78);
+  color: #4a3420;
+  border-radius: 999px;
+  width: 1.8rem;
+  height: 1.8rem;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.customizable-inline-chip.is-upgrade {
+  background: linear-gradient(180deg, rgba(145, 27, 38, 0.94) 0%, rgba(111, 17, 27, 0.92) 100%);
+  color: #fff3df;
+}
+
+.customizable-inline-chip.is-inherited {
+  background: linear-gradient(180deg, rgba(189, 159, 113, 0.92) 0%, rgba(158, 124, 74, 0.9) 100%);
+  color: #fff6de;
+  cursor: default;
+}
+
 .card-ref:hover .card-preview {
   display: block;
 }
 
 .card-ref:focus-within .card-preview {
   display: block;
+}
+
+.card-ref:hover .customizable-preview,
+.card-ref:focus-within .customizable-preview {
+  display: flex;
 }
 
 /* Investigator deck pages: use panel preview instead of popup hover preview. */

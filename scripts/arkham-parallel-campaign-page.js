@@ -19,7 +19,69 @@
     });
   }
 
+  function normalizeCatalogKey(text) {
+    return String(text || "")
+      .toLowerCase()
+      .replace(/["']/g, "")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .replace(/\s+/g, " ");
+  }
+
+  function getCustomizableDefinition(cardName) {
+    const lib = window.AHLCG_CUSTOMIZABLE_LIBRARY && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY === "object"
+      ? window.AHLCG_CUSTOMIZABLE_LIBRARY.cards || {}
+      : {};
+    return lib[normalizeCatalogKey(cardName)] || null;
+  }
+
+  function getCustomizableGroupIds(group) {
+    const boxes = Number(group && group.boxes) > 0 ? Number(group.boxes) : 0;
+    const baseId = String(group && group.id ? group.id : "").trim();
+    if (!baseId || boxes <= 0) return [];
+    return Array.from({ length: boxes }, (_, idx) => `${baseId}.${idx + 1}`);
+  }
+
+  function renderCustomizableStateNote(note) {
+    const wrap = el("div", "story-note customizable-state-note");
+    if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
+    if (note.text) wrap.appendChild(el("p", "", String(note.text)));
+
+    const definition = getCustomizableDefinition(note.card);
+    if (!definition) return wrap;
+
+    const meta = el("div", "record-meta");
+    appendItems(meta, [
+      `Investigator: ${String(note.investigator || "")}`,
+      `Card: ${String(definition.displayName || note.card || "")}`,
+    ], "meta-item");
+    wrap.appendChild(meta);
+
+    const checked = new Set(Array.isArray(note.checkedIds) ? note.checkedIds.map((id) => String(id || "").trim()).filter(Boolean) : []);
+    const list = el("div", "customizable-preview-panel");
+    (definition.groups || []).forEach((group) => {
+      const row = el("div", "customizable-group");
+      const head = el("div", "customizable-group-head");
+      head.appendChild(el("span", "customizable-group-label", String(group.label || "").replace(/\.$/, "")));
+      const boxes = el("div", "customizable-group-boxes");
+      getCustomizableGroupIds(group).forEach((id, idx) => {
+        const chip = el("span", "customizable-box", String(idx + 1));
+        if (checked.has(id)) chip.classList.add("is-inherited");
+        boxes.appendChild(chip);
+      });
+      head.appendChild(boxes);
+      row.appendChild(head);
+      if (group.text) row.appendChild(el("p", "customizable-group-text", String(group.text)));
+      list.appendChild(row);
+    });
+    wrap.appendChild(list);
+    return wrap;
+  }
+
   function renderStoryNote(note) {
+    if (note && typeof note === "object" && note.customizableState) {
+      return renderCustomizableStateNote(note.customizableState);
+    }
     const wrap = el("div", "story-note");
     if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
     if (note.text) wrap.appendChild(el("p", "", String(note.text)));
@@ -106,6 +168,18 @@
   function renderPage(data) {
     root.innerHTML = "";
     document.title = String(data.pageTitle || "Arkham Horror LCG");
+    window.BGB_AHLCG_CUSTOMIZABLE_STATE = {};
+    (Array.isArray(data.customizableState) ? data.customizableState : []).forEach((row) => {
+      const investigator = String(row && row.investigator ? row.investigator : "").trim();
+      const card = String(row && row.card ? row.card : "").trim();
+      if (!investigator || !card) return;
+      if (!window.BGB_AHLCG_CUSTOMIZABLE_STATE[investigator]) {
+        window.BGB_AHLCG_CUSTOMIZABLE_STATE[investigator] = {};
+      }
+      window.BGB_AHLCG_CUSTOMIZABLE_STATE[investigator][card] = Array.isArray(row.checkedIds)
+        ? row.checkedIds.map((id) => String(id || "").trim()).filter(Boolean)
+        : [];
+    });
 
     const main = el("main", "container");
     main.appendChild(el("h1", "page-title", String(data.headerTitle || data.pageTitle || "Arkham Horror LCG")));
@@ -237,6 +311,7 @@
         myriadCardNames: ahlcgLibrary.myriadCardNames || [],
         exceptionalCardNames: ahlcgLibrary.exceptionalCardNames || [],
         customizableCardNames: ahlcgLibrary.customizableCardNames || [],
+        customizableBaselineState: window.BGB_AHLCG_CUSTOMIZABLE_STATE || {},
         campaignStartNote: upgradeConfig.campaignStartNote || null,
         inactivityMs: Number(upgradeConfig.inactivityMs) > 0 ? Number(upgradeConfig.inactivityMs) : 120000,
         remoteSync: upgradeConfig.remoteSync || null,

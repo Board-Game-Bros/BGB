@@ -185,15 +185,17 @@ Refresh AHLCG images and the standard-name library from ArkhamDB:
 python3 scripts/sync_arkhamdb_collection.py --project-root .
 ```
 
-The generated `scripts/ahlcg-standard-library.js` now carries card image filenames, standard display names, plus keyword metadata such as `myriadCardNames`, `exceptionalCardNames`, and `customizableCardNames`.
+The generated `scripts/ahlcg-standard-library.js` now carries card image filenames, standard display names, plus keyword metadata such as `myriadCardNames`, `exceptionalCardNames`, and `customizableCardNames`. `scripts/ahlcg-customizable-library.js` carries parsed checkbox-group metadata for customizable cards.
 
 Upgrade-history XP calculation currently uses that metadata as follows:
 
 - `Myriad` cards such as `Segment of Onyx (1)` are charged once for up to three copies added in the same purchase.
 - `Exceptional` cards are charged at double their base XP cost.
-- `Customizable` cards are tracked by checkbox count, not by printed level. Record them in upgrade entries using a suffix like `Runic Axe (3 checks)` or `Hyperphysical Shotcaster: Theoretical Device (5 checkboxes)`.
-- When a customizable card appears in both `Removed` and `Added`, XP is calculated from the checkbox delta, for example `Removed: Runic Axe (2 checks)` -> `Added: Runic Axe (5 checks)` spends `3 XP`.
-- `Refine` is not treated as a customizable card for XP purposes; free checkboxes from `Refine` should stay in scenario/campaign log notes and not be charged here.
+- `Customizable` cards are tracked by checkbox state, not by printed level or by hard-coded `(N checks)` text.
+- The upgrade editor now exposes a `Checkboxes` button for customizable cards in the `Added` column. Use that UI to mark only the boxes purchased during the current upgrade step.
+- Campaign-start selections, `Refine`, or other free/story-granted checkboxes should be recorded in campaign-log data as baseline customizable state. Those inherited checkboxes are locked in the editor preview and do not spend XP again.
+- XP for a customizable card is now calculated from the number of newly checked boxes added during the upgrade step only.
+- `Refine` is not treated as a customizable card for XP purposes; free checkboxes from `Refine` stay in scenario/campaign log state and are not charged during upgrade resolution.
 
 Optional:
 

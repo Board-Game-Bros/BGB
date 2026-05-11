@@ -74,6 +74,75 @@ def card_display_name(card: Dict[str, Any]) -> str:
     return label
 
 
+def normalize_catalog_key(text: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9]+", " ", normalize_whitespace(text).lower())).strip()
+
+
+def parse_customizable_groups(card: Dict[str, Any]) -> List[Dict[str, Any]]:
+    raw_text = str(card.get("customization_text") or "").strip()
+    raw_options = card.get("customization_options")
+    options = raw_options if isinstance(raw_options, list) else []
+    if not raw_text:
+        return []
+
+    groups: List[Dict[str, Any]] = []
+    lines = [line.strip() for line in raw_text.splitlines() if line.strip()]
+    for idx, line in enumerate(lines):
+        match = re.match(r"^(□+)\s*(.*)$", line)
+        if not match:
+          continue
+        boxes = len(match.group(1))
+        body = match.group(2).strip()
+        label_match = re.match(r"^<b>(.*?)</b>\s*(.*)$", body)
+        label = normalize_whitespace(label_match.group(1)) if label_match else normalize_whitespace(body.split(".", 1)[0])
+        text = normalize_whitespace(label_match.group(2)) if label_match else normalize_whitespace(body)
+        text = re.sub(r"^[:.]\s*", "", text)
+        option = options[idx] if idx < len(options) and isinstance(options[idx], dict) else {}
+        slug = slugify(label) or f"option_{idx + 1}"
+        groups.append({
+            "id": slug,
+            "label": label,
+            "boxes": boxes,
+            "xpTotal": int(option.get("xp")) if isinstance(option.get("xp"), int) else boxes,
+            "text": text,
+        })
+    return groups
+
+
+def write_customizable_library(out_file: Path, cards: Iterable[Dict[str, Any]]) -> None:
+    rows: List[Dict[str, Any]] = []
+    for card in cards:
+        groups = parse_customizable_groups(card)
+        if not groups:
+            continue
+        display_name = card_display_name(card)
+        rows.append({
+            "displayName": display_name,
+            "catalogKey": normalize_catalog_key(display_name),
+            "groups": groups,
+        })
+
+    rows.sort(key=lambda row: row["displayName"].lower())
+
+    payload = {
+        row["catalogKey"]: {
+            "displayName": row["displayName"],
+            "groups": row["groups"],
+        }
+        for row in rows
+    }
+
+    lines: List[str] = []
+    lines.append("(function () {")
+    lines.append("  window.AHLCG_CUSTOMIZABLE_LIBRARY = {")
+    lines.append("    cards: " + json.dumps(payload, ensure_ascii=False, indent=4).replace("\n", "\n    "))
+    lines.append("  };")
+    lines.append("})();")
+    lines.append("")
+    out_file.parent.mkdir(parents=True, exist_ok=True)
+    out_file.write_text("\n".join(lines), encoding="utf-8")
+
+
 def image_url_for_card(card: Dict[str, Any]) -> Optional[str]:
     # ArkhamDB payloads have used imagesrc (often relative URL).
     candidates = [
@@ -290,6 +359,11 @@ def main() -> int:
         help="Path (relative to project root) to write missing image report JSON. Use empty string to disable.",
     )
     parser.add_argument(
+        "--customizable-library",
+        default="scripts/ahlcg-customizable-library.js",
+        help="Path (relative to project root) to write customizable metadata library JS.",
+    )
+    parser.add_argument(
         "--print-missing-limit",
         type=int,
         default=20,
@@ -316,6 +390,7 @@ def main() -> int:
     cards_dir = root / "assets" / "boardgames" / "ahlcg_cards"
     investigators_dir = root / "assets" / "boardgames" / "ahlcg_investigators"
     lib_file = root / "scripts" / "ahlcg-standard-library.js"
+    customizable_lib_file = (root / str(args.customizable_library)).resolve()
     pack_codes = {
         code.strip().lower()
         for code in str(args.pack_codes or "").split(",")
@@ -420,6 +495,7 @@ def main() -> int:
             exceptional_names,
             customizable_names,
         )
+        write_customizable_library(customizable_lib_file, all_cards)
 
     if args.audit_missing_only:
         print("Audit mode: no image downloads performed.")
@@ -429,6 +505,7 @@ def main() -> int:
         print("Updated standard library: skipped (audit mode).")
     else:
         print(f"Updated standard library: {lib_file}")
+        print(f"Updated customizable library: {customizable_lib_file}")
 
     if missing_details:
         limit = max(0, int(args.print_missing_limit))
