@@ -72,7 +72,7 @@
   },
   "storyNotes": [
     {
-      "title": "Prologue: The Shared Dream Begins",
+      "title": "Prologue (Dream-Quest)",
       "statusChips": [
         "Status: Completed"
       ],
@@ -86,32 +86,49 @@
           ]
         },
         {
-          "title": "Shared Dream Outbreak",
+          "title": "Dream-Quest Setup",
           "items": [
             "Virgil Gray and many of the affected dreamers are committed for treatment after failing to wake properly from the strange shared visions.",
             "The investigators reconstruct Virgil's circumstances as faithfully as possible in hopes of reproducing the same crossing between the waking world and the Dreamlands.",
-            "From the outset, the campaign is treated as one interconnected eight-part run in which both teams influence one another's fate."
+            "Half the party prepares to cross into the Dreamlands directly, while the waking-world team will remain behind and begin its own linked campaign separately."
           ]
         },
         {
           "title": "Investigators Chosen For Campaign A",
           "items": [
-            "Silas Marsh, Mandy Thompson, and Wilson Richards are assigned to the Dream-Quest side of the campaign and will cross into the Dreamlands directly.",
-            "This team becomes the group that follows Randolph Carter's path through the dream realm once the crossing succeeds."
+            "Silas Marsh",
+            "Mandy Thompson",
+            "Wilson Richards"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Prologue (Web of Dreams)",
+      "statusChips": [
+        "Status: Completed"
+      ],
+      "notes": [
+        {
+          "title": "Background",
+          "items": [
+            "Friday, February 13th, 1925. While the dreamers attempt to reproduce Virgil Gray's crossing, the waking-world investigators remain in Arkham to watch over them and respond if the experiment goes wrong.",
+            "Something does go wrong: the sleepers fail to wake naturally, their condition worsens, and the waking-world team is forced into its own linked investigation alongside the dream journey."
+          ]
+        },
+        {
+          "title": "Web Of Dreams Setup",
+          "items": [
+            "The waking-world team begins by studying the dreamers' physical condition, guarding them, and trying to understand whether the shared visions have opened some path between worlds.",
+            "This parallel campaign follows the consequences in Arkham while the Dream-Quest investigators disappear into the Dreamlands."
           ]
         },
         {
           "title": "Investigators Chosen For Campaign B",
           "items": [
-            "Zoey Samaras, Kymani Jones, and Joe Diamond remain in the waking world as the Web of Dreams team.",
-            "Their role at the outset is to monitor the sleeping dreamers, keep them alive, and respond if anything goes wrong while the others travel beyond waking reality."
-          ]
-        },
-        {
-          "title": "The Party Splits",
-          "items": [
-            "The party intentionally divides into two linked teams: one group will cross into the Dreamlands, while the other stays in Arkham to observe, investigate, and protect the sleepers.",
-            "This opening split creates the campaign's core structure: Dream-Quest events unfold in the dream realm while Web of Dreams events track the consequences in the waking world."
+            "Zoey Samaras",
+            "Kymani Jones",
+            "Joe Diamond"
           ]
         }
       ]
@@ -148,7 +165,7 @@
       "variant": "session-meta",
       "metaItems": [
         "Date: 05/10/2026",
-        "Session: Scenario I-B + Interlude I + Scenario II-B"
+        "Session: Prologue (Web of Dreams) + Scenario I-B + Interlude I + Scenario II-B"
       ]
     },
     {
