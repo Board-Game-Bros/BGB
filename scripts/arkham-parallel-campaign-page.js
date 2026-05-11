@@ -97,6 +97,11 @@
   }
 
   function renderLinearStoryEntry(entry) {
+    if (String(entry.variant || "") === "session-meta") {
+      const meta = el("div", "record-meta linear-session-meta");
+      appendItems(meta, entry.metaItems, "meta-item");
+      return meta;
+    }
     const section = el("div", "scenario-log linear-story-entry");
     section.appendChild(el("h3", "", String(entry.title || "")));
 

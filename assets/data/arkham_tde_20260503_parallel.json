@@ -26,8 +26,7 @@
     ],
     "metaItems": [
       "Date: 05/03/2026",
-      "Structure: Two Parallel Campaigns",
-      "Play Order: A1 - B1 - A2 - B2 - A3 - B3 - A4 - B4"
+      "Session: Prologue + Scenario I-A"
     ],
     "sections": [
       {
@@ -76,10 +75,6 @@
       "statusChips": [
         "Status: Completed"
       ],
-      "metaItems": [
-        "Date: 05/03/2026",
-        "Session: Prologue"
-      ],
       "notes": [
         {
           "title": "Background",
@@ -97,11 +92,6 @@
         "Status: Completed",
         "Resolution: 1",
         "Victory Display: 13"
-      ],
-      "metaItems": [
-        "Date: 05/03/2026",
-        "Session: Scenario I-A",
-        "Track: Dream-Quest"
       ],
       "notes": [
         {
@@ -125,16 +115,18 @@
       ]
     },
     {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 05/10/2026",
+        "Session: Scenario I-B + Interlude I + Scenario II-B"
+      ]
+    },
+    {
       "title": "Scenario I-B: Waking Nightmare",
       "statusChips": [
         "Status: Completed",
         "Resolution: 1 / 5 aftermath",
         "Victory Display: 11"
-      ],
-      "metaItems": [
-        "Date: 05/10/2026",
-        "Session: Scenario I-B",
-        "Track: Web of Dreams"
       ],
       "notes": [
         {
@@ -165,11 +157,6 @@
         "Type: Shared Interlude",
         "Status: Completed"
       ],
-      "metaItems": [
-        "Date: 05/10/2026",
-        "Session: Interlude I",
-        "Order: Resolve A side, then B side"
-      ],
       "notes": [
         {
           "title": "Dream-Quest Side",
@@ -198,11 +185,6 @@
         "Status: Completed",
         "Resolution: 1",
         "Victory Display: 6"
-      ],
-      "metaItems": [
-        "Date: 05/10/2026",
-        "Session: Scenario II-B",
-        "Track: Web of Dreams"
       ],
       "notes": [
         {
