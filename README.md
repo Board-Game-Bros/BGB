@@ -197,6 +197,55 @@ Upgrade-history XP calculation currently uses that metadata as follows:
 - XP for a customizable card is now calculated from the number of newly checked boxes added during the upgrade step only.
 - `Refine` is not treated as a customizable card for XP purposes; free checkboxes from `Refine` stay in scenario/campaign log state and are not charged during upgrade resolution.
 
+Customizable state is now maintained in one shared place and reused by every renderer:
+
+- Use `scripts/ahlcg-customizable-state.js` as the shared state resolver for customizable cards.
+- Each customizable record in page data should be keyed by `investigator` + `card`.
+- `customizableState` entries may define a named state timeline instead of one hard-coded final checkbox list.
+- Supported state fields are:
+  - `baselineStateId`: the state that should count as inherited / pre-upgrade baseline for upgrade-history rendering.
+  - `currentStateId`: the latest known state for general campaign rendering when no explicit state is requested.
+  - `states`: ordered named states for this card.
+  - Per-state fields:
+    - `id`: stable state name such as `campaign_start` or `after_scenario_i_upgrade`.
+    - `checkedIds`: full snapshot for this state.
+    - `from`: previous state id to inherit from.
+    - `activateIds`: checkbox ids turned on relative to `from`.
+    - `deactivateIds`: checkbox ids turned off relative to `from` when needed.
+- Prefer `from + activateIds` for campaign progression states. Use `checkedIds` only for an initial snapshot or when importing an already-known full state.
+
+Story notes and other in-campaign references should not hard-code checkbox arrays when the state already exists in `customizableState`:
+
+- For gameplay / story references, use `customizableHover.stateId` and let the renderer resolve the checkbox state from the shared timeline.
+- This allows pre-scenario, in-scenario, and post-upgrade views of the same customizable card to render different checkbox states without duplicating checkbox data.
+- Example pattern:
+
+```json
+{
+  "customizableHover": {
+    "text": "During Scenario I-B, Kymani Jones played Refine and checked the first Signal Mirror box for free. ☑ ☐",
+    "investigator": "Kymani Jones",
+    "card": "Pocket Multi Tool",
+    "stateId": "scenario_i_b_refine"
+  }
+}
+```
+
+Upgrade-history data should stay structural, not presentation-heavy:
+
+- In `upgradeHtml`, customizable rows should keep only:
+  - `data-customizable-card-key`
+  - `data-customizable-inherited-ids`
+  - `data-customizable-upgrade-ids`
+  - `data-customizable-effective-ids`
+  - the visible card name text inside `.card-ref`
+- Do not store pre-rendered customizable preview panels or customizable summary HTML in JSON.
+- Runtime code in `scripts/ahlcg-upgrade-manager.js` is responsible for rebuilding:
+  - preview image
+  - `Existing` / `This Upgrade` checkbox panel
+  - summary text
+- This keeps campaign data smaller and prevents checkbox presentation from drifting out of sync with the maintained state model.
+
 Optional:
 
 ```bash
