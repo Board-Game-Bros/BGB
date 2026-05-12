@@ -239,6 +239,8 @@ Upgrade-history data should stay structural, not presentation-heavy:
   - `data-customizable-upgrade-ids`
   - `data-customizable-effective-ids`
   - the visible card name text inside `.card-ref`
+- `data-customizable-upgrade-ids` must represent only boxes purchased in that upgrade step. Do not repeat inherited boxes there.
+- Runtime logic will sanitize `data-customizable-upgrade-ids` by removing ids already present in `data-customizable-inherited-ids` and any ids not valid for that customizable card, so bad persisted local state does not overcharge XP.
 - Do not store pre-rendered customizable preview panels or customizable summary HTML in JSON.
 - Runtime code in `scripts/ahlcg-upgrade-manager.js` is responsible for rebuilding:
   - preview image

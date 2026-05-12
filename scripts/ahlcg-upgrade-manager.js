@@ -647,6 +647,12 @@
       return uniqueIds(added);
     }
 
+    function sanitizeCustomizableAddedIds(definition, inheritedIds, addedIds) {
+      const inheritedSet = new Set(uniqueIds(inheritedIds));
+      const allowedSet = new Set(getCustomizableAllIds(definition));
+      return uniqueIds(addedIds).filter((id) => allowedSet.has(id) && !inheritedSet.has(id));
+    }
+
     function closeCustomizableEditor() {
       if (customizableEditorOutsideHandler) {
         document.removeEventListener("mousedown", customizableEditorOutsideHandler, true);
@@ -868,7 +874,8 @@
         return;
       }
       const inherited = uniqueIds(inheritedIds);
-      const added = uniqueIds(addedIds);
+      const added = sanitizeCustomizableAddedIds(definition, inherited, addedIds);
+      setCustomizableUpgradeIdsForRow(row, added);
       row.dataset.customizableCardKey = getCatalogKey(name);
       row.dataset.customizableInheritedIds = inherited.join(",");
       row.dataset.customizableEffectiveIds = uniqueIds(inherited.concat(added)).join(",");
