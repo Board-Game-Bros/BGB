@@ -81,7 +81,7 @@
     return latestIds.length ? latestIds : getBaselineCustomizableIds(investigatorName, cardName);
   }
 
-  function buildCurrentCustomizablePreview(cardName, investigator) {
+  function buildCurrentCustomizablePreview(cardName, investigator, overrideCheckedIds) {
     const definition = getCustomizableDefinition(cardName);
     if (!definition) return null;
 
@@ -93,7 +93,11 @@
     wrap.appendChild(img);
 
     const panel = el("div", "customizable-preview-panel story-note-customizable-panel");
-    const checked = new Set(getCurrentCustomizableIds(investigator, cardName));
+    const checked = new Set(
+      Array.isArray(overrideCheckedIds) && overrideCheckedIds.length
+        ? overrideCheckedIds.map((id) => String(id || "").trim()).filter(Boolean)
+        : getCurrentCustomizableIds(investigator, cardName)
+    );
 
     (definition.groups || []).forEach((group) => {
       const row = el("div", "customizable-group");
@@ -123,7 +127,7 @@
       const syncPreview = () => {
         const existing = ref.querySelector(".card-preview");
         if (existing) existing.remove();
-        const preview = buildCurrentCustomizablePreview(config.card, config.investigator);
+        const preview = buildCurrentCustomizablePreview(config.card, config.investigator, config.checkedIds);
         if (preview) ref.appendChild(preview);
       };
       ref.addEventListener("mouseenter", syncPreview);

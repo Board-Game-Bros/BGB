@@ -168,7 +168,10 @@
               "customizableHover": {
                 "text": "Campaign start selected Pry Bar on Pocket Multi Tool. ☑",
                 "investigator": "Kymani Jones",
-                "card": "Pocket Multi Tool"
+                "card": "Pocket Multi Tool",
+                "checkedIds": [
+                  "pry_bar.1"
+                ]
               }
             }
           ]
@@ -205,7 +208,11 @@
               "customizableHover": {
                 "text": "During Scenario I-B, Kymani Jones played Refine and checked the first Signal Mirror box for free. ☑ ☐",
                 "investigator": "Kymani Jones",
-                "card": "Pocket Multi Tool"
+                "card": "Pocket Multi Tool",
+                "checkedIds": [
+                  "pry_bar.1",
+                  "signal_mirror.1"
+                ]
               }
             }
           ]
