@@ -161,9 +161,15 @@
 
     const storyNote = el("div", "story-note");
     (Array.isArray(entry.notes) ? entry.notes : []).forEach((note) => {
+      if (note && typeof note === "object" && note.customizableState) {
+        section.appendChild(renderStoryNote(note));
+        return;
+      }
       appendStoryNoteContent(storyNote, note || {});
     });
-    section.appendChild(storyNote);
+    if (storyNote.childNodes.length) {
+      section.appendChild(storyNote);
+    }
 
     return section;
   }
@@ -186,6 +192,10 @@
         block.appendChild(meta);
       }
       (Array.isArray(entry.notes) ? entry.notes : []).forEach((note) => {
+        if (note && typeof note === "object" && note.customizableState) {
+          block.appendChild(renderStoryNote(note));
+          return;
+        }
         const noteWrap = el("div", "story-note");
         appendStoryNoteContent(noteWrap, note || {});
         block.appendChild(noteWrap);
