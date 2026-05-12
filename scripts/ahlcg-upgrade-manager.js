@@ -1834,6 +1834,15 @@
       return !requireEditPassword || editUnlocked;
     }
 
+    function restoreEntryDisplayLayer(entry) {
+      if (!entry) return;
+      const directChildren = Array.from(entry.children || []);
+      const displayColumns = directChildren.find((node) => node.classList && node.classList.contains("upgrade-columns")) || null;
+      const displayActions = directChildren.find((node) => node.classList && node.classList.contains("entry-actions")) || null;
+      if (displayColumns) displayColumns.style.removeProperty("display");
+      if (displayActions) displayActions.style.removeProperty("display");
+    }
+
     function stopInactivityTimer() {
       if (inactivityTimer) {
         window.clearTimeout(inactivityTimer);
@@ -1846,7 +1855,9 @@
       editUnlocked = false;
       stopInactivityTimer();
       clearUndo({ forceClearPending: true, skipSave: true });
+      closeCustomizableEditor();
       document.querySelectorAll(".upgrade-entry-editor").forEach((node) => {
+        restoreEntryDisplayLayer(node.closest(".upgrade-entry"));
         node.remove();
       });
       document.querySelectorAll(".upgrade-entry-draft").forEach((draftEntry) => {
