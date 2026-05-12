@@ -169,6 +169,40 @@ body.torch-mode #campaigns .campaign-subtitle {
   line-height: 1.35;
 }
 
+.customizable-state-log {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.customizable-state-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.customizable-state-entry + .customizable-state-entry {
+  margin-top: 8px;
+}
+
+.customizable-state-entry-text {
+  min-width: 0;
+}
+
+.customizable-state-boxes {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.customizable-state-box {
+  min-width: 1.8rem;
+  padding: 0 0.3rem;
+  font-size: 0.95rem;
+}
+
 .story-note h4 + p,
 .story-note h4 + ul {
   margin-bottom: 12px;

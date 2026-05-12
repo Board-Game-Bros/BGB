@@ -42,6 +42,16 @@
     return Array.from({ length: boxes }, (_, idx) => `${baseId}.${idx + 1}`);
   }
 
+  function renderCustomizableCheckboxes(group, checked) {
+    const boxes = el("span", "customizable-state-boxes");
+    getCustomizableGroupIds(group).forEach((id) => {
+      const chip = el("span", "customizable-box customizable-state-box", checked.has(id) ? "☑" : "☐");
+      if (checked.has(id)) chip.classList.add("is-inherited");
+      boxes.appendChild(chip);
+    });
+    return boxes;
+  }
+
   function renderCustomizableStateNote(note) {
     const wrap = el("div", "story-note customizable-state-note");
     if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
@@ -58,23 +68,41 @@
     wrap.appendChild(meta);
 
     const checked = new Set(Array.isArray(note.checkedIds) ? note.checkedIds.map((id) => String(id || "").trim()).filter(Boolean) : []);
-    const list = el("div", "customizable-preview-panel");
-    (definition.groups || []).forEach((group) => {
-      const row = el("div", "customizable-group");
-      const head = el("div", "customizable-group-head");
-      head.appendChild(el("span", "customizable-group-label", String(group.label || "").replace(/\.$/, "")));
-      const boxes = el("div", "customizable-group-boxes");
-      getCustomizableGroupIds(group).forEach((id, idx) => {
-        const chip = el("span", "customizable-box", String(idx + 1));
-        if (checked.has(id)) chip.classList.add("is-inherited");
-        boxes.appendChild(chip);
+    const groupsById = new Map((definition.groups || []).map((group) => [String(group.id || "").trim(), group]));
+
+    if (Array.isArray(note.entries) && note.entries.length) {
+      const entryList = el("ul", "customizable-state-log");
+      note.entries.forEach((entry) => {
+        const item = el("li", "customizable-state-entry");
+        item.appendChild(el("span", "customizable-state-entry-text", String(entry && entry.text ? entry.text : "")));
+        const group = groupsById.get(String(entry && entry.groupId ? entry.groupId : "").trim());
+        if (group) {
+          item.appendChild(renderCustomizableCheckboxes(group, checked));
+        }
+        entryList.appendChild(item);
       });
-      head.appendChild(boxes);
-      row.appendChild(head);
-      if (group.text) row.appendChild(el("p", "customizable-group-text", String(group.text)));
-      list.appendChild(row);
-    });
-    wrap.appendChild(list);
+      wrap.appendChild(entryList);
+    }
+
+    if (!note.entries || note.showFullState === true) {
+      const list = el("div", "customizable-preview-panel");
+      (definition.groups || []).forEach((group) => {
+        const row = el("div", "customizable-group");
+        const head = el("div", "customizable-group-head");
+        head.appendChild(el("span", "customizable-group-label", String(group.label || "").replace(/\.$/, "")));
+        const boxes = el("div", "customizable-group-boxes");
+        getCustomizableGroupIds(group).forEach((id, idx) => {
+          const chip = el("span", "customizable-box", String(idx + 1));
+          if (checked.has(id)) chip.classList.add("is-inherited");
+          boxes.appendChild(chip);
+        });
+        head.appendChild(boxes);
+        row.appendChild(head);
+        if (group.text) row.appendChild(el("p", "customizable-group-text", String(group.text)));
+        list.appendChild(row);
+      });
+      wrap.appendChild(list);
+    }
     return wrap;
   }
 

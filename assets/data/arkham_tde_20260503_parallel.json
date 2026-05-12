@@ -548,9 +548,18 @@
         {
           "customizableState": {
             "title": "Scenario I-B Customizable Record",
-            "text": "Campaign start selected Pry Bar on Pocket Multi Tool. During Scenario I-B, Kymani Jones played Refine and checked the first Signal Mirror box for free.",
             "investigator": "Kymani Jones",
             "card": "Pocket Multi Tool",
+            "entries": [
+              {
+                "text": "Campaign start selected Pry Bar on Pocket Multi Tool.",
+                "groupId": "pry_bar"
+              },
+              {
+                "text": "During Scenario I-B, Kymani Jones played Refine and checked the first Signal Mirror box for free.",
+                "groupId": "signal_mirror"
+              }
+            ],
             "checkedIds": [
               "pry_bar.1",
               "signal_mirror.1"
