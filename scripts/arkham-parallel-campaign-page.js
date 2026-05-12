@@ -42,6 +42,99 @@
     return Array.from({ length: boxes }, (_, idx) => `${baseId}.${idx + 1}`);
   }
 
+  function inferCardImagePath(cardName) {
+    const normalized = normalizeCatalogKey(cardName).replace(/\s+/g, "_");
+    return normalized ? `/assets/boardgames/ahlcg_cards/${normalized}.png` : "";
+  }
+
+  function getBaselineCustomizableIds(investigator, cardName) {
+    const state = window.BGB_AHLCG_CUSTOMIZABLE_STATE && typeof window.BGB_AHLCG_CUSTOMIZABLE_STATE === "object"
+      ? window.BGB_AHLCG_CUSTOMIZABLE_STATE
+      : {};
+    const investigatorState = state[String(investigator || "").trim()];
+    if (!investigatorState || typeof investigatorState !== "object") return [];
+    const ids = investigatorState[String(cardName || "").trim()];
+    return Array.isArray(ids) ? ids.map((id) => String(id || "").trim()).filter(Boolean) : [];
+  }
+
+  function getCurrentCustomizableIds(investigator, cardName) {
+    const investigatorName = String(investigator || "").trim();
+    const targetCardKey = normalizeCatalogKey(cardName);
+    let latestIds = [];
+
+    Array.from(document.querySelectorAll(".upgrade-card")).forEach((card) => {
+      const heading = card.querySelector("h3");
+      if (!heading) return;
+      const name = String(heading.getAttribute("data-investigator-name") || "").trim();
+      if (name !== investigatorName) return;
+      const rows = Array.from(card.querySelectorAll("[data-customizable-card-key]")).filter((row) => {
+        return normalizeCatalogKey(row.getAttribute("data-customizable-card-key") || "") === targetCardKey;
+      });
+      if (!rows.length) return;
+      const lastRow = rows[rows.length - 1];
+      latestIds = String(lastRow.getAttribute("data-customizable-effective-ids") || "")
+        .split(",")
+        .map((id) => String(id || "").trim())
+        .filter(Boolean);
+    });
+
+    return latestIds.length ? latestIds : getBaselineCustomizableIds(investigatorName, cardName);
+  }
+
+  function buildCurrentCustomizablePreview(cardName, investigator) {
+    const definition = getCustomizableDefinition(cardName);
+    if (!definition) return null;
+
+    const wrap = el("div", "card-preview customizable-preview story-note-customizable-preview");
+    const img = document.createElement("img");
+    img.className = "customizable-preview-image";
+    img.src = inferCardImagePath(cardName);
+    img.alt = String(cardName || "");
+    wrap.appendChild(img);
+
+    const panel = el("div", "customizable-preview-panel story-note-customizable-panel");
+    const checked = new Set(getCurrentCustomizableIds(investigator, cardName));
+
+    (definition.groups || []).forEach((group) => {
+      const row = el("div", "customizable-group");
+      const head = el("div", "customizable-group-head");
+      head.appendChild(el("span", "customizable-group-label", String(group.label || "").replace(/\.$/, "")));
+      const boxes = el("div", "customizable-group-boxes");
+      getCustomizableGroupIds(group).forEach((id, idx) => {
+        const chip = el("span", "customizable-box", String(idx + 1));
+        if (checked.has(id)) chip.classList.add("is-upgrade");
+        boxes.appendChild(chip);
+      });
+      head.appendChild(boxes);
+      row.appendChild(head);
+      if (group.text) row.appendChild(el("p", "customizable-group-text", String(group.text)));
+      panel.appendChild(row);
+    });
+
+    wrap.appendChild(panel);
+    return wrap;
+  }
+
+  function renderStoryNoteItem(item) {
+    if (item && typeof item === "object" && item.customizableHover) {
+      const li = el("li", item.className ? String(item.className) : "");
+      const config = item.customizableHover;
+      const ref = el("span", "card-ref story-note-inline-card-ref", String(config.text || ""));
+      const syncPreview = () => {
+        const existing = ref.querySelector(".card-preview");
+        if (existing) existing.remove();
+        const preview = buildCurrentCustomizablePreview(config.card, config.investigator);
+        if (preview) ref.appendChild(preview);
+      };
+      ref.addEventListener("mouseenter", syncPreview);
+      ref.addEventListener("focus", syncPreview);
+      syncPreview();
+      li.appendChild(ref);
+      return li;
+    }
+    return el("li", item && item.className ? String(item.className) : "", String(item && item.text ? item.text : item || ""));
+  }
+
   function renderCustomizableStateNote(note) {
     const wrap = el("div", "story-note customizable-state-note");
     if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
@@ -88,8 +181,7 @@
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
       note.items.forEach((item) => {
-        const li = el("li", item && item.className ? String(item.className) : "", String(item && item.text ? item.text : item || ""));
-        list.appendChild(li);
+        list.appendChild(renderStoryNoteItem(item));
       });
       wrap.appendChild(list);
     }
@@ -103,8 +195,7 @@
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
       note.items.forEach((item) => {
-        const li = el("li", item && item.className ? String(item.className) : "", String(item && item.text ? item.text : item || ""));
-        list.appendChild(li);
+        list.appendChild(renderStoryNoteItem(item));
       });
       parent.appendChild(list);
     }

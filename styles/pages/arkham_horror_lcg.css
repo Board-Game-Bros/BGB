@@ -530,6 +530,11 @@ body.torch-mode #campaigns .campaign-subtitle {
   border-bottom: 1px solid rgba(58, 45, 26, 0.52);
 }
 
+.story-note-inline-card-ref {
+  display: inline-block;
+  max-width: 100%;
+}
+
 .card-preview {
   display: none;
   position: absolute;
@@ -653,6 +658,19 @@ body.torch-mode #campaigns .campaign-subtitle {
 
 .customizable-preview-panel .customizable-group-label {
   color: #4a2a18 !important;
+}
+
+.story-note-customizable-preview {
+  left: 0;
+  bottom: calc(100% + 12px);
+  transform: none;
+  width: min(860px, calc(100vw - 24px));
+  max-width: min(860px, calc(100vw - 24px));
+  z-index: 80;
+}
+
+.story-note-customizable-panel {
+  min-width: 320px;
 }
 
 .customizable-group-boxes,
