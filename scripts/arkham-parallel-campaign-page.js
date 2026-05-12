@@ -5,6 +5,9 @@
 
   const dataSource = String(root.getAttribute("data-source") || "").trim();
   if (!dataSource) return;
+  const customizableStateUtils = window.AHLCG_CUSTOMIZABLE_STATE_UTILS && typeof window.AHLCG_CUSTOMIZABLE_STATE_UTILS === "object"
+    ? window.AHLCG_CUSTOMIZABLE_STATE_UTILS
+    : null;
 
   function el(tag, cls, text) {
     const node = document.createElement(tag);
@@ -20,6 +23,9 @@
   }
 
   function normalizeCatalogKey(text) {
+    if (customizableStateUtils && typeof customizableStateUtils.normalizeCatalogKey === "function") {
+      return customizableStateUtils.normalizeCatalogKey(text);
+    }
     return String(text || "")
       .toLowerCase()
       .replace(/["']/g, "")
@@ -29,6 +35,9 @@
   }
 
   function getCustomizableDefinition(cardName) {
+    if (customizableStateUtils && typeof customizableStateUtils.getCustomizableDefinition === "function") {
+      return customizableStateUtils.getCustomizableDefinition(cardName);
+    }
     const lib = window.AHLCG_CUSTOMIZABLE_LIBRARY && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY === "object"
       ? window.AHLCG_CUSTOMIZABLE_LIBRARY.cards || {}
       : {};
@@ -36,6 +45,9 @@
   }
 
   function getCustomizableGroupIds(group) {
+    if (customizableStateUtils && typeof customizableStateUtils.getCustomizableGroupIds === "function") {
+      return customizableStateUtils.getCustomizableGroupIds(group);
+    }
     const boxes = Number(group && group.boxes) > 0 ? Number(group.boxes) : 0;
     const baseId = String(group && group.id ? group.id : "").trim();
     if (!baseId || boxes <= 0) return [];
@@ -48,6 +60,10 @@
   }
 
   function getBaselineCustomizableIds(investigator, cardName) {
+    const registry = window.BGB_AHLCG_CUSTOMIZABLE_REGISTRY || null;
+    if (customizableStateUtils && registry && typeof customizableStateUtils.getBaselineIds === "function") {
+      return customizableStateUtils.getBaselineIds(registry, investigator, cardName);
+    }
     const state = window.BGB_AHLCG_CUSTOMIZABLE_STATE && typeof window.BGB_AHLCG_CUSTOMIZABLE_STATE === "object"
       ? window.BGB_AHLCG_CUSTOMIZABLE_STATE
       : {};
@@ -81,7 +97,15 @@
     return latestIds.length ? latestIds : getBaselineCustomizableIds(investigatorName, cardName);
   }
 
-  function buildCurrentCustomizablePreview(cardName, investigator, overrideCheckedIds) {
+  function getStateScopedCustomizableIds(investigator, cardName, stateId) {
+    const registry = window.BGB_AHLCG_CUSTOMIZABLE_REGISTRY || null;
+    if (customizableStateUtils && registry && typeof customizableStateUtils.resolveStateIds === "function") {
+      return customizableStateUtils.resolveStateIds(registry, investigator, cardName, stateId);
+    }
+    return [];
+  }
+
+  function buildCurrentCustomizablePreview(cardName, investigator, stateId, overrideCheckedIds) {
     const definition = getCustomizableDefinition(cardName);
     if (!definition) return null;
 
@@ -96,8 +120,12 @@
     const checked = new Set(
       Array.isArray(overrideCheckedIds) && overrideCheckedIds.length
         ? overrideCheckedIds.map((id) => String(id || "").trim()).filter(Boolean)
-        : getCurrentCustomizableIds(investigator, cardName)
+        : (stateId ? getStateScopedCustomizableIds(investigator, cardName, stateId) : [])
+      || []
     );
+    if (!checked.size && (!Array.isArray(overrideCheckedIds) || !overrideCheckedIds.length) && !stateId) {
+      getCurrentCustomizableIds(investigator, cardName).forEach((id) => checked.add(id));
+    }
 
     (definition.groups || []).forEach((group) => {
       const row = el("div", "customizable-group");
@@ -127,7 +155,7 @@
       const syncPreview = () => {
         const existing = ref.querySelector(".card-preview");
         if (existing) existing.remove();
-        const preview = buildCurrentCustomizablePreview(config.card, config.investigator, config.checkedIds);
+        const preview = buildCurrentCustomizablePreview(config.card, config.investigator, config.stateId, config.checkedIds);
         if (preview) ref.appendChild(preview);
       };
       ref.addEventListener("mouseenter", syncPreview);
@@ -335,18 +363,13 @@
   function renderPage(data) {
     root.innerHTML = "";
     document.title = String(data.pageTitle || "Arkham Horror LCG");
-    window.BGB_AHLCG_CUSTOMIZABLE_STATE = {};
-    (Array.isArray(data.customizableState) ? data.customizableState : []).forEach((row) => {
-      const investigator = String(row && row.investigator ? row.investigator : "").trim();
-      const card = String(row && row.card ? row.card : "").trim();
-      if (!investigator || !card) return;
-      if (!window.BGB_AHLCG_CUSTOMIZABLE_STATE[investigator]) {
-        window.BGB_AHLCG_CUSTOMIZABLE_STATE[investigator] = {};
-      }
-      window.BGB_AHLCG_CUSTOMIZABLE_STATE[investigator][card] = Array.isArray(row.checkedIds)
-        ? row.checkedIds.map((id) => String(id || "").trim()).filter(Boolean)
-        : [];
-    });
+    const rawCustomizableState = Array.isArray(data.customizableState) ? data.customizableState : [];
+    window.BGB_AHLCG_CUSTOMIZABLE_REGISTRY = customizableStateUtils && typeof customizableStateUtils.createRegistry === "function"
+      ? customizableStateUtils.createRegistry(rawCustomizableState)
+      : null;
+    window.BGB_AHLCG_CUSTOMIZABLE_STATE = customizableStateUtils && typeof customizableStateUtils.toBaselineStateMap === "function"
+      ? customizableStateUtils.toBaselineStateMap(rawCustomizableState)
+      : {};
 
     const main = el("main", "container");
     main.appendChild(el("h1", "page-title", String(data.headerTitle || data.pageTitle || "Arkham Horror LCG")));

@@ -23,6 +23,7 @@
       scripts: [
         "/scripts/ahlcg-standard-library.js",
         "/scripts/ahlcg-customizable-library.js",
+        "/scripts/ahlcg-customizable-state.js?v=20260512a",
         "/scripts/shared-github-sync.js?v=20260401a",
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
