@@ -241,7 +241,6 @@
     section.id = "campaign-log";
     section.appendChild(el("h2", "section-title", String(data.title || "Campaign Log")));
     const card = el("div", "record-card");
-    const groupsWrap = el("div", "story-note campaign-log-groups");
     (Array.isArray(data.sections) ? data.sections : []).forEach((entry) => {
       const block = el("div", "campaign-log-group");
       if (entry.title) {
@@ -252,11 +251,11 @@
         appendItems(meta, entry.metaItems, "meta-item");
         block.appendChild(meta);
       }
+      const noteWrap = el("div", "story-note");
       (Array.isArray(entry.notes) ? entry.notes : []).forEach((note) => {
-        const noteWrap = el("div", "story-note");
         appendStoryNoteContent(noteWrap, note || {});
-        block.appendChild(noteWrap);
       });
+      block.appendChild(noteWrap);
       card.appendChild(block);
     });
 
