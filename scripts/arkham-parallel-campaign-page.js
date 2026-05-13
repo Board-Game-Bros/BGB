@@ -322,8 +322,6 @@
 
     if (Array.isArray(track.cards) && track.cards.length) {
       const grid = el("div", "upgrade-grid");
-      grid.dataset.cardRemoveBound = "1";
-      grid.dataset.traumaEditBound = "1";
       track.cards.forEach((card) => grid.appendChild(renderUpgradeCard(card || {})));
       wrap.appendChild(grid);
       return wrap;

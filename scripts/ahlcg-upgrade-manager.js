@@ -3058,8 +3058,8 @@
 
     function bindCardRemoveDelegation() {
       const root = document.querySelector(rootSelector + " .upgrade-grid");
-      if (!root || root.dataset.cardRemoveBound === "1") return;
-      root.dataset.cardRemoveBound = "1";
+      if (!root || root.__bgbCardRemoveBound === true) return;
+      root.__bgbCardRemoveBound = true;
 
       root.addEventListener("click", (event) => {
         const target = event.target;
@@ -3350,8 +3350,8 @@
 
     function bindTraumaInlineEditing() {
       const root = document.querySelector(rootSelector + " .upgrade-grid");
-      if (!root || root.dataset.traumaEditBound === "1") return;
-      root.dataset.traumaEditBound = "1";
+      if (!root || root.__bgbTraumaEditBound === true) return;
+      root.__bgbTraumaEditBound = true;
 
       root.addEventListener("click", (event) => {
         const target = event.target;
