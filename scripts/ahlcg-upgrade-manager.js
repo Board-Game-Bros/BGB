@@ -2843,16 +2843,20 @@
     }
 
     function watchUpgradeChanges() {
-      const root = document.querySelector(rootSelector + " .upgrade-grid");
-      if (!root) return;
-      const observer = new MutationObserver(() => {
-        scheduleSaveUpgradeState();
-        refreshCurrentXp();
-      });
-      observer.observe(root, {
-        subtree: true,
-        childList: true,
-        characterData: true,
+      const roots = Array.from(document.querySelectorAll(rootSelector + " .upgrade-grid"));
+      if (!roots.length) return;
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement) || root.__bgbMutationWatchBound === true) return;
+        root.__bgbMutationWatchBound = true;
+        const observer = new MutationObserver(() => {
+          scheduleSaveUpgradeState();
+          refreshCurrentXp();
+        });
+        observer.observe(root, {
+          subtree: true,
+          childList: true,
+          characterData: true,
+        });
       });
     }
 
@@ -3057,23 +3061,25 @@
     }
 
     function bindCardRemoveDelegation() {
-      const root = document.querySelector(rootSelector + " .upgrade-grid");
-      if (!root || root.__bgbCardRemoveBound === true) return;
-      root.__bgbCardRemoveBound = true;
+      const roots = Array.from(document.querySelectorAll(rootSelector + " .upgrade-grid"));
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement) || root.__bgbCardRemoveBound === true) return;
+        root.__bgbCardRemoveBound = true;
 
-      root.addEventListener("click", (event) => {
-        const target = event.target;
-        if (!(target instanceof Element)) return;
-        const removeBtn = target.closest(".draft-card-remove");
-        if (!removeBtn) return;
-        if (!isEditEnabled()) return;
+        root.addEventListener("click", (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          const removeBtn = target.closest(".draft-card-remove");
+          if (!removeBtn) return;
+          if (!isEditEnabled()) return;
 
-        const row = removeBtn.closest("li");
-        if (!row) return;
-        event.preventDefault();
-        event.stopPropagation();
-        decrementOrRemoveCardRow(row);
-        syncDerivedUpgradeState();
+          const row = removeBtn.closest("li");
+          if (!row) return;
+          event.preventDefault();
+          event.stopPropagation();
+          decrementOrRemoveCardRow(row);
+          syncDerivedUpgradeState();
+        });
       });
     }
 
@@ -3349,17 +3355,19 @@
     }
 
     function bindTraumaInlineEditing() {
-      const root = document.querySelector(rootSelector + " .upgrade-grid");
-      if (!root || root.__bgbTraumaEditBound === true) return;
-      root.__bgbTraumaEditBound = true;
+      const roots = Array.from(document.querySelectorAll(rootSelector + " .upgrade-grid"));
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement) || root.__bgbTraumaEditBound === true) return;
+        root.__bgbTraumaEditBound = true;
 
-      root.addEventListener("click", (event) => {
-        const target = event.target;
-        if (!(target instanceof Element)) return;
-        const valueBtn = target.closest(".trauma-value");
-        if (!valueBtn) return;
-        event.preventDefault();
-        startTraumaInlineEdit(valueBtn);
+        root.addEventListener("click", (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          const valueBtn = target.closest(".trauma-value");
+          if (!valueBtn) return;
+          event.preventDefault();
+          startTraumaInlineEdit(valueBtn);
+        });
       });
     }
 
