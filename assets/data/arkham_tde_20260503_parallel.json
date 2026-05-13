@@ -180,7 +180,7 @@
       "title": "Scenario I-B: Waking Nightmare",
       "statusChips": [
         "Status: Completed",
-        "Resolution: 1 / 5 aftermath",
+        "Resolution Chain: 1 -> 5",
         "Victory Display: 11"
       ],
       "notes": [
