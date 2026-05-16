@@ -242,6 +242,13 @@ Upgrade-history data should stay structural, not presentation-heavy:
 - `data-customizable-upgrade-ids` must represent only boxes purchased in that upgrade step. Do not repeat inherited boxes there.
 - Runtime logic will sanitize `data-customizable-upgrade-ids` by removing ids already present in `data-customizable-inherited-ids` and any ids not valid for that customizable card, so bad persisted local state does not overcharge XP.
 - Do not store pre-rendered customizable preview panels or customizable summary HTML in JSON.
+
+Website maintenance rule:
+
+- For any change that affects rendered page behavior, layout, hover states, editing flows, previews, campaign logs, deck upgrades, or other website UI, do not stop at static code inspection.
+- Always perform runtime page validation after the code change. Prefer opening the actual local page and verifying the affected interaction path end-to-end.
+- When available, use a real browser or headless browser flow (for example Playwright) to click through the exact UI path, inspect the rendered DOM state, and confirm the visible result matches the intended behavior.
+- Treat cache-busting as part of verification for script and stylesheet changes. If a page is driven by versioned script URLs, bump the version when needed and re-verify the live page.
 - Runtime code in `scripts/ahlcg-upgrade-manager.js` is responsible for rebuilding:
   - preview image
   - `Existing` / `This Upgrade` checkbox panel

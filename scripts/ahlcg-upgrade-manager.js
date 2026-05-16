@@ -426,21 +426,30 @@
       return investigatorDir + "/" + normalized + ".png";
     }
 
-    function buildCustomizableChecklistPanel(definition, inheritedIds, addedIds) {
+    function buildCustomizableChecklistPanel(definition, inheritedIds, addedIds, options) {
+      const opts = options && typeof options === "object" ? options : {};
+      const showTitle = opts.showTitle === true;
+      const showLegend = opts.showLegend === true;
+      const previewMode = String(opts.mode || "static").toLowerCase();
       const panel = document.createElement("div");
       panel.className = "customizable-preview-panel";
 
-      const title = document.createElement("h4");
-      title.textContent = "Customization Sheet";
-      panel.appendChild(title);
+      if (showTitle) {
+        const title = document.createElement("h4");
+        title.textContent = "Customization Sheet";
+        panel.appendChild(title);
+      }
 
-      const legend = document.createElement("p");
-      legend.className = "customizable-preview-legend";
-      legend.innerHTML = '<span class="legend-chip is-inherited">Existing</span><span class="legend-chip is-upgrade">This Upgrade</span>';
-      panel.appendChild(legend);
+      if (showLegend) {
+        const legend = document.createElement("p");
+        legend.className = "customizable-preview-legend";
+        legend.innerHTML = '<span class="legend-chip is-inherited">Existing</span><span class="legend-chip is-upgrade">This Upgrade</span>';
+        panel.appendChild(legend);
+      }
 
       const inheritedSet = new Set(uniqueIds(inheritedIds));
       const addedSet = new Set(uniqueIds(addedIds));
+      const checkedSet = new Set(uniqueIds([].concat(inheritedIds || [], addedIds || [])));
 
       (Array.isArray(definition && definition.groups) ? definition.groups : []).forEach((group) => {
         const row = document.createElement("div");
@@ -459,9 +468,13 @@
           const chip = document.createElement("span");
           chip.className = "customizable-box";
           chip.textContent = String(idx + 1);
-          if (addedSet.has(id)) {
-            chip.classList.add("is-upgrade");
-          } else if (inheritedSet.has(id)) {
+          if (previewMode === "editor") {
+            if (addedSet.has(id)) {
+              chip.classList.add("is-upgrade");
+            } else if (inheritedSet.has(id)) {
+              chip.classList.add("is-inherited");
+            }
+          } else if (checkedSet.has(id)) {
             chip.classList.add("is-inherited");
           }
           boxes.appendChild(chip);
@@ -497,7 +510,12 @@
           wrap.replaceWith(fallback);
         });
         wrap.appendChild(img);
-        wrap.appendChild(buildCustomizableChecklistPanel(definition, context.inheritedIds || [], context.addedIds || []));
+        wrap.appendChild(buildCustomizableChecklistPanel(
+          definition,
+          context.inheritedIds || [],
+          context.addedIds || [],
+          { mode: "static", showTitle: false, showLegend: false }
+        ));
         return wrap;
       }
       if (src) {
@@ -706,8 +724,9 @@
       panel.style.top = `${Math.round(buttonMidWithinRow)}px`;
     }
 
-    function attachCustomizableEditor(row, anchorButton) {
+    function attachCustomizableEditor(row, anchorButton, options) {
       if (!row) return;
+      const opts = options && typeof options === "object" ? options : {};
       const name = getRowCardName(row);
       const definition = getCustomizableDefinition(name);
       if (!definition) return;
@@ -718,9 +737,13 @@
       closeCustomizableEditor();
 
       const inheritedIds = parseCustomizableIdList(row.dataset.customizableInheritedIds || "");
-      const currentAddedIds = getCustomizableUpgradeIdsForRow(row);
+      const seedAddedIds = sanitizeCustomizableAddedIds(
+        definition,
+        inheritedIds,
+        Array.isArray(opts.seedAddedIds) ? opts.seedAddedIds : []
+      );
       const inheritedSet = new Set(inheritedIds);
-      const currentAddedSet = new Set(currentAddedIds);
+      const seedAddedSet = new Set(seedAddedIds);
       const countsByGroup = {};
 
       const panel = document.createElement("div");
@@ -752,8 +775,8 @@
       (definition.groups || []).forEach((group) => {
         const ids = getCustomizableGroupIds(group);
         const inheritedCount = ids.filter((id) => inheritedSet.has(id)).length;
-        const addedCount = ids.filter((id) => currentAddedSet.has(id)).length;
-        countsByGroup[group.id] = addedCount;
+        const seededAddedCount = ids.filter((id) => seedAddedSet.has(id)).length;
+        countsByGroup[group.id] = seededAddedCount;
 
         const groupWrap = document.createElement("div");
         groupWrap.className = "customizable-inline-group customizable-overlay-group";
@@ -774,7 +797,7 @@
           if (idx < inheritedCount) {
             chip.classList.add("is-inherited");
             chip.disabled = true;
-          } else if (idx < inheritedCount + addedCount) {
+          } else if (idx < inheritedCount + countsByGroup[group.id]) {
             chip.classList.add("is-upgrade");
           }
           chip.addEventListener("click", () => {
@@ -783,8 +806,11 @@
             setCustomizableUpgradeIdsForRow(row, buildCustomizableAddedIdsFromCounts(definition, inheritedIds, countsByGroup));
             refreshCustomizableRowsInList(listEl, row.closest(".upgrade-entry"));
             refreshCurrentXp();
+            const nextSeedAddedIds = getCustomizableUpgradeIdsForRow(row);
             closeCustomizableEditor();
-            attachCustomizableEditor(row, anchorButton || row.querySelector(".customizable-edit-btn"));
+            attachCustomizableEditor(row, anchorButton || row.querySelector(".customizable-edit-btn"), {
+              seedAddedIds: nextSeedAddedIds,
+            });
           });
           chips.appendChild(chip);
         });
@@ -852,7 +878,7 @@
           closeCustomizableEditor();
           return;
         }
-        attachCustomizableEditor(row, btn);
+        attachCustomizableEditor(row, btn, { seedAddedIds: [] });
       });
       inline.insertBefore(btn, inline.querySelector(".draft-card-remove"));
     }
@@ -2133,6 +2159,8 @@
       const removedEditList = editor.querySelector('[data-edit-list="removed"]');
       const addedEditList = editor.querySelector('[data-edit-list="added"]');
       const errorNode = editor.querySelector('[data-edit-error]');
+      hideDisplayLayer();
+      entry.appendChild(editor);
       setCardsWithInlineRemove(removedEditList, listCardRows(removedList));
       setCardsWithInlineRemove(addedEditList, listCardRows(addedList));
       const head = entry.querySelector(".upgrade-entry-head");
@@ -2222,9 +2250,6 @@
         }
         syncDerivedUpgradeState();
       });
-
-      hideDisplayLayer();
-      entry.appendChild(editor);
     }
 
     function ensureEntryActions(entry) {

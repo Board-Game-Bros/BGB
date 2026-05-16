@@ -134,7 +134,7 @@
       const boxes = el("div", "customizable-group-boxes");
       getCustomizableGroupIds(group).forEach((id, idx) => {
         const chip = el("span", "customizable-box", String(idx + 1));
-        if (checked.has(id)) chip.classList.add("is-upgrade");
+        if (checked.has(id)) chip.classList.add("is-inherited");
         boxes.appendChild(chip);
       });
       head.appendChild(boxes);
