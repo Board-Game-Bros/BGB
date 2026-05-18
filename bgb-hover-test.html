@@ -1,12 +1,5 @@
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<style>
-html,body,iframe{margin:0;padding:0;width:100%;height:100%;border:0;background:#fff}
-#log{position:fixed;left:0;top:0;z-index:99999;background:rgba(255,255,255,.95);font:12px monospace;padding:8px;white-space:pre-wrap;max-width:520px}
-</style>
-</head>
+<html><head><meta charset="utf-8"><style>html,body,iframe{margin:0;padding:0;width:100%;height:100%;border:0}#log{position:fixed;left:0;top:0;z-index:99999;background:rgba(255,255,255,.97);font:12px monospace;padding:8px;white-space:pre-wrap;max-width:680px}</style></head>
 <body>
 <div id="log">loading</div>
 <iframe id="f" src="/arkham_horror_lcg_tde_20260503/"></iframe>
@@ -14,35 +7,42 @@ html,body,iframe{margin:0;padding:0;width:100%;height:100%;border:0;background:#
 const log = document.getElementById('log');
 const iframe = document.getElementById('f');
 iframe.addEventListener('load', () => {
-  const win = iframe.contentWindow;
-  const doc = iframe.contentDocument;
-  setTimeout(() => {
-    const refs = Array.from(doc.querySelectorAll('.card-ref'));
-    const target = refs.find((el) => /M1911/.test(el.textContent || ''));
-    if (!target) {
-      log.textContent = 'target not found';
-      return;
-    }
-    target.scrollIntoView({ block: 'center', inline: 'center' });
-    setTimeout(() => {
-      const rect = target.getBoundingClientRect();
-      ['mouseenter','mousemove'].forEach((type) => {
-        target.dispatchEvent(new win.MouseEvent(type, { bubbles: true, clientX: rect.left + 10, clientY: rect.top + 10 }));
-      });
-      setTimeout(() => {
-        const preview = target.querySelector('.card-preview');
-        const cs = win.getComputedStyle(preview);
-        const pr = preview.getBoundingClientRect();
-        log.textContent = JSON.stringify({
-          cssVar: win.getComputedStyle(doc.documentElement).getPropertyValue('--card-preview-width').trim(),
-          rect: { width: pr.width, height: pr.height, left: pr.left, top: pr.top },
-          style: { width: cs.width, height: cs.height, boxSizing: cs.boxSizing, display: cs.display, position: cs.position },
-          natural: { width: preview.naturalWidth, height: preview.naturalHeight }
-        }, null, 2);
-      }, 1200);
-    }, 200);
-  }, 3500);
+ const win = iframe.contentWindow, doc = iframe.contentDocument;
+ setTimeout(() => {
+   const target = Array.from(doc.querySelectorAll('.card-ref')).find(el => /M1911/.test(el.textContent || ''));
+   if (!target) return log.textContent = 'target not found';
+   target.scrollIntoView({block:'center'});
+   setTimeout(() => {
+     const r = target.getBoundingClientRect();
+     target.dispatchEvent(new win.MouseEvent('mouseenter',{bubbles:true,clientX:r.left+10,clientY:r.top+10}));
+     target.dispatchEvent(new win.MouseEvent('mousemove',{bubbles:true,clientX:r.left+10,clientY:r.top+10}));
+     setTimeout(() => {
+       const preview = target.querySelector('.card-preview');
+       const cs = win.getComputedStyle(preview);
+       const matches = [];
+       try {
+         for (const sheet of Array.from(doc.styleSheets)) {
+           let rules;
+           try { rules = sheet.cssRules; } catch (_) { continue; }
+           for (const rule of Array.from(rules || [])) {
+             if (rule.type === CSSRule.STYLE_RULE && preview.matches(rule.selectorText)) {
+               const style = rule.style;
+               if (style.width || style.maxWidth || style.boxSizing || style.objectFit || style.height) {
+                 matches.push({selector: rule.selectorText, width: style.width || '', maxWidth: style.maxWidth || '', height: style.height || '', boxSizing: style.boxSizing || '', objectFit: style.objectFit || ''});
+               }
+             }
+           }
+         }
+       } catch (e) { matches.push({err:String(e)}) }
+       log.textContent = JSON.stringify({
+         computed:{width:cs.width,height:cs.height,maxWidth:cs.maxWidth,maxHeight:cs.maxHeight,boxSizing:cs.boxSizing,display:cs.display,position:cs.position,objectFit:cs.objectFit},
+         rect: preview.getBoundingClientRect().toJSON(),
+         natural:{width:preview.naturalWidth,height:preview.naturalHeight},
+         matched: matches
+       }, null, 2);
+     }, 1200);
+   }, 200);
+ }, 3500);
 });
 </script>
-</body>
-</html>
+</body></html>
