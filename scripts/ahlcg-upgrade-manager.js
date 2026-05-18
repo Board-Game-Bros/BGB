@@ -2962,6 +2962,11 @@
         if (!preview) return;
         // Ensure measurable box on first hover frame.
         forceShowCardPreview(preview);
+        preview.style.removeProperty("width");
+        preview.style.removeProperty("height");
+        preview.style.removeProperty("max-width");
+        preview.style.removeProperty("max-height");
+        preview.style.removeProperty("overflow");
         preview.style.removeProperty("position");
         preview.style.removeProperty("left");
         preview.style.removeProperty("right");
