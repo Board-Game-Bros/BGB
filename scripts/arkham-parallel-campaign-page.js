@@ -16,17 +16,29 @@
     return node;
   }
 
+  const INLINE_CHAOS_TOKENS = [
+    { pattern: "elder thing", src: "/assets/icon/elder_thing_token.png", alt: "elder thing" },
+    { pattern: "cultist", src: "/assets/icon/cultist_token.png", alt: "cultist" },
+    { pattern: "skull", src: "/assets/icon/skull_token.png", alt: "skull" },
+    { pattern: "tablet", src: "/assets/icon/tablet_token.png", alt: "tablet" },
+  ];
+  const inlineChaosTokenPattern = new RegExp(
+    `(${INLINE_CHAOS_TOKENS.map((token) => token.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+    "gi"
+  );
+
   function appendInlineArkhamText(node, text) {
     const source = String(text || "");
     if (!source) return;
-    const parts = source.split(/(tablet)/gi);
+    const parts = source.split(inlineChaosTokenPattern);
     parts.forEach((part) => {
       if (!part) return;
-      if (/^tablet$/i.test(part)) {
+      const token = INLINE_CHAOS_TOKENS.find((entry) => new RegExp(`^${entry.pattern}$`, "i").test(part));
+      if (token) {
         const img = document.createElement("img");
         img.className = "inline-chaos-token";
-        img.src = "/assets/icon/tablet_token.png";
-        img.alt = part;
+        img.src = token.src;
+        img.alt = token.alt;
         node.appendChild(img);
         return;
       }

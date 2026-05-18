@@ -493,7 +493,7 @@
     {
       "investigator": "Kymani Jones",
       "card": "Pocket Multi Tool",
-      "baselineStateId": "scenario_i_b_refine",
+      "baselineStateId": "after_scenario_i_upgrade",
       "currentStateId": "after_scenario_i_upgrade",
       "states": [
         {
@@ -518,6 +518,34 @@
             "spring_loaded.2",
             "spring_loaded.3",
             "spring_loaded.4"
+          ]
+        }
+      ]
+    },
+    {
+      "investigator": "Wilson Richards",
+      "card": "Pocket Multi Tool",
+      "baselineStateId": "after_scenario_iii_upgrade",
+      "currentStateId": "after_scenario_iii_upgrade",
+      "states": [
+        {
+          "id": "after_scenario_ii_upgrade",
+          "checkedIds": [
+            "pry_bar.1",
+            "spring_loaded.1",
+            "spring_loaded.2",
+            "spring_loaded.3",
+            "spring_loaded.4"
+          ]
+        },
+        {
+          "id": "after_scenario_iii_upgrade",
+          "from": "after_scenario_ii_upgrade",
+          "activateIds": [
+            "sharpened_knife.1",
+            "sharpened_knife.2",
+            "magnifying_lens.1",
+            "magnifying_lens.2"
           ]
         }
       ]
