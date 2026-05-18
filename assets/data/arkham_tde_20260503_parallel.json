@@ -270,6 +270,105 @@
           ]
         }
       ]
+    },
+    {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 05/17/2026",
+        "Session: Scenario II-A"
+      ]
+    },
+    {
+      "title": "Scenario II-A: The Search for Kadath",
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 8"
+      ],
+      "notes": [
+        {
+          "title": "Search Across The Dreamlands",
+          "items": [
+            "The Dream-Quest investigators continued their search for Kadath by traveling across multiple distant regions of the Dreamlands.",
+            "During the investigation, they made their way through Oriab, Mnar, the Forbidden Lands, and the Timeless Realm.",
+            "Across those locations, the investigators uncovered a total of 4 Signs of the Gods out of the 10 available in the scenario."
+          ]
+        },
+        {
+          "title": "The Investigators Achieved Resolution I.",
+          "items": [
+            "The investigators reached Resolution I.",
+            "All three investigators resigned alive.",
+            "Each investigator earned 8 XP from the scenario.",
+            "Record: Virgil was captured.",
+            "Record: Randolph eluded capture."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Interlude II: The Oneironauts",
+      "statusChips": [
+        "Type: Shared Interlude",
+        "Status: Completed"
+      ],
+      "notes": [
+        {
+          "title": "Web of Dreams Side",
+          "items": [
+            "Following Scenario II-B, the black cat met the waking-world investigators at the end of the stairway and once again offered to pass a message between the two campaign groups.",
+            "For this shared interlude, the lead investigator chose: tell your companions that you are safe.",
+            "Record: the black cat warned the others.",
+            "Because the black cat is at your side had been recorded for Campaign B, that note was crossed off there and recorded in Campaign A instead.",
+            "Replace 1 tablet token in each campaign's chaos bag with 1 elder thing token."
+          ]
+        },
+        {
+          "title": "Dream-Quest Side",
+          "items": [
+            "Following Scenario II-A, Virgil's cat found the Dream-Quest investigators aboard their ship and confirmed that Virgil had been captured by the Corsairs.",
+            "Because at least one investigator was not captured, the dreamers received the cat's warning directly.",
+            "The cat passed along the waking-world team's message that they were safe and remained with the dreamers for a while longer.",
+            "Proceed to Scenario III-A: Dark Side of the Moon."
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 05/17/2026",
+        "Session: Scenario III-A"
+      ]
+    },
+    {
+      "title": "Scenario III-A: Dark Side of the Moon",
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 8"
+      ],
+      "notes": [
+        {
+          "title": "Voyage Toward The Moon",
+          "items": [
+            "The Dream-Quest investigators sailed onward in pursuit of the Corsairs' captives, following Randolph Carter toward the route that leads across the edge of the world and on toward the Moon.",
+            "The search for Virgil and the others continued without any additional setup notes recorded for this campaign page."
+          ]
+        },
+        {
+          "title": "The Investigators Achieved Resolution I.",
+          "items": [
+            "The investigators reached Resolution I.",
+            "Silas Marsh and Mandy Thompson survived the scenario.",
+            "Wilson Richards was defeated and suffered 1 mental trauma.",
+            "Record: the investigators traveled to the Cold Wastes.",
+            "Record: Randolph survived the voyage.",
+            "Each investigator earned 8 XP from the scenario.",
+            "Record 3 additional tally marks next to Evidence of Kadath in Campaign A."
+          ]
+        }
+      ]
     }
   ],
   "campaignLog": {
@@ -285,7 +384,11 @@
               "The dreamers strayed from the path.",
               "The cats collected their tribute from the Zoogs.",
               "The dreamers grow weaker.",
-              "The black cat warned the others."
+              "The black cat warned the others.",
+              "Virgil was captured.",
+              "Randolph eluded capture.",
+              "The investigators traveled to the Cold Wastes.",
+              "Randolph survived the voyage."
             ]
           },
           {
@@ -299,7 +402,7 @@
             "title": "Campaign Counters",
             "listClass": "campaign-log-list",
             "items": [
-              "Evidence of Kadath: 0"
+              "Evidence of Kadath: 7"
             ]
           }
         ]
