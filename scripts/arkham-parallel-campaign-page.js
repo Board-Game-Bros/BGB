@@ -498,6 +498,16 @@
     if (window.BGB && typeof window.BGB.setupHoverImagePreview === "function") {
       window.BGB.setupHoverImagePreview();
     }
+    if (window.BGB && typeof window.BGB.bindCardRefViewportPreviews === "function") {
+      [
+        overviewSection,
+        main.querySelector("#campaign-log"),
+        main.querySelector("#timeline"),
+        main.querySelector("#parallel-campaigns"),
+      ].forEach((section) => {
+        if (section) window.BGB.bindCardRefViewportPreviews(section);
+      });
+    }
 
     const ahlcgLibrary = window.AHLCG_STANDARD_NAME_LIBRARY || {};
     const upgradeConfig = data.upgradeManager || {};

@@ -705,23 +705,34 @@
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
       const margin = 18;
       const gap = 16;
-      const preferredWidth = Math.min(560, Math.max(360, viewportWidth - (margin * 2)));
+      const preferredWidth = Math.min(560, Math.max(280, viewportWidth - (margin * 2)));
       const maxPanelHeight = Math.max(280, viewportHeight - (margin * 2));
 
       panel.style.width = `${Math.round(preferredWidth)}px`;
+      panel.style.maxWidth = `${Math.round(Math.max(280, viewportWidth - (margin * 2)))}px`;
       panel.style.maxHeight = `${Math.round(maxPanelHeight)}px`;
 
-      const rowRect = row.getBoundingClientRect();
       const buttonRect = button.getBoundingClientRect();
-      const buttonMidWithinRow = (buttonRect.top - rowRect.top) + (buttonRect.height / 2);
-
       panel.classList.remove("is-left-side");
       const panelRect = panel.getBoundingClientRect();
       const canOpenRight = buttonRect.right + gap + panelRect.width + margin <= viewportWidth;
+      let left = canOpenRight
+        ? buttonRect.right + gap
+        : buttonRect.left - gap - panelRect.width;
       if (!canOpenRight) {
         panel.classList.add("is-left-side");
       }
-      panel.style.top = `${Math.round(buttonMidWithinRow)}px`;
+      const maxLeft = Math.max(margin, viewportWidth - panelRect.width - margin);
+      left = Math.min(Math.max(left, margin), maxLeft);
+
+      let top = buttonRect.top + (buttonRect.height / 2) - (panelRect.height / 2);
+      const maxTop = Math.max(margin, viewportHeight - panelRect.height - margin);
+      top = Math.min(Math.max(top, margin), maxTop);
+
+      panel.style.left = `${Math.round(left)}px`;
+      panel.style.top = `${Math.round(top)}px`;
+      panel.style.right = "auto";
+      panel.style.bottom = "auto";
     }
 
     function attachCustomizableEditor(row, anchorButton, options) {
@@ -1602,6 +1613,9 @@
         preview.style.top = "auto";
         preview.style.bottom = "auto";
         preview.style.transform = "none";
+        preview.style.removeProperty("max-width");
+        preview.style.removeProperty("max-height");
+        preview.style.removeProperty("overflow");
       }
 
       function clampAutocompletePreviewPosition(option, preview) {
@@ -1609,11 +1623,17 @@
         const rect = option.getBoundingClientRect();
         const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-        const adaptive = computeAdaptivePreviewSize();
-        const previewWidth = adaptive.width;
-        const previewHeight = adaptive.height;
 
         resetAutocompletePreviewPosition(preview);
+        preview.style.setProperty("display", "block", "important");
+        preview.style.setProperty("visibility", "visible", "important");
+        const previewRect = preview.getBoundingClientRect();
+        const previewWidth = Math.min(previewRect.width || 0, Math.max(160, viewportWidth - (previewMargin * 2)));
+        const previewHeight = Math.min(previewRect.height || 0, Math.max(160, viewportHeight - (previewMargin * 2)));
+        if (!previewWidth || !previewHeight) return;
+        preview.style.maxWidth = Math.max(160, viewportWidth - (previewMargin * 2)) + "px";
+        preview.style.maxHeight = Math.max(160, viewportHeight - (previewMargin * 2)) + "px";
+        preview.style.overflow = "auto";
 
         const rightSideLeft = rect.right + previewMargin;
         const hasRightSpace = rightSideLeft + previewWidth <= viewportWidth - previewMargin;
@@ -2923,6 +2943,9 @@
         preview.style.removeProperty("bottom");
         preview.style.removeProperty("transform");
         preview.style.removeProperty("z-index");
+        preview.style.removeProperty("max-width");
+        preview.style.removeProperty("max-height");
+        preview.style.removeProperty("overflow");
       }
 
       function forceShowCardPreview(preview) {
@@ -2956,7 +2979,9 @@
 
         const overflowLeft = rect.left < previewMargin;
         const overflowRight = rect.right > (viewportWidth - previewMargin);
-        if (!(overflowLeft || overflowRight)) {
+        const overflowTop = rect.top < previewMargin;
+        const overflowBottom = rect.bottom > (viewportHeight - previewMargin);
+        if (!(overflowLeft || overflowRight || overflowTop || overflowBottom)) {
           // Keep default CSS hover behavior when within viewport.
           preview.style.removeProperty("display");
           preview.style.removeProperty("visibility");
@@ -2973,7 +2998,10 @@
         left = clamp(left, previewMargin, viewportWidth - width - previewMargin);
 
         let top = anchor.top - previewGap - height;
-        top = Math.min(top, viewportHeight - height - previewMargin);
+        if (top < previewMargin) {
+          top = anchor.bottom + previewGap;
+        }
+        top = clamp(top, previewMargin, viewportHeight - height - previewMargin);
 
         preview.style.position = "fixed";
         preview.style.left = Math.round(left) + "px";
@@ -2982,6 +3010,9 @@
         preview.style.bottom = "auto";
         preview.style.transform = "none";
         preview.style.zIndex = "2147483000";
+        preview.style.maxWidth = Math.max(160, viewportWidth - (previewMargin * 2)) + "px";
+        preview.style.maxHeight = Math.max(160, viewportHeight - (previewMargin * 2)) + "px";
+        preview.style.overflow = "auto";
       }
 
       function refreshActivePreview() {
@@ -3562,6 +3593,13 @@
     applyAdaptivePreviewSize();
     window.addEventListener("resize", () => {
       applyAdaptivePreviewSize();
+      if (activeCustomizableEditor) {
+        window.requestAnimationFrame(positionCustomizableEditor);
+      }
+    }, { passive: true });
+    window.addEventListener("scroll", () => {
+      if (!activeCustomizableEditor) return;
+      window.requestAnimationFrame(positionCustomizableEditor);
     }, { passive: true });
 
     ensureCampaignStartNotes();

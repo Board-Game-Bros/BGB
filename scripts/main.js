@@ -74,7 +74,152 @@ const resetHoverPreviewStyles = (previewEl) => {
   previewEl.style.transform = "";
   previewEl.style.maxWidth = "";
   previewEl.style.maxHeight = "";
+  previewEl.style.overflow = "";
   previewEl.style.zIndex = "";
+};
+
+const bindCardRefViewportPreviews = (root = document) => {
+  const scope = root && typeof root.querySelectorAll === "function" ? root : document;
+  const previewMargin = 8;
+  const previewGap = 10;
+  let activeCardRef = null;
+
+  const isInteractive = (cardRef) => {
+    if (!cardRef) return false;
+    const preview = cardRef.querySelector(".card-preview");
+    const activeEl = document.activeElement;
+    const cardHovered = typeof cardRef.matches === "function" && cardRef.matches(":hover");
+    const previewHovered = !!(preview && typeof preview.matches === "function" && preview.matches(":hover"));
+    const cardFocused = !!(activeEl && cardRef.contains(activeEl));
+    const previewFocused = !!(preview && activeEl && preview.contains(activeEl));
+    return cardHovered || previewHovered || cardFocused || previewFocused;
+  };
+
+  const resetPreview = (preview) => {
+    if (!preview) return;
+    resetHoverPreviewStyles(preview);
+    preview.style.removeProperty("display");
+    preview.style.removeProperty("visibility");
+  };
+
+  const forceShow = (preview) => {
+    if (!preview) return;
+    preview.style.setProperty("display", "block", "important");
+    preview.style.setProperty("visibility", "visible", "important");
+  };
+
+  const clampPreview = (cardRef) => {
+    if (!cardRef) return;
+    const preview = cardRef.querySelector(".card-preview");
+    if (!preview) return;
+
+    forceShow(preview);
+    resetHoverPreviewStyles(preview);
+
+    const rect = preview.getBoundingClientRect();
+    const width = rect.width || 0;
+    const height = rect.height || 0;
+    if (!width || !height) return;
+
+    const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
+    const viewportHeight = document.documentElement.clientHeight || window.innerHeight || 0;
+    if (!viewportWidth || !viewportHeight) return;
+
+    const overflowLeft = rect.left < previewMargin;
+    const overflowRight = rect.right > (viewportWidth - previewMargin);
+    const overflowTop = rect.top < previewMargin;
+    const overflowBottom = rect.bottom > (viewportHeight - previewMargin);
+    if (!(overflowLeft || overflowRight || overflowTop || overflowBottom)) {
+      preview.style.removeProperty("display");
+      preview.style.removeProperty("visibility");
+      return;
+    }
+
+    const clamp = (value, min, max) => {
+      if (max < min) return min;
+      return Math.min(Math.max(value, min), max);
+    };
+
+    const anchor = cardRef.getBoundingClientRect();
+    let left = anchor.left + (anchor.width / 2) - (width / 2);
+    left = clamp(left, previewMargin, viewportWidth - width - previewMargin);
+
+    let top = anchor.top - previewGap - height;
+    if (top < previewMargin) {
+      top = anchor.bottom + previewGap;
+    }
+    top = clamp(top, previewMargin, viewportHeight - height - previewMargin);
+
+    preview.style.position = "fixed";
+    preview.style.left = `${Math.round(left)}px`;
+    preview.style.top = `${Math.round(top)}px`;
+    preview.style.right = "auto";
+    preview.style.bottom = "auto";
+    preview.style.transform = "none";
+    preview.style.maxWidth = `${Math.max(160, viewportWidth - (previewMargin * 2))}px`;
+    preview.style.maxHeight = `${Math.max(160, viewportHeight - (previewMargin * 2))}px`;
+    preview.style.overflow = "auto";
+    preview.style.zIndex = "2147483000";
+  };
+
+  const refreshActive = () => {
+    if (!activeCardRef) return;
+    if (!isInteractive(activeCardRef)) {
+      resetPreview(activeCardRef.querySelector(".card-preview"));
+      activeCardRef = null;
+      return;
+    }
+    clampPreview(activeCardRef);
+  };
+
+  if (scope.__bgbViewportPreviewViewportBound !== true) {
+    scope.__bgbViewportPreviewViewportBound = true;
+    window.addEventListener("scroll", () => {
+      window.requestAnimationFrame(refreshActive);
+    }, { passive: true });
+    window.addEventListener("resize", () => {
+      window.requestAnimationFrame(refreshActive);
+    }, { passive: true });
+  }
+
+  scope.querySelectorAll(".card-ref").forEach((cardRef) => {
+    if (cardRef.__bgbViewportPreviewBound === true) return;
+    cardRef.__bgbViewportPreviewBound = true;
+
+    const activate = () => {
+      const preview = cardRef.querySelector(".card-preview");
+      if (!preview) return;
+      activeCardRef = cardRef;
+      forceShow(preview);
+      window.requestAnimationFrame(() => clampPreview(cardRef));
+    };
+
+    const reset = (event) => {
+      const relatedTarget = event && event.relatedTarget;
+      if (relatedTarget instanceof Node && cardRef.contains(relatedTarget)) {
+        return;
+      }
+      window.requestAnimationFrame(() => {
+        if (isInteractive(cardRef)) return;
+        resetPreview(cardRef.querySelector(".card-preview"));
+        if (activeCardRef === cardRef) activeCardRef = null;
+      });
+    };
+
+    cardRef.addEventListener("mouseenter", activate);
+    cardRef.addEventListener("mousemove", activate);
+    cardRef.addEventListener("focusin", activate);
+    cardRef.addEventListener("mouseleave", reset);
+    cardRef.addEventListener("focusout", reset);
+
+    const preview = cardRef.querySelector(".card-preview");
+    if (preview && preview.__bgbViewportPreviewHoverBound !== true) {
+      preview.__bgbViewportPreviewHoverBound = true;
+      preview.addEventListener("mouseenter", activate);
+      preview.addEventListener("mousemove", activate);
+      preview.addEventListener("mouseleave", reset);
+    }
+  });
 };
 
 // 1.3 Generic hover image preview for elements with data-hover-preview-src.
@@ -230,4 +375,5 @@ window.BGB = {
   setupSubnavActiveState,
   setupHoverImagePreview,
   resetHoverPreviewStyles,
+  bindCardRefViewportPreviews,
 };

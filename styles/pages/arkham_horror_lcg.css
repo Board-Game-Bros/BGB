@@ -544,7 +544,11 @@ body.torch-mode #campaigns .campaign-subtitle {
   width: var(--card-preview-width, 420px);
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
+  box-sizing: border-box;
   height: auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   border: 2px solid #3a2d1a;
   border-radius: 8px;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
@@ -555,6 +559,7 @@ body.torch-mode #campaigns .campaign-subtitle {
 .customizable-preview {
   width: min(760px, calc(100vw - 16px));
   max-width: min(760px, calc(100vw - 16px));
+  max-height: calc(100vh - 16px);
   padding: 12px;
   border-radius: 14px;
   background:
@@ -562,10 +567,14 @@ body.torch-mode #campaigns .campaign-subtitle {
   display: none;
   align-items: flex-start;
   gap: 12px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .customizable-preview-image {
   display: block;
+  flex: 0 0 auto;
   width: min(320px, 42vw);
   max-width: 100%;
   height: auto;
@@ -577,13 +586,14 @@ body.torch-mode #campaigns .campaign-subtitle {
 
 .customizable-preview-panel {
   flex: 1 1 0;
-  min-width: 220px;
+  min-width: 0;
   padding: 10px 12px;
   border: 1px solid rgba(74, 52, 32, 0.45);
   border-radius: 12px;
   background:
     linear-gradient(180deg, rgba(242, 228, 196, 0.9) 0%, rgba(223, 196, 148, 0.84) 100%);
   box-shadow: inset 0 1px 0 rgba(255, 250, 241, 0.78);
+  overflow-wrap: anywhere;
 }
 
 .customizable-preview-panel h4 {
@@ -637,8 +647,9 @@ body.torch-mode #campaigns .campaign-subtitle {
 
 .customizable-group-head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -670,7 +681,7 @@ body.torch-mode #campaigns .campaign-subtitle {
 }
 
 .story-note-customizable-panel {
-  min-width: 320px;
+  min-width: 0;
 }
 
 .customizable-group-boxes,
@@ -786,15 +797,19 @@ body.torch-mode #campaigns .campaign-subtitle {
 }
 
 .customizable-popover {
-  position: absolute;
-  left: calc(100% + 16px);
-  top: 50%;
-  transform: translateY(-50%);
+  position: fixed;
+  left: 18px;
+  top: 18px;
+  transform: none;
   width: 560px;
+  max-width: calc(100vw - 36px);
   overflow: auto;
   overflow-anchor: none;
   scroll-behavior: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   z-index: 70;
+  box-sizing: border-box;
   padding: 18px 18px 16px;
   border: 2px solid rgba(86, 60, 34, 0.46);
   border-radius: 18px;
@@ -806,8 +821,8 @@ body.torch-mode #campaigns .campaign-subtitle {
 }
 
 .customizable-popover.is-left-side {
-  left: auto;
-  right: calc(100% + 16px);
+  left: 18px;
+  right: auto;
 }
 
 .customizable-overlay-title {
@@ -1130,6 +1145,22 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(247, 235, 214, 0.96) 0%, rgba(230, 205, 166, 0.96) 100%);
+}
+
+@media (max-width: 980px) {
+  .customizable-preview {
+    flex-direction: column;
+  }
+
+  .customizable-preview-image {
+    width: min(320px, 100%);
+    margin: 0 auto;
+  }
+
+  .customizable-preview-panel,
+  .story-note-customizable-panel {
+    width: 100%;
+  }
 }
 
 /* Torch mode: keep text readable on light parchment cards. */
