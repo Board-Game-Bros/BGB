@@ -550,10 +550,10 @@ body.torch-mode #campaigns .campaign-subtitle {
   left: 50%;
   bottom: calc(100% + 10px);
   transform: translateX(-50%);
+  box-sizing: content-box;
   width: var(--card-preview-width, 420px);
   max-width: calc(100vw - 16px);
   max-height: calc(100vh - 16px);
-  box-sizing: border-box;
   height: auto;
   overflow: auto;
   overscroll-behavior: contain;
@@ -566,6 +566,7 @@ body.torch-mode #campaigns .campaign-subtitle {
 }
 
 .customizable-preview {
+  box-sizing: border-box;
   width: min(760px, calc(100vw - 16px));
   max-width: min(760px, calc(100vw - 16px));
   max-height: calc(100vh - 16px);

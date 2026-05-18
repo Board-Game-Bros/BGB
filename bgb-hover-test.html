@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+html,body,iframe{margin:0;padding:0;width:100%;height:100%;border:0;background:#fff}
+#log{position:fixed;left:0;top:0;z-index:99999;background:rgba(255,255,255,.95);font:12px monospace;padding:8px;white-space:pre-wrap;max-width:520px}
+</style>
+</head>
+<body>
+<div id="log">loading</div>
+<iframe id="f" src="/arkham_horror_lcg_tde_20260503/"></iframe>
+<script>
+const log = document.getElementById('log');
+const iframe = document.getElementById('f');
+iframe.addEventListener('load', () => {
+  const win = iframe.contentWindow;
+  const doc = iframe.contentDocument;
+  setTimeout(() => {
+    const refs = Array.from(doc.querySelectorAll('.card-ref'));
+    const target = refs.find((el) => /M1911/.test(el.textContent || ''));
+    if (!target) {
+      log.textContent = 'target not found';
+      return;
+    }
+    target.scrollIntoView({ block: 'center', inline: 'center' });
+    setTimeout(() => {
+      const rect = target.getBoundingClientRect();
+      ['mouseenter','mousemove'].forEach((type) => {
+        target.dispatchEvent(new win.MouseEvent(type, { bubbles: true, clientX: rect.left + 10, clientY: rect.top + 10 }));
+      });
+      setTimeout(() => {
+        const preview = target.querySelector('.card-preview');
+        const cs = win.getComputedStyle(preview);
+        const pr = preview.getBoundingClientRect();
+        log.textContent = JSON.stringify({
+          cssVar: win.getComputedStyle(doc.documentElement).getPropertyValue('--card-preview-width').trim(),
+          rect: { width: pr.width, height: pr.height, left: pr.left, top: pr.top },
+          style: { width: cs.width, height: cs.height, boxSizing: cs.boxSizing, display: cs.display, position: cs.position },
+          natural: { width: preview.naturalWidth, height: preview.naturalHeight }
+        }, null, 2);
+      }, 1200);
+    }, 200);
+  }, 3500);
+});
+</script>
+</body>
+</html>
