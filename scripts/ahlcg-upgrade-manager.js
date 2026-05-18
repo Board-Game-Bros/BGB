@@ -2943,6 +2943,8 @@
         preview.style.removeProperty("bottom");
         preview.style.removeProperty("transform");
         preview.style.removeProperty("z-index");
+        preview.style.removeProperty("width");
+        preview.style.removeProperty("height");
         preview.style.removeProperty("max-width");
         preview.style.removeProperty("max-height");
         preview.style.removeProperty("overflow");
@@ -2976,6 +2978,8 @@
         const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
         const viewportHeight = document.documentElement.clientHeight || window.innerHeight || 0;
         if (!viewportWidth || !viewportHeight) return;
+        const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
+        const maxHeight = Math.max(160, viewportHeight - (previewMargin * 2));
 
         const overflowLeft = rect.left < previewMargin;
         const overflowRight = rect.right > (viewportWidth - previewMargin);
@@ -2993,15 +2997,32 @@
           return Math.min(Math.max(value, min), max);
         };
 
-        const anchor = cardRef.getBoundingClientRect();
-        let left = anchor.left + (anchor.width / 2) - (width / 2);
-        left = clamp(left, previewMargin, viewportWidth - width - previewMargin);
+        let displayWidth = width;
+        let displayHeight = height;
+        if (preview.tagName === "IMG") {
+          const scale = Math.min(1, maxWidth / width, maxHeight / height);
+          displayWidth = Math.round(width * scale);
+          displayHeight = Math.round(height * scale);
+          preview.style.width = displayWidth + "px";
+          preview.style.height = displayHeight + "px";
+          preview.style.maxWidth = "none";
+          preview.style.maxHeight = "none";
+          preview.style.overflow = "visible";
+        } else {
+          preview.style.maxWidth = maxWidth + "px";
+          preview.style.maxHeight = maxHeight + "px";
+          preview.style.overflow = "auto";
+        }
 
-        let top = anchor.top - previewGap - height;
+        const anchor = cardRef.getBoundingClientRect();
+        let left = anchor.left + (anchor.width / 2) - (displayWidth / 2);
+        left = clamp(left, previewMargin, viewportWidth - displayWidth - previewMargin);
+
+        let top = anchor.top - previewGap - displayHeight;
         if (top < previewMargin) {
           top = anchor.bottom + previewGap;
         }
-        top = clamp(top, previewMargin, viewportHeight - height - previewMargin);
+        top = clamp(top, previewMargin, viewportHeight - displayHeight - previewMargin);
 
         preview.style.position = "fixed";
         preview.style.left = Math.round(left) + "px";
@@ -3010,9 +3031,6 @@
         preview.style.bottom = "auto";
         preview.style.transform = "none";
         preview.style.zIndex = "2147483000";
-        preview.style.maxWidth = Math.max(160, viewportWidth - (previewMargin * 2)) + "px";
-        preview.style.maxHeight = Math.max(160, viewportHeight - (previewMargin * 2)) + "px";
-        preview.style.overflow = "auto";
       }
 
       function refreshActivePreview() {
