@@ -25,7 +25,7 @@
       if (/^tablet$/i.test(part)) {
         const img = document.createElement("img");
         img.className = "inline-chaos-token";
-        img.src = "/assets/icon/chaos_token.png";
+        img.src = "/assets/icon/tablet_token.png";
         img.alt = part;
         node.appendChild(img);
         return;
