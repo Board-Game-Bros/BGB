@@ -16,6 +16,31 @@
     return node;
   }
 
+  function appendInlineArkhamText(node, text) {
+    const source = String(text || "");
+    if (!source) return;
+    const parts = source.split(/(tablet)/gi);
+    parts.forEach((part) => {
+      if (!part) return;
+      if (/^tablet$/i.test(part)) {
+        const img = document.createElement("img");
+        img.className = "inline-chaos-token";
+        img.src = "/assets/icon/chaos_token.png";
+        img.alt = part;
+        node.appendChild(img);
+        return;
+      }
+      node.appendChild(document.createTextNode(part));
+    });
+  }
+
+  function elWithInlineArkhamText(tag, cls, text) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (typeof text === "string") appendInlineArkhamText(node, text);
+    return node;
+  }
+
   function appendItems(parent, items, className) {
     (Array.isArray(items) ? items : []).forEach((item) => {
       parent.appendChild(el("span", className, String(item || "")));
@@ -151,7 +176,7 @@
     if (item && typeof item === "object" && item.customizableHover) {
       const li = el("li", item.className ? String(item.className) : "");
       const config = item.customizableHover;
-      const ref = el("span", "card-ref story-note-inline-card-ref", String(config.text || ""));
+      const ref = elWithInlineArkhamText("span", "card-ref story-note-inline-card-ref", String(config.text || ""));
       const syncPreview = () => {
         const existing = ref.querySelector(".card-preview");
         if (existing) existing.remove();
@@ -164,7 +189,7 @@
       li.appendChild(ref);
       return li;
     }
-    return el("li", item && item.className ? String(item.className) : "", String(item && item.text ? item.text : item || ""));
+    return elWithInlineArkhamText("li", item && item.className ? String(item.className) : "", String(item && item.text ? item.text : item || ""));
   }
 
   function renderCustomizableStateNote(note) {
@@ -209,7 +234,7 @@
     }
     const wrap = el("div", "story-note");
     if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
-    if (note.text) wrap.appendChild(el("p", "", String(note.text)));
+    if (note.text) wrap.appendChild(elWithInlineArkhamText("p", "", String(note.text)));
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
       note.items.forEach((item) => {
@@ -223,7 +248,7 @@
   function appendStoryNoteContent(parent, note) {
     if (!note || typeof note !== "object") return;
     if (note.title) parent.appendChild(el("h4", "", String(note.title)));
-    if (note.text) parent.appendChild(el("p", "", String(note.text)));
+    if (note.text) parent.appendChild(elWithInlineArkhamText("p", "", String(note.text)));
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
       note.items.forEach((item) => {

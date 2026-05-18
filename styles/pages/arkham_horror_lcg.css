@@ -526,6 +526,15 @@ body.torch-mode #campaigns .campaign-subtitle {
   object-fit: contain;
 }
 
+.inline-chaos-token {
+  display: inline-block;
+  width: 0.95em;
+  height: 0.95em;
+  margin: 0 0.12em;
+  vertical-align: -0.12em;
+  object-fit: contain;
+}
+
 .investigator-pill.card-ref {
   border-bottom: 1px solid rgba(58, 45, 26, 0.52);
 }
