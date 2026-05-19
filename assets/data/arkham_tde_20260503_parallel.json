@@ -397,6 +397,15 @@
             "items": [
               "Evidence of Kadath: 7"
             ]
+          },
+          {
+            "title": "Chaos Bag Notes",
+            "listClass": "campaign-log-list",
+            "items": [
+              "+3 skull tokens (Dream-Quest scenario pressure recorded by the end of Scenario I-A).",
+              "+1 tablet token (from Interlude I: The Black Cat).",
+              "Replace 1 tablet token with 1 elder thing token (from Interlude II: The Oneironauts)."
+            ]
           }
         ]
       },
@@ -428,6 +437,15 @@
             "listClass": "campaign-log-list",
             "items": [
               "Steps of the Bridge: 0"
+            ]
+          },
+          {
+            "title": "Chaos Bag Notes",
+            "listClass": "campaign-log-list",
+            "items": [
+              "+1 tablet token (shared consequence from Interlude I: The Black Cat).",
+              "+1 skull token (ongoing effect from Scenario II-B: A Thousand Shapes of Horror).",
+              "Replace 1 tablet token with 1 elder thing token (from Interlude II: The Oneironauts)."
             ]
           }
         ]
