@@ -63,6 +63,79 @@ const setupSubnavActiveState = () => {
 
 setupSubnavActiveState();
 
+// 1.15 Inline chaos token replacement for static campaign pages.
+const INLINE_CHAOS_TOKENS = [
+  { pattern: "elder thing", src: "/assets/icon/elder_thing_token.png", alt: "elder thing" },
+  { pattern: "cultist", src: "/assets/icon/cultist_token.png", alt: "cultist" },
+  { pattern: "skull", src: "/assets/icon/skull_token.png", alt: "skull" },
+  { pattern: "tablet", src: "/assets/icon/tablet_token.png", alt: "tablet" },
+];
+
+const inlineChaosTokenPattern = new RegExp(
+  `(${INLINE_CHAOS_TOKENS.map((token) => token.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+  "gi"
+);
+
+const replaceInlineChaosTokensInNode = (textNode) => {
+  if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+  const source = String(textNode.nodeValue || "");
+  if (!source || !inlineChaosTokenPattern.test(source)) return;
+  inlineChaosTokenPattern.lastIndex = 0;
+
+  const frag = document.createDocumentFragment();
+  source.split(inlineChaosTokenPattern).forEach((part) => {
+    if (!part) return;
+    const token = INLINE_CHAOS_TOKENS.find((entry) => new RegExp(`^${entry.pattern}$`, "i").test(part));
+    if (token) {
+      const img = document.createElement("img");
+      img.className = "inline-chaos-token";
+      img.src = token.src;
+      img.alt = token.alt;
+      frag.appendChild(img);
+      return;
+    }
+    frag.appendChild(document.createTextNode(part));
+  });
+
+  if (textNode.parentNode) {
+    textNode.parentNode.replaceChild(frag, textNode);
+  }
+};
+
+const setupInlineChaosTokenText = (root = document) => {
+  const scope = root && typeof root.querySelectorAll === "function" ? root : document;
+  const containers = scope.querySelectorAll([
+    ".story-note",
+    ".campaign-log-list",
+    ".record-meta",
+    ".status-chip",
+    ".meta-item",
+  ].join(", "));
+
+  containers.forEach((container) => {
+    if (!container || container.dataset.inlineChaosTokensBound === "1") return;
+    container.dataset.inlineChaosTokensBound = "1";
+    const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node || !node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        const parent = node.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+        if (parent.closest(".card-ref, .card-preview, button, script, style")) return NodeFilter.FILTER_REJECT;
+        inlineChaosTokenPattern.lastIndex = 0;
+        return inlineChaosTokenPattern.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    const textNodes = [];
+    while (walker.nextNode()) {
+      textNodes.push(walker.currentNode);
+    }
+    textNodes.forEach((node) => replaceInlineChaosTokensInNode(node));
+  });
+};
+
+window.BGBSetupInlineChaosTokenText = setupInlineChaosTokenText;
+setupInlineChaosTokenText();
+
 // 1.2 Shared hover-preview reset helper.
 const resetHoverPreviewStyles = (previewEl) => {
   if (!previewEl) return;
