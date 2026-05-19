@@ -275,7 +275,7 @@
       "variant": "session-meta",
       "metaItems": [
         "Date: 05/17/2026",
-        "Session: Scenario II-A"
+        "Session: Scenario II-A + Interlude II + Scenario III-A"
       ]
     },
     {
@@ -332,13 +332,6 @@
             "Proceed to Scenario III-A: Dark Side of the Moon."
           ]
         }
-      ]
-    },
-    {
-      "variant": "session-meta",
-      "metaItems": [
-        "Date: 05/17/2026",
-        "Session: Scenario III-A"
       ]
     },
     {
