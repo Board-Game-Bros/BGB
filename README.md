@@ -191,10 +191,10 @@ Upgrade-history XP calculation currently uses that metadata as follows:
 
 - `Myriad` cards such as `Segment of Onyx (1)` are charged once for up to three copies added in the same purchase.
 - `Exceptional` cards are charged at double their base XP cost.
-- `Customizable` cards are tracked by checkbox state, not by printed level or by hard-coded `(N checks)` text.
-- The upgrade editor now exposes a `Checkboxes` button for customizable cards in the `Added` column. Use that UI to mark only the boxes purchased during the current upgrade step.
+- `Customizable` cards split physical deck changes from checkbox upgrades. `Added` / `Removed` track physical copies, and each newly added physical copy costs 1 XP as a level-0 card.
+- Once an investigator has a customizable card, each scenario entry shows a `Customized` section for that investigator/card. Use that section's `Checkboxes` control to mark only the boxes purchased during the current upgrade step.
 - Campaign-start selections, `Refine`, or other free/story-granted checkboxes should be recorded in campaign-log data as baseline customizable state. Those inherited checkboxes are locked in the editor preview and do not spend XP again.
-- XP for a customizable card is now calculated from the number of newly checked boxes added during the upgrade step only.
+- Checkbox XP for a customizable card is calculated from the number of newly checked boxes added in the `Customized` section only. Multiple physical copies share the same checkbox state for that investigator/card, not across different investigator decks or campaign tracks.
 - `Refine` is not treated as a customizable card for XP purposes; free checkboxes from `Refine` stay in scenario/campaign log state and are not charged during upgrade resolution.
 
 Customizable state is now maintained in one shared place and reused by every renderer:
@@ -234,6 +234,8 @@ Story notes and other in-campaign references should not hard-code checkbox array
 Upgrade-history data should stay structural, not presentation-heavy:
 
 - In `upgradeHtml`, customizable rows should keep only:
+  - physical copy changes in the regular `Removed` / `Added` lists
+  - checkbox changes in the `.customized-section` list
   - `data-customizable-card-key`
   - `data-customizable-inherited-ids`
   - `data-customizable-upgrade-ids`

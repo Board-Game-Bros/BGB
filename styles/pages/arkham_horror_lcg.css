@@ -463,6 +463,20 @@ body.torch-mode #campaigns .campaign-subtitle {
   letter-spacing: 0.5px;
 }
 
+.customized-section {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(58, 45, 26, 0.28);
+}
+
+.customized-section h4 {
+  margin: 0 0 6px;
+  font-family: "Eater", serif;
+  font-weight: 400;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
 .card-list {
   margin: 0;
   padding-left: 18px;
@@ -478,11 +492,22 @@ body.torch-mode #campaigns .campaign-subtitle {
   overflow: visible;
 }
 
+.customized-card-item {
+  display: list-item;
+  position: relative;
+  overflow: visible;
+}
+
 .draft-card-inline {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   max-width: 100%;
+}
+
+.customized-card-inline {
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .draft-card-item .card-ref {
