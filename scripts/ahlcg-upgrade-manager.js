@@ -1508,7 +1508,7 @@
       const name = base
         .split("_")
         .filter(Boolean)
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .map((part) => (/^[ivxlcdm]+$/i.test(part) ? part.toUpperCase() : part.charAt(0).toUpperCase() + part.slice(1)))
         .join(" ");
       if (level !== null) return name + " (" + level + ")";
       return name;
@@ -1542,6 +1542,12 @@
         if (!map.has(key)) {
           map.set(key, { name, key });
         }
+      });
+      cardImageFiles.forEach((file) => {
+        const name = toDisplayNameFromFile(file);
+        const key = getCatalogKey(name);
+        if (!key || map.has(key)) return;
+        map.set(key, { name, key });
       });
 
       return Array.from(map.values());
