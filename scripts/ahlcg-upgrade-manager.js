@@ -1608,6 +1608,8 @@
 
       function resetAutocompletePreviewPosition(preview) {
         if (!preview) return;
+        preview.style.removeProperty("display");
+        preview.style.removeProperty("visibility");
         preview.style.left = "auto";
         preview.style.right = "auto";
         preview.style.top = "auto";
@@ -2915,6 +2917,10 @@
       }
 
       function setActiveCardRef(cardRef) {
+        const previousCardRef = getActiveCardRef();
+        if (previousCardRef && previousCardRef !== cardRef) {
+          resetCardPreviewPosition(previousCardRef.querySelector(".card-preview"));
+        }
         window.__bgbActiveCardRef = cardRef || null;
       }
 
@@ -3111,7 +3117,8 @@
         cardRef.addEventListener("focusout", reset);
 
         const preview = cardRef.querySelector(".card-preview");
-        if (preview && preview.__bgbPreviewHoverBound !== true) {
+        const canPreviewReceiveHover = preview && !preview.matches("img.card-preview, .card-preview-placeholder");
+        if (canPreviewReceiveHover && preview.__bgbPreviewHoverBound !== true) {
           preview.__bgbPreviewHoverBound = true;
           preview.addEventListener("mouseenter", activate);
           preview.addEventListener("mousemove", move);

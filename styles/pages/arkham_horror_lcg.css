@@ -563,6 +563,11 @@ body.torch-mode #campaigns .campaign-subtitle {
   z-index: 30;
 }
 
+img.card-preview,
+.card-preview-placeholder {
+  pointer-events: none;
+}
+
 .customizable-preview {
   box-sizing: border-box;
   width: min(760px, calc(100vw - 16px));

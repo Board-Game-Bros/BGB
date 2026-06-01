@@ -280,6 +280,9 @@ const bindCardRefViewportPreviews = (root = document) => {
     const activate = () => {
       const preview = cardRef.querySelector(".card-preview");
       if (!preview) return;
+      if (activeCardRef && activeCardRef !== cardRef) {
+        resetPreview(activeCardRef.querySelector(".card-preview"));
+      }
       activeCardRef = cardRef;
       forceShow(preview);
       window.requestAnimationFrame(() => clampPreview(cardRef));
@@ -304,7 +307,8 @@ const bindCardRefViewportPreviews = (root = document) => {
     cardRef.addEventListener("focusout", reset);
 
     const preview = cardRef.querySelector(".card-preview");
-    if (preview && preview.__bgbViewportPreviewHoverBound !== true) {
+    const canPreviewReceiveHover = preview && !preview.matches("img.card-preview, .card-preview-placeholder");
+    if (canPreviewReceiveHover && preview.__bgbViewportPreviewHoverBound !== true) {
       preview.__bgbViewportPreviewHoverBound = true;
       preview.addEventListener("mouseenter", activate);
       preview.addEventListener("mousemove", activate);
