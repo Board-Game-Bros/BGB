@@ -1593,10 +1593,17 @@
       if (sameBaseName.length === 1) {
         return sameBaseName[0].name;
       }
+      const prefixedName = catalog.filter((item) => (
+        item.key.startsWith(normalized + " ") ||
+        normalized.startsWith(item.key + " ")
+      ));
+      if (prefixedName.length === 1) {
+        return prefixedName[0].name;
+      }
       return original;
     }
 
-    function wireCardAutocomplete(input, onPick, onSubmit) {
+    function wireCardAutocomplete(input, onPick) {
       if (!input || input.dataset.autocompleteBound === "1") return;
       input.dataset.autocompleteBound = "1";
 
@@ -1735,8 +1742,6 @@
           event.preventDefault();
           if (!panel.hidden && current.length && activeIndex >= 0 && current[activeIndex]) {
             pick(current[activeIndex].name);
-          } else if (typeof onSubmit === "function") {
-            onSubmit();
           }
         } else if (event.key === "Escape") {
           closePanel();
@@ -2156,25 +2161,23 @@
           <label>XP Gained</label>
           <input type="number" class="upgrade-input" data-edit="xp" min="0" step="1" />
         </div>
-        <div class="builder-grid">
-          <div class="builder-col" data-edit-builder="removed">
-            <h5>Removed</h5>
-            <div class="builder-input-row">
-              <input type="text" class="upgrade-input" placeholder="Type card name..." />
-              <button type="button" class="upgrade-btn upgrade-btn-secondary">Add</button>
+          <div class="builder-grid">
+            <div class="builder-col" data-edit-builder="removed">
+              <h5>Removed</h5>
+              <div class="builder-input-row">
+                <input type="text" class="upgrade-input" placeholder="Search cards..." />
+              </div>
+              <p class="builder-hint">Type at least 2 characters, then select a card from the suggestions.</p>
+              <ul class="card-list" data-edit-list="removed"></ul>
             </div>
-            <p class="builder-hint">Input a card name and click Add (or press Enter).</p>
-            <ul class="card-list" data-edit-list="removed"></ul>
-          </div>
-          <div class="builder-col" data-edit-builder="added">
-            <h5>Added</h5>
-            <div class="builder-input-row">
-              <input type="text" class="upgrade-input" placeholder="Type card name..." />
-              <button type="button" class="upgrade-btn upgrade-btn-secondary">Add</button>
+            <div class="builder-col" data-edit-builder="added">
+              <h5>Added</h5>
+              <div class="builder-input-row">
+                <input type="text" class="upgrade-input" placeholder="Search cards..." />
+              </div>
+              <p class="builder-hint">Type at least 2 characters, then select a card from the suggestions.</p>
+              <ul class="card-list" data-edit-list="added"></ul>
             </div>
-            <p class="builder-hint">Input a card name and click Add (or press Enter).</p>
-            <ul class="card-list" data-edit-list="added"></ul>
-          </div>
         </div>
         <p class="builder-error" data-edit-error hidden></p>
         <div class="entry-actions">
@@ -2205,7 +2208,6 @@
         const mode = builderCol.getAttribute("data-edit-builder");
         const listEl = editor.querySelector(`[data-edit-list="${mode}"]`);
         const input = builderCol.querySelector(".upgrade-input");
-        const addBtn = builderCol.querySelector(".upgrade-btn");
 
         const addCardToEditorList = (rawName) => {
           addOrIncrementCardInList(listEl, rawName);
@@ -2214,9 +2216,7 @@
           refreshCurrentXp();
         };
 
-        const addFromInput = () => addCardToEditorList(input.value);
-        addBtn.addEventListener("click", addFromInput);
-        wireCardAutocomplete(input, addCardToEditorList, addFromInput);
+        wireCardAutocomplete(input, addCardToEditorList);
       });
 
       editor.querySelector('[data-action="save-edit"]').addEventListener("click", () => {
@@ -2329,23 +2329,21 @@
             <label>XP Gained</label>
             <input type="number" class="upgrade-input" data-draft="xp" min="0" step="1" value="0" />
           </div>
-          <div class="builder-grid">
-            <div class="builder-col" data-builder="removed">
-              <h5>Removed</h5>
-              <div class="builder-input-row">
-                <input type="text" class="upgrade-input" placeholder="Type card name..." />
-                <button type="button" class="upgrade-btn upgrade-btn-secondary">Add</button>
+            <div class="builder-grid">
+              <div class="builder-col" data-builder="removed">
+                <h5>Removed</h5>
+                <div class="builder-input-row">
+                  <input type="text" class="upgrade-input" placeholder="Search cards..." />
+                </div>
+                <p class="builder-hint">Type at least 2 characters, then select a card from the suggestions.</p>
               </div>
-              <p class="builder-hint">Input a card name and click Add (or press Enter).</p>
-            </div>
-            <div class="builder-col" data-builder="added">
-              <h5>Added</h5>
-              <div class="builder-input-row">
-                <input type="text" class="upgrade-input" placeholder="Type card name..." />
-                <button type="button" class="upgrade-btn upgrade-btn-secondary">Add</button>
+              <div class="builder-col" data-builder="added">
+                <h5>Added</h5>
+                <div class="builder-input-row">
+                  <input type="text" class="upgrade-input" placeholder="Search cards..." />
+                </div>
+                <p class="builder-hint">Type at least 2 characters, then select a card from the suggestions.</p>
               </div>
-              <p class="builder-hint">Input a card name and click Add (or press Enter).</p>
-            </div>
           </div>
           <p class="builder-error" data-draft-error hidden></p>
           <div class="entry-actions">
@@ -2359,7 +2357,6 @@
         const mode = builderCol.getAttribute("data-builder");
         const listEl = entry.querySelector(`.card-list[data-list="${mode}"]`);
         const input = builderCol.querySelector(".upgrade-input");
-        const addBtn = builderCol.querySelector(".upgrade-btn");
 
         const addCardToList = (rawName) => {
           addOrIncrementCardInList(listEl, rawName);
@@ -2367,12 +2364,7 @@
           input.focus();
         };
 
-        const addCardFromInput = () => {
-          addCardToList(input.value);
-        };
-
-        addBtn.addEventListener("click", addCardFromInput);
-        wireCardAutocomplete(input, addCardToList, addCardFromInput);
+        wireCardAutocomplete(input, addCardToList);
       });
 
       entry.querySelector('[data-action="confirm-draft"]').addEventListener("click", () => {
