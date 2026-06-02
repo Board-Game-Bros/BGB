@@ -828,10 +828,13 @@
       closeCustomizableEditor();
 
       const inheritedIds = parseCustomizableIdList(row.dataset.customizableInheritedIds || "");
+      const seedSourceIds = Array.isArray(opts.seedAddedIds)
+        ? opts.seedAddedIds
+        : getCustomizableUpgradeIdsForRow(row);
       const seedAddedIds = sanitizeCustomizableAddedIds(
         definition,
         inheritedIds,
-        Array.isArray(opts.seedAddedIds) ? opts.seedAddedIds : []
+        seedSourceIds
       );
       const inheritedSet = new Set(inheritedIds);
       const seedAddedSet = new Set(seedAddedIds);
@@ -969,7 +972,7 @@
           closeCustomizableEditor();
           return;
         }
-        attachCustomizableEditor(row, btn, { seedAddedIds: [] });
+        attachCustomizableEditor(row, btn);
       });
       inline.insertBefore(btn, inline.querySelector(".draft-card-remove"));
     }
