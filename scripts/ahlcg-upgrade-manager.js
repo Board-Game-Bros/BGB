@@ -1700,12 +1700,6 @@
       return isExceptionalCardName(cardName) ? (baseCost * 2) : baseCost;
     }
 
-    function getRemovedCardValue(cardName) {
-      if (isStoryCardName(cardName)) return 0;
-      const level = getCardLevel(cardName);
-      return level > 0 ? level : 0;
-    }
-
     function isExceptionalCardName(cardName) {
       const key = getCatalogKey(cardName);
       if (!key) return false;
@@ -1757,44 +1751,98 @@
       });
     }
 
-    function sumAddedCostsFromCardNames(cardNames) {
+    function getUpgradeDiscountKey(cardName) {
+      const source = typeof cardName === "string" ? cardName : (cardName && cardName.name ? cardName.name : "");
+      const parsed = parseTrailingQuantity(source);
+      const key = getCatalogKey(parsed.base || source);
+      return getNameOnly(key);
+    }
+
+    function getRemovedUpgradeCredit(cardName) {
+      if (isStoryCardName(cardName) || isCustomizableCardName(cardName)) return 0;
+      const level = getCardLevel(cardName);
+      if (level <= 0) return 0;
+      return isExceptionalCardName(cardName) ? (level * 2) : level;
+    }
+
+    function buildAddedXpCostItems(cardNames) {
+      const items = [];
       const groupedMyriad = new Map();
-      let total = 0;
       (cardNames || []).forEach((name) => {
         const qty = getCardQuantity(name);
+        if (isStoryCardName(name)) return;
         if (isCustomizableCardName(name)) {
-          if (isPhysicalCustomizableRecord(name)) {
-            total += qty * getAddedCardCost(name);
+          if (!isPhysicalCustomizableRecord(name)) return;
+          for (let i = 0; i < qty; i += 1) {
+            items.push({ key: "", cost: getAddedCardCost(name) });
           }
           return;
         }
+
+        const key = getUpgradeDiscountKey(name);
         const cost = getAddedCardCost(name);
-        if (!isMyriadCardName(name)) {
-          total += qty * cost;
+        if (isMyriadCardName(name)) {
+          if (!groupedMyriad.has(key)) {
+            groupedMyriad.set(key, { key, cost });
+          }
           return;
         }
-        const parsed = parseTrailingQuantity(name);
-        const key = getCatalogKey(parsed.base || name);
-        if (!key) {
-          total += cost;
-          return;
-        }
-        if (!groupedMyriad.has(key)) {
-          groupedMyriad.set(key, cost);
+
+        for (let i = 0; i < qty; i += 1) {
+          items.push({ key, cost });
         }
       });
-      groupedMyriad.forEach((cost) => {
-        total += cost;
+
+      groupedMyriad.forEach((item) => {
+        items.push(item);
       });
-      return total;
+      return items;
     }
 
-    function sumRemovedValuesFromCardNames(cardNames) {
-      return (cardNames || []).reduce((acc, name) => {
-        if (isCustomizableCardName(name)) return acc;
+    function buildSameNameUpgradeCreditMap(cardNames) {
+      const creditsByKey = new Map();
+      const groupedMyriad = new Map();
+      (cardNames || []).forEach((name) => {
+        const credit = getRemovedUpgradeCredit(name);
+        if (credit <= 0) return;
+        const key = getUpgradeDiscountKey(name);
+        if (!key) return;
+
+        if (isMyriadCardName(name)) {
+          groupedMyriad.set(key, Math.max(groupedMyriad.get(key) || 0, credit));
+          return;
+        }
+
+        const credits = creditsByKey.get(key) || [];
         const qty = getCardQuantity(name);
-        const cost = getRemovedCardValue(name);
-        return acc + qty * cost;
+        for (let i = 0; i < qty; i += 1) {
+          credits.push(credit);
+        }
+        creditsByKey.set(key, credits);
+      });
+
+      groupedMyriad.forEach((credit, key) => {
+        const credits = creditsByKey.get(key) || [];
+        credits.push(credit);
+        creditsByKey.set(key, credits);
+      });
+
+      creditsByKey.forEach((credits) => {
+        credits.sort((a, b) => b - a);
+      });
+      return creditsByKey;
+    }
+
+    function computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames) {
+      const creditsByKey = buildSameNameUpgradeCreditMap(removedCardNames);
+      return buildAddedXpCostItems(addedCardNames).reduce((total, item) => {
+        const key = item.key || "";
+        let credit = 0;
+        const credits = key ? creditsByKey.get(key) : null;
+        if (credits && credits.length) {
+          credit = credits.shift();
+        }
+        return total + Math.max(0, item.cost - credit);
       }, 0);
     }
 
@@ -1848,10 +1896,9 @@
     }
 
     function computeNetSpentXp(removedCardNames, addedCardNames, customizedCardNames) {
-      const removedValue = sumRemovedValuesFromCardNames(removedCardNames);
-      const addedCost = sumAddedCostsFromCardNames(addedCardNames);
+      const addedCost = computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames);
       const customizableSpent = computeCustomizableSpentXp(customizedCardNames);
-      return Math.max(0, addedCost - removedValue) + customizableSpent;
+      return addedCost + customizableSpent;
     }
 
     function getEntryCardLists(entry) {
