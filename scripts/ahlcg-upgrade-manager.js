@@ -824,6 +824,7 @@
       const listEl = row.closest(".card-list");
       const mode = getListMode(listEl);
       if (mode !== "customized") return;
+      if (!isCustomizableEditContext(row)) return;
 
       closeCustomizableEditor();
 
@@ -948,6 +949,13 @@
       document.addEventListener("keydown", customizableEditorEscapeHandler, true);
     }
 
+    function isCustomizableEditContext(row) {
+      if (!row) return false;
+      if (row.closest(".upgrade-entry-editor")) return true;
+      const entry = row.closest(".upgrade-entry");
+      return !!(entry && entry.classList.contains("upgrade-entry-draft"));
+    }
+
     function ensureCustomizableActionButton(row) {
       if (!row) return;
       const name = getRowCardName(row);
@@ -956,7 +964,8 @@
       const listEl = row.closest(".card-list");
       const mode = getListMode(listEl);
       const existingBtn = row.querySelector(".customizable-edit-btn");
-      if (!definition || !inline || mode !== "customized") {
+      if (!definition || !inline || mode !== "customized" || !isCustomizableEditContext(row)) {
+        if (activeCustomizableEditorRow === row) closeCustomizableEditor();
         if (existingBtn) existingBtn.remove();
         return;
       }
