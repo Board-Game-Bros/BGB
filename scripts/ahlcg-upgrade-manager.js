@@ -1382,6 +1382,33 @@
       return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
     }
 
+    function getPhysicalCustomizableKeysFromRows(cardRows) {
+      const keys = new Set();
+      (cardRows || []).forEach((row) => {
+        const name = typeof row === "string" ? row : (row && row.name ? row.name : "");
+        if (!isCustomizableCardName(name) || !isPhysicalCustomizableRecord(row)) return;
+        const key = getCardKeyFromCardName(name);
+        if (key) keys.add(key);
+      });
+      return keys;
+    }
+
+    function filterPersistedCustomizedRows(customizedRows, addedRows) {
+      const physicalAddedKeys = getPhysicalCustomizableKeysFromRows(addedRows);
+      return mergeCustomizedCardRows(customizedRows)
+        .filter((row) => {
+          const key = getCardKeyFromCardName(row.name);
+          if (!key) return false;
+          if (uniqueIds(row.customizableUpgradeIds || []).length) return true;
+          return physicalAddedKeys.has(key);
+        })
+        .map((row) => ({
+          name: row.name,
+          customizableUpgradeIds: uniqueIds(row.customizableUpgradeIds || []),
+          customizableSnapshotIds: uniqueIds(row.customizableSnapshotIds || []),
+        }));
+    }
+
     function refreshEntryCustomizedSection(entry, options) {
       if (!entry) return;
       const opts = options && typeof options === "object" ? options : {};
@@ -1459,15 +1486,20 @@
       const migratedCustomizedRows = getCustomizedRowsFromLegacyAddedRows(rawAddedRows);
       if (removedList) setCards(removedList, listCardRows(removedList));
       if (addedList) setCards(addedList, rawAddedRows.filter((row) => shouldKeepAddedRow(row)));
-      if (customizedList || migratedCustomizedRows.length) {
+      const persistedCustomizedRows = filterPersistedCustomizedRows(
+        (customizedList ? listCardRows(customizedList) : []).concat(migratedCustomizedRows),
+        rawAddedRows
+      );
+      if (persistedCustomizedRows.length) {
         const section = ensureCustomizedSection(entry, false);
         const nextCustomizedList = section ? getCustomizedList(entry) : null;
-        const existingRows = customizedList ? listCardRows(customizedList) : [];
         if (nextCustomizedList) {
-          setCards(nextCustomizedList, mergeCustomizedCardRows(existingRows.concat(migratedCustomizedRows)));
+          setCards(nextCustomizedList, persistedCustomizedRows);
         }
+      } else {
+        const section = getCustomizedSection(entry);
+        if (section) section.remove();
       }
-      refreshEntryCustomizedSection(entry);
     }
 
     function parseTrailingQuantity(cardName) {
@@ -2380,8 +2412,10 @@
       if (!entry) return;
       const directChildren = Array.from(entry.children || []);
       const displayColumns = directChildren.find((node) => node.classList && node.classList.contains("upgrade-columns")) || null;
+      const displayCustomized = directChildren.find((node) => node.classList && node.classList.contains("customized-section")) || null;
       const displayActions = directChildren.find((node) => node.classList && node.classList.contains("entry-actions")) || null;
       if (displayColumns) displayColumns.style.removeProperty("display");
+      if (displayCustomized) displayCustomized.style.removeProperty("display");
       if (displayActions) displayActions.style.removeProperty("display");
     }
 
@@ -2691,7 +2725,8 @@
         const removedCards = listCardRows(removedEditList);
         const addedCards = listCardRows(addedEditList);
         const currentCustomizedEditList = getCustomizedList(editor);
-        const customizedCards = currentCustomizedEditList ? listCardRows(currentCustomizedEditList) : [];
+        const rawCustomizedCards = currentCustomizedEditList ? listCardRows(currentCustomizedEditList) : [];
+        const customizedCards = filterPersistedCustomizedRows(rawCustomizedCards, addedCards);
         const xpValue = toNonNegativeInteger(editor.querySelector('[data-edit="xp"]').value);
         const card = entry.closest(".upgrade-card");
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
@@ -2853,7 +2888,8 @@
         const { removedList, addedList, customizedList } = getEntryCardLists(entry);
         const removedCards = removedList ? listCardRows(removedList) : [];
         const addedCards = addedList ? listCardRows(addedList) : [];
-        const customizedCards = customizedList ? listCardRows(customizedList) : [];
+        const rawCustomizedCards = customizedList ? listCardRows(customizedList) : [];
+        const customizedCards = filterPersistedCustomizedRows(rawCustomizedCards, addedCards);
         const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards);
         const card = entry.closest(".upgrade-card");
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
@@ -3878,6 +3914,30 @@
       row.innerHTML = `${escapeHtml(label)} Physical <button type="button" class="trauma-value" data-trauma-field="physical">${physical}</button>, Mental <button type="button" class="trauma-value" data-trauma-field="mental">${mental}</button>.`;
     }
 
+    function getUpgradeListTailAnchor(upgradeList) {
+      if (!upgradeList) return null;
+      return Array.from(upgradeList.children || []).find((node) => {
+        return node instanceof HTMLElement && (
+          node.classList.contains("upgrade-toolbar") ||
+          node.classList.contains("xp-line") ||
+          node.classList.contains("current-trauma-status")
+        );
+      }) || null;
+    }
+
+    function getDirectUpgradeEntries(upgradeList) {
+      if (!upgradeList) return [];
+      const tailAnchor = getUpgradeListTailAnchor(upgradeList);
+      return Array.from(upgradeList.querySelectorAll(".upgrade-entry"))
+        .filter((entry) => entry.closest(".upgrade-list") === upgradeList)
+        .map((entry) => {
+          if (entry.parentNode !== upgradeList) {
+            insertBeforeIfChild(upgradeList, entry, tailAnchor);
+          }
+          return entry;
+        });
+    }
+
     function startTraumaInlineEdit(button) {
       if (!button || !isEditEnabled()) return;
       if (button.closest(".scenario-trauma")?.querySelector(".trauma-input")) return;
@@ -3941,7 +4001,8 @@
     function normalizeScenarioTraumaRows() {
       document.querySelectorAll(".upgrade-list").forEach((upgradeList) => {
         const seenUids = new Set();
-        upgradeList.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        const entries = getDirectUpgradeEntries(upgradeList);
+        entries.forEach((entry) => {
           let uid = String(entry.dataset.entryUid || "").trim();
           if (!uid || seenUids.has(uid)) {
             entry.removeAttribute("data-entry-uid");
@@ -3951,58 +4012,67 @@
         });
 
         const entryTraumaMap = new Map();
-        let currentEntry = null;
-
-        Array.from(upgradeList.children).forEach((node) => {
-          if (!(node instanceof HTMLElement)) return;
-
-          if (node.classList.contains("upgrade-entry")) {
-            ensureEntryUid(node);
-            currentEntry = node;
-            return;
-          }
-
-          if (!node.classList.contains("scenario-trauma")) return;
-
-          renderTraumaRow(node);
-          if (!currentEntry) {
-            node.remove();
-            return;
-          }
-
-          const entryUid = ensureEntryUid(currentEntry);
-          if (entryTraumaMap.has(entryUid)) {
-            node.remove();
-            return;
-          }
-
-          const head = currentEntry.querySelector(".upgrade-entry-head");
+        const entryByUid = new Map();
+        const entryByScenario = new Map();
+        entries.forEach((entry) => {
+          const uid = ensureEntryUid(entry);
+          entryByUid.set(uid, entry);
+          const head = entry.querySelector(".upgrade-entry-head");
           const scenarioLabel = getScenarioLabelFromHead(head ? head.textContent : "");
-          node.dataset.entryUidLink = entryUid;
-          if (scenarioLabel) {
-            node.dataset.traumaLabel = `Trauma (Scenario ${scenarioLabel}):`;
+          if (scenarioLabel && !entryByScenario.has(scenarioLabel)) {
+            entryByScenario.set(scenarioLabel, entry);
           }
+        });
+
+        Array.from(upgradeList.querySelectorAll(".scenario-trauma")).forEach((node) => {
+          if (!(node instanceof HTMLElement)) return;
+          if (node.closest(".upgrade-list") !== upgradeList) return;
           renderTraumaRow(node);
 
-          if (node.previousElementSibling !== currentEntry) {
-            const anchor = currentEntry.nextSibling;
-            insertBeforeIfChild(upgradeList, node, anchor);
+          const linkedUid = String(node.dataset.entryUidLink || "").trim();
+          const scenarioLabel = getScenarioLabelFromTraumaRow(node);
+          const targetEntry = (linkedUid && entryByUid.get(linkedUid))
+            || (scenarioLabel && entryByScenario.get(scenarioLabel))
+            || null;
+          if (!targetEntry) {
+            node.remove();
+            return;
+          }
+
+          const entryUid = ensureEntryUid(targetEntry);
+          const existing = entryTraumaMap.get(entryUid);
+          if (existing) {
+            existing.dataset.physical = String(Math.max(
+              toNonNegativeInteger(existing.dataset.physical || 0),
+              toNonNegativeInteger(node.dataset.physical || 0)
+            ));
+            existing.dataset.mental = String(Math.max(
+              toNonNegativeInteger(existing.dataset.mental || 0),
+              toNonNegativeInteger(node.dataset.mental || 0)
+            ));
+            renderTraumaRow(existing);
+            node.remove();
+            return;
           }
 
           entryTraumaMap.set(entryUid, node);
         });
 
-        upgradeList.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        entries.forEach((entry) => {
           const entryUid = ensureEntryUid(entry);
-          if (entryTraumaMap.has(entryUid)) return;
           const head = entry.querySelector(".upgrade-entry-head");
           const scenarioLabel = getScenarioLabelFromHead(head ? head.textContent : "");
           if (!scenarioLabel) return;
-          const row = createScenarioTraumaRow(scenarioLabel);
-          row.dataset.entryUidLink = entryUid;
+          let row = entryTraumaMap.get(entryUid) || null;
+          if (!row) {
+            row = createScenarioTraumaRow(scenarioLabel);
+            entryTraumaMap.set(entryUid, row);
+          }
           const anchor = entry.nextSibling;
+          row.dataset.entryUidLink = entryUid;
+          row.dataset.traumaLabel = `Trauma (Scenario ${scenarioLabel}):`;
+          renderTraumaRow(row);
           insertBeforeIfChild(upgradeList, row, anchor);
-          entryTraumaMap.set(entryUid, row);
         });
       });
     }
