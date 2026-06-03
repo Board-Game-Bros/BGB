@@ -329,6 +329,15 @@
       return roman;
     }
 
+    function insertBeforeIfChild(parent, node, anchor) {
+      if (!parent || !node) return;
+      if (anchor && anchor.parentNode === parent) {
+        parent.insertBefore(node, anchor);
+      } else {
+        parent.appendChild(node);
+      }
+    }
+
     function findMatchingImage(cardName) {
       const target = normalizeText(cardName);
       if (!target) return null;
@@ -1001,7 +1010,7 @@
         }
         attachCustomizableEditor(row, btn);
       });
-      inline.insertBefore(btn, inline.querySelector(".draft-card-remove"));
+      insertBeforeIfChild(inline, btn, inline.querySelector(".draft-card-remove"));
     }
 
     function replaceCardPreview(ref, cardName, previewContext) {
@@ -1225,11 +1234,7 @@
     function insertCustomizedSection(container, section) {
       if (!container || !section) return;
       const anchor = container.querySelector(":scope > .upgrade-entry-builder, :scope > .upgrade-entry-editor, :scope > .builder-error, :scope > .entry-actions");
-      if (anchor && anchor.parentNode === container) {
-        container.insertBefore(section, anchor);
-      } else {
-        container.appendChild(section);
-      }
+      insertBeforeIfChild(container, section, anchor);
     }
 
     function ensureCustomizedSection(container, editMode) {
@@ -2511,11 +2516,7 @@
       remoteSyncStatus = gate.syncStatus;
 
       const title = section.querySelector(".section-title");
-      if (title && title.nextSibling) {
-        section.insertBefore(gate.root, title.nextSibling);
-      } else {
-        section.prepend(gate.root);
-      }
+      insertBeforeIfChild(section, gate.root, title && title.parentNode === section ? title.nextSibling : section.firstChild);
 
       refreshEditGateUi();
       refreshRemoteSyncUi();
@@ -2569,18 +2570,10 @@
           return;
         }
 
-        if (nextSibling && nextSibling.parentNode === upgradeList) {
-          upgradeList.insertBefore(entry, nextSibling);
-        } else {
-          upgradeList.appendChild(entry);
-        }
+        insertBeforeIfChild(upgradeList, entry, nextSibling);
         if (traumaRow) {
           const insertionAnchor = entry.nextSibling;
-          if (insertionAnchor) {
-            upgradeList.insertBefore(traumaRow, insertionAnchor);
-          } else {
-            upgradeList.appendChild(traumaRow);
-          }
+          insertBeforeIfChild(upgradeList, traumaRow, insertionAnchor);
         }
         normalizeStaticEntryCardRows(entry);
         ensureEntryActions(entry);
@@ -2589,11 +2582,7 @@
       });
 
       const toolbar = upgradeList.querySelector(".upgrade-toolbar");
-      if (toolbar) {
-        upgradeList.insertBefore(toast, toolbar);
-      } else {
-        upgradeList.prepend(toast);
-      }
+      insertBeforeIfChild(upgradeList, toast, toolbar || upgradeList.firstChild);
 
       const expireAt = Number(expiresAt) || (Date.now() + 60000);
       const remainingMs = Math.max(0, expireAt - Date.now());
@@ -3697,7 +3686,7 @@
       if (first && first.nodeType === Node.TEXT_NODE) {
         first.textContent = text;
       } else {
-        cardRef.insertBefore(document.createTextNode(text), first || null);
+        insertBeforeIfChild(cardRef, document.createTextNode(text), first || null);
       }
     }
 
@@ -3997,11 +3986,7 @@
 
           if (node.previousElementSibling !== currentEntry) {
             const anchor = currentEntry.nextSibling;
-            if (anchor) {
-              upgradeList.insertBefore(node, anchor);
-            } else {
-              upgradeList.appendChild(node);
-            }
+            insertBeforeIfChild(upgradeList, node, anchor);
           }
 
           entryTraumaMap.set(entryUid, node);
@@ -4016,11 +4001,7 @@
           const row = createScenarioTraumaRow(scenarioLabel);
           row.dataset.entryUidLink = entryUid;
           const anchor = entry.nextSibling;
-          if (anchor) {
-            upgradeList.insertBefore(row, anchor);
-          } else {
-            upgradeList.appendChild(row);
-          }
+          insertBeforeIfChild(upgradeList, row, anchor);
           entryTraumaMap.set(entryUid, row);
         });
       });
@@ -4047,7 +4028,7 @@
         if (!noteNode) {
           noteNode = document.createElement("p");
           noteNode.className = "campaign-start-note";
-          upgradeList.insertBefore(noteNode, upgradeList.firstChild);
+          insertBeforeIfChild(upgradeList, noteNode, upgradeList.firstChild);
         }
 
         noteNode.textContent = noteText;
