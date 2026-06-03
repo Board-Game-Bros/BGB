@@ -500,9 +500,9 @@
               "The cats collected their tribute from the Zoogs.",
               "The dreamers grow weaker.",
               "The black cat warned the others.",
-              "The black cat is at your side.",
               "Virgil was captured.",
               "Randolph eluded capture.",
+              "The black cat is at your side.",
               "The investigators traveled to the Cold Wastes.",
               "Randolph survived the voyage.",
               "The black cat spoke of Nyarlathotep.",
@@ -521,7 +521,7 @@
             "title": "Campaign Counters",
             "listClass": "campaign-log-list",
             "items": [
-              "Evidence of Kadath: 7"
+              "Evidence of Kadath: 8"
             ]
           },
           {
@@ -545,12 +545,18 @@
             "items": [
               "Dr. Maheswaran joined the investigation.",
               "Dr. Maheswaran is alive.",
-              "Your companions' condition has worsened.",
               "Randolph escaped the hospital with the investigators.",
+              {
+                "text": "The black cat is at your side.",
+                "className": "campaign-log-crossed"
+              },
               "Randolph survived the descent.",
-              "The investigators possess the Silver Key.",
+              {
+                "text": "The investigators possess the Silver Key.",
+                "className": "campaign-log-crossed"
+              },
+              "The black cat warned the others.",
               "The investigators found a way out of the Underworld.",
-              "The Silver Key was removed from Campaign B during Interlude III and moved to Campaign A.",
               "The investigators are trapped in Atlach-Nacha's realm.",
               "The bridge was destroyed.",
               "The investigators returned to reality."
