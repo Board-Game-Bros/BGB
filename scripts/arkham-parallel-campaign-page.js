@@ -405,6 +405,9 @@
     window.BGB_AHLCG_CUSTOMIZABLE_STATE = customizableStateUtils && typeof customizableStateUtils.toBaselineStateMap === "function"
       ? customizableStateUtils.toBaselineStateMap(rawCustomizableState)
       : {};
+    window.BGB_AHLCG_CUSTOMIZABLE_INITIAL_STATE = customizableStateUtils && typeof customizableStateUtils.toInitialStateMap === "function"
+      ? customizableStateUtils.toInitialStateMap(rawCustomizableState)
+      : {};
 
     const main = el("main", "container");
     main.appendChild(el("h1", "page-title", String(data.headerTitle || data.pageTitle || "Arkham Horror LCG")));
@@ -560,6 +563,7 @@
         exceptionalCardNames: ahlcgLibrary.exceptionalCardNames || [],
         customizableCardNames: ahlcgLibrary.customizableCardNames || [],
         customizableBaselineState: window.BGB_AHLCG_CUSTOMIZABLE_STATE || {},
+        customizableInitialState: window.BGB_AHLCG_CUSTOMIZABLE_INITIAL_STATE || {},
         campaignStartNote: upgradeConfig.campaignStartNote || null,
         inactivityMs: Number(upgradeConfig.inactivityMs) > 0 ? Number(upgradeConfig.inactivityMs) : 120000,
         remoteSync: upgradeConfig.remoteSync || null,

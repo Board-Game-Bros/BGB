@@ -20,6 +20,9 @@
       : (window.BGB_AHLCG_CUSTOMIZABLE_STATE && typeof window.BGB_AHLCG_CUSTOMIZABLE_STATE === "object"
         ? window.BGB_AHLCG_CUSTOMIZABLE_STATE
         : {});
+    const customizableInitialSource = options.customizableInitialState && typeof options.customizableInitialState === "object"
+      ? options.customizableInitialState
+      : customizableBaselineSource;
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
@@ -74,7 +77,7 @@
     const customizableNameOnlySet = new Set(
       customizableCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
     );
-    const customizableBaselineState = normalizeCustomizableBaselineState(customizableBaselineSource);
+    const customizableBaselineState = normalizeCustomizableBaselineState(customizableInitialSource);
 
     let activeUndo = null;
     let saveTimer = null;
@@ -498,7 +501,7 @@
       const context = previewContext && typeof previewContext === "object" ? previewContext : {};
       const definition = getCustomizableDefinition(cardName);
       const src = findExactImage(cardName) || findMatchingImage(cardName) || inferImagePath(cardName);
-      if (definition && src) {
+      if (definition && src && context.showCustomizableState === true) {
         const wrap = document.createElement("div");
         wrap.className = "card-preview customizable-preview";
         const img = document.createElement("img");
@@ -660,6 +663,7 @@
         row.dataset.customizableInheritedIds ||
         row.dataset.customizableEffectiveIds ||
         row.dataset.customizableUpgradeIds ||
+        row.dataset.customizableSnapshotIds ||
         row.querySelector(".customizable-row-summary")
       );
     }
@@ -694,6 +698,10 @@
       return parseCustomizableIdList(row && row.dataset ? row.dataset.customizableUpgradeIds : "");
     }
 
+    function getCustomizableSnapshotIdsForRow(row) {
+      return parseCustomizableIdList(row && row.dataset ? row.dataset.customizableSnapshotIds : "");
+    }
+
     function setCustomizableUpgradeIdsForRow(row, ids) {
       if (!row || !row.dataset) return;
       const next = uniqueIds(ids);
@@ -701,6 +709,16 @@
         row.dataset.customizableUpgradeIds = next.join(",");
       } else {
         delete row.dataset.customizableUpgradeIds;
+      }
+    }
+
+    function setCustomizableSnapshotIdsForRow(row, ids) {
+      if (!row || !row.dataset) return;
+      const next = uniqueIds(ids);
+      if (next.length) {
+        row.dataset.customizableSnapshotIds = next.join(",");
+      } else {
+        delete row.dataset.customizableSnapshotIds;
       }
     }
 
@@ -1004,6 +1022,7 @@
         delete row.dataset.customizableInheritedIds;
         delete row.dataset.customizableEffectiveIds;
         delete row.dataset.customizableUpgradeIds;
+        delete row.dataset.customizableSnapshotIds;
       }
     }
 
@@ -1019,11 +1038,13 @@
       }
       const inherited = uniqueIds(inheritedIds);
       const added = sanitizeCustomizableAddedIds(definition, inherited, addedIds);
+      const effective = uniqueIds(inherited.concat(added));
       setCustomizableUpgradeIdsForRow(row, added);
       row.dataset.customizableCardKey = getCatalogKey(name);
       row.dataset.customizableInheritedIds = inherited.join(",");
-      row.dataset.customizableEffectiveIds = uniqueIds(inherited.concat(added)).join(",");
-      replaceCardPreview(ref, name, { inheritedIds: inherited, addedIds: added });
+      row.dataset.customizableEffectiveIds = effective.join(",");
+      setCustomizableSnapshotIdsForRow(row, effective);
+      replaceCardPreview(ref, name, { inheritedIds: inherited, addedIds: added, showCustomizableState: true });
       ensureCustomizableSummary(row, inherited, added);
       ensureCustomizableActionButton(row);
     }
@@ -1045,7 +1066,12 @@
             const name = getRowCardName(row);
             if (!isCustomizableCardName(name)) return;
             const key = getCatalogKey(name);
-            initial[key] = uniqueIds((initial[key] || []).concat(getCustomizableUpgradeIdsForRow(row)));
+            const snapshotIds = getCustomizableSnapshotIdsForRow(row);
+            if (snapshotIds.length) {
+              initial[key] = snapshotIds;
+            } else {
+              initial[key] = uniqueIds((initial[key] || []).concat(getCustomizableUpgradeIdsForRow(row)));
+            }
           });
         }
         const addedList = getEntryList(entry, "added");
@@ -1071,8 +1097,13 @@
         const name = getRowCardName(row);
         if (!isCustomizableCardName(name)) return;
         const key = getCatalogKey(name);
-        const inheritedIds = uniqueIds(stateBefore[key] || []);
-        const addedIds = mode === "customized" ? getCustomizableUpgradeIdsForRow(row) : [];
+        const upgradeIds = mode === "customized" ? getCustomizableUpgradeIdsForRow(row) : [];
+        const snapshotIds = mode === "customized" ? getCustomizableSnapshotIdsForRow(row) : [];
+        const upgradeSet = new Set(upgradeIds);
+        const inheritedIds = snapshotIds.length
+          ? uniqueIds(snapshotIds.filter((id) => !upgradeSet.has(id)))
+          : uniqueIds(stateBefore[key] || []);
+        const addedIds = upgradeIds;
         enhanceCustomizableRow(row, inheritedIds, addedIds);
       });
     }
@@ -1085,8 +1116,12 @@
         name,
       };
       if (isCustomizableCardName(name)) {
+        const snapshotIds = getCustomizableSnapshotIdsForRow(row);
         if (mode === "customized" || upgradeIds.length) {
           serialized.customizableUpgradeIds = upgradeIds;
+        }
+        if (mode === "customized" && snapshotIds.length) {
+          serialized.customizableSnapshotIds = snapshotIds;
         }
         if (mode === "added") {
           const legacyState = hasLegacyCustomizableRowState(row);
@@ -1132,6 +1167,7 @@
           : createCardListItem(cardRow.name);
         if (mode === "customized") {
           setCustomizableUpgradeIdsForRow(li, cardRow.customizableUpgradeIds || []);
+          setCustomizableSnapshotIdsForRow(li, cardRow.customizableSnapshotIds || []);
         } else if (mode === "added" && isCustomizableCardName(cardRow.name)) {
           setCustomizablePhysicalForRow(li, isPhysicalCustomizableRecord(cardRow));
         }
@@ -1150,6 +1186,7 @@
           : createDraftCardListItem(cardRow.name);
         if (mode === "customized") {
           setCustomizableUpgradeIdsForRow(li, cardRow.customizableUpgradeIds || []);
+          setCustomizableSnapshotIdsForRow(li, cardRow.customizableSnapshotIds || []);
         } else if (mode === "added" && isCustomizableCardName(cardRow.name)) {
           setCustomizablePhysicalForRow(li, isPhysicalCustomizableRecord(cardRow));
         }
@@ -1329,8 +1366,12 @@
         const existing = map.get(key) || {
           name: getCustomizableDisplayNameByKey(key) || cardRow.name,
           customizableUpgradeIds: [],
+          customizableSnapshotIds: [],
         };
         existing.customizableUpgradeIds = uniqueIds(existing.customizableUpgradeIds.concat(cardRow.customizableUpgradeIds || []));
+        if (Array.isArray(cardRow.customizableSnapshotIds) && cardRow.customizableSnapshotIds.length) {
+          existing.customizableSnapshotIds = uniqueIds(cardRow.customizableSnapshotIds);
+        }
         map.set(key, existing);
       });
       return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
@@ -1362,6 +1403,21 @@
       mergeCustomizedCardRows(existingCustomizedRows.concat(migratedCustomizedRows)).forEach((row) => {
         existingByKey.set(getCardKeyFromCardName(row.name), row);
       });
+      const removedKeys = new Set(
+        removedRows
+          .filter((row) => row && isCustomizableCardName(row.name))
+          .map((row) => getCardKeyFromCardName(row.name))
+          .filter(Boolean)
+      );
+
+      existingByKey.forEach((row, key) => {
+        if (!key || holdings.has(key) || removedKeys.has(key)) return;
+        holdings.set(key, {
+          key,
+          name: getCustomizableDisplayNameByKey(key) || row.name,
+          qty: 1,
+        });
+      });
 
       const nextRows = Array.from(holdings.values())
         .filter((item) => item.qty > 0)
@@ -1370,6 +1426,7 @@
           return {
             name: item.name,
             customizableUpgradeIds: existing ? uniqueIds(existing.customizableUpgradeIds || []) : [],
+            customizableSnapshotIds: existing ? uniqueIds(existing.customizableSnapshotIds || []) : [],
           };
         })
         .sort((a, b) => a.name.localeCompare(b.name));

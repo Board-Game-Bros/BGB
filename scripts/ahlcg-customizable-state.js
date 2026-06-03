@@ -135,6 +135,28 @@
     return result;
   }
 
+  function getInitialStateId(record) {
+    if (!record || !Array.isArray(record.states)) return "";
+    const exact = record.states.find((state) => state && state.id === "campaign_start");
+    if (exact) return exact.id;
+    const start = record.states.find((state) => state && /(?:^|_)campaign_start$|(?:^|_)start$/i.test(String(state.id || "")));
+    return start ? start.id : "";
+  }
+
+  function toInitialStateMap(rawRows) {
+    const registry = createRegistry(rawRows);
+    const result = {};
+    registry.map.forEach((record) => {
+      const initialStateId = getInitialStateId(record);
+      if (!initialStateId) return;
+      const ids = record.resolveStateIds(initialStateId);
+      if (!ids.length) return;
+      if (!result[record.investigator]) result[record.investigator] = {};
+      result[record.investigator][record.card] = ids.slice();
+    });
+    return result;
+  }
+
   window.AHLCG_CUSTOMIZABLE_STATE_UTILS = {
     normalizeCatalogKey,
     uniqueIds,
@@ -145,5 +167,6 @@
     resolveStateIds,
     getBaselineIds,
     toBaselineStateMap,
+    toInitialStateMap,
   };
 })();
