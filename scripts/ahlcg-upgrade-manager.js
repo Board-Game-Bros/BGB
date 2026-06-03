@@ -1225,7 +1225,7 @@
     function insertCustomizedSection(container, section) {
       if (!container || !section) return;
       const anchor = container.querySelector(":scope > .upgrade-entry-builder, :scope > .upgrade-entry-editor, :scope > .builder-error, :scope > .entry-actions");
-      if (anchor) {
+      if (anchor && anchor.parentNode === container) {
         container.insertBefore(section, anchor);
       } else {
         container.appendChild(section);
