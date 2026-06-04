@@ -1382,33 +1382,6 @@
       return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    function getPhysicalCustomizableKeysFromRows(cardRows) {
-      const keys = new Set();
-      (cardRows || []).forEach((row) => {
-        const name = typeof row === "string" ? row : (row && row.name ? row.name : "");
-        if (!isCustomizableCardName(name) || !isPhysicalCustomizableRecord(row)) return;
-        const key = getCardKeyFromCardName(name);
-        if (key) keys.add(key);
-      });
-      return keys;
-    }
-
-    function filterPersistedCustomizedRows(customizedRows, addedRows) {
-      const physicalAddedKeys = getPhysicalCustomizableKeysFromRows(addedRows);
-      return mergeCustomizedCardRows(customizedRows)
-        .filter((row) => {
-          const key = getCardKeyFromCardName(row.name);
-          if (!key) return false;
-          if (uniqueIds(row.customizableUpgradeIds || []).length) return true;
-          return physicalAddedKeys.has(key);
-        })
-        .map((row) => ({
-          name: row.name,
-          customizableUpgradeIds: uniqueIds(row.customizableUpgradeIds || []),
-          customizableSnapshotIds: uniqueIds(row.customizableSnapshotIds || []),
-        }));
-    }
-
     function refreshEntryCustomizedSection(entry, options) {
       if (!entry) return;
       const opts = options && typeof options === "object" ? options : {};
@@ -1486,20 +1459,15 @@
       const migratedCustomizedRows = getCustomizedRowsFromLegacyAddedRows(rawAddedRows);
       if (removedList) setCards(removedList, listCardRows(removedList));
       if (addedList) setCards(addedList, rawAddedRows.filter((row) => shouldKeepAddedRow(row)));
-      const persistedCustomizedRows = filterPersistedCustomizedRows(
-        (customizedList ? listCardRows(customizedList) : []).concat(migratedCustomizedRows),
-        rawAddedRows
-      );
-      if (persistedCustomizedRows.length) {
+      if (customizedList || migratedCustomizedRows.length) {
         const section = ensureCustomizedSection(entry, false);
         const nextCustomizedList = section ? getCustomizedList(entry) : null;
+        const existingRows = customizedList ? listCardRows(customizedList) : [];
         if (nextCustomizedList) {
-          setCards(nextCustomizedList, persistedCustomizedRows);
+          setCards(nextCustomizedList, mergeCustomizedCardRows(existingRows.concat(migratedCustomizedRows)));
         }
-      } else {
-        const section = getCustomizedSection(entry);
-        if (section) section.remove();
       }
+      refreshEntryCustomizedSection(entry);
     }
 
     function parseTrailingQuantity(cardName) {
@@ -2772,8 +2740,7 @@
         const removedCards = listCardRows(removedEditList);
         const addedCards = listCardRows(addedEditList);
         const currentCustomizedEditList = getCustomizedList(editor);
-        const rawCustomizedCards = currentCustomizedEditList ? listCardRows(currentCustomizedEditList) : [];
-        const customizedCards = filterPersistedCustomizedRows(rawCustomizedCards, addedCards);
+        const customizedCards = currentCustomizedEditList ? listCardRows(currentCustomizedEditList) : [];
         const xpValue = toNonNegativeInteger(editor.querySelector('[data-edit="xp"]').value);
         const card = entry.closest(".upgrade-card");
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
@@ -2935,8 +2902,7 @@
         const { removedList, addedList, customizedList } = getEntryCardLists(entry);
         const removedCards = removedList ? listCardRows(removedList) : [];
         const addedCards = addedList ? listCardRows(addedList) : [];
-        const rawCustomizedCards = customizedList ? listCardRows(customizedList) : [];
-        const customizedCards = filterPersistedCustomizedRows(rawCustomizedCards, addedCards);
+        const customizedCards = customizedList ? listCardRows(customizedList) : [];
         const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards);
         const card = entry.closest(".upgrade-card");
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
