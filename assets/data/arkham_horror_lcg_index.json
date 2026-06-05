@@ -103,6 +103,19 @@
           ]
         }
       ]
+    },
+    {
+      "title": "The Innsmouth Conspiracy Campaign",
+      "href": "https://www.fantasyflightgames.com/en/products/arkham-horror-the-card-game/products/innsmouth-conspiracy-campaign-expansion/",
+      "hoverPreviewSrc": "/assets/boardgames/the_innsmouth_conspiracy.png",
+      "hoverPreviewAlt": "The Innsmouth Conspiracy Campaign",
+      "sessions": [
+        {
+          "href": "/arkham_horror_lcg_tic_20260606/",
+          "label": "06/06/2026 Campaign",
+          "investigators": []
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,349 @@
+{
+  "pageTitle": "The Innsmouth Conspiracy Campaign - 06/06/2026",
+  "headerTitle": "The Innsmouth Conspiracy - 06/06/2026 Campaign",
+  "subnav": [
+    {
+      "href": "#story-notes",
+      "label": "Story Notes"
+    },
+    {
+      "href": "#campaign-log",
+      "label": "Campaign Log"
+    },
+    {
+      "href": "#upgrade-history",
+      "label": "Upgrade History"
+    }
+  ],
+  "linearStoryLayout": true,
+  "overview": {
+    "title": "Story Notes",
+    "statusChips": [
+      "Difficulty: TBD",
+      "Players: TBD",
+      "Mode: 8-Part Campaign",
+      "Recorded Decks: 0",
+      "Campaign Start: 06/06/2026"
+    ],
+    "metaItems": [
+      "Date: 06/06/2026",
+      "Session: Campaign Setup"
+    ],
+    "sections": [
+      {
+        "title": "Run Structure",
+        "metaItems": [
+          "Status: Not Started",
+          "Cycle: The Innsmouth Conspiracy",
+          "Expansion: Campaign Expansion"
+        ],
+        "notes": [
+          {
+            "title": "How This Page Is Organized",
+            "items": [
+              "Use the Story Notes section for session-by-session notes, scenario setup, resolutions, XP, trauma, and important narrative choices.",
+              "Use the Campaign Log section for persistent records such as recovered memories, keys, suspects, leads, chaos bag changes, and bless/curse notes.",
+              "Use the Deck Upgrade History section after investigator decks are added to this run."
+            ]
+          }
+        ]
+      }
+    ],
+    "teamColumns": [
+      {
+        "title": "Investigators",
+        "items": [],
+        "text": "Investigator lineup to be added."
+      }
+    ]
+  },
+  "storyNotes": [
+    {
+      "title": "Campaign Setup",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Table Setup",
+          "items": [
+            "Difficulty: TBD",
+            "Lead investigator: TBD",
+            "Investigators: TBD",
+            "Initial chaos bag: TBD"
+          ]
+        },
+        {
+          "title": "Opening Notes",
+          "items": []
+        }
+      ]
+    },
+    {
+      "title": "Scenario I: The Pit of Despair",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario II: The Vanishing of Elina Harper",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario III: In Too Deep",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario IV: Devil Reef",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario V: Horror in High Gear",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario VI: A Light in the Fog",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario VII: The Lair of Dagon",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario VIII: Into the Maelstrom",
+      "statusChips": [
+        "Status: Pending"
+      ],
+      "notes": [
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    }
+  ],
+  "campaignLog": {
+    "title": "Campaign Log",
+    "sections": [
+      {
+        "title": "Memories Recovered",
+        "notes": [
+          {
+            "title": "Recovered Memories",
+            "items": []
+          }
+        ]
+      },
+      {
+        "title": "Keys",
+        "notes": [
+          {
+            "title": "Key Records",
+            "items": []
+          }
+        ]
+      },
+      {
+        "title": "Suspects and Leads",
+        "notes": [
+          {
+            "title": "Suspects",
+            "items": []
+          },
+          {
+            "title": "Leads",
+            "items": []
+          }
+        ]
+      },
+      {
+        "title": "Chaos Bag and Tokens",
+        "notes": [
+          {
+            "title": "Chaos Bag Changes",
+            "items": []
+          },
+          {
+            "title": "Bless / Curse Notes",
+            "items": []
+          }
+        ]
+      },
+      {
+        "title": "General Campaign Notes",
+        "notes": [
+          {
+            "title": "Open Notes",
+            "items": []
+          }
+        ]
+      }
+    ]
+  },
+  "upgradeHistoryTitle": "Deck Upgrade History",
+  "upgradeTracks": [
+    {
+      "title": "The Innsmouth Conspiracy",
+      "emptyNote": {
+        "title": "Upgrade Slots Reserved",
+        "items": [
+          "Add investigator deck cards here after the player decks are created."
+        ]
+      }
+    }
+  ],
+  "backHref": "/arkham_horror_lcg/",
+  "backLabel": "Back to Arkham Horror LCG",
+  "upgradeManager": {
+    "storageKey": "ahlcg_tic_20260606_upgrade_state_v1",
+    "editPassword": "bgbzhangyan2026",
+    "campaignStartNote": {
+      "date": "06/06/2026",
+      "runName": "Innsmouth Conspiracy"
+    },
+    "inactivityMs": 120000,
+    "remoteSync": {
+      "provider": "github",
+      "owner": "Board-Game-Bros",
+      "repo": "BGB",
+      "branch": "main",
+      "filePath": "assets/data/arkham_tic_20260606_campaign.json"
+    },
+    "remoteSyncTokenStorageKey": "bgb_github_sync_token_v1",
+    "remoteSyncDebounceMs": 2800
+  }
+}
