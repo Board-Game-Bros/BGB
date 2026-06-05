@@ -22,7 +22,7 @@
       "Difficulty: TBD",
       "Players: TBD",
       "Mode: 8-Part Campaign",
-      "Recorded Decks: 0",
+      "Recorded Decks: 1",
       "Campaign Start: 06/06/2026"
     ],
     "metaItems": [
@@ -52,8 +52,10 @@
     "teamColumns": [
       {
         "title": "Investigators",
-        "items": [],
-        "text": "Investigator lineup to be added."
+        "items": [
+          "Lily Chen"
+        ],
+        "text": "Yan's Lily Chen deck is recorded for the Innsmouth run."
       }
     ]
   },
@@ -69,7 +71,7 @@
           "items": [
             "Difficulty: TBD",
             "Lead investigator: TBD",
-            "Investigators: TBD",
+            "Investigators: Lily Chen",
             "Initial chaos bag: TBD"
           ]
         },
@@ -318,12 +320,16 @@
   "upgradeTracks": [
     {
       "title": "The Innsmouth Conspiracy",
-      "emptyNote": {
-        "title": "Upgrade Slots Reserved",
-        "items": [
-          "Add investigator deck cards here after the player decks are created."
-        ]
-      }
+      "cards": [
+        {
+          "name": "Lily Chen",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/lily_chen_the_martial_artist.png",
+          "imageAlt": "Lily Chen: The Martial Artist",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        }
+      ]
     }
   ],
   "backHref": "/arkham_horror_lcg/",

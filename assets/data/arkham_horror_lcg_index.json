@@ -113,7 +113,15 @@
         {
           "href": "/arkham_horror_lcg_tic_20260606/",
           "label": "06/06/2026 Campaign",
-          "investigators": []
+          "investigators": [
+            {
+              "href": "/arkham_horror_lcg_tic_lily_chen_20260606/",
+              "imageSrc": "/assets/boardgames/ahlcg_investigators/lily_chen_the_martial_artist.png",
+              "imageAlt": "Lily Chen",
+              "builderName": "Built by Yan",
+              "buildDate": "Built: 06/06/2026 \u00b7 XP: 3"
+            }
+          ]
         }
       ]
     }
