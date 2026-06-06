@@ -27,8 +27,8 @@
         "/scripts/shared-github-sync.js?v=20260401a",
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
-        "/scripts/ahlcg-upgrade-manager.js?v=20260603e",
-        "/scripts/arkham-parallel-campaign-page.js?v=20260516a",
+        "/scripts/ahlcg-upgrade-manager.js?v=20260606a",
+        "/scripts/arkham-parallel-campaign-page.js?v=20260606a",
       ],
     },
   };

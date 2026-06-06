@@ -79,7 +79,9 @@
         },
         {
           "title": "Opening Notes",
-          "items": []
+          "items": [
+            "Lily Chen's opening deck includes In the Thick of It, so Lily starts the campaign with 1 physical trauma and 1 mental trauma."
+          ]
         }
       ]
     },
@@ -327,9 +329,13 @@
           "name": "Lily Chen",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/lily_chen_the_martial_artist.png",
           "imageAlt": "Lily Chen: The Martial Artist",
+          "startingTrauma": {
+            "physical": 1,
+            "mental": 1
+          },
           "currentXp": "Current XP: 0",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p>",
-          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><p>In the Thick of It: Lily Chen starts with 1 physical trauma and 1 mental trauma.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 1, Mental 1."
         },
         {
           "name": "George Barnaby",

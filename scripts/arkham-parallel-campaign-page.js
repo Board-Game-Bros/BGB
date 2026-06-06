@@ -330,6 +330,14 @@
 
   function renderUpgradeCard(card) {
     const article = el("article", "upgrade-card");
+    const startingTrauma = card && typeof card.startingTrauma === "object" && card.startingTrauma
+      ? card.startingTrauma
+      : {};
+    const startingPhysical = Math.max(0, Number.parseInt(String(startingTrauma.physical || 0), 10) || 0);
+    const startingMental = Math.max(0, Number.parseInt(String(startingTrauma.mental || 0), 10) || 0);
+    article.dataset.startingPhysicalTrauma = String(startingPhysical);
+    article.dataset.startingMentalTrauma = String(startingMental);
+
     const heading = el("h3");
     if (card.name) {
       heading.setAttribute("data-investigator-name", String(card.name));

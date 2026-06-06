@@ -3883,8 +3883,8 @@
     function refreshTraumaStatus() {
       document.querySelectorAll(".upgrade-card").forEach((card) => {
         const traumaRows = card.querySelectorAll(".scenario-trauma");
-        let physical = 0;
-        let mental = 0;
+        let physical = toNonNegativeInteger(card.dataset.startingPhysicalTrauma || 0);
+        let mental = toNonNegativeInteger(card.dataset.startingMentalTrauma || 0);
 
         traumaRows.forEach((row) => {
           physical += Number(row.dataset.physical || 0);
