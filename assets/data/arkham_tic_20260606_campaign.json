@@ -22,7 +22,7 @@
       "Difficulty: TBD",
       "Players: TBD",
       "Mode: 8-Part Campaign",
-      "Recorded Decks: 2",
+      "Recorded Decks: 3",
       "Campaign Start: 06/06/2026"
     ],
     "metaItems": [
@@ -54,9 +54,10 @@
         "title": "Investigators",
         "items": [
           "Lily Chen",
-          "George Barnaby"
+          "George Barnaby",
+          "Trish Scarborough"
         ],
-        "text": "Yan's Lily Chen deck and Shengbo's George Barnaby deck are recorded for the Innsmouth run."
+        "text": "Yan's Lily Chen deck, Shengbo's George Barnaby deck, and LL's Trish Scarborough deck are recorded for the Innsmouth run."
       }
     ]
   },
@@ -72,7 +73,7 @@
           "items": [
             "Difficulty: TBD",
             "Lead investigator: TBD",
-            "Investigators: Lily Chen, George Barnaby",
+            "Investigators: Lily Chen, George Barnaby, Trish Scarborough",
             "Initial chaos bag: TBD"
           ]
         },
@@ -334,6 +335,14 @@
           "name": "George Barnaby",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/george_barnaby_the_lawyer.png",
           "imageAlt": "George Barnaby: The Lawyer",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        },
+        {
+          "name": "Trish Scarborough",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/trish_scarborough_the_spy.png",
+          "imageAlt": "Trish Scarborough: The Spy",
           "currentXp": "Current XP: 0",
           "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."

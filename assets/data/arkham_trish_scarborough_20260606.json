@@ -1,0 +1,110 @@
+{
+  "pageTitle": "Trish Scarborough - Deck Build (06/06/2026)",
+  "title": "Trish Scarborough Deck - 06/06/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/trish_scarborough_the_spy.png",
+    "imageAlt": "Trish Scarborough",
+    "heading": "Trish Scarborough",
+    "details": [
+      "25 cards (29 total)",
+      "0 experience required",
+      "15 packs required",
+      "Class: Rogue",
+      "Built by LL on 06/06/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (12)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 1, "name": "British Bull Dog", "imageSrc": "/assets/boardgames/ahlcg_cards/british_bull_dog.png", "imageAlt": "British Bull Dog" },
+            { "qty": 1, "name": "Flashlight", "imageSrc": "/assets/boardgames/ahlcg_cards/flashlight.png", "imageAlt": "Flashlight" },
+            { "qty": 1, "name": "Lockpicks", "imageSrc": "/assets/boardgames/ahlcg_cards/lockpicks.png", "imageAlt": "Lockpicks" },
+            { "qty": 1, "name": "Magnifying Glass", "imageSrc": "/assets/boardgames/ahlcg_cards/magnifying_glass.png", "imageAlt": "Magnifying Glass" }
+          ]
+        },
+        {
+          "label": "Arcane",
+          "cards": [
+            { "qty": 1, "name": "Obfuscation", "imageSrc": "/assets/boardgames/ahlcg_cards/obfuscation.png", "imageAlt": "Obfuscation" }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            { "qty": 1, "name": "Lucky Cigarette Case", "imageSrc": "/assets/boardgames/ahlcg_cards/lucky_cigarette_case.png", "imageAlt": "Lucky Cigarette Case" },
+            { "qty": 1, "name": "Tooth of Eztli", "imageSrc": "/assets/boardgames/ahlcg_cards/tooth_of_eztli_mortal_reminder.png", "imageAlt": "Tooth of Eztli" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 1, "name": "Dr. Milan Christopher", "imageSrc": "/assets/boardgames/ahlcg_cards/dr_milan_christopher_professor_of_entomology.png", "imageAlt": "Dr. Milan Christopher" },
+            { "qty": 1, "name": "Leo De Luca", "imageSrc": "/assets/boardgames/ahlcg_cards/leo_de_luca_the_louisiana_lion.png", "imageAlt": "Leo De Luca" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 1, "name": "Investments", "imageSrc": "/assets/boardgames/ahlcg_cards/investments.png", "imageAlt": "Investments" },
+            { "qty": 1, "name": "Lone Wolf", "imageSrc": "/assets/boardgames/ahlcg_cards/lone_wolf.png", "imageAlt": "Lone Wolf" },
+            { "qty": 1, "name": "Silver Tongue ?", "imageSrc": "/assets/boardgames/ahlcg_cards/silver_tongue.png", "imageAlt": "Silver Tongue" }
+          ]
+        },
+        {
+          "title": "Permanent (1)",
+          "cards": [
+            { "qty": 1, "name": "Underworld Support", "imageSrc": "/assets/boardgames/ahlcg_cards/underworld_support.png", "imageAlt": "Underworld Support" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (10)",
+          "cards": [
+            { "qty": 1, "name": "Backstab", "imageSrc": "/assets/boardgames/ahlcg_cards/backstab.png", "imageAlt": "Backstab" },
+            { "qty": 1, "name": "Bank Job", "imageSrc": "/assets/boardgames/ahlcg_cards/bank_job.png", "imageAlt": "Bank Job" },
+            { "qty": 1, "name": "Bizarre Diagnosis", "imageSrc": "/assets/boardgames/ahlcg_cards/bizarre_diagnosis.png", "imageAlt": "Bizarre Diagnosis" },
+            { "qty": 1, "name": "Elusive", "imageSrc": "/assets/boardgames/ahlcg_cards/elusive.png", "imageAlt": "Elusive" },
+            { "qty": 1, "name": "Grift", "imageSrc": "/assets/boardgames/ahlcg_cards/grift.png", "imageAlt": "Grift" },
+            { "qty": 1, "name": "In the Shadows ★", "imageSrc": "/assets/boardgames/ahlcg_cards/in_the_shadows.png", "imageAlt": "In the Shadows" },
+            { "qty": 1, "name": "Logical Reasoning", "imageSrc": "/assets/boardgames/ahlcg_cards/logical_reasoning.png", "imageAlt": "Logical Reasoning" },
+            { "qty": 1, "name": "Scout Ahead", "imageSrc": "/assets/boardgames/ahlcg_cards/scout_ahead.png", "imageAlt": "Scout Ahead" },
+            { "qty": 1, "name": "Sneak Attack", "imageSrc": "/assets/boardgames/ahlcg_cards/sneak_attack.png", "imageAlt": "Sneak Attack" },
+            { "qty": 1, "name": "Working a Hunch", "imageSrc": "/assets/boardgames/ahlcg_cards/working_a_hunch.png", "imageAlt": "Working a Hunch" }
+          ]
+        },
+        {
+          "title": "Skill (4)",
+          "cards": [
+            { "qty": 1, "name": "Deduction", "imageSrc": "/assets/boardgames/ahlcg_cards/deduction.png", "imageAlt": "Deduction" },
+            { "qty": 1, "name": "Double or Nothing", "imageSrc": "/assets/boardgames/ahlcg_cards/double_or_nothing.png", "imageAlt": "Double or Nothing" },
+            { "qty": 1, "name": "Guts", "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png", "imageAlt": "Guts" },
+            { "qty": 1, "name": "Inquiring Mind", "imageSrc": "/assets/boardgames/ahlcg_cards/inquiring_mind.png", "imageAlt": "Inquiring Mind" }
+          ]
+        },
+        {
+          "title": "Treachery (1)",
+          "cards": [
+            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        },
+        {
+          "title": "Enemy (1)",
+          "cards": [
+            { "qty": 1, "name": "Shadow Agents ★", "imageSrc": "/assets/boardgames/ahlcg_cards/shadow_agents.png", "imageAlt": "Shadow Agents" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Trish-Scarborough-DeckBuild-20260606-LL.pdf",
+    "label": "Open Trish Deck PDF"
+  }
+}
