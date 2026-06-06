@@ -80,7 +80,7 @@
         {
           "title": "Opening Notes",
           "items": [
-            "Lily Chen's opening deck includes In the Thick of It, so Lily starts the campaign with 3 XP, 1 physical trauma, and 1 mental trauma."
+            "Lily Chen's opening deck includes In the Thick of It, so she starts the campaign with 3 XP and chooses to take 2 total trauma as 1 physical trauma and 1 mental trauma."
           ]
         }
       ]
@@ -335,7 +335,7 @@
           },
           "startingXp": 3,
           "currentXp": "Current XP: 3",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><p>In the Thick of It: Lily Chen starts with 3 experience, 1 physical trauma, and 1 mental trauma.</p>",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><p>In the Thick of It: Lily Chen starts with 3 experience and chooses to take 2 total trauma as 1 physical trauma and 1 mental trauma.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 1, Mental 1."
         },
         {
