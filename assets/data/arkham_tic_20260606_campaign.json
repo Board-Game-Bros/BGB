@@ -22,7 +22,7 @@
       "Difficulty: TBD",
       "Players: TBD",
       "Mode: 8-Part Campaign",
-      "Recorded Decks: 1",
+      "Recorded Decks: 2",
       "Campaign Start: 06/06/2026"
     ],
     "metaItems": [
@@ -53,9 +53,10 @@
       {
         "title": "Investigators",
         "items": [
-          "Lily Chen"
+          "Lily Chen",
+          "George Barnaby"
         ],
-        "text": "Yan's Lily Chen deck is recorded for the Innsmouth run."
+        "text": "Yan's Lily Chen deck and Shengbo's George Barnaby deck are recorded for the Innsmouth run."
       }
     ]
   },
@@ -71,7 +72,7 @@
           "items": [
             "Difficulty: TBD",
             "Lead investigator: TBD",
-            "Investigators: Lily Chen",
+            "Investigators: Lily Chen, George Barnaby",
             "Initial chaos bag: TBD"
           ]
         },
@@ -325,6 +326,14 @@
           "name": "Lily Chen",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/lily_chen_the_martial_artist.png",
           "imageAlt": "Lily Chen: The Martial Artist",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        },
+        {
+          "name": "George Barnaby",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/george_barnaby_the_lawyer.png",
+          "imageAlt": "George Barnaby: The Lawyer",
           "currentXp": "Current XP: 0",
           "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."

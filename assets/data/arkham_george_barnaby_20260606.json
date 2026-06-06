@@ -1,0 +1,101 @@
+{
+  "pageTitle": "George Barnaby - Deck Build (06/06/2026)",
+  "title": "George Barnaby Deck - 06/06/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/george_barnaby_the_lawyer.png",
+    "imageAlt": "George Barnaby",
+    "heading": "George Barnaby",
+    "details": [
+      "50 cards (56 total)",
+      "0 experience required",
+      "19 packs required",
+      "Class: Survivor",
+      "Built by Shengbo on 06/06/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (21)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 2, "name": "Anchor Chain", "imageSrc": "/assets/boardgames/ahlcg_cards/anchor_chain.png", "imageAlt": "Anchor Chain" },
+            { "qty": 2, "name": "Fingerprint Kit", "imageSrc": "/assets/boardgames/ahlcg_cards/fingerprint_kit.png", "imageAlt": "Fingerprint Kit" },
+            { "qty": 2, "name": "Hand Hook", "imageSrc": "/assets/boardgames/ahlcg_cards/hand_hook.png", "imageAlt": "Hand Hook" },
+            { "qty": 2, "name": "Improvised Shield", "imageSrc": "/assets/boardgames/ahlcg_cards/improvised_shield.png", "imageAlt": "Improvised Shield" },
+            { "qty": 2, "name": "Nautical Charts", "imageSrc": "/assets/boardgames/ahlcg_cards/nautical_charts.png", "imageAlt": "Nautical Charts" },
+            { "qty": 1, "name": "Occult Lexicon", "imageSrc": "/assets/boardgames/ahlcg_cards/occult_lexicon.png", "imageAlt": "Occult Lexicon" }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            { "qty": 2, "name": "Idol of Xanatos: Watcher Beyond Time", "imageSrc": "/assets/boardgames/ahlcg_cards/idol_of_xanatos_watcher_beyond_time.png", "imageAlt": "Idol of Xanatos: Watcher Beyond Time" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Laboratory Assistant", "imageSrc": "/assets/boardgames/ahlcg_cards/laboratory_assistant.png", "imageAlt": "Laboratory Assistant" },
+            { "qty": 2, "name": "Lawrence Carlisle: Sculpting His Dreams", "imageSrc": "/assets/boardgames/ahlcg_cards/lawrence_carlisle_sculpting_his_dreams.png", "imageAlt": "Lawrence Carlisle: Sculpting His Dreams" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 2, "name": "Schoffner's Catalogue", "imageSrc": "/assets/boardgames/ahlcg_cards/schoffners_catalogue.png", "imageAlt": "Schoffner's Catalogue" },
+            { "qty": 1, "name": "Sparrow Mask: The Wanderer's Companion", "imageSrc": "/assets/boardgames/ahlcg_cards/sparrow_mask_the_wanderers_companion.png", "imageAlt": "Sparrow Mask: The Wanderer's Companion" },
+            { "qty": 1, "name": "Track Shoes", "imageSrc": "/assets/boardgames/ahlcg_cards/track_shoes.png", "imageAlt": "Track Shoes" }
+          ]
+        },
+        {
+          "title": "Permanent (1)",
+          "cards": [
+            { "qty": 1, "name": "Forced Learning", "imageSrc": "/assets/boardgames/ahlcg_cards/forced_learning.png", "imageAlt": "Forced Learning" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (9)",
+          "cards": [
+            { "qty": 3, "name": "Fortuitous Discovery", "imageSrc": "/assets/boardgames/ahlcg_cards/fortuitous_discovery.png", "imageAlt": "Fortuitous Discovery" },
+            { "qty": 2, "name": "Impromptu Barrier", "imageSrc": "/assets/boardgames/ahlcg_cards/impromptu_barrier.png", "imageAlt": "Impromptu Barrier" },
+            { "qty": 2, "name": "Improvised Weapon", "imageSrc": "/assets/boardgames/ahlcg_cards/improvised_weapon.png", "imageAlt": "Improvised Weapon" },
+            { "qty": 2, "name": "Winging It", "imageSrc": "/assets/boardgames/ahlcg_cards/winging_it.png", "imageAlt": "Winging It" }
+          ]
+        },
+        {
+          "title": "Skill (23)",
+          "cards": [
+            { "qty": 2, "name": "Deduction", "imageSrc": "/assets/boardgames/ahlcg_cards/deduction.png", "imageAlt": "Deduction" },
+            { "qty": 3, "name": "Grim Resolve", "imageSrc": "/assets/boardgames/ahlcg_cards/grim_resolve.png", "imageAlt": "Grim Resolve" },
+            { "qty": 2, "name": "Guts", "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png", "imageAlt": "Guts" },
+            { "qty": 2, "name": "Long Shot", "imageSrc": "/assets/boardgames/ahlcg_cards/long_shot.png", "imageAlt": "Long Shot" },
+            { "qty": 2, "name": "Manual Dexterity", "imageSrc": "/assets/boardgames/ahlcg_cards/manual_dexterity.png", "imageAlt": "Manual Dexterity" },
+            { "qty": 2, "name": "Overpower", "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png", "imageAlt": "Overpower" },
+            { "qty": 2, "name": "Perception", "imageSrc": "/assets/boardgames/ahlcg_cards/perception.png", "imageAlt": "Perception" },
+            { "qty": 2, "name": "Quick Thinking", "imageSrc": "/assets/boardgames/ahlcg_cards/quick_thinking.png", "imageAlt": "Quick Thinking" },
+            { "qty": 2, "name": "Resourceful", "imageSrc": "/assets/boardgames/ahlcg_cards/resourceful.png", "imageAlt": "Resourceful" },
+            { "qty": 2, "name": "Take Heart", "imageSrc": "/assets/boardgames/ahlcg_cards/take_heart.png", "imageAlt": "Take Heart" },
+            { "qty": 2, "name": "Unexpected Courage", "imageSrc": "/assets/boardgames/ahlcg_cards/unexpected_courage.png", "imageAlt": "Unexpected Courage" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "Cast Adrift", "imageSrc": "/assets/boardgames/ahlcg_cards/cast_adrift.png", "imageAlt": "Cast Adrift" },
+            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/George-Barnaby-DeckBuild-20260606-Shengbo.pdf",
+    "label": "Open George Deck PDF"
+  }
+}
