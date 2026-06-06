@@ -337,6 +337,7 @@
     const startingMental = Math.max(0, Number.parseInt(String(startingTrauma.mental || 0), 10) || 0);
     article.dataset.startingPhysicalTrauma = String(startingPhysical);
     article.dataset.startingMentalTrauma = String(startingMental);
+    article.dataset.startingXp = String(Math.max(0, Number.parseInt(String(card.startingXp || 0), 10) || 0));
 
     const heading = el("h3");
     if (card.name) {

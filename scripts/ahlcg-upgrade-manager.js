@@ -1918,13 +1918,18 @@
       return !!card.querySelector(".upgrade-entry:not(.upgrade-entry-draft)");
     }
 
+    function getStartingXp(card) {
+      return toNonNegativeInteger(card && card.dataset ? card.dataset.startingXp : 0);
+    }
+
     function computeEarnedXp(card) {
       // Use one source of truth to avoid double-counting:
       // once structured entries exist, ignore legacy summary paragraphs.
+      const startingXp = getStartingXp(card);
       if (hasConfirmedEntries(card)) {
-        return sumEarnedXpFromEntryHeads(card);
+        return startingXp + sumEarnedXpFromEntryHeads(card);
       }
-      return sumEarnedXpFromSummaryLines(card);
+      return startingXp + sumEarnedXpFromSummaryLines(card);
     }
 
     function computeAvailableXpExcludingEntry(card, excludedEntry) {
@@ -1939,7 +1944,7 @@
         return earned - spent;
       }
 
-      let earned = 0;
+      let earned = getStartingXp(card);
       let spent = 0;
       const entries = Array.from(card.querySelectorAll(".upgrade-entry"));
       for (let i = 0; i < entries.length; i += 1) {
