@@ -201,20 +201,11 @@ const bindCardRefViewportPreviews = (root = document) => {
     if (!viewportWidth || !viewportHeight) return;
     const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
     const maxHeight = Math.max(160, viewportHeight - (previewMargin * 2));
-    const anchor = cardRef.getBoundingClientRect();
-    const availableAbove = Math.max(0, anchor.top - previewGap - previewMargin);
-    const availableBelow = Math.max(0, viewportHeight - anchor.bottom - previewGap - previewMargin);
-    const naturalPreviewHeight = preview.tagName === "IMG" && preview.naturalWidth && preview.naturalHeight
-      ? width * (preview.naturalHeight / preview.naturalWidth)
-      : Math.max(height, preview.scrollHeight || 0);
-    const placeBelow = availableAbove < naturalPreviewHeight && availableBelow >= Math.min(160, naturalPreviewHeight * 0.25);
-    const sideMaxHeight = placeBelow ? Math.max(120, availableBelow) : maxHeight;
-
     const overflowLeft = rect.left < previewMargin;
     const overflowRight = rect.right > (viewportWidth - previewMargin);
     const overflowTop = rect.top < previewMargin;
     const overflowBottom = rect.bottom > (viewportHeight - previewMargin);
-    if (!placeBelow && !(overflowLeft || overflowRight || overflowTop || overflowBottom)) {
+    if (!(overflowLeft || overflowRight || overflowTop || overflowBottom)) {
       preview.style.removeProperty("display");
       preview.style.removeProperty("visibility");
       return;
@@ -228,10 +219,9 @@ const bindCardRefViewportPreviews = (root = document) => {
     let displayWidth = width;
     let displayHeight = height;
     if (preview.tagName === "IMG") {
-      const sourceHeight = Math.max(height, naturalPreviewHeight);
-      const scale = Math.min(1, maxWidth / width, sideMaxHeight / sourceHeight);
+      const scale = Math.min(1, maxWidth / width, maxHeight / height);
       displayWidth = Math.round(width * scale);
-      displayHeight = Math.round(sourceHeight * scale);
+      displayHeight = Math.round(height * scale);
       preview.style.width = `${displayWidth}px`;
       preview.style.height = `${displayHeight}px`;
       preview.style.maxWidth = "none";
@@ -239,21 +229,19 @@ const bindCardRefViewportPreviews = (root = document) => {
       preview.style.overflow = "visible";
     } else {
       preview.style.maxWidth = `${maxWidth}px`;
-      preview.style.maxHeight = `${sideMaxHeight}px`;
+      preview.style.maxHeight = `${maxHeight}px`;
       preview.style.overflow = "auto";
-      displayHeight = Math.min(displayHeight, sideMaxHeight);
     }
 
+    const anchor = cardRef.getBoundingClientRect();
     let left = anchor.left + (anchor.width / 2) - (displayWidth / 2);
     left = clamp(left, previewMargin, viewportWidth - displayWidth - previewMargin);
 
-    let top = placeBelow ? anchor.bottom + previewGap : anchor.top - previewGap - displayHeight;
-    if (!placeBelow && top < previewMargin) {
+    let top = anchor.top - previewGap - displayHeight;
+    if (top < previewMargin) {
       top = anchor.bottom + previewGap;
     }
-    if (!placeBelow) {
-      top = clamp(top, previewMargin, viewportHeight - displayHeight - previewMargin);
-    }
+    top = clamp(top, previewMargin, viewportHeight - displayHeight - previewMargin);
 
     preview.style.position = "fixed";
     preview.style.left = `${Math.round(left)}px`;
