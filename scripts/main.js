@@ -202,16 +202,6 @@ const bindCardRefViewportPreviews = (root = document) => {
     const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
     const maxHeight = Math.max(160, viewportHeight - (previewMargin * 2));
 
-    const overflowLeft = rect.left < previewMargin;
-    const overflowRight = rect.right > (viewportWidth - previewMargin);
-    const overflowTop = rect.top < previewMargin;
-    const overflowBottom = rect.bottom > (viewportHeight - previewMargin);
-    if (!(overflowLeft || overflowRight || overflowTop || overflowBottom)) {
-      preview.style.removeProperty("display");
-      preview.style.removeProperty("visibility");
-      return;
-    }
-
     const clamp = (value, min, max) => {
       if (max < min) return min;
       return Math.min(Math.max(value, min), max);
