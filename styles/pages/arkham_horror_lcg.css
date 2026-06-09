@@ -585,7 +585,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   border-radius: 8px;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
   background: #f2e6c9;
-  z-index: 30;
+  z-index: 2147483000;
 }
 
 img.card-preview,
@@ -715,7 +715,7 @@ img.card-preview,
   transform: none;
   width: min(860px, calc(100vw - 24px));
   max-width: min(860px, calc(100vw - 24px));
-  z-index: 80;
+  z-index: 2147483000;
 }
 
 .story-note-customizable-panel {
@@ -1168,7 +1168,7 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
 }
 
 .card-autocomplete-preview {
-  z-index: 61;
+  z-index: 2147483000;
   pointer-events: none;
 }
 
