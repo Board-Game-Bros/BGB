@@ -27,7 +27,7 @@
         "/scripts/shared-github-sync.js?v=20260401a",
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
-        "/scripts/ahlcg-upgrade-manager.js?v=20260609b",
+        "/scripts/ahlcg-upgrade-manager.js?v=20260609c",
         "/scripts/arkham-parallel-campaign-page.js?v=20260606b",
       ],
     },
@@ -60,7 +60,7 @@
   (async () => {
     try {
       await loadScript("/scripts/shell-layout.js");
-      await loadScript("/scripts/main.js?v=20260609b");
+      await loadScript("/scripts/main.js?v=20260609c");
       for (const src of config.scripts) {
         await loadScript(src);
       }
