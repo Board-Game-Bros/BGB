@@ -27,13 +27,13 @@
     ],
     "metaItems": [
       "Date: 06/06/2026",
-      "Session: Campaign Setup"
+      "Session: Scenario I: The Pit of Despair + Interlude I: Puzzle Pieces"
     ],
     "sections": [
       {
         "title": "Run Structure",
         "metaItems": [
-          "Status: Not Started",
+          "Status: In Progress",
           "Cycle: The Innsmouth Conspiracy",
           "Expansion: Campaign Expansion"
         ],
@@ -88,21 +88,50 @@
     {
       "title": "Scenario I: The Pit of Despair",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 2",
+        "Scenario XP: 2",
+        "Interlude Bonus XP: 4"
       ],
       "notes": [
         {
-          "title": "Setup Notes",
-          "items": []
+          "title": "The Investigators Entered the Pit",
+          "items": [
+            "George Barnaby, Lily Chen, and Trish Scarborough woke in a cold, wet cavern with no memory of the recent past and only fragments of identity intact.",
+            "The chamber felt recently underwater, the ceiling held a strange slab of alien metal, and a croaking, gurgling sound echoed through the tunnels as the investigators searched for a way out.",
+            "The scenario introduced flashbacks and colored keys; the recovered flashbacks became the first pieces of the larger Innsmouth mystery."
+          ]
         },
         {
-          "title": "Scenario Results",
+          "title": "Flashbacks",
           "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
+            "Flashback I: record a meeting with Thomas Dawson under Memories Recovered.",
+            "Flashback II: record a battle with a horrifying devil under Memories Recovered, and remove 1 cultist token from the chaos bag for the remainder of the campaign.",
+            "Flashback III: record a decision to stick together under Memories Recovered, and remove 1 tablet token from the chaos bag for the remainder of the campaign.",
+            "Flashback IV: record an encounter with a secret cult under Memories Recovered, and remove 1 elder thing token from the chaos bag for the remainder of the campaign."
+          ]
+        },
+        {
+          "title": "Resolution 1",
+          "items": [
+            "The scenario ended at Resolution 1.",
+            "George Barnaby, Lily Chen, and Trish Scarborough resigned.",
+            "The investigators escaped the pit alive after hearing a stranger call out and finding Agent Harper, but their missing memories and the crimson sky made it clear that the conspiracy had only begun.",
+            "Victory display: 2. Each investigator records 2 unspent XP, but none of this experience is spent yet.",
+            "Proceed to Interlude I: Puzzle Pieces."
+          ]
+        },
+        {
+          "title": "Interlude I: Puzzle Pieces",
+          "items": [
+            "Agent Harper questioned the investigators about the memories they recovered, helped establish that the date was September 24, and pressed them for anything else they could remember.",
+            "Because a meeting with Thomas Dawson was recovered, the conspiracy deepens and each investigator records 1 additional unspent XP.",
+            "Because a battle with a horrifying devil was recovered, the conspiracy deepens and each investigator records 1 additional unspent XP.",
+            "Because a decision to stick together was recovered, the conspiracy deepens and each investigator records 1 additional unspent XP.",
+            "Because an encounter with a secret cult was recovered, the conspiracy deepens and each investigator records 1 additional unspent XP.",
+            "Total unspent XP from Scenario I plus Interlude I: 6 XP for each investigator.",
+            "Proceed to Scenario II: The Vanishing of Elina Harper."
           ]
         }
       ]
@@ -270,7 +299,12 @@
         "notes": [
           {
             "title": "Recovered Memories",
-            "items": []
+            "items": [
+              "a meeting with Thomas Dawson.",
+              "a battle with a horrifying devil.",
+              "a decision to stick together.",
+              "an encounter with a secret cult."
+            ]
           }
         ]
       },
@@ -301,7 +335,11 @@
         "notes": [
           {
             "title": "Chaos Bag Changes",
-            "items": []
+            "items": [
+              "Remove 1 cultist token from the chaos bag for the remainder of the campaign.",
+              "Remove 1 tablet token from the chaos bag for the remainder of the campaign.",
+              "Remove 1 elder thing token from the chaos bag for the remainder of the campaign."
+            ]
           },
           {
             "title": "Bless / Curse Notes",
@@ -313,8 +351,28 @@
         "title": "General Campaign Notes",
         "notes": [
           {
-            "title": "Open Notes",
-            "items": []
+            "title": "Scenario I: The Pit of Despair",
+            "items": [
+              "The scenario ended at Resolution 1.",
+              "George Barnaby, Lily Chen, and Trish Scarborough resigned.",
+              "Victory display: 2.",
+              "Proceed to Interlude I: Puzzle Pieces."
+            ]
+          },
+          {
+            "title": "Interlude I: Puzzle Pieces",
+            "items": [
+              "The conspiracy deepens four times from the recovered memories.",
+              "Proceed to Scenario II: The Vanishing of Elina Harper."
+            ]
+          },
+          {
+            "title": "Unspent Experience",
+            "items": [
+              "George Barnaby has 6 unspent XP from Scenario I plus Interlude I.",
+              "Lily Chen has 6 unspent XP from Scenario I plus Interlude I, in addition to her 3 starting XP from In the Thick of It.",
+              "Trish Scarborough has 6 unspent XP from Scenario I plus Interlude I."
+            ]
           }
         ]
       }
@@ -334,24 +392,24 @@
             "mental": 1
           },
           "startingXp": 3,
-          "currentXp": "Current XP: 3",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><p>In the Thick of It: Lily Chen starts with 3 experience and chooses to take 2 total trauma as 1 physical trauma and 1 mental trauma.</p>",
+          "currentXp": "Current XP: 9",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><p>In the Thick of It: Lily Chen starts with 3 experience and chooses to take 2 total trauma as 1 physical trauma and 1 mental trauma.</p><div class=\"upgrade-entry\" data-entry-uid=\"tic-s1-lily\"><p class=\"upgrade-entry-head\">After Scenario I (+6 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-s1-lily\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 1, Mental 1."
         },
         {
           "name": "George Barnaby",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/george_barnaby_the_lawyer.png",
           "imageAlt": "George Barnaby: The Lawyer",
-          "currentXp": "Current XP: 0",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p>",
+          "currentXp": "Current XP: 6",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><div class=\"upgrade-entry\" data-entry-uid=\"tic-s1-george\"><p class=\"upgrade-entry-head\">After Scenario I (+6 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-s1-george\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         },
         {
           "name": "Trish Scarborough",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/trish_scarborough_the_spy.png",
           "imageAlt": "Trish Scarborough: The Spy",
-          "currentXp": "Current XP: 0",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p>",
+          "currentXp": "Current XP: 6",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><div class=\"upgrade-entry\" data-entry-uid=\"tic-s1-trish\"><p class=\"upgrade-entry-head\">After Scenario I (+6 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-s1-trish\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         }
       ]
