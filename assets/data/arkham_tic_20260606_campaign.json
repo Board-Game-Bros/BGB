@@ -63,16 +63,14 @@
     {
       "title": "Campaign Setup",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed"
       ],
       "notes": [
         {
           "title": "Table Setup",
           "items": [
-            "Difficulty: TBD",
-            "Lead investigator: TBD",
-            "Investigators: Lily Chen, George Barnaby, Trish Scarborough",
-            "Initial chaos bag: TBD"
+            "Difficulty: Standard",
+            "Investigators: Lily Chen, George Barnaby, Trish Scarborough"
           ]
         },
         {
@@ -118,9 +116,19 @@
             "Each investigator earned 2 XP from the victory display. This experience is recorded as unspent experience and should not be spent yet.",
             "Proceed to Interlude I: Puzzle Pieces."
           ]
-        },
+        }
+      ]
+    },
+    {
+      "title": "Interlude I: Puzzle Pieces",
+      "statusChips": [
+        "Status: Completed",
+        "Bonus XP: 4",
+        "Total Unspent XP: 6 each"
+      ],
+      "notes": [
         {
-          "title": "Interlude I: Puzzle Pieces",
+          "title": "Puzzle Pieces",
           "items": [
             "Agent Harper questioned the investigators about the memories they recovered and explained that it was September 24, with Innsmouth locked down and the tide rising around them.",
             "Because a meeting with Thomas Dawson was recovered, the conspiracy deepens and each investigator records 1 additional unspent XP.",
@@ -292,68 +300,13 @@
     "title": "Campaign Log",
     "sections": [
       {
-        "title": "Memories Recovered",
-        "notes": [
-          {
-            "title": "Memories Recovered",
-            "listClass": "campaign-log-list",
-            "items": [
-              "a meeting with Thomas Dawson.",
-              "a battle with a horrifying devil.",
-              "a decision to stick together.",
-              "an encounter with a secret cult."
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Keys",
-        "notes": [
-          {
-            "title": "Key Records",
-            "items": []
-          }
-        ]
-      },
-      {
-        "title": "Suspects and Leads",
-        "notes": [
-          {
-            "title": "Suspects",
-            "items": []
-          },
-          {
-            "title": "Leads",
-            "items": []
-          }
-        ]
-      },
-      {
-        "title": "Chaos Bag and Tokens",
-        "notes": [
-          {
-            "title": "Chaos Bag Changes",
-            "listClass": "campaign-log-list",
-            "items": [
-              "Remove 1 cultist token from the chaos bag for the remainder of the campaign.",
-              "Remove 1 tablet token from the chaos bag for the remainder of the campaign.",
-              "Remove 1 elder thing token from the chaos bag for the remainder of the campaign."
-            ]
-          },
-          {
-            "title": "Bless / Curse Notes",
-            "listClass": "campaign-log-list",
-            "items": []
-          }
-        ]
-      },
-      {
-        "title": "General Campaign Notes",
+        "title": "",
         "notes": [
           {
             "title": "Campaign Notes",
             "listClass": "campaign-log-list",
             "items": [
+              "Record in campaign log: Player card entries only.",
               "Scenario I: The Pit of Despair ended at Resolution 1.",
               "George Barnaby, Lily Chen, and Trish Scarborough resigned.",
               "Victory display: 2.",
@@ -363,12 +316,55 @@
             ]
           },
           {
+            "title": "Memories Recovered",
+            "listClass": "campaign-log-list",
+            "items": [
+              "A meeting with Thomas Dawson",
+              "A battle with a horrifying devil",
+              "A decision to stick together",
+              "An encounter with a secret cult"
+            ]
+          },
+          {
+            "title": "Possible Suspects",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Brian Burnham",
+              "Othera Gilman",
+              "Joyce Little",
+              "Barnabas Marsh",
+              "Zadok Allen",
+              "Robert Friendly"
+            ]
+          },
+          {
+            "title": "Possible Hideouts",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Innsmouth Jail",
+              "Shoreward Slums",
+              "Sawbones Alley",
+              "The House on Water Street",
+              "Esoteric Order of Dagon",
+              "New Church Green"
+            ]
+          },
+          {
             "title": "Unspent Experience",
             "listClass": "campaign-log-list",
             "items": [
               "George Barnaby: 6 unspent XP after Scenario I + Interlude I.",
-              "Lily Chen: 6 unspent XP after Scenario I + Interlude I, plus 3 starting XP from In the Thick of It.",
+              "Lily Chen: 6 unspent XP after Scenario I + Interlude I. Her 3 XP from In the Thick of It was spent during opening deck construction.",
               "Trish Scarborough: 6 unspent XP after Scenario I + Interlude I."
+            ]
+          },
+          {
+            "title": "Campaign-Wide Chaos Bag Notes",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Remove 1 cultist token from the chaos bag for the remainder of the campaign.",
+              "Remove 1 tablet token from the chaos bag for the remainder of the campaign.",
+              "Remove 1 elder thing token from the chaos bag for the remainder of the campaign."
             ]
           }
         ]
@@ -389,8 +385,8 @@
             "mental": 1
           },
           "startingXp": 3,
-          "currentXp": "Current XP: 9",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><p>In the Thick of It: Lily Chen starts with 3 experience and chooses to take 2 total trauma as 1 physical trauma and 1 mental trauma.</p><div class=\"upgrade-entry\" data-entry-uid=\"tic-s1-lily\"><p class=\"upgrade-entry-head\">After Scenario I (+6 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-s1-lily\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
+          "currentXp": "Current XP: 6",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><p>In the Thick of It: Lily Chen starts with 3 experience and chooses to take 2 total trauma as 1 physical trauma and 1 mental trauma.</p><div class=\"upgrade-entry opening-deck-spend\" data-entry-uid=\"tic-start-lily\"><p class=\"upgrade-entry-head\">Campaign Start: In the Thick of It XP spent</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Discipline: Prescience of Fate (Unbroken)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/discipline_prescience_of_fate.png\" alt=\"Discipline: Prescience of Fate (Unbroken)\"></span></li><li><span class=\"card-ref\">Safeguard (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/safeguard_2.png\" alt=\"Safeguard (2)\"></span></li><li><span class=\"card-ref\">Ever Vigilant (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/ever_vigilant_1.png\" alt=\"Ever Vigilant (1)\"></span></li></ul></div></div></div><div class=\"upgrade-entry\" data-entry-uid=\"tic-s1-lily\"><p class=\"upgrade-entry-head\">After Scenario I (+6 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-s1-lily\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 1, Mental 1."
         },
         {
