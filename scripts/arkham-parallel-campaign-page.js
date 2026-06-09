@@ -571,6 +571,7 @@
         myriadCardNames: ahlcgLibrary.myriadCardNames || [],
         exceptionalCardNames: ahlcgLibrary.exceptionalCardNames || [],
         customizableCardNames: ahlcgLibrary.customizableCardNames || [],
+        signatureCardNames: ahlcgLibrary.signatureCardNames || [],
         customizableBaselineState: window.BGB_AHLCG_CUSTOMIZABLE_STATE || {},
         customizableInitialState: window.BGB_AHLCG_CUSTOMIZABLE_INITIAL_STATE || {},
         campaignStartNote: upgradeConfig.campaignStartNote || null,

@@ -11,6 +11,7 @@
     const myriadCardNames = Array.isArray(options.myriadCardNames) ? options.myriadCardNames : [];
     const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
     const customizableCardNames = Array.isArray(options.customizableCardNames) ? options.customizableCardNames : [];
+    const signatureCardNames = Array.isArray(options.signatureCardNames) ? options.signatureCardNames : [];
     const customizableLibraryCards = window.AHLCG_CUSTOMIZABLE_LIBRARY && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY === "object"
       && window.AHLCG_CUSTOMIZABLE_LIBRARY.cards && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY.cards === "object"
       ? window.AHLCG_CUSTOMIZABLE_LIBRARY.cards
@@ -76,6 +77,12 @@
       .filter(Boolean);
     const customizableNameOnlySet = new Set(
       customizableCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
+    );
+    const signatureCatalogKeys = signatureCardNames
+      .map((name) => getCatalogKey(name))
+      .filter(Boolean);
+    const signatureNameOnlySet = new Set(
+      signatureCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
     );
     const customizableBaselineState = normalizeCustomizableBaselineState(customizableInitialSource);
 
@@ -1661,8 +1668,29 @@
       return false;
     }
 
+    function isSignatureCardName(cardName) {
+      const key = getCatalogKey(cardName);
+      if (!key) return false;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return false;
+      if (signatureNameOnlySet.has(nameOnly)) return true;
+      return signatureCatalogKeys.some((sk) => {
+        const sNameOnly = getNameOnly(sk);
+        if (!sNameOnly) return false;
+        return (
+          nameOnly === sNameOnly ||
+          nameOnly.startsWith(sNameOnly + " ") ||
+          sNameOnly.startsWith(nameOnly + " ")
+        );
+      });
+    }
+
+    function isNoXpCardName(cardName) {
+      return isStoryCardName(cardName) || isSignatureCardName(cardName);
+    }
+
     function getAddedCardCost(cardName) {
-      if (isStoryCardName(cardName)) return 0;
+      if (isNoXpCardName(cardName)) return 0;
       const level = getCardLevel(cardName);
       const baseCost = level <= 0 ? 1 : level;
       return isExceptionalCardName(cardName) ? (baseCost * 2) : baseCost;
@@ -1727,7 +1755,7 @@
     }
 
     function getRemovedUpgradeCredit(cardName) {
-      if (isStoryCardName(cardName) || isCustomizableCardName(cardName)) return 0;
+      if (isNoXpCardName(cardName) || isCustomizableCardName(cardName)) return 0;
       const level = getCardLevel(cardName);
       if (level <= 0) return 0;
       return isExceptionalCardName(cardName) ? (level * 2) : level;
@@ -1738,7 +1766,7 @@
       const groupedMyriad = new Map();
       (cardNames || []).forEach((name) => {
         const qty = getCardQuantity(name);
-        if (isStoryCardName(name)) return;
+        if (isNoXpCardName(name)) return;
         if (isCustomizableCardName(name)) {
           if (!isPhysicalCustomizableRecord(name)) return;
           for (let i = 0; i < qty; i += 1) {

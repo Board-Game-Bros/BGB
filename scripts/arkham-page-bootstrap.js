@@ -21,14 +21,14 @@
     "parallel-campaign": {
       rootId: "arkham-parallel-campaign-root",
       scripts: [
-        "/scripts/ahlcg-standard-library.js?v=20260608a",
+        "/scripts/ahlcg-standard-library.js?v=20260609a",
         "/scripts/ahlcg-customizable-library.js",
         "/scripts/ahlcg-customizable-state.js?v=20260512a",
         "/scripts/shared-github-sync.js?v=20260401a",
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
-        "/scripts/ahlcg-upgrade-manager.js?v=20260609d",
-        "/scripts/arkham-parallel-campaign-page.js?v=20260606b",
+        "/scripts/ahlcg-upgrade-manager.js?v=20260609e",
+        "/scripts/arkham-parallel-campaign-page.js?v=20260609a",
       ],
     },
   };
