@@ -17,7 +17,7 @@
     {
       "sections": [
         {
-          "title": "Asset (16)",
+          "title": "Asset (14)",
           "label": "Hand",
           "cards": [
             { "qty": 2, "name": "Dragon Pole", "imageSrc": "/assets/boardgames/ahlcg_cards/dragon_pole.png", "imageAlt": "Dragon Pole" }
@@ -47,8 +47,13 @@
           "label": "Other",
           "cards": [
             { "qty": 2, "name": "Enchanted Blade", "imageSrc": "/assets/boardgames/ahlcg_cards/enchanted_blade.png", "imageAlt": "Enchanted Blade" },
-            { "qty": 1, "name": "Safeguard (2)", "imageSrc": "/assets/boardgames/ahlcg_cards/safeguard_2.png", "imageAlt": "Safeguard (2)" },
-            { "qty": 1, "name": "Discipline", "imageSrc": "/assets/boardgames/ahlcg_cards/discipline_balance_of_body.png", "imageAlt": "Discipline" },
+            { "qty": 1, "name": "Safeguard (2)", "imageSrc": "/assets/boardgames/ahlcg_cards/safeguard_2.png", "imageAlt": "Safeguard (2)" }
+          ]
+        },
+        {
+          "title": "Permanent (2)",
+          "cards": [
+            { "qty": 1, "name": "Discipline: Balance of Body (Unbroken)", "imageSrc": "/assets/boardgames/ahlcg_cards/discipline_balance_of_body.png", "imageAlt": "Discipline: Balance of Body (Unbroken)" },
             { "qty": 1, "name": "In the Thick of It", "imageSrc": "/assets/boardgames/ahlcg_cards/in_the_thick_of_it.png", "imageAlt": "In the Thick of It" }
           ]
         }
@@ -80,6 +85,25 @@
           "cards": [
             { "qty": 1, "name": "Burden of Destiny", "imageSrc": "/assets/boardgames/ahlcg_cards/burden_of_destiny.png", "imageAlt": "Burden of Destiny" },
             { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        },
+        {
+          "title": "Side Deck (22)",
+          "cards": [
+            { "qty": 2, "name": "Beat Cop (2)", "imageSrc": "/assets/boardgames/ahlcg_cards/beat_cop_2.png", "imageAlt": "Beat Cop (2)" },
+            { "qty": 2, "name": "Burden of Destiny ★", "imageSrc": "/assets/boardgames/ahlcg_cards/burden_of_destiny.png", "imageAlt": "Burden of Destiny" },
+            { "qty": 2, "name": "Cyclopean Hammer (5)", "imageSrc": "/assets/boardgames/ahlcg_cards/cyclopean_hammer_5.png", "imageAlt": "Cyclopean Hammer (5)" },
+            { "qty": 1, "name": "Discipline: Alignment of Spirit (Unbroken)", "imageSrc": "/assets/boardgames/ahlcg_cards/discipline_alignment_of_spirit.png", "imageAlt": "Discipline: Alignment of Spirit (Unbroken)" },
+            { "qty": 1, "name": "Discipline: Prescience of Fate (Unbroken)", "imageSrc": "/assets/boardgames/ahlcg_cards/discipline_prescience_of_fate.png", "imageAlt": "Discipline: Prescience of Fate (Unbroken)" },
+            { "qty": 1, "name": "Discipline: Quiescence of Thought (Unbroken)", "imageSrc": "/assets/boardgames/ahlcg_cards/discipline_quiescence_of_thought.png", "imageAlt": "Discipline: Quiescence of Thought (Unbroken)" },
+            { "qty": 1, "name": "Empty Vessel (4)", "imageSrc": "/assets/boardgames/ahlcg_cards/empty_vessel_abandoned_by_the_gods_4.png", "imageAlt": "Empty Vessel (4)" },
+            { "qty": 2, "name": "Enchant Weapon (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/enchant_weapon_3.png", "imageAlt": "Enchant Weapon (3)" },
+            { "qty": 2, "name": "Ever Vigilant (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/ever_vigilant_1.png", "imageAlt": "Ever Vigilant (1)" },
+            { "qty": 1, "name": "Fang of Tyr'thrha (4)", "imageSrc": "/assets/boardgames/ahlcg_cards/fang_of_tyrthrha_4.png", "imageAlt": "Fang of Tyr'thrha (4)" },
+            { "qty": 2, "name": "First Watch", "imageSrc": "/assets/boardgames/ahlcg_cards/first_watch.png", "imageAlt": "First Watch" },
+            { "qty": 2, "name": "Grete Wagner (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/grete_wagner_the_purifier_3.png", "imageAlt": "Grete Wagner (3)" },
+            { "qty": 2, "name": "On the Hunt (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/on_the_hunt_3.png", "imageAlt": "On the Hunt (3)" },
+            { "qty": 1, "name": "Stick to the Plan (3)", "imageSrc": "/assets/boardgames/ahlcg_cards/stick_to_the_plan_3.png", "imageAlt": "Stick to the Plan (3)" }
           ]
         }
       ]

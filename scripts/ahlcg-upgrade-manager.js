@@ -2026,6 +2026,19 @@
     }
 
     function toDisplayNameFromFile(fileName) {
+      const disciplineNamesByFile = {
+        "discipline_alignment_of_spirit.png": "Discipline: Alignment of Spirit (Unbroken)",
+        "discipline_alignment_of_spirit_1.png": "Discipline: Alignment of Spirit (Broken)",
+        "discipline_balance_of_body.png": "Discipline: Balance of Body (Unbroken)",
+        "discipline_balance_of_body_1.png": "Discipline: Balance of Body (Broken)",
+        "discipline_prescience_of_fate.png": "Discipline: Prescience of Fate (Unbroken)",
+        "discipline_prescience_of_fate_1.png": "Discipline: Prescience of Fate (Broken)",
+        "discipline_quiescence_of_thought.png": "Discipline: Quiescence of Thought (Unbroken)",
+        "discipline_quiescence_of_thought_1.png": "Discipline: Quiescence of Thought (Broken)",
+      };
+      const exactFileName = String(fileName || "").split("/").pop();
+      if (disciplineNamesByFile[exactFileName]) return disciplineNamesByFile[exactFileName];
+
       let base = String(fileName || "").replace(/\.png$/i, "");
       let level = null;
       const levelMatch = base.match(/_(\d+)$/);
