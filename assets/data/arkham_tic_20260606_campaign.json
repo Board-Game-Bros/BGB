@@ -303,19 +303,6 @@
         "title": "",
         "notes": [
           {
-            "title": "Campaign Notes",
-            "listClass": "campaign-log-list",
-            "items": [
-              "Record in campaign log: Player card entries only.",
-              "Scenario I: The Pit of Despair ended at Resolution 1.",
-              "George Barnaby, Lily Chen, and Trish Scarborough resigned.",
-              "Victory display: 2.",
-              "Interlude I: Puzzle Pieces was resolved after Scenario I.",
-              "The conspiracy deepens four times from the recovered memories.",
-              "Proceed to Scenario II: The Vanishing of Elina Harper."
-            ]
-          },
-          {
             "title": "Memories Recovered",
             "listClass": "campaign-log-list",
             "items": [
