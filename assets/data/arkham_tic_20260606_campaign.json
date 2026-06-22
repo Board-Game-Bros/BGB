@@ -86,8 +86,7 @@
       "statusChips": [
         "Status: Completed",
         "Resolution: 1",
-        "Victory Display: 2",
-        "Unspent XP: 6 each"
+        "Victory Display: 2"
       ],
       "notes": [
         {
@@ -123,8 +122,7 @@
       "title": "Interlude I: Puzzle Pieces",
       "statusChips": [
         "Status: Completed",
-        "Bonus XP: 4",
-        "Total Unspent XP: 6 each"
+        "Bonus XP: 4"
       ],
       "notes": [
         {
@@ -151,21 +149,86 @@
     {
       "title": "Scenario II: The Vanishing of Elina Harper",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed",
+        "Resolution: No resolution was reached",
+        "Victory Display: 3",
+        "Outcome: Mission failed"
       ],
       "notes": [
         {
-          "title": "Setup Notes",
-          "items": []
+          "title": "Opening Search",
+          "items": [
+            "On Wednesday, August 17, 1927, five weeks before the pit, Agent Dawson drove George Barnaby, Lily Chen, and Trish Scarborough into Innsmouth to find Agent Elina Harper.",
+            "Dawson found Harper's abandoned vehicle near the old railroad station, but it offered no clear trail. With little to go on, he split the team up to canvas the town and learn who might know where Harper had gone.",
+            "The first useful contact was Joe Sargent, the suspicious bus driver in the town square. Through his curt tour of local gossip, the investigators learned the main names and places shaping Innsmouth's power structure: Brian Burnham at the First National grocery, Othera Gilman and the Gilman House, Joyce Little's bookshop, Barnabas Marsh's refinery, Zadok Allen near the old Fish Street bridge, Robert Friendly at the harbor, and the Esoteric Order of Dagon on New Church Green.",
+            "The town itself felt hostile from the start: abandoned buildings, watchful locals, and Dawson's growing worry all pointed to Harper having drawn attention from people who controlled more of Innsmouth than they admitted."
+          ]
         },
         {
-          "title": "Scenario Results",
+          "title": "Harper's Trail",
           "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
+            "That night, Dawson revealed that Harper had been staying at the Gilman House and had left behind an unsent letter warning that someone in town knew her movements.",
+            "The letter made the search urgent: Harper had not used Dawson's code phrase for a routine absence, so Dawson assumed she was in danger rather than merely lying low.",
+            "Together, the investigators narrowed the search to a suspect and a hideout, using the Leads deck to rule out impossible options before making an accusation."
+          ]
+        },
+        {
+          "title": "Leads Eliminated",
+          "items": [
+            "Eliminated suspects: Robert Friendly, Joyce Little, Barnabas Marsh, Zadok Allen.",
+            "Eliminated hideouts: Innsmouth Jail, The House on Water Street, Sawbones Alley, New Church Green."
+          ]
+        },
+        {
+          "title": "The Accusation",
+          "items": [
+            "The investigators accused Othera Gilman and searched Shoreward Slums.",
+            "The hidden Suspect was Brian Burnham and the hidden Hideout was Esoteric Order of Dagon.",
+            "Because neither part of the accusation matched the hidden cards, the investigators were on the wrong track and had to resign immediately."
+          ]
+        },
+        {
+          "title": "Scenario Outcome",
+          "items": [
+            "No resolution was reached during play, and the aftermath proceeded through Resolution 1.",
+            "After the failed search, the investigators returned to their hotel room and found it ransacked, their gear stolen, and a warning left for them: INTERLOPERS DROWN IN THE DEEP.",
+            "A mysterious notebook slipped under the door gave them a new lead into Innsmouth's older history, Obed Marsh, and the Esoteric Order of Dagon. The notes suggested that whatever had happened to Harper was tied to the Order's deeper interests, not merely to smuggling or prohibition.",
+            "Campaign Log record: the mission failed.",
+            "Each investigator earned 3 XP from the victory display. This XP has been spent in the recorded Scenario II deck upgrades.",
+            "Proceed to Interlude II: The Syzygy."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Interlude II: The Syzygy",
+      "statusChips": [
+        "Type: Narrative Interlude",
+        "Status: Completed"
+      ],
+      "notes": [
+        {
+          "title": "Memory Returns",
+          "items": [
+            "The investigators came to on the rocky shore with Agent Harper standing over them, once again caught between the present-day Innsmouth crisis and the memories from five weeks earlier.",
+            "Because the mission failed, they remembered searching for Harper but never finding her, with the notebook about the Esoteric Order of Dagon as the last clear piece of the trail."
+          ]
+        },
+        {
+          "title": "Harper's Explanation",
+          "items": [
+            "Harper revealed that she had escaped captivity on her own, though she was badly injured in the process.",
+            "She admitted that she was the one who slipped the notebook under the hotel room door. She could not safely stay and talk because she was still being followed, but she believed the investigators had uncovered more in one week than she had in two.",
+            "The conversation confirmed that the earlier failed search was still useful: the notebook and the investigators' work had pointed them toward the Esoteric Order of Dagon and the deeper conspiracy behind Harper's disappearance."
+          ]
+        },
+        {
+          "title": "The Syzygy",
+          "items": [
+            "As Harper began to fill in the missing pieces, thunder rolled across the horizon and a powerful wave struck the jetties.",
+            "The sky turned crimson as storm clouds gathered around the aligned sun and moon, making it clear that the strange celestial event had begun.",
+            "Harper changed the plan immediately: the investigators would return to Innsmouth with her while she explained what she knew on the way.",
+            "Proceed to Scenario III: In Too Deep."
           ]
         }
       ]
@@ -173,21 +236,40 @@
     {
       "title": "Scenario III: In Too Deep",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 5",
+        "Bonus XP: 2"
       ],
       "notes": [
         {
-          "title": "Setup Notes",
-          "items": []
+          "title": "Return To Innsmouth",
+          "items": [
+            "Harper led George Barnaby, Lily Chen, and Trish Scarborough back toward Innsmouth while the sea continued to rise and the sun and moon aligned over the horizon.",
+            "As the gaps in their memories began to close, Harper explained that the hostile locals and the creatures in town seemed connected to the Esoteric Order of Dagon.",
+            "From the headland, the investigators saw that Innsmouth had been invaded. Deep One creatures prowled the flooded streets, barricades blocked the routes through town, and the Manuxet River had spilled out into the roads.",
+            "The group decided to cross town quickly and reach Agent Dawson's vehicle near the abandoned railway station on the western edge of Innsmouth."
+          ]
         },
         {
-          "title": "Scenario Results",
+          "title": "Flashbacks",
           "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
+            "Flashback V record added: a deal with Joe Sargent. Put the set-aside Joe Sargent asset into play under the control of an investigator at Innsmouth Square.",
+            "Flashback VIII record added: a jailbreak. Remove 1 elder thing token from the chaos bag for the remainder of the campaign.",
+            "Flashback VI record added: a followed lead. George Barnaby earns Teachings of the Order.",
+            "Flashback VII record added: an intervention. Add 1 +1 token to the chaos bag for the remainder of the campaign."
+          ]
+        },
+        {
+          "title": "The Investigators Achieved Resolution I.",
+          "items": [
+            "George Barnaby, Lily Chen, and Trish Scarborough all resigned and made it safely to the vehicles.",
+            "Harper recognized that leaving Innsmouth would not be enough: the rising tide, the aligned sky, and the creatures in town suggested a threat that could spread beyond Innsmouth if ignored.",
+            "Dawson's silver key turned up among the investigators' belongings, allowing Harper to start his automobile and escape the flooded town.",
+            "Campaign Log record: the investigators made it safely to their vehicles.",
+            "Each investigator earned 5 XP from the victory display plus 2 bonus XP because the investigators made it safely to their vehicles.",
+            "This 7 XP is recorded under Unspent Experience and should not be spent yet.",
+            "Proceed to Scenario IV: Devil Reef."
           ]
         }
       ]
@@ -316,7 +398,11 @@
               "A meeting with Thomas Dawson",
               "A battle with a horrifying devil",
               "A decision to stick together",
-              "An encounter with a secret cult"
+              "An encounter with a secret cult",
+              "A deal with Joe Sargent",
+              "A jailbreak",
+              "A followed lead",
+              "An intervention"
             ]
           },
           {
@@ -344,12 +430,33 @@
             ]
           },
           {
+            "title": "Scenario II Lead Investigation",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Eliminated suspect leads: Robert Friendly, Joyce Little, Barnabas Marsh, Zadok Allen.",
+              "Eliminated hideout leads: Innsmouth Jail, The House on Water Street, Sawbones Alley, New Church Green.",
+              "Accusation made: Othera Gilman at Shoreward Slums.",
+              "Revealed hidden cards: Brian Burnham and Esoteric Order of Dagon.",
+              "Record: the mission failed."
+            ]
+          },
+          {
+            "title": "Scenario III Records",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Record: the investigators made it safely to their vehicles.",
+              "Joe Sargent entered play under the control of an investigator at Innsmouth Square.",
+              "George Barnaby earned Teachings of the Order.",
+              "Innsmouth was not consumed by the rising tide."
+            ]
+          },
+          {
             "title": "Unspent Experience",
             "listClass": "campaign-log-list",
             "items": [
-              "George Barnaby: 6 unspent XP after Scenario I + Interlude I.",
-              "Lily Chen: 6 unspent XP after Scenario I + Interlude I. Her 3 XP from In the Thick of It was spent during opening deck construction.",
-              "Trish Scarborough: 6 unspent XP after Scenario I + Interlude I."
+              "George Barnaby: 7 unspent XP after Scenario III.",
+              "Lily Chen: 7 unspent XP after Scenario III. Her 3 XP from In the Thick of It was spent during opening deck construction.",
+              "Trish Scarborough: 7 unspent XP after Scenario III."
             ]
           },
           {
@@ -358,7 +465,9 @@
             "items": [
               "Remove 1 cultist token from the chaos bag for the remainder of the campaign.",
               "Remove 1 tablet token from the chaos bag for the remainder of the campaign.",
-              "Remove 1 elder thing token from the chaos bag for the remainder of the campaign."
+              "Remove 1 elder thing token from the chaos bag for the remainder of the campaign.",
+              "Remove 1 additional elder thing token from the chaos bag for the remainder of the campaign.",
+              "Add 1 +1 token to the chaos bag for the remainder of the campaign."
             ]
           }
         ]
@@ -379,7 +488,7 @@
             "mental": 1
           },
           "startingXp": 3,
-          "currentXp": "Current XP: 0",
+          "currentXp": "Current XP: 7",
           "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><p>In the Thick of It: Lily Chen starts with 3 experience and chooses to take 2 total trauma as 1 physical trauma and 1 mental trauma.</p><div class=\"upgrade-entry opening-deck-spend\" data-entry-uid=\"tic-start-lily\"><p class=\"upgrade-entry-head\">After Scenario I (+0 XP)</p><div class=\"upgrade-columns\" style=\"\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Discipline: Prescience of Fate (Unbroken)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/discipline_prescience_of_fate.png\" alt=\"Discipline: Prescience of Fate (Unbroken)\" style=\"\"></span></li><li><span class=\"card-ref\">Safeguard (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/safeguard_2.png\" alt=\"Safeguard (2)\" style=\"\"></span></li><li><span class=\"card-ref\">Ever Vigilant (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/ever_vigilant_1.png\" alt=\"Ever Vigilant (1)\" style=\"\"></span></li><li><span class=\"card-ref\">Burden of Destiny<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/burden_of_destiny.png\" alt=\"Burden of Destiny\" style=\"\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-start-lily\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"tic-s1-lily\"><p class=\"upgrade-entry-head\">After Scenario I (+6 XP)</p><div class=\"upgrade-columns\" style=\"\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Arcane Initiate (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/arcane_initiate.png\" alt=\"Arcane Initiate (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Vicious Blow (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/vicious_blow_2.png\" alt=\"Vicious Blow (2)\"></span></li><li><span class=\"card-ref\">Fang of Tyr'thrha (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fang_of_tyrthrha_4.png\" alt=\"Fang of Tyr'thrha (4)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-s1-lily\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e1\">\n        <p class=\"upgrade-entry-head\">After Scenario II (+3 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Scrying<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/scrying.png\" alt=\"Scrying\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Combat Training (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/combat_training_3.png\" alt=\"Combat Training (3)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e1\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 1, Mental 1."
         },
@@ -387,7 +496,7 @@
           "name": "George Barnaby",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/george_barnaby_the_lawyer.png",
           "imageAlt": "George Barnaby: The Lawyer",
-          "currentXp": "Current XP: 0",
+          "currentXp": "Current XP: 7",
           "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><div class=\"upgrade-entry\" data-entry-uid=\"tic-s1-george\"><p class=\"upgrade-entry-head\">After Scenario I (+6 XP)</p><div class=\"upgrade-columns\" style=\"\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Schoffner's Catalogue (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/schoffners_catalogue.png\" alt=\"Schoffner's Catalogue (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Miss Doyle: Cat General of Ulthar (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/miss_doyle_cat_general_of_ulthar_1.png\" alt=\"Miss Doyle: Cat General of Ulthar (1)\"></span></li><li><span class=\"card-ref\">Cornered (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/cornered_2.png\" alt=\"Cornered (2)\"></span></li><li><span class=\"card-ref\">Charisma (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/charisma_3.png\" alt=\"Charisma (3)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-s1-george\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e5\">\n        <p class=\"upgrade-entry-head\">After Scenario II (+3 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Charisma (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/charisma_3.png\" alt=\"Charisma (3)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e5\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         },
@@ -395,7 +504,7 @@
           "name": "Trish Scarborough",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/trish_scarborough_the_spy.png",
           "imageAlt": "Trish Scarborough: The Spy",
-          "currentXp": "Current XP: 0",
+          "currentXp": "Current XP: 7",
           "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (06/06/2026): Base deck recorded for the Innsmouth Conspiracy run.</p><div class=\"upgrade-entry\" data-entry-uid=\"tic-s1-trish\"><p class=\"upgrade-entry-head\">After Scenario I (+6 XP)</p><div class=\"upgrade-columns\" style=\"\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Silver Tongue<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/silver_tongue.png\" alt=\"Silver Tongue\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Moxie (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/moxie_3.png\" alt=\"Moxie (3)\"></span></li><li><span class=\"card-ref\">Streetwise (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/streetwise_3.png\" alt=\"Streetwise (3)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"tic-s1-trish\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e6\">\n        <p class=\"upgrade-entry-head\">After Scenario II (+3 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Magnifying Glass<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/magnifying_glass.png\" alt=\"Magnifying Glass\"></span></li><li><span class=\"card-ref\">Bizarre Diagnosis<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/bizarre_diagnosis.png\" alt=\"Bizarre Diagnosis\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Magnifying Glass 1 (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/magnifying_glass_1_1.png\" alt=\"Magnifying Glass 1 (1)\"></span></li><li><span class=\"card-ref\">Haste (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/haste_2.png\" alt=\"Haste (2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e6\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         }
