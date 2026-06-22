@@ -142,6 +142,13 @@
       ]
     },
     {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 06/21/2026",
+        "Session: Scenario II + Interlude II + Scenario III"
+      ]
+    },
+    {
       "title": "Scenario II: The Vanishing of Elina Harper",
       "statusChips": [
         "Status: Pending"
