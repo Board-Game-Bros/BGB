@@ -447,6 +447,18 @@ body.torch-mode #campaigns .campaign-subtitle {
   background: linear-gradient(180deg, rgba(236, 214, 174, 0.76) 0%, rgba(215, 183, 131, 0.74) 100%);
 }
 
+.opening-deck-spend .opening-deck-note,
+.opening-deck-spend .scenario-trauma {
+  margin: 0 0 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.opening-deck-spend .scenario-trauma {
+  margin: 10px 0 0;
+}
+
 .upgrade-entry-head {
   margin: 0 0 8px;
   font-weight: 700;
