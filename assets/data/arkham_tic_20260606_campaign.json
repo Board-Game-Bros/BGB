@@ -392,6 +392,14 @@
         "title": "",
         "notes": [
           {
+            "title": "Campaign Notes",
+            "listClass": "campaign-log-list",
+            "items": [
+              "The mission failed.",
+              "The investigators made it safely to their vehicles."
+            ]
+          },
+          {
             "title": "Memories Recovered",
             "listClass": "campaign-log-list",
             "items": [
@@ -409,24 +417,62 @@
             "title": "Possible Suspects",
             "listClass": "campaign-log-list",
             "items": [
-              "Brian Burnham",
+              {
+                "text": "Brian Burnham",
+                "className": "campaign-log-underlined"
+              },
               "Othera Gilman",
-              "Joyce Little",
-              "Barnabas Marsh",
-              "Zadok Allen",
-              "Robert Friendly"
+              {
+                "text": "Joyce Little",
+                "className": "campaign-log-crossed"
+              },
+              {
+                "text": "Barnabas Marsh",
+                "className": "campaign-log-crossed"
+              },
+              {
+                "text": "Zadok Allen",
+                "className": "campaign-log-crossed"
+              },
+              {
+                "text": "Robert Friendly",
+                "className": "campaign-log-crossed"
+              }
             ]
           },
           {
             "title": "Possible Hideouts",
             "listClass": "campaign-log-list",
             "items": [
-              "Innsmouth Jail",
+              {
+                "text": "Innsmouth Jail",
+                "className": "campaign-log-crossed"
+              },
               "Shoreward Slums",
-              "Sawbones Alley",
-              "The House on Water Street",
-              "Esoteric Order of Dagon",
-              "New Church Green"
+              {
+                "text": "Sawbones Alley",
+                "className": "campaign-log-crossed"
+              },
+              {
+                "text": "The House on Water Street",
+                "className": "campaign-log-crossed"
+              },
+              {
+                "text": "Esoteric Order of Dagon",
+                "className": "campaign-log-underlined"
+              },
+              {
+                "text": "New Church Green",
+                "className": "campaign-log-crossed"
+              }
+            ]
+          },
+          {
+            "title": "Player Card Entries",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Joe Sargent entered play under the control of an investigator at Innsmouth Square.",
+              "George Barnaby earns Teachings of the Order."
             ]
           },
           {
@@ -445,8 +491,6 @@
             "listClass": "campaign-log-list",
             "items": [
               "Record: the investigators made it safely to their vehicles.",
-              "Joe Sargent entered play under the control of an investigator at Innsmouth Square.",
-              "George Barnaby earned Teachings of the Order.",
               "Innsmouth was not consumed by the rising tide."
             ]
           },

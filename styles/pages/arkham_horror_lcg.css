@@ -292,6 +292,13 @@ body.torch-mode #campaigns .campaign-subtitle {
   text-decoration-skip-ink: none;
 }
 
+.campaign-log-underlined {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.08em;
+  text-decoration-color: rgba(90, 68, 39, 0.78);
+}
+
 .upgrade-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -1220,6 +1227,10 @@ body.torch-mode .campaign-log-highlight {
 
 body.torch-mode .campaign-log-crossed {
   text-decoration-color: rgba(230, 194, 122, 0.62);
+}
+
+body.torch-mode .campaign-log-underlined {
+  text-decoration-color: rgba(230, 194, 122, 0.72);
 }
 
 body.torch-mode .campaign-log-group + .campaign-log-group {
