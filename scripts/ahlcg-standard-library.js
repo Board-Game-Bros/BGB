@@ -1014,8 +1014,6 @@
       "madame_labranche_mysterious_benefactress.png",
       "magnifying_glass.png",
       "magnifying_glass_1.png",
-      "magnifying_glass_1_1.png",
-      "magnifying_glass_1_car.png",
       "magnifying_glass_core_2026.png",
       "maimed_hand.png",
       "makeshift_bomb_3.png",
