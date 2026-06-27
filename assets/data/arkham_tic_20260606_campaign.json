@@ -340,7 +340,7 @@
         {
           "title": "Keys And Relics",
           "items": [
-            "Because the purple key was controlled or on the current act when Devil Reef ended, the idol was brought to the lighthouse. Each investigator earned 2 additional XP, and 1 skull token was added to the chaos bag for the remainder of the campaign.",
+            "Because the purple key was controlled or on the current act when Devil Reef ended, the idol was brought to the lighthouse. Each investigator earned 2 additional XP, and 1 cultist token was added to the chaos bag for the remainder of the campaign.",
             "Because the white key was controlled or on the current act when Devil Reef ended, the mantle was brought to the lighthouse. Each investigator earned 2 additional XP, and 1 tablet token was added to the chaos bag for the remainder of the campaign.",
             "Because the black key was controlled or on the current act when Devil Reef ended, the headdress was brought to the lighthouse. Each investigator earned 2 additional XP, and 1 elder thing token was added to the chaos bag for the remainder of the campaign.",
             "Do not add the Waveworn Idol, Awakened Mantle, or Headdress of Y'ha-nthlei story assets to any investigator deck yet. They must be recovered first."
@@ -590,7 +590,7 @@
             "title": "Interlude III Records",
             "listClass": "campaign-log-list",
             "items": [
-              "Purple key condition resolved: the idol was brought to the lighthouse; each investigator earned 2 additional XP; add 1 skull token to the chaos bag for the remainder of the campaign.",
+              "Purple key condition resolved: the idol was brought to the lighthouse; each investigator earned 2 additional XP; add 1 cultist token to the chaos bag for the remainder of the campaign.",
               "White key condition resolved: the mantle was brought to the lighthouse; each investigator earned 2 additional XP; add 1 tablet token to the chaos bag for the remainder of the campaign.",
               "Black key condition resolved: the headdress was brought to the lighthouse; each investigator earned 2 additional XP; add 1 elder thing token to the chaos bag for the remainder of the campaign.",
               "Each investigator may now spend the experience previously recorded under Unspent Experience. The group has spent that experience.",
@@ -606,7 +606,7 @@
               "Remove 1 elder thing token from the chaos bag for the remainder of the campaign.",
               "Remove 1 additional elder thing token from the chaos bag for the remainder of the campaign.",
               "Add 1 +1 token to the chaos bag for the remainder of the campaign.",
-              "Add 1 skull token to the chaos bag for the remainder of the campaign.",
+              "Add 1 cultist token to the chaos bag for the remainder of the campaign.",
               "Add 1 tablet token to the chaos bag for the remainder of the campaign.",
               "Add 1 elder thing token to the chaos bag for the remainder of the campaign."
             ]
