@@ -275,23 +275,84 @@
       ]
     },
     {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 06/27/2026",
+        "Session: Scenario IV + Interlude III"
+      ]
+    },
+    {
       "title": "Scenario IV: Devil Reef",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 5",
+        "Outcome: The Terror of Devil Reef is dead"
       ],
       "notes": [
         {
-          "title": "Setup Notes",
-          "items": []
+          "title": "Voyage To Devil Reef",
+          "items": [
+            "On Friday, September 2, 1927, three weeks before the present crisis, George Barnaby, Lily Chen, and Trish Scarborough hired Captain Moore to take them from Innsmouth to Devil Reef.",
+            "Because the mission to find Harper had failed, Agent Dawson boarded with the grim news that all four leads were cold and Harper was still beyond their reach.",
+            "The investigators chose Devil Reef anyway: sailors whispered about haunted coves, misshapen fins, vanished boats, and creatures crawling in and out of the reef caves. Dawson suspected the Esoteric Order of Dagon was spreading the rumors because it had something to hide there.",
+            "Before departure, Dawson asked why the investigators stayed in Innsmouth after failing to rescue Harper. They could only answer that duty, curiosity, or both had left them with no choice but to keep digging."
+          ]
         },
         {
-          "title": "Scenario Results",
+          "title": "Flashbacks",
           "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
+            "Flashback X record added: discovery of an unholy mantle. Take control of the white key and the set-aside Awakened Mantle story asset; place the white key on Awakened Mantle.",
+            "Flashback XI record added: discovery of a mystical relic. Take control of the black key and the set-aside Headdress of Y'ha-nthlei story asset; place the black key on Headdress of Y'ha-nthlei.",
+            "Flashback IX record added: discovery of a strange idol. Take control of the purple key and the set-aside Waveworn Idol story asset; place the purple key on Waveworn Idol."
+          ]
+        },
+        {
+          "title": "The Investigators Achieved Resolution I.",
+          "items": [
+            "As daylight faded and the tide rose around Devil Reef, the investigators returned safely to shore with their discoveries.",
+            "The coves and tidal caverns held more than relics of the Esoteric Order of Dagon: they were home to strange fish-human hybrids, blood-stained altars, unholy prayers, and signs of a catastrophe still coming for Innsmouth and perhaps far more than Innsmouth.",
+            "Resolution 1 was not reached by advancing Agenda 2b.",
+            "Each investigator earned 5 XP from the victory display. This experience is recorded as unspent experience and should not be spent yet.",
+            "The Terror of Devil Reef was in the victory display, so the Campaign Log records that the Terror of Devil Reef is dead.",
+            "Do not move the purple, black, or white keys from their current positions yet; their locations will matter during Interlude III: Beneath the Waves.",
+            "Proceed to Interlude III: Beneath the Waves."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Interlude III: Beneath the Waves",
+      "statusChips": [
+        "Type: Narrative Interlude",
+        "Status: Completed",
+        "Bonus XP: 6"
+      ],
+      "notes": [
+        {
+          "title": "Another Memory Surfaces",
+          "items": [
+            "On the road back toward the present crisis, the investigators remembered a dark cell, a knife at their throat, and hooded figures discussing what they had stolen from Dagon's lair and Devil Reef.",
+            "A name surfaced from the vision: Oceiros. Harper identified him as Oceiros Marsh, keeper of the old lighthouse on Falcon Point.",
+            "The vision made it clear that the items found at Devil Reef had been taken from the investigators after their capture and sent to the lighthouse."
+          ]
+        },
+        {
+          "title": "Keys And Relics",
+          "items": [
+            "Because the purple key was controlled or on the current act when Devil Reef ended, the idol was brought to the lighthouse. Each investigator earned 2 additional XP, and 1 skull token was added to the chaos bag for the remainder of the campaign.",
+            "Because the white key was controlled or on the current act when Devil Reef ended, the mantle was brought to the lighthouse. Each investigator earned 2 additional XP, and 1 tablet token was added to the chaos bag for the remainder of the campaign.",
+            "Because the black key was controlled or on the current act when Devil Reef ended, the headdress was brought to the lighthouse. Each investigator earned 2 additional XP, and 1 elder thing token was added to the chaos bag for the remainder of the campaign.",
+            "Do not add the Waveworn Idol, Awakened Mantle, or Headdress of Y'ha-nthlei story assets to any investigator deck yet. They must be recovered first."
+          ]
+        },
+        {
+          "title": "Toward Falcon Point",
+          "items": [
+            "Harper recognized that the recovered memories were returning in fragments, but the lighthouse now seemed to be the next place with answers.",
+            "Thomas Dawson is returned to the collection. If an investigator earned Elina Harper earlier in the campaign, that investigator may add her back to their deck.",
+            "With a fragment of memory restored, the investigators may now spend the experience previously recorded under Unspent Experience. The group has spent that experience, so the Campaign Log no longer keeps an Unspent Experience entry.",
+            "Proceed to Scenario V: Horror in High Gear."
           ]
         }
       ]
@@ -396,7 +457,11 @@
             "listClass": "campaign-log-list",
             "items": [
               "The mission failed.",
-              "The investigators made it safely to their vehicles."
+              "The investigators made it safely to their vehicles.",
+              "The Terror of Devil Reef is dead.",
+              "The idol was brought to the lighthouse.",
+              "The mantle was brought to the lighthouse.",
+              "The headdress was brought to the lighthouse."
             ]
           },
           {
@@ -410,7 +475,10 @@
               "A deal with Joe Sargent",
               "A jailbreak",
               "A followed lead",
-              "An intervention"
+              "An intervention",
+              "Discovery of an unholy mantle",
+              "Discovery of a mystical relic",
+              "Discovery of a strange idol"
             ]
           },
           {
@@ -472,7 +540,19 @@
             "listClass": "campaign-log-list",
             "items": [
               "Joe Sargent entered play under the control of an investigator at Innsmouth Square.",
-              "George Barnaby earns Teachings of the Order."
+              "George Barnaby earns Teachings of the Order.",
+              "Thomas Dawson returned to the collection.",
+              "If an investigator earned Elina Harper earlier in the campaign, that investigator may add her back to their deck."
+            ]
+          },
+          {
+            "title": "Key Records",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Purple key / Waveworn Idol: the idol was brought to the lighthouse.",
+              "White key / Awakened Mantle: the mantle was brought to the lighthouse.",
+              "Black key / Headdress of Y'ha-nthlei: the headdress was brought to the lighthouse.",
+              "Do not add Waveworn Idol, Awakened Mantle, or Headdress of Y'ha-nthlei to any investigator deck yet; they must be recovered first."
             ]
           },
           {
@@ -495,12 +575,26 @@
             ]
           },
           {
-            "title": "Unspent Experience",
+            "title": "Scenario IV Records",
             "listClass": "campaign-log-list",
             "items": [
-              "George Barnaby: 7 unspent XP after Scenario III.",
-              "Lily Chen: 7 unspent XP after Scenario III. Her 3 XP from In the Thick of It was spent during opening deck construction.",
-              "Trish Scarborough: 7 unspent XP after Scenario III."
+              "Resolution: Resolution 1.",
+              "Resolution 1 was not reached by advancing Agenda 2b.",
+              "Victory display: 5.",
+              "Record: the Terror of Devil Reef is dead.",
+              "Do not move the purple, black, or white keys from their current positions yet.",
+              "Proceed to Interlude III: Beneath the Waves."
+            ]
+          },
+          {
+            "title": "Interlude III Records",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Purple key condition resolved: the idol was brought to the lighthouse; each investigator earned 2 additional XP; add 1 skull token to the chaos bag for the remainder of the campaign.",
+              "White key condition resolved: the mantle was brought to the lighthouse; each investigator earned 2 additional XP; add 1 tablet token to the chaos bag for the remainder of the campaign.",
+              "Black key condition resolved: the headdress was brought to the lighthouse; each investigator earned 2 additional XP; add 1 elder thing token to the chaos bag for the remainder of the campaign.",
+              "Each investigator may now spend the experience previously recorded under Unspent Experience. The group has spent that experience.",
+              "Proceed to Scenario V: Horror in High Gear."
             ]
           },
           {
@@ -511,7 +605,10 @@
               "Remove 1 tablet token from the chaos bag for the remainder of the campaign.",
               "Remove 1 elder thing token from the chaos bag for the remainder of the campaign.",
               "Remove 1 additional elder thing token from the chaos bag for the remainder of the campaign.",
-              "Add 1 +1 token to the chaos bag for the remainder of the campaign."
+              "Add 1 +1 token to the chaos bag for the remainder of the campaign.",
+              "Add 1 skull token to the chaos bag for the remainder of the campaign.",
+              "Add 1 tablet token to the chaos bag for the remainder of the campaign.",
+              "Add 1 elder thing token to the chaos bag for the remainder of the campaign."
             ]
           }
         ]
