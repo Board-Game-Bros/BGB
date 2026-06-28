@@ -173,6 +173,37 @@
       return Array.from({ length: boxes }, (_, idx) => `${baseId}.${idx + 1}`);
     }
 
+    function getCustomizableGroupBoxLabel(group, idx) {
+      const labels = Array.isArray(group && group.boxLabels) ? group.boxLabels : [];
+      const label = labels[idx];
+      return label !== undefined && label !== null && String(label).trim()
+        ? String(label).trim()
+        : String(idx + 1);
+    }
+
+    function getCustomizableGroupBoxXp(group, idx) {
+      const boxXp = Array.isArray(group && group.boxXp) ? Number(group.boxXp[idx]) : NaN;
+      if (Number.isFinite(boxXp) && boxXp > 0) return boxXp;
+      const boxes = Number(group && group.boxes) > 0 ? Number(group.boxes) : 0;
+      const xpTotal = Number(group && group.xpTotal);
+      if (boxes === 1 && Number.isFinite(xpTotal) && xpTotal > 0) return xpTotal;
+      return 1;
+    }
+
+    function getCustomizableGroupSelectedXp(group, idSet) {
+      const selectedSet = idSet instanceof Set ? idSet : new Set(uniqueIds(idSet));
+      return getCustomizableGroupIds(group).reduce((total, id, idx) => (
+        selectedSet.has(id) ? total + getCustomizableGroupBoxXp(group, idx) : total
+      ), 0);
+    }
+
+    function getCustomizableUpgradeIdsSpentXp(definition, upgradeIds) {
+      const idSet = new Set(uniqueIds(upgradeIds));
+      return (definition && Array.isArray(definition.groups) ? definition.groups : []).reduce((total, group) => (
+        total + getCustomizableGroupSelectedXp(group, idSet)
+      ), 0);
+    }
+
     function getCustomizableAllIds(definition) {
       return (definition && Array.isArray(definition.groups) ? definition.groups : [])
         .flatMap((group) => getCustomizableGroupIds(group));
@@ -598,7 +629,7 @@
         ids.forEach((id, idx) => {
           const chip = document.createElement("span");
           chip.className = "customizable-box";
-          chip.textContent = String(idx + 1);
+          chip.textContent = getCustomizableGroupBoxLabel(group, idx);
           if (previewMode === "editor") {
             if (addedSet.has(id)) {
               chip.classList.add("is-upgrade");
@@ -888,12 +919,16 @@
         const addedCount = ids.filter((id) => addedSet.has(id)).length;
         const total = inheritedCount + addedCount;
         if (total <= 0) return;
-        const suffix = addedCount > 0 ? ` (+${addedCount})` : "";
+        const inheritedXp = getCustomizableGroupSelectedXp(group, inheritedSet);
+        const addedXp = getCustomizableGroupSelectedXp(group, addedSet);
+        const totalXp = inheritedXp + addedXp;
+        const maxXp = Number(group && group.xpTotal) > 0 ? Number(group.xpTotal) : ids.length;
+        const suffix = addedXp > 0 ? ` (+${addedXp})` : "";
         const groupFieldValues = getCustomizableGroupFields(group)
           .map((field) => String(fieldValues[field.id] || "").trim())
           .filter(Boolean);
         const groupFieldText = groupFieldValues.length ? `: ${groupFieldValues.join(", ")}` : "";
-        parts.push(`${String(group.label || "").replace(/\.$/, "")} ${total}/${ids.length}${suffix}${groupFieldText}`);
+        parts.push(`${String(group.label || "").replace(/\.$/, "")} ${totalXp}/${maxXp}${suffix}${groupFieldText}`);
       });
       summary.textContent = parts.length ? parts.join(" • ") : "No checkboxes selected yet.";
     }
@@ -1111,7 +1146,7 @@
           const chip = document.createElement("button");
           chip.type = "button";
           chip.className = "customizable-inline-chip";
-          chip.textContent = String(idx + 1);
+          chip.textContent = getCustomizableGroupBoxLabel(group, idx);
           if (idx < inheritedCount) {
             chip.classList.add("is-inherited");
             chip.disabled = true;
@@ -2209,7 +2244,11 @@
       let total = 0;
       customizedMap.forEach((customizedState) => {
         if (customizedState.upgradeIds && customizedState.upgradeIds.length) {
-          total += customizedState.upgradeIds.length;
+          const definition = getCustomizableDefinition(customizedState.sampleName);
+          const spent = definition
+            ? getCustomizableUpgradeIdsSpentXp(definition, customizedState.upgradeIds)
+            : customizedState.upgradeIds.length;
+          total += spent;
           return;
         }
         if (customizedState.explicitPaidXp !== null) {

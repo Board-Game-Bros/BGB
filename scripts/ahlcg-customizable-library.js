@@ -297,7 +297,8 @@
                 {
                     "id": "specialist_2",
                     "label": "Specialist.",
-                    "boxes": 2,
+                    "boxes": 1,
+                    "boxLabels": ["2"],
                     "xpTotal": 2,
                     "text": "Choose another trait.",
                     "fields": [
