@@ -12,6 +12,7 @@
     const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
     const customizableCardNames = Array.isArray(options.customizableCardNames) ? options.customizableCardNames : [];
     const signatureCardNames = Array.isArray(options.signatureCardNames) ? options.signatureCardNames : [];
+    const permanentCardNames = Array.isArray(options.permanentCardNames) ? options.permanentCardNames : [];
     const customizableLibraryCards = window.AHLCG_CUSTOMIZABLE_LIBRARY && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY === "object"
       && window.AHLCG_CUSTOMIZABLE_LIBRARY.cards && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY.cards === "object"
       ? window.AHLCG_CUSTOMIZABLE_LIBRARY.cards
@@ -84,11 +85,18 @@
     const signatureNameOnlySet = new Set(
       signatureCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
     );
+    const permanentCatalogKeys = permanentCardNames
+      .map((name) => getCatalogKey(name))
+      .filter(Boolean);
+    const permanentNameOnlySet = new Set(
+      permanentCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
+    );
     const deckSizeAdjustmentRules = [
       {
         cardKey: getCatalogKey("Versatile (2)"),
         nameOnly: getNameOnly(getCatalogKey("Versatile (2)")),
         freeLevel0Cards: 5,
+        deckSlots: 0,
       },
     ].filter((rule) => rule.cardKey && rule.nameOnly && rule.freeLevel0Cards > 0);
     const customizableBaselineState = normalizeCustomizableBaselineState(customizableInitialSource);
@@ -1924,6 +1932,23 @@
       return isStoryCardName(cardName) || isSignatureCardName(cardName);
     }
 
+    function isPermanentCardName(cardName) {
+      const key = getCatalogKey(cardName);
+      if (!key) return false;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return false;
+      if (permanentNameOnlySet.has(nameOnly)) return true;
+      return permanentCatalogKeys.some((pk) => {
+        const pNameOnly = getNameOnly(pk);
+        if (!pNameOnly) return false;
+        return (
+          nameOnly === pNameOnly ||
+          nameOnly.startsWith(pNameOnly + " ") ||
+          pNameOnly.startsWith(nameOnly + " ")
+        );
+      });
+    }
+
     function getDeckSizeAdjustmentRule(cardName) {
       const key = getCatalogKey(cardName);
       if (!key) return null;
@@ -1941,6 +1966,22 @@
         const rule = getDeckSizeAdjustmentRule(name);
         if (!rule) return total;
         return total + (getCardQuantity(name) * rule.freeLevel0Cards);
+      }, 0);
+    }
+
+    function getAddedCardDeckSlots(cardName) {
+      const rule = getDeckSizeAdjustmentRule(cardName);
+      if (rule && Number.isFinite(Number(rule.deckSlots))) {
+        return Math.max(0, Number(rule.deckSlots));
+      }
+      if (isPermanentCardName(cardName)) return 0;
+      return 1;
+    }
+
+    function computeRemovedDeckSlots(cardNames) {
+      return (cardNames || []).reduce((total, name) => {
+        if (isNoXpCardName(name)) return total;
+        return total + (getCardQuantity(name) * getAddedCardDeckSlots(name));
       }, 0);
     }
 
@@ -2029,7 +2070,7 @@
               key: "",
               cost: getAddedCardCost(name),
               freeLevel0Eligible: getCardLevel(name) <= 0,
-              deckSlots: 1,
+              deckSlots: getAddedCardDeckSlots(name),
               freeLevel0SlotsRequired: 1,
             });
           }
@@ -2047,13 +2088,13 @@
             deckSlots: 0,
             freeLevel0SlotsRequired: 1,
           };
-          existing.deckSlots += qty;
+          existing.deckSlots += getAddedCardDeckSlots(name) * qty;
           groupedMyriad.set(key, existing);
           return;
         }
 
         for (let i = 0; i < qty; i += 1) {
-          items.push({ key, cost, freeLevel0Eligible, deckSlots: 1, freeLevel0SlotsRequired: 1 });
+          items.push({ key, cost, freeLevel0Eligible, deckSlots: getAddedCardDeckSlots(name), freeLevel0SlotsRequired: 1 });
         }
       });
 
@@ -2097,9 +2138,14 @@
       return creditsByKey;
     }
 
+    function getCostItemDeckSlots(item) {
+      const value = Number(item && item.deckSlots);
+      return Number.isFinite(value) && value >= 0 ? value : 1;
+    }
+
     function computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames) {
       const creditsByKey = buildSameNameUpgradeCreditMap(removedCardNames);
-      const deckSizeAdjustmentSlots = computeDeckSizeAdjustmentSlots(addedCardNames);
+      const refillDeckSlots = computeRemovedDeckSlots(removedCardNames) + computeDeckSizeAdjustmentSlots(addedCardNames);
       const costItems = buildAddedXpCostItems(addedCardNames).map((item) => {
         const key = item.key || "";
         let credit = 0;
@@ -2112,14 +2158,15 @@
         });
       });
       const nonLevel0DeckSlots = costItems.reduce((total, item) => (
-        item.freeLevel0Eligible ? total : total + Math.max(1, Number(item.deckSlots) || 1)
+        item.freeLevel0Eligible ? total : total + getCostItemDeckSlots(item)
       ), 0);
-      let availableDeckSizeSlots = Math.max(0, deckSizeAdjustmentSlots - nonLevel0DeckSlots);
+      let availableDeckSizeSlots = Math.max(0, refillDeckSlots - nonLevel0DeckSlots);
       return costItems.reduce((total, item) => {
-        if (item.adjustedCost > 0 && item.freeLevel0Eligible && availableDeckSizeSlots > 0) {
+        const deckSlots = getCostItemDeckSlots(item);
+        if (item.adjustedCost > 0 && item.freeLevel0Eligible && deckSlots > 0 && availableDeckSizeSlots > 0) {
           const neededSlots = Math.max(1, Number(item.freeLevel0SlotsRequired) || 1);
           if (availableDeckSizeSlots >= neededSlots) {
-            availableDeckSizeSlots = Math.max(0, availableDeckSizeSlots - Math.max(1, Number(item.deckSlots) || 1));
+            availableDeckSizeSlots = Math.max(0, availableDeckSizeSlots - deckSlots);
             return total;
           }
         }
