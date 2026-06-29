@@ -379,6 +379,73 @@
     return wrap;
   }
 
+  function slugifyDeckDataName(name) {
+    return String(name || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+  }
+
+  function compactDate(value) {
+    const match = String(value || "").match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    if (!match) return "";
+    return match[3] + match[1] + match[2];
+  }
+
+  function extractInitialDeckCards(deckData) {
+    const rows = [];
+    (Array.isArray(deckData && deckData.deckColumns) ? deckData.deckColumns : []).forEach((column) => {
+      (Array.isArray(column && column.sections) ? column.sections : []).forEach((section) => {
+        const title = String(section && section.title ? section.title : "").trim();
+        if (/^Side Deck\b/i.test(title)) return;
+        (Array.isArray(section && section.cards) ? section.cards : []).forEach((card) => {
+          const name = String(card && card.name ? card.name : "").trim();
+          if (!name) return;
+          const qty = Number(card && card.qty);
+          rows.push({
+            name,
+            qty: Number.isFinite(qty) && qty > 0 ? Math.trunc(qty) : 1,
+          });
+        });
+      });
+    });
+    return rows;
+  }
+
+  async function loadInitialDecks(data) {
+    const initialDecks = {};
+    const campaignDate = compactDate(data && data.upgradeManager && data.upgradeManager.campaignStartNote
+      ? data.upgradeManager.campaignStartNote.date
+      : "");
+    const cards = (Array.isArray(data.upgradeTracks) ? data.upgradeTracks : [])
+      .flatMap((track) => Array.isArray(track && track.cards) ? track.cards : []);
+
+    await Promise.all(cards.map(async (card) => {
+      const name = String(card && card.name ? card.name : "").trim();
+      if (!name) return;
+      if (Array.isArray(card.initialDeckCards)) {
+        initialDecks[name] = extractInitialDeckCards({ deckColumns: [{ sections: [{ cards: card.initialDeckCards }] }] });
+        return;
+      }
+      const source = String(card && card.deckSource ? card.deckSource : "").trim()
+        || (campaignDate && slugifyDeckDataName(name)
+          ? `/assets/data/arkham_${slugifyDeckDataName(name)}_${campaignDate}.json`
+          : "");
+      if (!source) return;
+      try {
+        const response = await window.fetch(source, { cache: "no-cache" });
+        if (!response.ok) return;
+        const deckData = await response.json();
+        const rows = extractInitialDeckCards(deckData || {});
+        if (rows.length) initialDecks[name] = rows;
+      } catch (_error) {
+        // Missing deck data should not block rendering; it only disables removed-card validation for that investigator.
+      }
+    }));
+
+    return initialDecks;
+  }
+
   function buildPersistableParallelCampaignJson(state, sourceContent) {
     const payload = JSON.parse(String(sourceContent || "{}"));
     const tracks = Array.isArray(payload.upgradeTracks) ? payload.upgradeTracks : [];
@@ -404,7 +471,7 @@
     return JSON.stringify(payload, null, 2) + "\n";
   }
 
-  function renderPage(data) {
+  async function renderPage(data) {
     root.innerHTML = "";
     document.title = String(data.pageTitle || "Arkham Horror LCG");
     const rawCustomizableState = Array.isArray(data.customizableState) ? data.customizableState : [];
@@ -560,6 +627,7 @@
 
     const ahlcgLibrary = window.AHLCG_STANDARD_NAME_LIBRARY || {};
     const upgradeConfig = data.upgradeManager || {};
+    const initialDecks = await loadInitialDecks(data || {});
     if (typeof window.initAhlcgUpgradeManager === "function") {
       window.initAhlcgUpgradeManager({
         storageKey: String(upgradeConfig.storageKey || "ahlcg_parallel_campaign_upgrade_state_v1"),
@@ -573,6 +641,7 @@
         customizableCardNames: ahlcgLibrary.customizableCardNames || [],
         signatureCardNames: ahlcgLibrary.signatureCardNames || [],
         permanentCardNames: ahlcgLibrary.permanentCardNames || [],
+        initialDecks,
         customizableBaselineState: window.BGB_AHLCG_CUSTOMIZABLE_STATE || {},
         customizableInitialState: window.BGB_AHLCG_CUSTOMIZABLE_INITIAL_STATE || {},
         campaignStartNote: upgradeConfig.campaignStartNote || null,
@@ -590,7 +659,7 @@
       const response = await window.fetch(dataSource, { cache: "no-cache" });
       if (!response.ok) throw new Error(`Failed to load parallel campaign data (${response.status})`);
       const data = await response.json();
-      renderPage(data || {});
+      await renderPage(data || {});
     } catch (error) {
       const main = el("main", "container");
       main.appendChild(el("h1", "page-title", "Arkham Horror LCG"));

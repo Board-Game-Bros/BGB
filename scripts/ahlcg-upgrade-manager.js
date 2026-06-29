@@ -25,6 +25,7 @@
     const customizableInitialSource = options.customizableInitialState && typeof options.customizableInitialState === "object"
       ? options.customizableInitialState
       : customizableBaselineSource;
+    const initialDecks = normalizeInitialDeckMap(options.initialDecks);
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
@@ -164,6 +165,28 @@
       const key = getCatalogKey(cardName);
       if (!key) return null;
       return customizableLibraryCards[key] || null;
+    }
+
+    function normalizeInitialDeckMap(rawDecks) {
+      const normalized = {};
+      if (!rawDecks || typeof rawDecks !== "object") return normalized;
+      Object.keys(rawDecks).forEach((investigatorName) => {
+        const investigatorKey = normalizeText(investigatorName);
+        if (!investigatorKey) return;
+        const rows = Array.isArray(rawDecks[investigatorName]) ? rawDecks[investigatorName] : [];
+        normalized[investigatorKey] = rows
+          .map((row) => {
+            if (typeof row === "string") return { name: row, qty: getCardQuantity(row) };
+            const name = String(row && row.name ? row.name : "").trim();
+            const qty = Number(row && row.qty);
+            return {
+              name,
+              qty: Number.isFinite(qty) && qty > 0 ? Math.trunc(qty) : getCardQuantity(name),
+            };
+          })
+          .filter((row) => row.name && row.qty > 0);
+      });
+      return normalized;
     }
 
     function getCustomizableGroupIds(group) {
@@ -857,7 +880,7 @@
     function getInvestigatorNameForRow(row) {
       const card = row ? row.closest(".upgrade-card") : null;
       if (!card) return "";
-      const heading = card.querySelector("h3[data-investigator-name]");
+      const heading = card.querySelector("[data-investigator-name]");
       return heading ? String(heading.getAttribute("data-investigator-name") || "").trim() : "";
     }
 
@@ -1875,6 +1898,127 @@
       return Number.isFinite(value) && value > 0 ? value : 1;
     }
 
+    function getInventoryCardInfo(cardRow) {
+      const rawName = typeof cardRow === "string" ? cardRow : (cardRow && cardRow.name ? cardRow.name : "");
+      const parsed = parseTrailingQuantity(rawName);
+      const baseName = parsed.base || rawName;
+      const key = getCatalogKey(baseName);
+      const explicitQty = typeof cardRow === "object" && cardRow
+        ? Number(cardRow.qty)
+        : NaN;
+      return {
+        key,
+        name: baseName,
+        qty: Number.isFinite(explicitQty) && explicitQty > 0
+          ? Math.trunc(explicitQty)
+          : Math.max(1, Number(parsed.qty) || getCardQuantity(rawName)),
+      };
+    }
+
+    function addInventoryCard(inventory, cardRow) {
+      const info = getInventoryCardInfo(cardRow);
+      if (!info.key || info.qty <= 0) return;
+      const current = inventory.get(info.key) || { name: info.name, qty: 0 };
+      current.qty += info.qty;
+      inventory.set(info.key, current);
+    }
+
+    function removeInventoryCard(inventory, cardRow) {
+      const info = getInventoryCardInfo(cardRow);
+      if (!info.key || info.qty <= 0) return;
+      const current = inventory.get(info.key) || { name: info.name, qty: 0 };
+      current.qty = Math.max(0, current.qty - info.qty);
+      if (current.qty > 0) {
+        inventory.set(info.key, current);
+      } else {
+        inventory.delete(info.key);
+      }
+    }
+
+    function getInitialDeckRowsForCard(card) {
+      const investigatorName = getUpgradeCardName(card);
+      const investigatorKey = normalizeText(investigatorName);
+      return investigatorKey && Array.isArray(initialDecks[investigatorKey])
+        ? initialDecks[investigatorKey]
+        : [];
+    }
+
+    function shouldApplyEntryToDeckInventory(entry) {
+      if (!entry || entry.classList.contains("upgrade-entry-draft")) return false;
+      if (entry.classList.contains("opening-deck-spend")) return false;
+      const head = entry.querySelector(".upgrade-entry-head");
+      const text = head ? head.textContent.trim() : "";
+      return !/^Campaign Start\b/i.test(text);
+    }
+
+    function applyEntryToDeckInventory(inventory, entry) {
+      if (!shouldApplyEntryToDeckInventory(entry)) return;
+      const removedList = getEntryList(entry, "removed");
+      const addedList = getEntryList(entry, "added");
+      if (removedList) {
+        listCardRows(removedList).forEach((row) => removeInventoryCard(inventory, row));
+      }
+      if (addedList) {
+        listCardRows(addedList).forEach((row) => addInventoryCard(inventory, row));
+      }
+    }
+
+    function buildDeckInventoryBeforeEntry(card, targetEntry) {
+      const inventory = new Map();
+      getInitialDeckRowsForCard(card).forEach((row) => addInventoryCard(inventory, row));
+      if (!inventory.size) return inventory;
+
+      const entries = Array.from(card ? card.querySelectorAll(".upgrade-entry") : []);
+      for (let i = 0; i < entries.length; i += 1) {
+        const entry = entries[i];
+        if (targetEntry && entry === targetEntry) break;
+        applyEntryToDeckInventory(inventory, entry);
+      }
+      return inventory;
+    }
+
+    function validateRemovedCardsAgainstDeck(card, entry, removedCards) {
+      const initialRows = getInitialDeckRowsForCard(card);
+      if (!initialRows.length) {
+        return { valid: true, message: "" };
+      }
+
+      const inventory = buildDeckInventoryBeforeEntry(card, entry);
+      const working = new Map(inventory);
+      const failures = [];
+      (removedCards || []).forEach((row) => {
+        const info = getInventoryCardInfo(row);
+        if (!info.key || info.qty <= 0) return;
+        const available = working.has(info.key) ? Number(working.get(info.key).qty) || 0 : 0;
+        if (available < info.qty) {
+          failures.push({
+            name: formatCardNameWithQuantity(info.name, info.qty),
+            available,
+            needed: info.qty,
+          });
+          return;
+        }
+        const next = Object.assign({}, working.get(info.key), { qty: available - info.qty });
+        if (next.qty > 0) {
+          working.set(info.key, next);
+        } else {
+          working.delete(info.key);
+        }
+      });
+
+      if (!failures.length) {
+        return { valid: true, message: "" };
+      }
+
+      const details = failures.map((failure) => (
+        `${failure.name} (deck has ${failure.available}, trying to remove ${failure.needed})`
+      )).join("; ");
+      return {
+        valid: false,
+        message: `Cannot save: removed card is not in the current deck before this update. ${details}.`,
+      };
+    }
+
     function getCustomizableCheckboxCount(cardName) {
       const source = typeof cardName === "string" ? cardName : (cardName && cardName.name ? cardName.name : "");
       const text = String(source || "");
@@ -2779,6 +2923,11 @@
       if (!nameNode) return "";
       const dataName = nameNode.getAttribute("data-investigator-name");
       if (dataName) return dataName.trim();
+      const nestedDataName = nameNode.querySelector("[data-investigator-name]");
+      if (nestedDataName) {
+        const value = nestedDataName.getAttribute("data-investigator-name");
+        if (value) return value.trim();
+      }
       return nameNode.textContent.trim();
     }
 
@@ -3195,6 +3344,11 @@
         const customizedCards = currentCustomizedEditList ? listCardRows(currentCustomizedEditList) : [];
         const xpValue = toNonNegativeInteger(editor.querySelector('[data-edit="xp"]').value);
         const card = entry.closest(".upgrade-card");
+        const removedValidation = validateRemovedCardsAgainstDeck(card, entry, removedCards);
+        if (!removedValidation.valid) {
+          setInlineValidationMessage(errorNode, removedValidation.message);
+          return;
+        }
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
         const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards);
         if (netSpent > availableBefore + xpValue) {
@@ -3357,6 +3511,11 @@
         const customizedCards = customizedList ? listCardRows(customizedList) : [];
         const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards);
         const card = entry.closest(".upgrade-card");
+        const removedValidation = validateRemovedCardsAgainstDeck(card, entry, removedCards);
+        if (!removedValidation.valid) {
+          setInlineValidationMessage(draftErrorNode, removedValidation.message);
+          return;
+        }
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
         const budget = availableBefore + xpValue;
         if (netSpent > availableBefore + xpValue) {
