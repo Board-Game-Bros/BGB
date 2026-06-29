@@ -249,7 +249,7 @@ const bindCardRefViewportPreviews = (root = document) => {
     preview.style.right = "auto";
     preview.style.bottom = "auto";
     preview.style.transform = "none";
-    preview.style.zIndex = "2147483000";
+    preview.style.zIndex = "2147483647";
   };
 
   const refreshActive = () => {

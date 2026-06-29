@@ -27,7 +27,7 @@
         "/scripts/shared-github-sync.js?v=20260401a",
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
-        "/scripts/ahlcg-upgrade-manager.js?v=20260629d",
+        "/scripts/ahlcg-upgrade-manager.js?v=20260629e",
         "/scripts/arkham-parallel-campaign-page.js?v=20260629a",
       ],
     },
@@ -41,7 +41,7 @@
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20260629b";
+  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20260629d";
   document.head.appendChild(stylesheet);
 
   const root = document.createElement("div");
@@ -60,7 +60,7 @@
   (async () => {
     try {
       await loadScript("/scripts/shell-layout.js");
-      await loadScript("/scripts/main.js?v=20260609d");
+      await loadScript("/scripts/main.js?v=20260629a");
       for (const src of config.scripts) {
         await loadScript(src);
       }

@@ -599,7 +599,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   border-radius: 8px;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
   background: #f2e6c9;
-  z-index: 2147483000;
+  z-index: 2147483647;
 }
 
 img.card-preview,
@@ -1270,7 +1270,8 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
 }
 
 .card-autocomplete-preview {
-  z-index: 2147483000;
+  position: fixed;
+  z-index: 2147483647;
   pointer-events: none;
 }
 
