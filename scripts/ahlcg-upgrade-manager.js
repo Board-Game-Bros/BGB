@@ -2553,11 +2553,36 @@
       const panel = document.createElement("div");
       panel.className = "card-autocomplete";
       panel.hidden = true;
-      row.appendChild(panel);
+      document.body.appendChild(panel);
 
       let current = [];
       let activeIndex = -1;
       const previewMargin = 8;
+
+      function positionPanel() {
+        if (panel.hidden || !input.isConnected) return;
+        const rect = input.getBoundingClientRect();
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const left = Math.max(previewMargin, Math.min(rect.left, viewportWidth - previewMargin));
+        const width = Math.max(160, Math.min(rect.width, viewportWidth - (previewMargin * 2)));
+        const belowSpace = Math.max(0, viewportHeight - rect.bottom - previewMargin);
+        const aboveSpace = Math.max(0, rect.top - previewMargin);
+        const openUp = belowSpace < 220 && aboveSpace > belowSpace;
+        const availableHeight = Math.max(140, (openUp ? aboveSpace : belowSpace) - 4);
+
+        panel.style.left = Math.round(left) + "px";
+        panel.style.width = Math.round(width) + "px";
+        panel.style.right = "auto";
+        panel.style.maxHeight = Math.round(Math.min(480, availableHeight)) + "px";
+        if (openUp) {
+          panel.style.top = "auto";
+          panel.style.bottom = Math.round(viewportHeight - rect.top + 4) + "px";
+        } else {
+          panel.style.top = Math.round(rect.bottom + 4) + "px";
+          panel.style.bottom = "auto";
+        }
+      }
 
       function resetAutocompletePreviewPosition(preview) {
         if (!preview) return;
@@ -2619,6 +2644,12 @@
       function closePanel() {
         panel.hidden = true;
         panel.innerHTML = "";
+        panel.style.removeProperty("left");
+        panel.style.removeProperty("right");
+        panel.style.removeProperty("top");
+        panel.style.removeProperty("bottom");
+        panel.style.removeProperty("width");
+        panel.style.removeProperty("max-height");
         current = [];
         activeIndex = -1;
       }
@@ -2656,6 +2687,7 @@
           panel.appendChild(option);
         });
         panel.hidden = false;
+        positionPanel();
       }
 
       input.addEventListener("input", () => {
@@ -2689,10 +2721,13 @@
       });
 
       document.addEventListener("click", (event) => {
-        if (!row.contains(event.target)) {
+        if (!row.contains(event.target) && !panel.contains(event.target)) {
           closePanel();
         }
       });
+
+      window.addEventListener("scroll", positionPanel, true);
+      window.addEventListener("resize", positionPanel);
 
       panel.addEventListener("scroll", () => {
         const hovered = panel.querySelector(".card-autocomplete-item:hover");

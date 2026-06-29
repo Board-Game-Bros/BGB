@@ -1228,16 +1228,14 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
 }
 
 .card-autocomplete {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 4px);
+  position: fixed;
   border: 1px solid rgba(58, 45, 26, 0.45);
   border-radius: 8px;
   background: rgba(255, 249, 236, 0.98);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
   z-index: 2147482999;
-  overflow: visible;
+  overflow-y: auto;
+  overflow-x: visible;
 }
 
 .card-autocomplete-item {
