@@ -238,7 +238,6 @@ nav a:focus-visible {
 
 .container > * {
   position: relative;
-  z-index: 1;
 }
 
 .container > .section-title:first-child,
