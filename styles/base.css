@@ -210,7 +210,6 @@ nav a:focus-visible {
   margin: 34px auto 56px;
   padding: 30px 34px 34px;
   position: relative;
-  isolation: isolate;
   background:
     linear-gradient(180deg, rgba(255, 247, 228, 0.95) 0%, rgba(242, 228, 197, 0.93) 100%);
   border: 5px solid var(--frame-border-color);
