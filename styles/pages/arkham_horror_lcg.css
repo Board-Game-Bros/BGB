@@ -465,6 +465,10 @@ body.torch-mode #campaigns .campaign-subtitle {
   gap: 10px;
 }
 
+.upgrade-col {
+  min-width: 0;
+}
+
 .deck-overview-grid {
   align-items: center;
 }
@@ -498,6 +502,7 @@ body.torch-mode #campaigns .campaign-subtitle {
 
 .card-list li {
   margin: 0 0 5px;
+  min-width: 0;
 }
 
 .draft-card-item {
@@ -554,6 +559,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   position: relative;
   cursor: help;
   border-bottom: 1px dashed rgba(58, 45, 26, 0.55);
+  overflow-wrap: anywhere;
 }
 
 .card-name-token {
