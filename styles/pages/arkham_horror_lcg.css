@@ -11,6 +11,10 @@ body {
   font-family: "IM Fell English SC", serif;
 }
 
+body[data-source="/assets/data/arkham_tic_20260606_campaign.json"] .page-title {
+  display: none;
+}
+
 header h1,
 nav a,
 .page-title,
