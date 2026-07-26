@@ -358,23 +358,40 @@
       ]
     },
     {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 07/26/2026",
+        "Session: Scenario V + Scenario VI"
+      ]
+    },
+    {
       "title": "Scenario V: Horror in High Gear",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 7",
+        "Outcome: Reached Falcon Point before sunrise"
       ],
       "notes": [
         {
-          "title": "Setup Notes",
-          "items": []
+          "title": "The Road To Falcon Point",
+          "items": [
+            "George Barnaby, Lily Chen, and Trish Scarborough sped along the old dirt roads outside Innsmouth with Agent Harper in the passenger seat, following her map toward Falcon Point Lighthouse.",
+            "Harper believed Oceiros Marsh could be found at the lighthouse. The name stirred a terrible memory: Oceiros was the man who had left the investigators to die in the tidal tunnels.",
+            "The winding roads made Falcon Point difficult to reach, and headlights soon appeared in the rearview mirror. The Order had already discovered the investigators' escape from Innsmouth and was closing in fast.",
+            "With Harper holding on beside them, the investigators accelerated into the night and tried to lose their pursuers before the sun rose."
+          ]
         },
         {
-          "title": "Scenario Results",
+          "title": "The Investigators Achieved Resolution I.",
           "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
+            "George Barnaby, Lily Chen, and Trish Scarborough survived the chase and reached the distant beacon of Falcon Point Lighthouse.",
+            "To keep anyone at the lighthouse from hearing their approach, Harper suggested pulling over and completing the rest of the journey on foot.",
+            "After checking that they were no longer being followed, the investigators gathered their belongings from the automobile and began the trek toward Falcon Point.",
+            "Campaign Log record: the investigators reached Falcon Point before sunrise.",
+            "Each investigator earned 7 XP from the victory display. This experience is reflected in the recorded Scenario V deck upgrades.",
+            "No investigator suffered physical or mental trauma.",
+            "Proceed to Scenario VI: A Light in the Fog."
           ]
         }
       ]
@@ -382,21 +399,66 @@
     {
       "title": "Scenario VI: A Light in the Fog",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 6",
+        "Outcome: All investigators resigned at the Moon Room"
       ],
       "notes": [
         {
-          "title": "Setup Notes",
-          "items": []
+          "title": "Arrival At Falcon Point",
+          "items": [
+            "Crimson-tinted fog covered the sky as George Barnaby, Lily Chen, Trish Scarborough, and Agent Harper reached the gatehouse of Falcon Point.",
+            "The lighthouse beacon cut through the mist above the cliffs, though the investigators doubted that any ships remained at sea in the worsening weather.",
+            "The evidence taken from them weeks earlier was somewhere inside, along with Oceiros Marsh, the man who had captured them and left them to die in the tidal tunnels.",
+            "With no safe escape route if the assault went wrong, Harper warned the investigators to be ready for anything. They pressed onward toward the cliffs, determined to end the matter that night."
+          ]
         },
         {
-          "title": "Scenario Results",
+          "title": "Key Representations Read",
           "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
+            "White: a pocket telescope.",
+            "Yellow: a heavy iron ring crowded with prison cell keys.",
+            "Purple: the deceased larva of a malformed fish.",
+            "Black: a map of the depths beneath Devil Reef.",
+            "Blue: a key carved with a symbol of an engorged fish eye.",
+            "Green: a fist-sized cluster of raw peridot that pulses and glows with unnatural light.",
+            "Red: a gilded key made of coral and covered in strange, glowing runes; the word Y'ha-nthlei is inscribed upon the handle."
+          ]
+        },
+        {
+          "title": "Flashback XII",
+          "items": [
+            "Looking up at Falcon Point Lighthouse restored a memory from the earlier voyage to Devil Reef aboard Mr. Moore's fishing vessel.",
+            "Mr. Moore explained that the Marsh family had kept the old lighthouse operating for as long as he could remember and that Oceiros, its strange current keeper, visited the Order of Dagon hall by New Church Green.",
+            "He had also heard that the Marshes carved caverns beneath the lighthouse all the way down to sea level and beyond, and had seen groups gathering by the cliffside as if in prayer.",
+            "Campaign Log memory added: a conversation with Mr. Moore.",
+            "Remove 1 elder thing token from the chaos bag for the remainder of the campaign."
+          ]
+        },
+        {
+          "title": "Flashback XIII",
+          "items": [
+            "The investigators remembered questioning a drunken sailor in a ramshackle tavern by the docks of Innsmouth.",
+            "The sailor described Deep Ones swimming near the reefs and recalled catching one in his net together with a fist-sized, wriggling egg.",
+            "His story suggested that the creatures had a fishlike lifecycle and raised new questions about the hybrid beings seen throughout Innsmouth.",
+            "Campaign Log memory added: the lifecycle of a Deep One.",
+            "Remove 1 tablet token from the chaos bag for the remainder of the campaign."
+          ]
+        },
+        {
+          "title": "The Investigators Achieved Resolution I.",
+          "items": [
+            "George Barnaby, Lily Chen, and Trish Scarborough all resigned at the Moon Room and escaped onto the rocky shore.",
+            "Each investigator who resigned at the Moon Room records that they possess a diving suit.",
+            "The black key was on the current act when the game ended, so the Campaign Log records that the investigators possess a map of Y'ha-nthlei.",
+            "The red key was on the current act when the game ended, so the Campaign Log records that the investigators possess the key to Y'ha-nthlei.",
+            "Lily Chen earns Waveworn Idol.",
+            "George Barnaby earns Awakened Mantle.",
+            "Trish Scarborough earns Headdress of Y'ha-nthlei.",
+            "Each investigator earned 6 XP from the victory display. Record this under Unspent Experience, but do not spend it yet.",
+            "No investigator suffered physical or mental trauma.",
+            "Proceed to Scenario VII: The Lair of Dagon."
           ]
         }
       ]
@@ -461,7 +523,21 @@
               "The Terror of Devil Reef is dead.",
               "The idol was brought to the lighthouse.",
               "The mantle was brought to the lighthouse.",
-              "The headdress was brought to the lighthouse."
+              "The headdress was brought to the lighthouse.",
+              "The investigators reached Falcon Point before sunrise.",
+              "George Barnaby, Lily Chen, and Trish Scarborough each possess a diving suit.",
+              "The investigators possess a map of Y'ha-nthlei.",
+              "The investigators possess the key to Y'ha-nthlei."
+            ]
+          },
+          {
+            "title": "Unspent Experience",
+            "listClass": "campaign-log-list",
+            "items": [
+              "George Barnaby: 6 unspent XP.",
+              "Lily Chen: 6 unspent XP.",
+              "Trish Scarborough: 6 unspent XP.",
+              "Do not spend this experience yet."
             ]
           },
           {
@@ -478,7 +554,9 @@
               "An intervention",
               "Discovery of an unholy mantle",
               "Discovery of a mystical relic",
-              "Discovery of a strange idol"
+              "Discovery of a strange idol",
+              "A conversation with Mr. Moore",
+              "The lifecycle of a Deep One"
             ]
           },
           {
@@ -541,7 +619,10 @@
             "items": [
               "Joe Sargent entered play under the control of an investigator at Innsmouth Square.",
               "George Barnaby earns Teachings of the Order.",
-              "Thomas Dawson returned to the collection."
+              "Thomas Dawson returned to the collection.",
+              "Lily Chen earns Waveworn Idol.",
+              "George Barnaby earns Awakened Mantle.",
+              "Trish Scarborough earns Headdress of Y'ha-nthlei."
             ]
           },
           {
@@ -551,7 +632,9 @@
               "Purple key / Waveworn Idol: the idol was brought to the lighthouse.",
               "White key / Awakened Mantle: the mantle was brought to the lighthouse.",
               "Black key / Headdress of Y'ha-nthlei: the headdress was brought to the lighthouse.",
-              "Do not add Waveworn Idol, Awakened Mantle, or Headdress of Y'ha-nthlei to any investigator deck yet; they must be recovered first."
+              "Black key condition resolved: the investigators possess a map of Y'ha-nthlei.",
+              "Red key condition resolved: the investigators possess the key to Y'ha-nthlei.",
+              "The three relics were recovered and assigned during Scenario VI."
             ]
           },
           {
@@ -596,6 +679,34 @@
             ]
           },
           {
+            "title": "Scenario V Records",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Resolution: Resolution 1.",
+              "Victory display: 7.",
+              "Record: the investigators reached Falcon Point before sunrise.",
+              "George Barnaby, Lily Chen, and Trish Scarborough survived the scenario without physical or mental trauma.",
+              "Proceed to Scenario VI: A Light in the Fog."
+            ]
+          },
+          {
+            "title": "Scenario VI Records",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Resolution: Resolution 1.",
+              "Victory display: 6.",
+              "George Barnaby, Lily Chen, and Trish Scarborough resigned at the Moon Room.",
+              "Each investigator possesses a diving suit.",
+              "The investigators possess a map of Y'ha-nthlei.",
+              "The investigators possess the key to Y'ha-nthlei.",
+              "Lily Chen earns Waveworn Idol.",
+              "George Barnaby earns Awakened Mantle.",
+              "Trish Scarborough earns Headdress of Y'ha-nthlei.",
+              "Each investigator records 6 unspent XP and must not spend it yet.",
+              "Proceed to Scenario VII: The Lair of Dagon."
+            ]
+          },
+          {
             "title": "Campaign-Wide Chaos Bag Notes",
             "listClass": "campaign-log-list",
             "items": [
@@ -606,7 +717,9 @@
               "Add 1 +1 token to the chaos bag for the remainder of the campaign.",
               "Add 1 cultist token to the chaos bag for the remainder of the campaign.",
               "Add 1 tablet token to the chaos bag for the remainder of the campaign.",
-              "Add 1 elder thing token to the chaos bag for the remainder of the campaign."
+              "Add 1 elder thing token to the chaos bag for the remainder of the campaign.",
+              "Remove 1 elder thing token after Flashback XII for the remainder of the campaign.",
+              "Remove 1 tablet token after Flashback XIII for the remainder of the campaign."
             ]
           }
         ]
