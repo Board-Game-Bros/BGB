@@ -430,7 +430,7 @@
           "title": "Flashbacks",
           "items": [
             "Flashback XII record added: a conversation with Mr. Moore. Remove 1 elder thing token from the chaos bag for the remainder of the campaign.",
-            "Flashback XIII record added: the lifecycle of a Deep One. Remove 1 tablet token from the chaos bag for the remainder of the campaign."
+            "Flashback XIII record added: the lifecycle of a \"Deep One\". Remove 1 tablet token from the chaos bag for the remainder of the campaign."
           ]
         },
         {
@@ -512,7 +512,9 @@
               "The mantle was brought to the lighthouse.",
               "The headdress was brought to the lighthouse.",
               "The investigators reached Falcon Point before sunrise.",
-              "George Barnaby, Lily Chen, and Trish Scarborough each possess a diving suit.",
+              "George Barnaby possesses a diving suit.",
+              "Lily Chen possesses a diving suit.",
+              "Trish Scarborough possesses a diving suit.",
               "The investigators possess a map of Y'ha-nthlei.",
               "The investigators possess the key to Y'ha-nthlei."
             ]
@@ -543,7 +545,7 @@
               "Discovery of a mystical relic",
               "Discovery of a strange idol",
               "A conversation with Mr. Moore",
-              "The lifecycle of a Deep One"
+              "The lifecycle of a \"Deep One\""
             ]
           },
           {
@@ -683,7 +685,9 @@
               "Resolution: Resolution 1.",
               "Victory display: 6.",
               "George Barnaby, Lily Chen, and Trish Scarborough resigned at the Moon Room.",
-              "Each investigator possesses a diving suit.",
+              "George Barnaby possesses a diving suit.",
+              "Lily Chen possesses a diving suit.",
+              "Trish Scarborough possesses a diving suit.",
               "The investigators possess a map of Y'ha-nthlei.",
               "The investigators possess the key to Y'ha-nthlei.",
               "Lily Chen earns Waveworn Idol.",
