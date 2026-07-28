@@ -2157,13 +2157,6 @@
       return 1;
     }
 
-    function computeRemovedDeckSlots(cardNames) {
-      return (cardNames || []).reduce((total, name) => {
-        if (isNoXpCardName(name)) return total;
-        return total + (getCardQuantity(name) * getAddedCardDeckSlots(name));
-      }, 0);
-    }
-
     function getAddedCardCost(cardName) {
       if (isNoXpCardName(cardName)) return 0;
       const level = getCardLevel(cardName);
@@ -2324,7 +2317,10 @@
 
     function computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames) {
       const creditsByKey = buildSameNameUpgradeCreditMap(removedCardNames);
-      const refillDeckSlots = computeRemovedDeckSlots(removedCardNames) + computeDeckSizeAdjustmentSlots(addedCardNames);
+      // Replacing a removed card with a new level-0 card still costs 1 XP.
+      // Only explicit deck-building effects such as Versatile grant free
+      // level-0 card slots; ordinary vacancies in the deck do not.
+      let availableFreeLevel0Slots = computeDeckSizeAdjustmentSlots(addedCardNames);
       const costItems = buildAddedXpCostItems(addedCardNames).map((item) => {
         const key = item.key || "";
         let credit = 0;
@@ -2336,16 +2332,12 @@
           adjustedCost: Math.max(0, item.cost - credit),
         });
       });
-      const nonLevel0DeckSlots = costItems.reduce((total, item) => (
-        item.freeLevel0Eligible ? total : total + getCostItemDeckSlots(item)
-      ), 0);
-      let availableDeckSizeSlots = Math.max(0, refillDeckSlots - nonLevel0DeckSlots);
       return costItems.reduce((total, item) => {
         const deckSlots = getCostItemDeckSlots(item);
-        if (item.adjustedCost > 0 && item.freeLevel0Eligible && deckSlots > 0 && availableDeckSizeSlots > 0) {
+        if (item.adjustedCost > 0 && item.freeLevel0Eligible && deckSlots > 0 && availableFreeLevel0Slots > 0) {
           const neededSlots = Math.max(1, Number(item.freeLevel0SlotsRequired) || 1);
-          if (availableDeckSizeSlots >= neededSlots) {
-            availableDeckSizeSlots = Math.max(0, availableDeckSizeSlots - deckSlots);
+          if (availableFreeLevel0Slots >= neededSlots) {
+            availableFreeLevel0Slots = Math.max(0, availableFreeLevel0Slots - deckSlots);
             return total;
           }
         }
