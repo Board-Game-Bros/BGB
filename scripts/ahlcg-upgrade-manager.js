@@ -1902,13 +1902,17 @@
       const rawName = typeof cardRow === "string" ? cardRow : (cardRow && cardRow.name ? cardRow.name : "");
       const parsed = parseTrailingQuantity(rawName);
       const baseName = parsed.base || rawName;
-      const key = getCatalogKey(baseName);
+      // Initial deck data sometimes uses a card's short title while the
+      // editor uses the catalog's full title and subtitle. Resolve both to
+      // the same canonical catalog name before comparing deck inventory.
+      const canonicalName = normalizeCardNameInput(baseName) || baseName;
+      const key = getCatalogKey(canonicalName);
       const explicitQty = typeof cardRow === "object" && cardRow
         ? Number(cardRow.qty)
         : NaN;
       return {
         key,
-        name: baseName,
+        name: canonicalName,
         qty: Number.isFinite(explicitQty) && explicitQty > 0
           ? Math.trunc(explicitQty)
           : Math.max(1, Number(parsed.qty) || getCardQuantity(rawName)),
