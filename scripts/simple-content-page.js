@@ -52,6 +52,55 @@
     return grid;
   }
 
+  function renderNews(items) {
+    const list = el("div", "news-list");
+    if (!items.length) {
+      list.appendChild(el("div", "card game-card category-placeholder", "No news yet"));
+      return list;
+    }
+    items.forEach((item) => {
+      const article = el("article", "news-card");
+      if (item.imageSrc) {
+        const imageUrl = String(item.imageSrc).replace(/"/g, "%22");
+        article.classList.add("has-news-image");
+        article.style.setProperty("--news-bg", `url("${imageUrl}")`);
+      }
+      const badge = el("div", "news-badge");
+      badge.appendChild(el("span", "news-badge-label", String(item.statLabel || "Update")));
+      badge.appendChild(el("strong", "news-badge-value", String(item.statValue || "")));
+
+      const body = el("div", "news-card-body");
+      const meta = el("div", "news-meta");
+      if (item.kicker) meta.appendChild(el("span", "news-kicker", String(item.kicker)));
+      if (item.date) meta.appendChild(el("time", "news-date", String(item.date)));
+      body.appendChild(meta);
+
+      if (item.title) body.appendChild(el("h3", "news-title", String(item.title)));
+      if (item.text) body.appendChild(el("p", "news-lede", String(item.text)));
+      if (item.detail) body.appendChild(el("p", "news-detail", String(item.detail)));
+
+      if (Array.isArray(item.tags) && item.tags.length) {
+        const tags = el("div", "news-tags");
+        item.tags.forEach((tag) => tags.appendChild(el("span", "news-tag", String(tag))));
+        body.appendChild(tags);
+      }
+
+      if (item.href) {
+        const link = el("a", "more-info-btn news-link", String(item.linkLabel || "Open"));
+        link.href = String(item.href);
+        if (item.external) {
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+        body.appendChild(link);
+      }
+
+      article.append(badge, body);
+      list.appendChild(article);
+    });
+    return list;
+  }
+
   function renderPage(data) {
     document.title = String(data.title || document.title || "");
     root.innerHTML = "";
@@ -62,6 +111,8 @@
     const items = Array.isArray(data.items) ? data.items : [];
     if (data.layout === "photo-grid") {
       container.appendChild(renderPhotoGrid(items));
+    } else if (data.layout === "news") {
+      container.appendChild(renderNews(items));
     } else {
       container.appendChild(renderCards(items));
     }

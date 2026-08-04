@@ -1,6 +1,25 @@
 {
   "title": "BGB - News",
   "heading": "News",
-  "layout": "cards",
-  "items": []
+  "layout": "news",
+  "items": [
+    {
+      "kicker": "Crowdfunding",
+      "date": "August 4, 2026",
+      "title": "Parks Europe - Chalet Edition + Free Expansion",
+      "imageSrc": "/assets/news/parks-europe-chalet.avif",
+      "text": "Proud to be the 4,894th backer on BackerKit for Parks Europe - Chalet Edition + Free Expansion.",
+      "detail": "The deluxe Chalet Edition campaign from Keymaster includes upgraded PARKS Europe components, 48 real European national parks, and the World Heritage Sites Mini Expansion free for backers.",
+      "statLabel": "Backer",
+      "statValue": "4,894",
+      "tags": [
+        "BackerKit",
+        "Keymaster",
+        "PARKS Europe"
+      ],
+      "href": "https://www.backerkit.com/c/projects/keymaster/parks-europe-chalet-edition-free-expansion",
+      "linkLabel": "View Campaign",
+      "external": true
+    }
+  ]
 }
