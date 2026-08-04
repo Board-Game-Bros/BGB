@@ -13,9 +13,21 @@
       "statLabel": "Backer",
       "statValue": "4,894",
       "tags": [
-        "BackerKit",
-        "Keymaster",
-        "PARKS Europe"
+        {
+          "label": "BackerKit",
+          "href": "https://www.backerkit.com/",
+          "external": true
+        },
+        {
+          "label": "Keymaster",
+          "href": "https://www.keymastergames.com/",
+          "external": true
+        },
+        {
+          "label": "PARKS Europe",
+          "href": "https://boardgamegeek.com/boardgame/458651/parks-europe",
+          "external": true
+        }
       ],
       "href": "https://www.backerkit.com/c/projects/keymaster/parks-europe-chalet-edition-free-expansion",
       "linkLabel": "View Campaign",

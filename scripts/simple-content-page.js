@@ -81,7 +81,19 @@
 
       if (Array.isArray(item.tags) && item.tags.length) {
         const tags = el("div", "news-tags");
-        item.tags.forEach((tag) => tags.appendChild(el("span", "news-tag", String(tag))));
+        item.tags.forEach((tag) => {
+          if (tag && typeof tag === "object" && tag.href) {
+            const link = el("a", "news-tag", String(tag.label || tag.href));
+            link.href = String(tag.href);
+            if (tag.external) {
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+            }
+            tags.appendChild(link);
+          } else {
+            tags.appendChild(el("span", "news-tag", String(tag)));
+          }
+        });
         body.appendChild(tags);
       }
 

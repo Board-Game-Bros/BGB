@@ -208,6 +208,25 @@ nav a {
   color: rgba(54, 39, 21, 0.76);
 }
 
+a.news-tag {
+  text-decoration: none;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+a.news-tag:hover {
+  border-color: rgba(255, 238, 200, 0.48);
+  background: rgba(255, 249, 232, 0.22);
+  transform: translateY(-1px);
+}
+
+a.news-tag:focus-visible {
+  outline: 2px solid rgba(255, 238, 200, 0.72);
+  outline-offset: 3px;
+}
+
 .news-card.has-news-image .news-date,
 .news-card.has-news-image .news-title,
 .news-card.has-news-image .news-lede,
