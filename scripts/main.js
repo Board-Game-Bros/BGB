@@ -201,7 +201,6 @@ const bindCardRefViewportPreviews = (root = document) => {
     if (!viewportWidth || !viewportHeight) return;
     const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
     const maxHeight = Math.max(160, viewportHeight - (previewMargin * 2));
-
     const overflowLeft = rect.left < previewMargin;
     const overflowRight = rect.right > (viewportWidth - previewMargin);
     const overflowTop = rect.top < previewMargin;
@@ -250,7 +249,7 @@ const bindCardRefViewportPreviews = (root = document) => {
     preview.style.right = "auto";
     preview.style.bottom = "auto";
     preview.style.transform = "none";
-    preview.style.zIndex = "2147483000";
+    preview.style.zIndex = "2147483647";
   };
 
   const refreshActive = () => {

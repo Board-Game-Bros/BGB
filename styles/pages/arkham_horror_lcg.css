@@ -11,6 +11,10 @@ body {
   font-family: "IM Fell English SC", serif;
 }
 
+body[data-source="/assets/data/arkham_tic_20260606_campaign.json"] .page-title {
+  display: none;
+}
+
 header h1,
 nav a,
 .page-title,
@@ -292,6 +296,13 @@ body.torch-mode #campaigns .campaign-subtitle {
   text-decoration-skip-ink: none;
 }
 
+.campaign-log-underlined {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.08em;
+  text-decoration-color: rgba(90, 68, 39, 0.78);
+}
+
 .upgrade-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -440,6 +451,13 @@ body.torch-mode #campaigns .campaign-subtitle {
   background: linear-gradient(180deg, rgba(236, 214, 174, 0.76) 0%, rgba(215, 183, 131, 0.74) 100%);
 }
 
+.opening-deck-spend .opening-deck-note {
+  margin: 0 0 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
 .upgrade-entry-head {
   margin: 0 0 8px;
   font-weight: 700;
@@ -449,6 +467,10 @@ body.torch-mode #campaigns .campaign-subtitle {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+}
+
+.upgrade-col {
+  min-width: 0;
 }
 
 .deck-overview-grid {
@@ -484,6 +506,7 @@ body.torch-mode #campaigns .campaign-subtitle {
 
 .card-list li {
   margin: 0 0 5px;
+  min-width: 0;
 }
 
 .draft-card-item {
@@ -540,6 +563,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   position: relative;
   cursor: help;
   border-bottom: 1px dashed rgba(58, 45, 26, 0.55);
+  overflow-wrap: anywhere;
 }
 
 .card-name-token {
@@ -585,7 +609,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   border-radius: 8px;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
   background: #f2e6c9;
-  z-index: 30;
+  z-index: 2147483647;
 }
 
 img.card-preview,
@@ -715,7 +739,7 @@ img.card-preview,
   transform: none;
   width: min(860px, calc(100vw - 24px));
   max-width: min(860px, calc(100vw - 24px));
-  z-index: 80;
+  z-index: 2147483000;
 }
 
 .story-note-customizable-panel {
@@ -748,6 +772,96 @@ img.card-preview,
   font-size: 0.84rem;
   color: rgba(47, 29, 18, 0.78);
   text-shadow: none;
+}
+
+.customizable-field-panel {
+  margin: 10px 0 12px;
+  padding: 10px;
+  border: 1px solid rgba(90, 68, 39, 0.28);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 246, 225, 0.58) 0%, rgba(216, 183, 128, 0.38) 100%);
+}
+
+.customizable-field-panel-title {
+  margin: 0 0 8px;
+  font-weight: 700;
+  color: #4a2a18;
+  text-shadow: none;
+}
+
+.customizable-field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.customizable-field-grid-inline {
+  margin-top: 8px;
+}
+
+.customizable-field-row {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.customizable-field-label {
+  font-size: 0.72rem;
+  color: rgba(74, 42, 24, 0.76);
+  text-shadow: none;
+}
+
+.customizable-field-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(90, 68, 39, 0.42);
+  border-radius: 10px;
+  background: rgba(255, 250, 238, 0.9);
+  color: #2f2316;
+  font: inherit;
+  font-size: 0.86rem;
+  padding: 6px 9px;
+  text-shadow: none;
+}
+
+.customizable-field-input:focus {
+  outline: 2px solid rgba(145, 27, 38, 0.28);
+  outline-offset: 1px;
+}
+
+.customizable-field-input:disabled {
+  opacity: 0.54;
+  cursor: not-allowed;
+}
+
+.customizable-field-preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  color: #4a2a18;
+  text-shadow: none;
+}
+
+.customizable-field-preview.is-compact {
+  margin: 8px 0 0;
+}
+
+.customizable-field-preview-label {
+  font-weight: 700;
+}
+
+.customizable-field-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  padding: 2px 8px;
+  border: 1px solid rgba(90, 68, 39, 0.32);
+  border-radius: 999px;
+  background: rgba(255, 248, 232, 0.72);
+  color: #4a2a18;
+  font-size: 0.78rem;
 }
 
 .customizable-edit-btn {
@@ -1124,16 +1238,14 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
 }
 
 .card-autocomplete {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 4px);
+  position: fixed;
   border: 1px solid rgba(58, 45, 26, 0.45);
   border-radius: 8px;
   background: rgba(255, 249, 236, 0.98);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-  z-index: 60;
-  overflow: visible;
+  z-index: 2147482999;
+  overflow-y: auto;
+  overflow-x: visible;
 }
 
 .card-autocomplete-item {
@@ -1168,7 +1280,8 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
 }
 
 .card-autocomplete-preview {
-  z-index: 61;
+  position: fixed;
+  z-index: 2147483647;
   pointer-events: none;
 }
 
@@ -1220,6 +1333,10 @@ body.torch-mode .campaign-log-highlight {
 
 body.torch-mode .campaign-log-crossed {
   text-decoration-color: rgba(230, 194, 122, 0.62);
+}
+
+body.torch-mode .campaign-log-underlined {
+  text-decoration-color: rgba(230, 194, 122, 0.72);
 }
 
 body.torch-mode .campaign-log-group + .campaign-log-group {

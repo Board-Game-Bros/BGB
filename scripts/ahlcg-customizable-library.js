@@ -266,20 +266,48 @@
         },
         "grizzled": {
             "displayName": "Grizzled",
+            "fieldsLabel": "Traits chosen",
+            "fields": [
+                {
+                    "id": "trait_1",
+                    "label": "Trait chosen",
+                    "placeholder": "First trait"
+                },
+                {
+                    "id": "trait_2",
+                    "label": "Trait chosen",
+                    "placeholder": "Second trait"
+                }
+            ],
             "groups": [
                 {
-                    "id": "specialist",
+                    "id": "specialist_1",
                     "label": "Specialist.",
                     "boxes": 1,
                     "xpTotal": 1,
-                    "text": "Choose another trait: _____"
+                    "text": "Choose another trait.",
+                    "fields": [
+                        {
+                            "id": "specialist_trait_1",
+                            "label": "Additional trait",
+                            "placeholder": "Trait from 1 XP Specialist"
+                        }
+                    ]
                 },
                 {
-                    "id": "specialist",
+                    "id": "specialist_2",
                     "label": "Specialist.",
-                    "boxes": 2,
+                    "boxes": 1,
+                    "boxLabels": ["2"],
                     "xpTotal": 2,
-                    "text": "Choose another trait: _____"
+                    "text": "Choose another trait.",
+                    "fields": [
+                        {
+                            "id": "specialist_trait_2",
+                            "label": "Additional trait",
+                            "placeholder": "Trait from 2 XP Specialist"
+                        }
+                    ]
                 },
                 {
                     "id": "nemesis",

@@ -11,6 +11,8 @@
     const myriadCardNames = Array.isArray(options.myriadCardNames) ? options.myriadCardNames : [];
     const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
     const customizableCardNames = Array.isArray(options.customizableCardNames) ? options.customizableCardNames : [];
+    const signatureCardNames = Array.isArray(options.signatureCardNames) ? options.signatureCardNames : [];
+    const permanentCardNames = Array.isArray(options.permanentCardNames) ? options.permanentCardNames : [];
     const customizableLibraryCards = window.AHLCG_CUSTOMIZABLE_LIBRARY && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY === "object"
       && window.AHLCG_CUSTOMIZABLE_LIBRARY.cards && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY.cards === "object"
       ? window.AHLCG_CUSTOMIZABLE_LIBRARY.cards
@@ -23,6 +25,7 @@
     const customizableInitialSource = options.customizableInitialState && typeof options.customizableInitialState === "object"
       ? options.customizableInitialState
       : customizableBaselineSource;
+    const initialDecks = normalizeInitialDeckMap(options.initialDecks);
     const storageKey = options.storageKey || "ahlcg_upgrade_state_default_v1";
     const pendingDeleteKey = storageKey + "__pending_delete_v1";
     const rootSelector = options.rootSelector || "#upgrade-history";
@@ -77,6 +80,26 @@
     const customizableNameOnlySet = new Set(
       customizableCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
     );
+    const signatureCatalogKeys = signatureCardNames
+      .map((name) => getCatalogKey(name))
+      .filter(Boolean);
+    const signatureNameOnlySet = new Set(
+      signatureCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
+    );
+    const permanentCatalogKeys = permanentCardNames
+      .map((name) => getCatalogKey(name))
+      .filter(Boolean);
+    const permanentNameOnlySet = new Set(
+      permanentCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
+    );
+    const deckSizeAdjustmentRules = [
+      {
+        cardKey: getCatalogKey("Versatile (2)"),
+        nameOnly: getNameOnly(getCatalogKey("Versatile (2)")),
+        freeLevel0Cards: 5,
+        deckSlots: 0,
+      },
+    ].filter((rule) => rule.cardKey && rule.nameOnly && rule.freeLevel0Cards > 0);
     const customizableBaselineState = normalizeCustomizableBaselineState(customizableInitialSource);
 
     let activeUndo = null;
@@ -144,11 +167,64 @@
       return customizableLibraryCards[key] || null;
     }
 
+    function normalizeInitialDeckMap(rawDecks) {
+      const normalized = {};
+      if (!rawDecks || typeof rawDecks !== "object") return normalized;
+      Object.keys(rawDecks).forEach((investigatorName) => {
+        const investigatorKey = normalizeText(investigatorName);
+        if (!investigatorKey) return;
+        const rows = Array.isArray(rawDecks[investigatorName]) ? rawDecks[investigatorName] : [];
+        normalized[investigatorKey] = rows
+          .map((row) => {
+            if (typeof row === "string") return { name: row, qty: getCardQuantity(row) };
+            const name = String(row && row.name ? row.name : "").trim();
+            const qty = Number(row && row.qty);
+            return {
+              name,
+              qty: Number.isFinite(qty) && qty > 0 ? Math.trunc(qty) : getCardQuantity(name),
+            };
+          })
+          .filter((row) => row.name && row.qty > 0);
+      });
+      return normalized;
+    }
+
     function getCustomizableGroupIds(group) {
       const boxes = Number(group && group.boxes) > 0 ? Number(group.boxes) : 0;
       const baseId = String(group && group.id ? group.id : "").trim();
       if (!baseId || boxes <= 0) return [];
       return Array.from({ length: boxes }, (_, idx) => `${baseId}.${idx + 1}`);
+    }
+
+    function getCustomizableGroupBoxLabel(group, idx) {
+      const labels = Array.isArray(group && group.boxLabels) ? group.boxLabels : [];
+      const label = labels[idx];
+      return label !== undefined && label !== null && String(label).trim()
+        ? String(label).trim()
+        : String(idx + 1);
+    }
+
+    function getCustomizableGroupBoxXp(group, idx) {
+      const boxXp = Array.isArray(group && group.boxXp) ? Number(group.boxXp[idx]) : NaN;
+      if (Number.isFinite(boxXp) && boxXp > 0) return boxXp;
+      const boxes = Number(group && group.boxes) > 0 ? Number(group.boxes) : 0;
+      const xpTotal = Number(group && group.xpTotal);
+      if (boxes === 1 && Number.isFinite(xpTotal) && xpTotal > 0) return xpTotal;
+      return 1;
+    }
+
+    function getCustomizableGroupSelectedXp(group, idSet) {
+      const selectedSet = idSet instanceof Set ? idSet : new Set(uniqueIds(idSet));
+      return getCustomizableGroupIds(group).reduce((total, id, idx) => (
+        selectedSet.has(id) ? total + getCustomizableGroupBoxXp(group, idx) : total
+      ), 0);
+    }
+
+    function getCustomizableUpgradeIdsSpentXp(definition, upgradeIds) {
+      const idSet = new Set(uniqueIds(upgradeIds));
+      return (definition && Array.isArray(definition.groups) ? definition.groups : []).reduce((total, group) => (
+        total + getCustomizableGroupSelectedXp(group, idSet)
+      ), 0);
     }
 
     function getCustomizableAllIds(definition) {
@@ -174,6 +250,63 @@
 
     function uniqueIds(ids) {
       return Array.from(new Set((Array.isArray(ids) ? ids : []).map((id) => String(id || "").trim()).filter(Boolean)));
+    }
+
+    function normalizeCustomizableFields(rawFields) {
+      const normalized = {};
+      if (!rawFields || typeof rawFields !== "object") return normalized;
+      Object.keys(rawFields).forEach((fieldId) => {
+        const id = String(fieldId || "").trim();
+        if (!id) return;
+        normalized[id] = String(rawFields[fieldId] == null ? "" : rawFields[fieldId]).trim();
+      });
+      return normalized;
+    }
+
+    function getCustomizableFieldsForRow(row) {
+      if (!row || !row.dataset || !row.dataset.customizableFields) return {};
+      try {
+        return normalizeCustomizableFields(JSON.parse(row.dataset.customizableFields));
+      } catch (_error) {
+        return {};
+      }
+    }
+
+    function setCustomizableFieldsForRow(row, fields) {
+      if (!row || !row.dataset) return;
+      const next = normalizeCustomizableFields(fields);
+      if (Object.keys(next).length) {
+        row.dataset.customizableFields = JSON.stringify(next);
+      } else {
+        delete row.dataset.customizableFields;
+      }
+    }
+
+    function setCustomizableFieldValueForRow(row, fieldId, value) {
+      if (!row || !fieldId) return;
+      const fields = getCustomizableFieldsForRow(row);
+      fields[String(fieldId).trim()] = String(value == null ? "" : value).trim();
+      setCustomizableFieldsForRow(row, fields);
+    }
+
+    function getCustomizableDefinitionFields(definition) {
+      return Array.isArray(definition && definition.fields)
+        ? definition.fields.filter((field) => field && field.id)
+        : [];
+    }
+
+    function getCustomizableGroupFields(group) {
+      return Array.isArray(group && group.fields)
+        ? group.fields.filter((field) => field && field.id)
+        : [];
+    }
+
+    function getCustomizableFieldLabel(field) {
+      return String(field && field.label ? field.label : "Trait").trim();
+    }
+
+    function getCustomizableFieldPlaceholder(field) {
+      return String(field && field.placeholder ? field.placeholder : "").trim();
     }
 
     function getGroupCheckedCount(group, ids) {
@@ -438,11 +571,42 @@
       return investigatorDir + "/" + normalized + ".png";
     }
 
+    function appendCustomizableFieldValues(container, fields, values, options) {
+      const fieldDefs = Array.isArray(fields) ? fields : [];
+      const opts = options && typeof options === "object" ? options : {};
+      const valueMap = normalizeCustomizableFields(values);
+      const visibleFields = fieldDefs
+        .map((field) => ({
+          field,
+          value: String(valueMap[field.id] || "").trim(),
+        }))
+        .filter((item) => item.value);
+      if (!container || !visibleFields.length) return;
+
+      const wrap = document.createElement("div");
+      wrap.className = "customizable-field-preview";
+      if (opts.compact) wrap.classList.add("is-compact");
+      if (opts.label) {
+        const label = document.createElement("span");
+        label.className = "customizable-field-preview-label";
+        label.textContent = `${opts.label}:`;
+        wrap.appendChild(label);
+      }
+      visibleFields.forEach((item) => {
+        const chip = document.createElement("span");
+        chip.className = "customizable-field-chip";
+        chip.textContent = item.value;
+        wrap.appendChild(chip);
+      });
+      container.appendChild(wrap);
+    }
+
     function buildCustomizableChecklistPanel(definition, inheritedIds, addedIds, options) {
       const opts = options && typeof options === "object" ? options : {};
       const showTitle = opts.showTitle === true;
       const showLegend = opts.showLegend === true;
       const previewMode = String(opts.mode || "static").toLowerCase();
+      const fieldValues = normalizeCustomizableFields(opts.fields);
       const panel = document.createElement("div");
       panel.className = "customizable-preview-panel";
 
@@ -463,9 +627,18 @@
       const addedSet = new Set(uniqueIds(addedIds));
       const checkedSet = new Set(uniqueIds([].concat(inheritedIds || [], addedIds || [])));
 
+      appendCustomizableFieldValues(
+        panel,
+        getCustomizableDefinitionFields(definition),
+        fieldValues,
+        { label: definition.fieldsLabel || "Choices" }
+      );
+
       (Array.isArray(definition && definition.groups) ? definition.groups : []).forEach((group) => {
         const row = document.createElement("div");
         row.className = "customizable-group";
+        const ids = getCustomizableGroupIds(group);
+        const groupActive = ids.some((id) => checkedSet.has(id));
 
         const head = document.createElement("div");
         head.className = "customizable-group-head";
@@ -476,10 +649,10 @@
 
         const boxes = document.createElement("div");
         boxes.className = "customizable-group-boxes";
-        getCustomizableGroupIds(group).forEach((id, idx) => {
+        ids.forEach((id, idx) => {
           const chip = document.createElement("span");
           chip.className = "customizable-box";
-          chip.textContent = String(idx + 1);
+          chip.textContent = getCustomizableGroupBoxLabel(group, idx);
           if (previewMode === "editor") {
             if (addedSet.has(id)) {
               chip.classList.add("is-upgrade");
@@ -499,6 +672,14 @@
           text.className = "customizable-group-text";
           text.textContent = String(group.text);
           row.appendChild(text);
+        }
+        if (groupActive) {
+          appendCustomizableFieldValues(
+            row,
+            getCustomizableGroupFields(group),
+            fieldValues,
+            { label: String(group.label || "").replace(/\.$/, ""), compact: true }
+          );
         }
         panel.appendChild(row);
       });
@@ -526,7 +707,7 @@
           definition,
           context.inheritedIds || [],
           context.addedIds || [],
-          { mode: "static", showTitle: false, showLegend: false }
+          { mode: "static", showTitle: false, showLegend: false, fields: context.fields || {} }
         ));
         return wrap;
       }
@@ -699,7 +880,7 @@
     function getInvestigatorNameForRow(row) {
       const card = row ? row.closest(".upgrade-card") : null;
       if (!card) return "";
-      const heading = card.querySelector("h3[data-investigator-name]");
+      const heading = card.querySelector("[data-investigator-name]");
       return heading ? String(heading.getAttribute("data-investigator-name") || "").trim() : "";
     }
 
@@ -748,14 +929,29 @@
       const inheritedSet = new Set(uniqueIds(inheritedIds));
       const addedSet = new Set(uniqueIds(addedIds));
       const parts = [];
+      const fieldValues = getCustomizableFieldsForRow(row);
+      const baseFieldValues = getCustomizableDefinitionFields(definition)
+        .map((field) => String(fieldValues[field.id] || "").trim())
+        .filter(Boolean);
+      if (baseFieldValues.length) {
+        parts.push(`${definition.fieldsLabel || "Choices"}: ${baseFieldValues.join(", ")}`);
+      }
       (definition.groups || []).forEach((group) => {
         const ids = getCustomizableGroupIds(group);
         const inheritedCount = ids.filter((id) => inheritedSet.has(id)).length;
         const addedCount = ids.filter((id) => addedSet.has(id)).length;
         const total = inheritedCount + addedCount;
         if (total <= 0) return;
-        const suffix = addedCount > 0 ? ` (+${addedCount})` : "";
-        parts.push(`${String(group.label || "").replace(/\.$/, "")} ${total}/${ids.length}${suffix}`);
+        const inheritedXp = getCustomizableGroupSelectedXp(group, inheritedSet);
+        const addedXp = getCustomizableGroupSelectedXp(group, addedSet);
+        const totalXp = inheritedXp + addedXp;
+        const maxXp = Number(group && group.xpTotal) > 0 ? Number(group.xpTotal) : ids.length;
+        const suffix = addedXp > 0 ? ` (+${addedXp})` : "";
+        const groupFieldValues = getCustomizableGroupFields(group)
+          .map((field) => String(fieldValues[field.id] || "").trim())
+          .filter(Boolean);
+        const groupFieldText = groupFieldValues.length ? `: ${groupFieldValues.join(", ")}` : "";
+        parts.push(`${String(group.label || "").replace(/\.$/, "")} ${totalXp}/${maxXp}${suffix}${groupFieldText}`);
       });
       summary.textContent = parts.length ? parts.join(" • ") : "No checkboxes selected yet.";
     }
@@ -776,6 +972,45 @@
       const inheritedSet = new Set(uniqueIds(inheritedIds));
       const allowedSet = new Set(getCustomizableAllIds(definition));
       return uniqueIds(addedIds).filter((id) => allowedSet.has(id) && !inheritedSet.has(id));
+    }
+
+    function createCustomizableFieldInput(row, field, options) {
+      const opts = options && typeof options === "object" ? options : {};
+      const wrap = document.createElement("label");
+      wrap.className = "customizable-field-row";
+
+      const label = document.createElement("span");
+      label.className = "customizable-field-label";
+      label.textContent = getCustomizableFieldLabel(field);
+      wrap.appendChild(label);
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "customizable-field-input";
+      input.placeholder = getCustomizableFieldPlaceholder(field);
+      input.value = String(getCustomizableFieldsForRow(row)[field.id] || "");
+      input.autocomplete = "off";
+      if (opts.disabled) input.disabled = true;
+      input.addEventListener("input", () => {
+        setCustomizableFieldValueForRow(row, field.id, input.value);
+        const inherited = parseCustomizableIdList(row.dataset.customizableInheritedIds || "");
+        const added = getCustomizableUpgradeIdsForRow(row);
+        ensureCustomizableSummary(row, inherited, added);
+        const ref = row.querySelector(".card-ref");
+        const name = getRowCardName(row);
+        if (ref && getCustomizableDefinition(name)) {
+          replaceCardPreview(ref, name, {
+            inheritedIds: inherited,
+            addedIds: added,
+            fields: getCustomizableFieldsForRow(row),
+            showCustomizableState: true,
+          });
+        }
+        scheduleSaveUpgradeState();
+      });
+      wrap.appendChild(input);
+
+      return { wrap, input };
     }
 
     function closeCustomizableEditor() {
@@ -894,6 +1129,25 @@
       legend.innerHTML = '<span class="legend-chip is-inherited">Existing</span><span class="legend-chip is-upgrade">This Upgrade</span>';
       panel.appendChild(legend);
 
+      const baseFields = getCustomizableDefinitionFields(definition);
+      if (baseFields.length) {
+        const fieldPanel = document.createElement("div");
+        fieldPanel.className = "customizable-field-panel";
+
+        const fieldTitle = document.createElement("div");
+        fieldTitle.className = "customizable-field-panel-title";
+        fieldTitle.textContent = definition.fieldsLabel || "Choices";
+        fieldPanel.appendChild(fieldTitle);
+
+        const fieldGrid = document.createElement("div");
+        fieldGrid.className = "customizable-field-grid";
+        baseFields.forEach((field) => {
+          fieldGrid.appendChild(createCustomizableFieldInput(row, field).wrap);
+        });
+        fieldPanel.appendChild(fieldGrid);
+        panel.appendChild(fieldPanel);
+      }
+
       (definition.groups || []).forEach((group) => {
         const ids = getCustomizableGroupIds(group);
         const inheritedCount = ids.filter((id) => inheritedSet.has(id)).length;
@@ -915,7 +1169,7 @@
           const chip = document.createElement("button");
           chip.type = "button";
           chip.className = "customizable-inline-chip";
-          chip.textContent = String(idx + 1);
+          chip.textContent = getCustomizableGroupBoxLabel(group, idx);
           if (idx < inheritedCount) {
             chip.classList.add("is-inherited");
             chip.disabled = true;
@@ -944,6 +1198,17 @@
           text.className = "customizable-inline-text";
           text.textContent = String(group.text);
           groupWrap.appendChild(text);
+        }
+
+        const groupFields = getCustomizableGroupFields(group);
+        if (groupFields.length) {
+          const groupFieldGrid = document.createElement("div");
+          groupFieldGrid.className = "customizable-field-grid customizable-field-grid-inline";
+          const groupActive = inheritedCount + countsByGroup[group.id] > 0;
+          groupFields.forEach((field) => {
+            groupFieldGrid.appendChild(createCustomizableFieldInput(row, field, { disabled: !groupActive }).wrap);
+          });
+          groupWrap.appendChild(groupFieldGrid);
         }
 
         panel.appendChild(groupWrap);
@@ -1032,6 +1297,7 @@
         delete row.dataset.customizableEffectiveIds;
         delete row.dataset.customizableUpgradeIds;
         delete row.dataset.customizableSnapshotIds;
+        delete row.dataset.customizableFields;
       }
     }
 
@@ -1053,7 +1319,12 @@
       row.dataset.customizableInheritedIds = inherited.join(",");
       row.dataset.customizableEffectiveIds = effective.join(",");
       setCustomizableSnapshotIdsForRow(row, effective);
-      replaceCardPreview(ref, name, { inheritedIds: inherited, addedIds: added, showCustomizableState: true });
+      replaceCardPreview(ref, name, {
+        inheritedIds: inherited,
+        addedIds: added,
+        fields: getCustomizableFieldsForRow(row),
+        showCustomizableState: true,
+      });
       ensureCustomizableSummary(row, inherited, added);
       ensureCustomizableActionButton(row);
     }
@@ -1097,6 +1368,27 @@
       return initial;
     }
 
+    function buildCustomizableFieldStateBeforeEntry(card, targetEntry) {
+      const initial = {};
+      const entries = Array.from(card ? card.querySelectorAll(".upgrade-entry") : []);
+      for (let i = 0; i < entries.length; i += 1) {
+        const entry = entries[i];
+        if (targetEntry && entry === targetEntry) break;
+        const customizedList = getEntryList(entry, "customized");
+        if (!customizedList) continue;
+        Array.from(customizedList.children || []).forEach((row) => {
+          const name = getRowCardName(row);
+          if (!isCustomizableCardName(name)) return;
+          const key = getCatalogKey(name);
+          const fields = getCustomizableFieldsForRow(row);
+          if (key && Object.keys(fields).length) {
+            initial[key] = fields;
+          }
+        });
+      }
+      return initial;
+    }
+
     function refreshCustomizableRowsInList(listEl, entry) {
       if (!listEl) return;
       const mode = getListMode(listEl);
@@ -1126,11 +1418,15 @@
       };
       if (isCustomizableCardName(name)) {
         const snapshotIds = getCustomizableSnapshotIdsForRow(row);
+        const customizableFields = getCustomizableFieldsForRow(row);
         if (mode === "customized" || upgradeIds.length) {
           serialized.customizableUpgradeIds = upgradeIds;
         }
         if (mode === "customized" && snapshotIds.length) {
           serialized.customizableSnapshotIds = snapshotIds;
+        }
+        if (mode === "customized" && Object.keys(customizableFields).length) {
+          serialized.customizableFields = customizableFields;
         }
         if (mode === "added") {
           const legacyState = hasLegacyCustomizableRowState(row);
@@ -1177,6 +1473,7 @@
         if (mode === "customized") {
           setCustomizableUpgradeIdsForRow(li, cardRow.customizableUpgradeIds || []);
           setCustomizableSnapshotIdsForRow(li, cardRow.customizableSnapshotIds || []);
+          setCustomizableFieldsForRow(li, cardRow.customizableFields || {});
         } else if (mode === "added" && isCustomizableCardName(cardRow.name)) {
           setCustomizablePhysicalForRow(li, isPhysicalCustomizableRecord(cardRow));
         }
@@ -1196,6 +1493,7 @@
         if (mode === "customized") {
           setCustomizableUpgradeIdsForRow(li, cardRow.customizableUpgradeIds || []);
           setCustomizableSnapshotIdsForRow(li, cardRow.customizableSnapshotIds || []);
+          setCustomizableFieldsForRow(li, cardRow.customizableFields || {});
         } else if (mode === "added" && isCustomizableCardName(cardRow.name)) {
           setCustomizablePhysicalForRow(li, isPhysicalCustomizableRecord(cardRow));
         }
@@ -1372,11 +1670,17 @@
           name: getCustomizableDisplayNameByKey(key) || cardRow.name,
           customizableUpgradeIds: [],
           customizableSnapshotIds: [],
+          customizableFields: {},
         };
         existing.customizableUpgradeIds = uniqueIds(existing.customizableUpgradeIds.concat(cardRow.customizableUpgradeIds || []));
         if (Array.isArray(cardRow.customizableSnapshotIds) && cardRow.customizableSnapshotIds.length) {
           existing.customizableSnapshotIds = uniqueIds(cardRow.customizableSnapshotIds);
         }
+        existing.customizableFields = Object.assign(
+          {},
+          existing.customizableFields || {},
+          normalizeCustomizableFields(cardRow.customizableFields || {})
+        );
         map.set(key, existing);
       });
       return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
@@ -1399,6 +1703,7 @@
 
       const card = entry.closest(".upgrade-card");
       const holdings = cloneCustomizableHoldings(buildCustomizableHoldingsBeforeEntry(card, entry));
+      const fieldStateBefore = buildCustomizableFieldStateBeforeEntry(card, entry);
       applyEntryCustomizableCardChanges(holdings, entry, { removed: removedRows, added: addedRows });
 
       const existingList = getCustomizedList(container);
@@ -1428,10 +1733,13 @@
         .filter((item) => item.qty > 0)
         .map((item) => {
           const existing = existingByKey.get(item.key);
+          const inheritedFields = normalizeCustomizableFields(fieldStateBefore[item.key] || {});
+          const existingFields = existing ? normalizeCustomizableFields(existing.customizableFields || {}) : {};
           return {
             name: item.name,
             customizableUpgradeIds: existing ? uniqueIds(existing.customizableUpgradeIds || []) : [],
             customizableSnapshotIds: existing ? uniqueIds(existing.customizableSnapshotIds || []) : [],
+            customizableFields: Object.assign({}, inheritedFields, existingFields),
           };
         })
         .sort((a, b) => a.name.localeCompare(b.name));
@@ -1590,6 +1898,131 @@
       return Number.isFinite(value) && value > 0 ? value : 1;
     }
 
+    function getInventoryCardInfo(cardRow) {
+      const rawName = typeof cardRow === "string" ? cardRow : (cardRow && cardRow.name ? cardRow.name : "");
+      const parsed = parseTrailingQuantity(rawName);
+      const baseName = parsed.base || rawName;
+      // Initial deck data sometimes uses a card's short title while the
+      // editor uses the catalog's full title and subtitle. Resolve both to
+      // the same canonical catalog name before comparing deck inventory.
+      const canonicalName = normalizeCardNameInput(baseName) || baseName;
+      const key = getCatalogKey(canonicalName);
+      const explicitQty = typeof cardRow === "object" && cardRow
+        ? Number(cardRow.qty)
+        : NaN;
+      return {
+        key,
+        name: canonicalName,
+        qty: Number.isFinite(explicitQty) && explicitQty > 0
+          ? Math.trunc(explicitQty)
+          : Math.max(1, Number(parsed.qty) || getCardQuantity(rawName)),
+      };
+    }
+
+    function addInventoryCard(inventory, cardRow) {
+      const info = getInventoryCardInfo(cardRow);
+      if (!info.key || info.qty <= 0) return;
+      const current = inventory.get(info.key) || { name: info.name, qty: 0 };
+      current.qty += info.qty;
+      inventory.set(info.key, current);
+    }
+
+    function removeInventoryCard(inventory, cardRow) {
+      const info = getInventoryCardInfo(cardRow);
+      if (!info.key || info.qty <= 0) return;
+      const current = inventory.get(info.key) || { name: info.name, qty: 0 };
+      current.qty = Math.max(0, current.qty - info.qty);
+      if (current.qty > 0) {
+        inventory.set(info.key, current);
+      } else {
+        inventory.delete(info.key);
+      }
+    }
+
+    function getInitialDeckRowsForCard(card) {
+      const investigatorName = getUpgradeCardName(card);
+      const investigatorKey = normalizeText(investigatorName);
+      return investigatorKey && Array.isArray(initialDecks[investigatorKey])
+        ? initialDecks[investigatorKey]
+        : [];
+    }
+
+    function shouldApplyEntryToDeckInventory(entry) {
+      if (!entry || entry.classList.contains("upgrade-entry-draft")) return false;
+      if (entry.classList.contains("opening-deck-spend")) return false;
+      const head = entry.querySelector(".upgrade-entry-head");
+      const text = head ? head.textContent.trim() : "";
+      return !/^Campaign Start\b/i.test(text);
+    }
+
+    function applyEntryToDeckInventory(inventory, entry) {
+      if (!shouldApplyEntryToDeckInventory(entry)) return;
+      const removedList = getEntryList(entry, "removed");
+      const addedList = getEntryList(entry, "added");
+      if (removedList) {
+        listCardRows(removedList).forEach((row) => removeInventoryCard(inventory, row));
+      }
+      if (addedList) {
+        listCardRows(addedList).forEach((row) => addInventoryCard(inventory, row));
+      }
+    }
+
+    function buildDeckInventoryBeforeEntry(card, targetEntry) {
+      const inventory = new Map();
+      getInitialDeckRowsForCard(card).forEach((row) => addInventoryCard(inventory, row));
+      if (!inventory.size) return inventory;
+
+      const entries = Array.from(card ? card.querySelectorAll(".upgrade-entry") : []);
+      for (let i = 0; i < entries.length; i += 1) {
+        const entry = entries[i];
+        if (targetEntry && entry === targetEntry) break;
+        applyEntryToDeckInventory(inventory, entry);
+      }
+      return inventory;
+    }
+
+    function validateRemovedCardsAgainstDeck(card, entry, removedCards) {
+      const initialRows = getInitialDeckRowsForCard(card);
+      if (!initialRows.length) {
+        return { valid: true, message: "" };
+      }
+
+      const inventory = buildDeckInventoryBeforeEntry(card, entry);
+      const working = new Map(inventory);
+      const failures = [];
+      (removedCards || []).forEach((row) => {
+        const info = getInventoryCardInfo(row);
+        if (!info.key || info.qty <= 0) return;
+        const available = working.has(info.key) ? Number(working.get(info.key).qty) || 0 : 0;
+        if (available < info.qty) {
+          failures.push({
+            name: formatCardNameWithQuantity(info.name, info.qty),
+            available,
+            needed: info.qty,
+          });
+          return;
+        }
+        const next = Object.assign({}, working.get(info.key), { qty: available - info.qty });
+        if (next.qty > 0) {
+          working.set(info.key, next);
+        } else {
+          working.delete(info.key);
+        }
+      });
+
+      if (!failures.length) {
+        return { valid: true, message: "" };
+      }
+
+      const details = failures.map((failure) => (
+        `${failure.name} (deck has ${failure.available}, trying to remove ${failure.needed})`
+      )).join("; ");
+      return {
+        valid: false,
+        message: `Cannot save: removed card is not in the current deck before this update. ${details}.`,
+      };
+    }
+
     function getCustomizableCheckboxCount(cardName) {
       const source = typeof cardName === "string" ? cardName : (cardName && cardName.name ? cardName.name : "");
       const text = String(source || "");
@@ -1661,8 +2094,75 @@
       return false;
     }
 
+    function isSignatureCardName(cardName) {
+      const key = getCatalogKey(cardName);
+      if (!key) return false;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return false;
+      if (signatureNameOnlySet.has(nameOnly)) return true;
+      return signatureCatalogKeys.some((sk) => {
+        const sNameOnly = getNameOnly(sk);
+        if (!sNameOnly) return false;
+        return (
+          nameOnly === sNameOnly ||
+          nameOnly.startsWith(sNameOnly + " ") ||
+          sNameOnly.startsWith(nameOnly + " ")
+        );
+      });
+    }
+
+    function isNoXpCardName(cardName) {
+      return isStoryCardName(cardName) || isSignatureCardName(cardName);
+    }
+
+    function isPermanentCardName(cardName) {
+      const key = getCatalogKey(cardName);
+      if (!key) return false;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return false;
+      if (permanentNameOnlySet.has(nameOnly)) return true;
+      return permanentCatalogKeys.some((pk) => {
+        const pNameOnly = getNameOnly(pk);
+        if (!pNameOnly) return false;
+        return (
+          nameOnly === pNameOnly ||
+          nameOnly.startsWith(pNameOnly + " ") ||
+          pNameOnly.startsWith(nameOnly + " ")
+        );
+      });
+    }
+
+    function getDeckSizeAdjustmentRule(cardName) {
+      const key = getCatalogKey(cardName);
+      if (!key) return null;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return null;
+      return deckSizeAdjustmentRules.find((rule) => (
+        nameOnly === rule.nameOnly ||
+        nameOnly.startsWith(rule.nameOnly + " ") ||
+        rule.nameOnly.startsWith(nameOnly + " ")
+      )) || null;
+    }
+
+    function computeDeckSizeAdjustmentSlots(cardNames) {
+      return (cardNames || []).reduce((total, name) => {
+        const rule = getDeckSizeAdjustmentRule(name);
+        if (!rule) return total;
+        return total + (getCardQuantity(name) * rule.freeLevel0Cards);
+      }, 0);
+    }
+
+    function getAddedCardDeckSlots(cardName) {
+      const rule = getDeckSizeAdjustmentRule(cardName);
+      if (rule && Number.isFinite(Number(rule.deckSlots))) {
+        return Math.max(0, Number(rule.deckSlots));
+      }
+      if (isPermanentCardName(cardName)) return 0;
+      return 1;
+    }
+
     function getAddedCardCost(cardName) {
-      if (isStoryCardName(cardName)) return 0;
+      if (isNoXpCardName(cardName)) return 0;
       const level = getCardLevel(cardName);
       const baseCost = level <= 0 ? 1 : level;
       return isExceptionalCardName(cardName) ? (baseCost * 2) : baseCost;
@@ -1727,7 +2227,7 @@
     }
 
     function getRemovedUpgradeCredit(cardName) {
-      if (isStoryCardName(cardName) || isCustomizableCardName(cardName)) return 0;
+      if (isNoXpCardName(cardName) || isCustomizableCardName(cardName)) return 0;
       const level = getCardLevel(cardName);
       if (level <= 0) return 0;
       return isExceptionalCardName(cardName) ? (level * 2) : level;
@@ -1738,26 +2238,39 @@
       const groupedMyriad = new Map();
       (cardNames || []).forEach((name) => {
         const qty = getCardQuantity(name);
-        if (isStoryCardName(name)) return;
+        if (isNoXpCardName(name)) return;
         if (isCustomizableCardName(name)) {
           if (!isPhysicalCustomizableRecord(name)) return;
           for (let i = 0; i < qty; i += 1) {
-            items.push({ key: "", cost: getAddedCardCost(name) });
+            items.push({
+              key: "",
+              cost: getAddedCardCost(name),
+              freeLevel0Eligible: getCardLevel(name) <= 0,
+              deckSlots: getAddedCardDeckSlots(name),
+              freeLevel0SlotsRequired: 1,
+            });
           }
           return;
         }
 
         const key = getUpgradeDiscountKey(name);
         const cost = getAddedCardCost(name);
+        const freeLevel0Eligible = getCardLevel(name) <= 0;
         if (isMyriadCardName(name)) {
-          if (!groupedMyriad.has(key)) {
-            groupedMyriad.set(key, { key, cost });
-          }
+          const existing = groupedMyriad.get(key) || {
+            key,
+            cost,
+            freeLevel0Eligible,
+            deckSlots: 0,
+            freeLevel0SlotsRequired: 1,
+          };
+          existing.deckSlots += getAddedCardDeckSlots(name) * qty;
+          groupedMyriad.set(key, existing);
           return;
         }
 
         for (let i = 0; i < qty; i += 1) {
-          items.push({ key, cost });
+          items.push({ key, cost, freeLevel0Eligible, deckSlots: getAddedCardDeckSlots(name), freeLevel0SlotsRequired: 1 });
         }
       });
 
@@ -1801,16 +2314,38 @@
       return creditsByKey;
     }
 
+    function getCostItemDeckSlots(item) {
+      const value = Number(item && item.deckSlots);
+      return Number.isFinite(value) && value >= 0 ? value : 1;
+    }
+
     function computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames) {
       const creditsByKey = buildSameNameUpgradeCreditMap(removedCardNames);
-      return buildAddedXpCostItems(addedCardNames).reduce((total, item) => {
+      // Replacing a removed card with a new level-0 card still costs 1 XP.
+      // Only explicit deck-building effects such as Versatile grant free
+      // level-0 card slots; ordinary vacancies in the deck do not.
+      let availableFreeLevel0Slots = computeDeckSizeAdjustmentSlots(addedCardNames);
+      const costItems = buildAddedXpCostItems(addedCardNames).map((item) => {
         const key = item.key || "";
         let credit = 0;
         const credits = key ? creditsByKey.get(key) : null;
         if (credits && credits.length) {
           credit = credits.shift();
         }
-        return total + Math.max(0, item.cost - credit);
+        return Object.assign({}, item, {
+          adjustedCost: Math.max(0, item.cost - credit),
+        });
+      });
+      return costItems.reduce((total, item) => {
+        const deckSlots = getCostItemDeckSlots(item);
+        if (item.adjustedCost > 0 && item.freeLevel0Eligible && deckSlots > 0 && availableFreeLevel0Slots > 0) {
+          const neededSlots = Math.max(1, Number(item.freeLevel0SlotsRequired) || 1);
+          if (availableFreeLevel0Slots >= neededSlots) {
+            availableFreeLevel0Slots = Math.max(0, availableFreeLevel0Slots - deckSlots);
+            return total;
+          }
+        }
+        return total + item.adjustedCost;
       }, 0);
     }
 
@@ -1849,7 +2384,11 @@
       let total = 0;
       customizedMap.forEach((customizedState) => {
         if (customizedState.upgradeIds && customizedState.upgradeIds.length) {
-          total += customizedState.upgradeIds.length;
+          const definition = getCustomizableDefinition(customizedState.sampleName);
+          const spent = definition
+            ? getCustomizableUpgradeIdsSpentXp(definition, customizedState.upgradeIds)
+            : customizedState.upgradeIds.length;
+          total += spent;
           return;
         }
         if (customizedState.explicitPaidXp !== null) {
@@ -2026,6 +2565,19 @@
     }
 
     function toDisplayNameFromFile(fileName) {
+      const disciplineNamesByFile = {
+        "discipline_alignment_of_spirit.png": "Discipline: Alignment of Spirit (Unbroken)",
+        "discipline_alignment_of_spirit_1.png": "Discipline: Alignment of Spirit (Broken)",
+        "discipline_balance_of_body.png": "Discipline: Balance of Body (Unbroken)",
+        "discipline_balance_of_body_1.png": "Discipline: Balance of Body (Broken)",
+        "discipline_prescience_of_fate.png": "Discipline: Prescience of Fate (Unbroken)",
+        "discipline_prescience_of_fate_1.png": "Discipline: Prescience of Fate (Broken)",
+        "discipline_quiescence_of_thought.png": "Discipline: Quiescence of Thought (Unbroken)",
+        "discipline_quiescence_of_thought_1.png": "Discipline: Quiescence of Thought (Broken)",
+      };
+      const exactFileName = String(fileName || "").split("/").pop();
+      if (disciplineNamesByFile[exactFileName]) return disciplineNamesByFile[exactFileName];
+
       let base = String(fileName || "").replace(/\.png$/i, "");
       let level = null;
       const levelMatch = base.match(/_(\d+)$/);
@@ -2141,15 +2693,49 @@
       const panel = document.createElement("div");
       panel.className = "card-autocomplete";
       panel.hidden = true;
-      row.appendChild(panel);
+      document.body.appendChild(panel);
 
       let current = [];
       let activeIndex = -1;
+      let activeAutocompletePreview = null;
       const previewMargin = 8;
+
+      function positionPanel() {
+        if (panel.hidden || !input.isConnected) return;
+        const rect = input.getBoundingClientRect();
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        const left = Math.max(previewMargin, Math.min(rect.left, viewportWidth - previewMargin));
+        const width = Math.max(160, Math.min(rect.width, viewportWidth - (previewMargin * 2)));
+        const belowSpace = Math.max(0, viewportHeight - rect.bottom - previewMargin);
+        const aboveSpace = Math.max(0, rect.top - previewMargin);
+        const openUp = belowSpace < 220 && aboveSpace > belowSpace;
+        const availableHeight = Math.max(140, (openUp ? aboveSpace : belowSpace) - 4);
+
+        panel.style.left = Math.round(left) + "px";
+        panel.style.width = Math.round(width) + "px";
+        panel.style.right = "auto";
+        panel.style.maxHeight = Math.round(Math.min(480, availableHeight)) + "px";
+        if (openUp) {
+          panel.style.top = "auto";
+          panel.style.bottom = Math.round(viewportHeight - rect.top + 4) + "px";
+        } else {
+          panel.style.top = Math.round(rect.bottom + 4) + "px";
+          panel.style.bottom = "auto";
+        }
+      }
+
+      function positionPanelAndActivePreview() {
+        positionPanel();
+        const hovered = panel.querySelector(".card-autocomplete-item:hover");
+        if (hovered && activeAutocompletePreview) {
+          clampAutocompletePreviewPosition(hovered, activeAutocompletePreview);
+        }
+      }
 
       function resetAutocompletePreviewPosition(preview) {
         if (!preview) return;
-        preview.style.removeProperty("display");
+        preview.style.setProperty("display", "none", "important");
         preview.style.removeProperty("visibility");
         preview.style.left = "auto";
         preview.style.right = "auto";
@@ -2180,33 +2766,61 @@
 
         const rightSideLeft = rect.right + previewMargin;
         const hasRightSpace = rightSideLeft + previewWidth <= viewportWidth - previewMargin;
+        const safeLeft = hasRightSpace
+          ? rightSideLeft
+          : Math.max(previewMargin, rect.left - previewWidth - previewMargin);
         if (hasRightSpace) {
-          preview.style.left = "calc(100% + 8px)";
+          preview.style.left = Math.round(safeLeft) + "px";
           preview.style.right = "auto";
         } else {
-          preview.style.right = "calc(100% + 8px)";
-          preview.style.left = "auto";
+          preview.style.left = Math.round(safeLeft) + "px";
+          preview.style.right = "auto";
         }
 
         const idealTop = rect.top + rect.height / 2 - previewHeight / 2;
         const minTop = previewMargin;
         const maxTop = Math.max(previewMargin, viewportHeight - previewHeight - previewMargin);
         const safeTop = Math.min(maxTop, Math.max(minTop, idealTop));
-        const offset = Math.round(safeTop - idealTop);
-        if (offset === 0) {
-          preview.style.top = "50%";
-        } else if (offset > 0) {
-          preview.style.top = "calc(50% + " + offset + "px)";
-        } else {
-          preview.style.top = "calc(50% - " + Math.abs(offset) + "px)";
-        }
+        preview.style.top = Math.round(safeTop) + "px";
         preview.style.bottom = "auto";
-        preview.style.transform = "translateY(-50%)";
+        preview.style.transform = "none";
+      }
+
+      function showAutocompletePreview(option, preview) {
+        if (activeAutocompletePreview && activeAutocompletePreview !== preview) {
+          resetAutocompletePreviewPosition(activeAutocompletePreview);
+        }
+        activeAutocompletePreview = preview;
+        clampAutocompletePreviewPosition(option, preview);
+      }
+
+      function hideAutocompletePreview(preview) {
+        resetAutocompletePreviewPosition(preview);
+        if (activeAutocompletePreview === preview) {
+          activeAutocompletePreview = null;
+        }
+      }
+
+      function cleanupAutocompletePreviews() {
+        if (activeAutocompletePreview) {
+          resetAutocompletePreviewPosition(activeAutocompletePreview);
+          activeAutocompletePreview = null;
+        }
+        document.querySelectorAll(".card-autocomplete-preview[data-autocomplete-preview-owner]").forEach((preview) => {
+          preview.remove();
+        });
       }
 
       function closePanel() {
+        cleanupAutocompletePreviews();
         panel.hidden = true;
         panel.innerHTML = "";
+        panel.style.removeProperty("left");
+        panel.style.removeProperty("right");
+        panel.style.removeProperty("top");
+        panel.style.removeProperty("bottom");
+        panel.style.removeProperty("width");
+        panel.style.removeProperty("max-height");
         current = [];
         activeIndex = -1;
       }
@@ -2221,6 +2835,7 @@
           closePanel();
           return;
         }
+        cleanupAutocompletePreviews();
         panel.innerHTML = "";
         current.forEach((item, idx) => {
           const option = document.createElement("button");
@@ -2229,21 +2844,24 @@
           option.appendChild(document.createTextNode(item.name));
           const preview = buildPreviewNode(item.name);
           preview.classList.add("card-autocomplete-preview");
+          preview.dataset.autocompletePreviewOwner = "1";
+          document.body.appendChild(preview);
+          resetAutocompletePreviewPosition(preview);
           option.addEventListener("mouseenter", () => {
-            clampAutocompletePreviewPosition(option, preview);
+            showAutocompletePreview(option, preview);
           });
           option.addEventListener("mousemove", () => {
-            clampAutocompletePreviewPosition(option, preview);
+            showAutocompletePreview(option, preview);
           });
           option.addEventListener("mouseleave", () => {
-            resetAutocompletePreviewPosition(preview);
+            hideAutocompletePreview(preview);
           });
-          option.appendChild(preview);
           if (idx === activeIndex) option.classList.add("is-active");
           option.addEventListener("click", () => pick(item.name));
           panel.appendChild(option);
         });
         panel.hidden = false;
+        positionPanel();
       }
 
       input.addEventListener("input", () => {
@@ -2277,16 +2895,18 @@
       });
 
       document.addEventListener("click", (event) => {
-        if (!row.contains(event.target)) {
+        if (!row.contains(event.target) && !panel.contains(event.target)) {
           closePanel();
         }
       });
 
+      window.addEventListener("scroll", positionPanelAndActivePreview, true);
+      window.addEventListener("resize", positionPanelAndActivePreview);
+
       panel.addEventListener("scroll", () => {
         const hovered = panel.querySelector(".card-autocomplete-item:hover");
-        if (!hovered) return;
-        const preview = hovered.querySelector(".card-autocomplete-preview");
-        clampAutocompletePreviewPosition(hovered, preview);
+        if (!hovered || !activeAutocompletePreview) return;
+        clampAutocompletePreviewPosition(hovered, activeAutocompletePreview);
       });
     }
 
@@ -2332,6 +2952,11 @@
       if (!nameNode) return "";
       const dataName = nameNode.getAttribute("data-investigator-name");
       if (dataName) return dataName.trim();
+      const nestedDataName = nameNode.querySelector("[data-investigator-name]");
+      if (nestedDataName) {
+        const value = nestedDataName.getAttribute("data-investigator-name");
+        if (value) return value.trim();
+      }
       return nameNode.textContent.trim();
     }
 
@@ -2748,6 +3373,11 @@
         const customizedCards = currentCustomizedEditList ? listCardRows(currentCustomizedEditList) : [];
         const xpValue = toNonNegativeInteger(editor.querySelector('[data-edit="xp"]').value);
         const card = entry.closest(".upgrade-card");
+        const removedValidation = validateRemovedCardsAgainstDeck(card, entry, removedCards);
+        if (!removedValidation.valid) {
+          setInlineValidationMessage(errorNode, removedValidation.message);
+          return;
+        }
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
         const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards);
         if (netSpent > availableBefore + xpValue) {
@@ -2910,6 +3540,11 @@
         const customizedCards = customizedList ? listCardRows(customizedList) : [];
         const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards);
         const card = entry.closest(".upgrade-card");
+        const removedValidation = validateRemovedCardsAgainstDeck(card, entry, removedCards);
+        if (!removedValidation.valid) {
+          setInlineValidationMessage(draftErrorNode, removedValidation.message);
+          return;
+        }
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
         const budget = availableBefore + xpValue;
         if (netSpent > availableBefore + xpValue) {
@@ -3526,7 +4161,6 @@
         if (!viewportWidth || !viewportHeight) return;
         const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
         const maxHeight = Math.max(160, viewportHeight - (previewMargin * 2));
-
         const overflowLeft = rect.left < previewMargin;
         const overflowRight = rect.right > (viewportWidth - previewMargin);
         const overflowTop = rect.top < previewMargin;
@@ -3576,7 +4210,7 @@
         preview.style.right = "auto";
         preview.style.bottom = "auto";
         preview.style.transform = "none";
-        preview.style.zIndex = "2147483000";
+        preview.style.zIndex = "2147483647";
       }
 
       function refreshActivePreview() {
@@ -3602,6 +4236,7 @@
       }
 
       root.querySelectorAll(".card-ref").forEach((cardRef) => {
+        if (cardRef.__bgbViewportPreviewBound === true) return;
         if (cardRef.__bgbPreviewBound === true) return;
         cardRef.__bgbPreviewBound = true;
         if (cardRef instanceof HTMLElement) {

@@ -17,39 +17,94 @@
     {
       "sections": [
         {
-          "title": "Asset (16)",
+          "title": "Asset (14)",
           "label": "Hand",
           "cards": [
-            { "qty": 2, "name": "Dragon Pole", "imageSrc": "/assets/boardgames/ahlcg_cards/dragon_pole.png", "imageAlt": "Dragon Pole" }
+            {
+              "qty": 2,
+              "name": "Dragon Pole",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/dragon_pole.png",
+              "imageAlt": "Dragon Pole"
+            }
           ]
         },
         {
           "label": "Arcane",
           "cards": [
-            { "qty": 2, "name": "Scrying", "imageSrc": "/assets/boardgames/ahlcg_cards/scrying.png", "imageAlt": "Scrying" },
-            { "qty": 2, "name": "Sixth Sense", "imageSrc": "/assets/boardgames/ahlcg_cards/sixth_sense.png", "imageAlt": "Sixth Sense" },
-            { "qty": 2, "name": "Talisman of Protection", "imageSrc": "/assets/boardgames/ahlcg_cards/talisman_of_protection.png", "imageAlt": "Talisman of Protection" }
+            {
+              "qty": 2,
+              "name": "Scrying",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/scrying.png",
+              "imageAlt": "Scrying"
+            },
+            {
+              "qty": 2,
+              "name": "Sixth Sense",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/sixth_sense.png",
+              "imageAlt": "Sixth Sense"
+            },
+            {
+              "qty": 2,
+              "name": "Talisman of Protection",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/talisman_of_protection.png",
+              "imageAlt": "Talisman of Protection"
+            }
           ]
         },
         {
           "label": "Accessory",
           "cards": [
-            { "qty": 1, "name": "Holy Rosary", "imageSrc": "/assets/boardgames/ahlcg_cards/holy_rosary.png", "imageAlt": "Holy Rosary" }
+            {
+              "qty": 1,
+              "name": "Holy Rosary",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/holy_rosary.png",
+              "imageAlt": "Holy Rosary"
+            }
           ]
         },
         {
           "label": "Ally",
           "cards": [
-            { "qty": 2, "name": "Arcane Initiate", "imageSrc": "/assets/boardgames/ahlcg_cards/arcane_initiate.png", "imageAlt": "Arcane Initiate" }
+            {
+              "qty": 2,
+              "name": "Arcane Initiate",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/arcane_initiate.png",
+              "imageAlt": "Arcane Initiate"
+            }
           ]
         },
         {
           "label": "Other",
           "cards": [
-            { "qty": 2, "name": "Enchanted Blade", "imageSrc": "/assets/boardgames/ahlcg_cards/enchanted_blade.png", "imageAlt": "Enchanted Blade" },
-            { "qty": 1, "name": "Safeguard (2)", "imageSrc": "/assets/boardgames/ahlcg_cards/safeguard_2.png", "imageAlt": "Safeguard (2)" },
-            { "qty": 1, "name": "Discipline", "imageSrc": "/assets/boardgames/ahlcg_cards/discipline_balance_of_body.png", "imageAlt": "Discipline" },
-            { "qty": 1, "name": "In the Thick of It", "imageSrc": "/assets/boardgames/ahlcg_cards/in_the_thick_of_it.png", "imageAlt": "In the Thick of It" }
+            {
+              "qty": 2,
+              "name": "Enchanted Blade",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/enchanted_blade.png",
+              "imageAlt": "Enchanted Blade"
+            },
+            {
+              "qty": 1,
+              "name": "Safeguard (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/safeguard_2.png",
+              "imageAlt": "Safeguard (2)"
+            }
+          ]
+        },
+        {
+          "title": "Permanent (2)",
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Discipline: Prescience of Fate (Unbroken)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/discipline_prescience_of_fate.png",
+              "imageAlt": "Discipline: Prescience of Fate (Unbroken)"
+            },
+            {
+              "qty": 1,
+              "name": "In the Thick of It",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/in_the_thick_of_it.png",
+              "imageAlt": "In the Thick of It"
+            }
           ]
         }
       ]
@@ -59,27 +114,82 @@
         {
           "title": "Event (12)",
           "cards": [
-            { "qty": 2, "name": "\"Let me handle this!\"", "imageSrc": "/assets/boardgames/ahlcg_cards/let_me_handle_this.png", "imageAlt": "\"Let me handle this!\"" },
-            { "qty": 2, "name": "Emergency Cache", "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png", "imageAlt": "Emergency Cache" },
-            { "qty": 1, "name": "Ever Vigilant (1)", "imageSrc": "/assets/boardgames/ahlcg_cards/ever_vigilant_1.png", "imageAlt": "Ever Vigilant (1)" },
-            { "qty": 1, "name": "Glory", "imageSrc": "/assets/boardgames/ahlcg_cards/glory.png", "imageAlt": "Glory" },
-            { "qty": 2, "name": "Prepared for the Worst", "imageSrc": "/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png", "imageAlt": "Prepared for the Worst" },
-            { "qty": 2, "name": "Spectral Razor", "imageSrc": "/assets/boardgames/ahlcg_cards/spectral_razor.png", "imageAlt": "Spectral Razor" },
-            { "qty": 2, "name": "Ward of Protection", "imageSrc": "/assets/boardgames/ahlcg_cards/ward_of_protection.png", "imageAlt": "Ward of Protection" }
+            {
+              "qty": 2,
+              "name": "\"Let me handle this!\"",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/let_me_handle_this.png",
+              "imageAlt": "\"Let me handle this!\""
+            },
+            {
+              "qty": 2,
+              "name": "Emergency Cache",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png",
+              "imageAlt": "Emergency Cache"
+            },
+            {
+              "qty": 1,
+              "name": "Ever Vigilant (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/ever_vigilant_1.png",
+              "imageAlt": "Ever Vigilant (1)"
+            },
+            {
+              "qty": 1,
+              "name": "Glory",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/glory.png",
+              "imageAlt": "Glory"
+            },
+            {
+              "qty": 2,
+              "name": "Prepared for the Worst",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png",
+              "imageAlt": "Prepared for the Worst"
+            },
+            {
+              "qty": 2,
+              "name": "Spectral Razor",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/spectral_razor.png",
+              "imageAlt": "Spectral Razor"
+            },
+            {
+              "qty": 2,
+              "name": "Ward of Protection",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/ward_of_protection.png",
+              "imageAlt": "Ward of Protection"
+            }
           ]
         },
         {
           "title": "Skill (4)",
           "cards": [
-            { "qty": 2, "name": "Guts", "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png", "imageAlt": "Guts" },
-            { "qty": 2, "name": "Overpower", "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png", "imageAlt": "Overpower" }
+            {
+              "qty": 2,
+              "name": "Guts",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png",
+              "imageAlt": "Guts"
+            },
+            {
+              "qty": 2,
+              "name": "Overpower",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png",
+              "imageAlt": "Overpower"
+            }
           ]
         },
         {
           "title": "Treachery (2)",
           "cards": [
-            { "qty": 1, "name": "Burden of Destiny", "imageSrc": "/assets/boardgames/ahlcg_cards/burden_of_destiny.png", "imageAlt": "Burden of Destiny" },
-            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+            {
+              "qty": 1,
+              "name": "Burden of Destiny",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/burden_of_destiny.png",
+              "imageAlt": "Burden of Destiny"
+            },
+            {
+              "qty": 1,
+              "name": "Random Basic Weakness ★?",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Random Basic Weakness"
+            }
           ]
         }
       ]

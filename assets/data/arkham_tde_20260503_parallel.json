@@ -33,7 +33,7 @@
       {
         "title": "Run Structure",
         "metaItems": [
-          "Status: In Progress",
+          "Status: Completed",
           "Campaign A: The Dream-Quest",
           "Campaign B: The Web of Dreams"
         ],
@@ -484,6 +484,81 @@
           ]
         }
       ]
+    },
+    {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 06/06/2026",
+        "Session: Scenario IV-A + Epilogue"
+      ]
+    },
+    {
+      "title": "Scenario IV-A: Where the Gods Dwell",
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1 + Resolution 3",
+        "Victory Display: 11",
+        "Trauma: +2 mental each"
+      ],
+      "notes": [
+        {
+          "title": "To The Cold Wastes",
+          "items": [
+            "Campaign log check: the investigators were not carried to the Cold Wastes, so that branch did not apply.",
+            "Campaign log check: because the investigators traveled to the Cold Wastes, the White Ship carried the dreamers north to the Plateau of Leng.",
+            "The captain warned the investigators that only death waited in this forsaken place, then refused to sail any farther and left them to descend on moonbeams into the frozen waste.",
+            "The Dream-Quest investigators continued toward unknown Kadath, climbing higher through snow and onyx until they reached the abandoned halls of the Great Ones."
+          ]
+        },
+        {
+          "title": "Grand Design",
+          "items": [
+            "The investigators discovered that there were no gods in the onyx halls; the place was long abandoned.",
+            "Because Randolph survived the voyage, Randolph accompanied the dreamers into the hall and revealed the truth: he was not Randolph Carter.",
+            "Not-Randolph murdered Virgil Gray with a blade of onyx, revealed himself as Nyarlathotep, and claimed that the entire quest had been his design.",
+            "If an investigator's deck contains Randolph Carter: Expert Dreamer, remove him for the remainder of the campaign. Recorded here as Wilson Richards losing Randolph from Campaign A deck state.",
+            "Because the black cat is at your side, the cat remained with the investigators and acknowledged the tragedy of Virgil's death."
+          ]
+        },
+        {
+          "title": "The Investigators Achieved Resolution I.",
+          "items": [
+            "The scenario ended at Resolution 1.",
+            "Wilson Richards, Silas Marsh, and Mandy Thompson were all alive at scenario end.",
+            "Record: the dreamers escaped from Nyarlathotep's grasp.",
+            "Each investigator earned 11 XP from the victory display.",
+            "Each Dream-Quest investigator suffered 2 mental trauma: Wilson Richards, Silas Marsh, and Mandy Thompson.",
+            "The investigators chose to wake up, which led into Resolution 3."
+          ]
+        },
+        {
+          "title": "Resolution III Follow-Up",
+          "items": [
+            "The dreamers awoke with only hazy fragments of the journey remaining: a black castle, a ship sailing through space, a staircase, and a black cat.",
+            "Record: the dreamers awoke.",
+            "Proceed to the Epilogue."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Epilogue",
+      "statusChips": [
+        "Status: Completed",
+        "Epilogue: 6",
+        "Campaign Result: Win"
+      ],
+      "notes": [
+        {
+          "title": "Epilogue 6",
+          "items": [
+            "Because the dreamers awoke in Campaign A and the investigators returned to reality in Campaign B, Epilogue 6 applied.",
+            "The black cat delivered a final wry farewell, telling the reunited investigators to leave their dreams behind or use what they had taken from the dream to shape their destiny.",
+            "Record: the two groups were reunited in the waking world.",
+            "Record: the investigators win the campaign."
+          ]
+        }
+      ]
     }
   ],
   "campaignLog": {
@@ -506,7 +581,11 @@
               "The investigators traveled to the Cold Wastes.",
               "Randolph survived the voyage.",
               "The black cat spoke of Nyarlathotep.",
-              "The investigators possess the Silver Key."
+              "The investigators possess the Silver Key.",
+              "The dreamers escaped from Nyarlathotep's grasp.",
+              "The dreamers awoke.",
+              "The two groups were reunited in the waking world.",
+              "The investigators win the campaign."
             ]
           },
           {
@@ -514,7 +593,8 @@
             "listClass": "campaign-log-list",
             "items": [
               "Wilson Richards earns Randolph Carter: Expert Dreamer.",
-              "Silas Marsh earns The Silver Key: Key to the Gate of Dreams."
+              "Silas Marsh earns The Silver Key: Key to the Gate of Dreams.",
+              "Randolph Carter: Expert Dreamer was removed from Wilson Richards's deck for the remainder of the campaign."
             ]
           },
           {
@@ -532,6 +612,15 @@
               "+1 tablet token (from Interlude I: The Black Cat).",
               "Replace 1 tablet token with 1 elder thing token (from Interlude II: The Oneironauts).",
               "+1 -4 token (from Interlude III: The Great Ones)."
+            ]
+          },
+          {
+            "title": "Trauma Entries",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Wilson Richards suffers 2 mental trauma from Scenario IV-A.",
+              "Silas Marsh suffers 2 mental trauma from Scenario IV-A.",
+              "Mandy Thompson suffers 2 mental trauma from Scenario IV-A."
             ]
           }
         ]
@@ -559,7 +648,9 @@
               "The investigators found a way out of the Underworld.",
               "The investigators are trapped in Atlach-Nacha's realm.",
               "The bridge was destroyed.",
-              "The investigators returned to reality."
+              "The investigators returned to reality.",
+              "The two groups were reunited in the waking world.",
+              "The investigators win the campaign."
             ]
           },
           {
@@ -636,6 +727,10 @@
       {
         "title": "8. Web of Dreams Scenario IV-B",
         "text": "Weaver of the Cosmos ended at Resolution 1, then Resolution 3 applied because the investigators had found a way out of the Underworld. Campaign B destroyed the bridge, returned to reality, added a -4 token, removed Randolph Carter: Chained to the Waking World, and each investigator earned 12 XP while suffering 2 physical trauma."
+      },
+      {
+        "title": "9. Dream-Quest Scenario IV-A + Epilogue",
+        "text": "Where the Gods Dwell ended at Resolution 1, then Resolution 3 after the dreamers chose to wake up. Campaign A recorded that the dreamers escaped from Nyarlathotep's grasp and awoke; each investigator earned 11 XP and suffered 2 mental trauma. Epilogue 6 reunited both groups in the waking world and the investigators won the campaign."
       }
     ],
     "crossNotes": {
@@ -648,7 +743,8 @@
         "Dream-Quest Scenario I-A already recorded that the dreamers strayed from the path and that the chaos bag reached three skull tokens by scenario end.",
         "Interlude I is one shared event for this run: resolve the Dream-Quest side first, then the Web of Dreams side, and apply the combined results across both campaign logs.",
         "Interlude III moved The Silver Key from Campaign B to Campaign A and revealed Nyarlathotep as the threat behind the dreamers' ordeal.",
-        "Scenario IV-B completed Campaign B: the bridge was destroyed, the investigators returned to reality, and the run proceeds to Scenario IV-A for the remaining finale."
+        "Scenario IV-B completed Campaign B: the bridge was destroyed, the investigators returned to reality, and the run proceeds to Scenario IV-A for the remaining finale.",
+        "Scenario IV-A completed Campaign A: the dreamers escaped Nyarlathotep, awoke, and Epilogue 6 reunited both teams in the waking world for a campaign win."
       ]
     }
   },
@@ -721,13 +817,13 @@
       "title": "Campaign A: The Dream-Quest",
       "subtitle": "Current recorded roster and scenario log for the dream-side track.",
       "statusChips": [
-        "Track Status: Active",
+        "Track Status: Completed",
         "Recorded Investigators: 3",
         "Chaos Bag: Track A"
       ],
       "metaItems": [
         "Investigators: Silas Marsh, Wilson Richards, Mandy Thompson",
-        "Next Step: Scenario IV-A, Where the Gods Dwell"
+        "Campaign Complete: Epilogue 6"
       ],
       "notes": [
         {
@@ -736,7 +832,8 @@
             "This is the currently populated side of the Dream-Eaters run.",
             "Use this column for Campaign A scenario records, campaign log changes, and chaos bag updates.",
             "Deck upgrade cards for the currently recorded team are grouped under the Dream-Quest heading below.",
-            "On 05/31/2026, Interlude III added a -4 token to Campaign A, revealed Nyarlathotep, and moved The Silver Key to Silas Marsh."
+            "On 05/31/2026, Interlude III added a -4 token to Campaign A, revealed Nyarlathotep, and moved The Silver Key to Silas Marsh.",
+            "On 06/06/2026, the group completed Scenario IV-A: Where the Gods Dwell, resolved Epilogue 6, and won the campaign."
           ]
         },
         {
@@ -791,6 +888,19 @@
             "Campaign log records added: the black cat spoke of Nyarlathotep; the investigators possess the Silver Key.",
             "Silas Marsh earned The Silver Key: Key to the Gate of Dreams."
           ]
+        },
+        {
+          "title": "Scenario IV-A Result Summary",
+          "items": [
+            "Opening state: the Dream-Quest investigators traveled to the Cold Wastes, climbed toward unknown Kadath, and reached the abandoned halls of the Great Ones.",
+            "Branch checks: Randolph survived the voyage and the black cat is at your side, so Not-Randolph revealed himself as Nyarlathotep and the black cat remained with the dreamers.",
+            "Player card change recorded: Randolph Carter: Expert Dreamer was removed from Wilson Richards's deck for the remainder of the campaign.",
+            "Scenario result: Resolution 1, then Resolution 3 after the investigators chose to wake up.",
+            "Campaign log records added: the dreamers escaped from Nyarlathotep's grasp; the dreamers awoke.",
+            "XP recorded: victory display 11, so each investigator earned 11 XP.",
+            "Trauma recorded: Wilson Richards, Silas Marsh, and Mandy Thompson each suffer 2 mental trauma.",
+            "Epilogue 6 applied because Campaign A awoke and Campaign B returned to reality; the two groups were reunited in the waking world and the investigators won the campaign."
+          ]
         }
       ],
       "scenarios": [
@@ -808,7 +918,7 @@
         },
         {
           "title": "Scenario IV-A",
-          "text": "Campaign A finale pending."
+          "text": "Where the Gods Dwell ended at Resolution 1, with Resolution 3 after the dreamers chose to wake up. Nyarlathotep was revealed, Virgil died, Randolph Carter: Expert Dreamer was removed from Wilson Richards, each investigator earned 11 XP and suffered 2 mental trauma, and Epilogue 6 reunited both groups for a campaign win."
         }
       ]
     },
@@ -823,7 +933,7 @@
       ],
       "metaItems": [
         "Investigators: Zoey Samaras, Kymani Jones, Joe Diamond",
-        "Next Step: Scenario IV-A, Where the Gods Dwell"
+        "Campaign Complete: Epilogue 6"
       ],
       "notes": [
         {
@@ -834,7 +944,8 @@
             "Keep Campaign B story progress, chaos bag changes, and upgrades separate from Dream-Quest.",
             "On 05/10/2026, the group advanced the waking-world side through Prologue, Scenario I-B, Interlude I, and Scenario II-B.",
             "On 05/31/2026, the group completed Scenario III-B, Point of No Return, then resolved Interlude III.",
-            "On 05/31/2026, the group completed Scenario IV-B: Weaver of the Cosmos and finished the Campaign B finale."
+            "On 05/31/2026, the group completed Scenario IV-B: Weaver of the Cosmos and finished the Campaign B finale.",
+            "On 06/06/2026, Campaign A completed Scenario IV-A and Epilogue 6 reunited the waking-world investigators with the dreamers."
           ]
         },
         {
@@ -944,6 +1055,10 @@
         {
           "title": "Scenario IV-B",
           "text": "Weaver of the Cosmos ended at Resolution 1, with Resolution 3 applied afterward. The bridge was destroyed, the investigators returned to reality, each investigator earned 12 XP and suffered 2 physical trauma, and the run proceeds to Scenario IV-A."
+        },
+        {
+          "title": "Epilogue",
+          "text": "Because the dreamers awoke and the waking-world investigators returned to reality, Epilogue 6 reunited both groups and the investigators won the campaign."
         }
       ]
     }
@@ -957,25 +1072,25 @@
           "name": "Silas Marsh",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/silas_marsh_the_sailor_1.png",
           "imageAlt": "Silas Marsh: The Sailor",
-          "currentXp": "Current XP: 0",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e1\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Flashlight (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/flashlight.png\" alt=\"Flashlight (x2)\"></span></li><li><span class=\"card-ref\">Meat Cleaver (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/meat_cleaver.png\" alt=\"Meat Cleaver (x2)\"></span></li><li><span class=\"card-ref\">Old Keyring (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/old_keyring.png\" alt=\"Old Keyring (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Brute Force (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/brute_force_1.png\" alt=\"Brute Force (1) (x2)\"></span></li><li><span class=\"card-ref\">Unexpected Courage (2) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/unexpected_courage_2.png\" alt=\"Unexpected Courage (2) (x2)\"></span></li><li><span class=\"card-ref\">Scrapper (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/scrapper_3.png\" alt=\"Scrapper (3)\"></span></li><li><span class=\"card-ref\">Last Chance (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/last_chance_3.png\" alt=\"Last Chance (3)\"></span></li><li><span class=\"card-ref\">Five of Pentacles: From the Brink (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/five_of_pentacles_from_the_brink_1.png\" alt=\"Five of Pentacles: From the Brink (1)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e1\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e4\"><p class=\"upgrade-entry-head\">After Scenario II (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Rise to the Occasion (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/rise_to_the_occasion.png\" alt=\"Rise to the Occasion (x2)\"></span></li><li><span class=\"card-ref\">Desperate Search (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/desperate_search.png\" alt=\"Desperate Search (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Plucky (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/plucky_3.png\" alt=\"Plucky (3) (x2)\"></span></li><li><span class=\"card-ref\">Gumption (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/gumption_1.png\" alt=\"Gumption (1) (x2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e4\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e7\"><p class=\"upgrade-entry-head\">After Scenario III (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Defiance (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/defiance.png\" alt=\"Defiance (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Chainsaw (4) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/chainsaw_4.png\" alt=\"Chainsaw (4) (x2)\"></span></li><li><span class=\"card-ref\">The Silver Key: Key to the Gate of Dreams (Story Asset)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/the_silver_key_key_to_the_gate_of_dreams_campaign.png\" alt=\"The Silver Key: Key to the Gate of Dreams (Story Asset)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario III):\" data-entry-uid-link=\"e7\">Trauma (Scenario III): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
-          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+          "currentXp": "Current XP: 11",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e1\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Flashlight (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/flashlight.png\" alt=\"Flashlight (x2)\"></span></li><li><span class=\"card-ref\">Meat Cleaver (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/meat_cleaver.png\" alt=\"Meat Cleaver (x2)\"></span></li><li><span class=\"card-ref\">Old Keyring (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/old_keyring.png\" alt=\"Old Keyring (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Brute Force (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/brute_force_1.png\" alt=\"Brute Force (1) (x2)\"></span></li><li><span class=\"card-ref\">Unexpected Courage (2) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/unexpected_courage_2.png\" alt=\"Unexpected Courage (2) (x2)\"></span></li><li><span class=\"card-ref\">Scrapper (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/scrapper_3.png\" alt=\"Scrapper (3)\"></span></li><li><span class=\"card-ref\">Last Chance (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/last_chance_3.png\" alt=\"Last Chance (3)\"></span></li><li><span class=\"card-ref\">Five of Pentacles: From the Brink (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/five_of_pentacles_from_the_brink_1.png\" alt=\"Five of Pentacles: From the Brink (1)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e1\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e4\"><p class=\"upgrade-entry-head\">After Scenario II (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Rise to the Occasion (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/rise_to_the_occasion.png\" alt=\"Rise to the Occasion (x2)\"></span></li><li><span class=\"card-ref\">Desperate Search (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/desperate_search.png\" alt=\"Desperate Search (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Plucky (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/plucky_3.png\" alt=\"Plucky (3) (x2)\"></span></li><li><span class=\"card-ref\">Gumption (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/gumption_1.png\" alt=\"Gumption (1) (x2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e4\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e7\"><p class=\"upgrade-entry-head\">After Scenario III (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Defiance (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/defiance.png\" alt=\"Defiance (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Chainsaw (4) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/chainsaw_4.png\" alt=\"Chainsaw (4) (x2)\"></span></li><li><span class=\"card-ref\">The Silver Key: Key to the Gate of Dreams (Story Asset)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/the_silver_key_key_to_the_gate_of_dreams_campaign.png\" alt=\"The Silver Key: Key to the Gate of Dreams (Story Asset)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario III):\" data-entry-uid-link=\"e7\">Trauma (Scenario III): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e22\"><p class=\"upgrade-entry-head\">After Scenario IV (+11 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"2\" data-trauma-label=\"Trauma (Scenario IV):\" data-entry-uid-link=\"e22\">Trauma (Scenario IV): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">2</button>.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 2."
         },
         {
           "name": "Wilson Richards",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/wilson_richards_the_handyman.png",
           "imageAlt": "Wilson Richards: The Handyman",
-          "currentXp": "Current XP: 0",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e2\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Enchanted Blade<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/enchanted_blade.png\" alt=\"Enchanted Blade\"></span></li><li><span class=\"card-ref\">Sledgehammer (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sledgehammer.png\" alt=\"Sledgehammer (x2)\"></span></li><li><span class=\"card-ref\">Toe to Toe<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/toe_to_toe.png\" alt=\"Toe to Toe\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Randolph Carter: Expert Dreamer (Story Asset)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/randolph_carter_expert_dreamer_campaign.png\" alt=\"Randolph Carter: Expert Dreamer (Story Asset)\"></span></li><li><span class=\"card-ref\">Fire Extinguisher (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fire_extinguisher_3.png\" alt=\"Fire Extinguisher (3)\"></span></li><li><span class=\"card-ref\">Sledgehammer (4) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sledgehammer_4.png\" alt=\"Sledgehammer (4) (x2)\"></span></li><li><span class=\"card-ref\">Taunt (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/taunt_2.png\" alt=\"Taunt (2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e2\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e6\"><p class=\"upgrade-entry-head\">After Scenario II (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Pitchfork<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pitchfork.png\" alt=\"Pitchfork\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Fire Extinguisher (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fire_extinguisher_3.png\" alt=\"Fire Extinguisher (3)\"></span></li></ul></div></div><div class=\"customized-section\"><h4>Customized</h4><ul class=\"card-list customized-list\" data-list=\"customized\"><li class=\"customized-card-item\" data-customizable-card-key=\"pocket multi tool\" data-customizable-upgrade-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\" data-customizable-snapshot-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\" data-customizable-effective-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\"><span class=\"draft-card-inline customized-card-inline\"><span class=\"card-ref\">Pocket Multi Tool<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pocket_multi_tool.png\" alt=\"Pocket Multi Tool\"></span></span><div class=\"customizable-row-summary\">Pry Bar 1/1 (+1) • Spring-Loaded 4/4 (+4)</div></li></ul></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e6\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e14\"><p class=\"upgrade-entry-head\">After Scenario III (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Toe to Toe<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/toe_to_toe.png\" alt=\"Toe to Toe\"></span></li><li><span class=\"card-ref\">Taunt (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/taunt_2.png\" alt=\"Taunt (2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Taunt (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/taunt_3.png\" alt=\"Taunt (3) (x2)\"></span></li></ul></div></div><div class=\"customized-section\"><h4>Customized</h4><ul class=\"card-list customized-list\" data-list=\"customized\"><li class=\"customized-card-item\" data-customizable-card-key=\"pocket multi tool\" data-customizable-inherited-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\" data-customizable-upgrade-ids=\"sharpened_knife.1,sharpened_knife.2,magnifying_lens.1,magnifying_lens.2\" data-customizable-snapshot-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4,sharpened_knife.1,sharpened_knife.2,magnifying_lens.1,magnifying_lens.2\" data-customizable-effective-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4,sharpened_knife.1,sharpened_knife.2,magnifying_lens.1,magnifying_lens.2\"><span class=\"draft-card-inline customized-card-inline\"><span class=\"card-ref\">Pocket Multi Tool<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pocket_multi_tool.png\" alt=\"Pocket Multi Tool\"></span></span><div class=\"customizable-row-summary\">Pry Bar 1/1 • Sharpened Knife 2/2 (+2) • Magnifying Lens 2/2 (+2) • Spring-Loaded 4/4</div></li></ul></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"1\" data-trauma-label=\"Trauma (Scenario III):\" data-entry-uid-link=\"e14\">Trauma (Scenario III): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">1</button>.</p>",
-          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 1."
+          "currentXp": "Current XP: 11",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e2\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Enchanted Blade<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/enchanted_blade.png\" alt=\"Enchanted Blade\"></span></li><li><span class=\"card-ref\">Sledgehammer (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sledgehammer.png\" alt=\"Sledgehammer (x2)\"></span></li><li><span class=\"card-ref\">Toe to Toe<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/toe_to_toe.png\" alt=\"Toe to Toe\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Randolph Carter: Expert Dreamer (Story Asset)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/randolph_carter_expert_dreamer_campaign.png\" alt=\"Randolph Carter: Expert Dreamer (Story Asset)\"></span></li><li><span class=\"card-ref\">Fire Extinguisher (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fire_extinguisher_3.png\" alt=\"Fire Extinguisher (3)\"></span></li><li><span class=\"card-ref\">Sledgehammer (4) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sledgehammer_4.png\" alt=\"Sledgehammer (4) (x2)\"></span></li><li><span class=\"card-ref\">Taunt (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/taunt_2.png\" alt=\"Taunt (2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e2\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e6\"><p class=\"upgrade-entry-head\">After Scenario II (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Pitchfork<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pitchfork.png\" alt=\"Pitchfork\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Fire Extinguisher (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fire_extinguisher_3.png\" alt=\"Fire Extinguisher (3)\"></span></li></ul></div></div><div class=\"customized-section\"><h4>Customized</h4><ul class=\"card-list customized-list\" data-list=\"customized\"><li class=\"customized-card-item\" data-customizable-card-key=\"pocket multi tool\" data-customizable-upgrade-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\" data-customizable-snapshot-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\" data-customizable-effective-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\"><span class=\"draft-card-inline customized-card-inline\"><span class=\"card-ref\">Pocket Multi Tool<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pocket_multi_tool.png\" alt=\"Pocket Multi Tool\"></span></span><div class=\"customizable-row-summary\">Pry Bar 1/1 (+1) • Spring-Loaded 4/4 (+4)</div></li></ul></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e6\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e14\"><p class=\"upgrade-entry-head\">After Scenario III (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Toe to Toe<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/toe_to_toe.png\" alt=\"Toe to Toe\"></span></li><li><span class=\"card-ref\">Taunt (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/taunt_2.png\" alt=\"Taunt (2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Taunt (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/taunt_3.png\" alt=\"Taunt (3) (x2)\"></span></li></ul></div></div><div class=\"customized-section\"><h4>Customized</h4><ul class=\"card-list customized-list\" data-list=\"customized\"><li class=\"customized-card-item\" data-customizable-card-key=\"pocket multi tool\" data-customizable-inherited-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4\" data-customizable-upgrade-ids=\"sharpened_knife.1,sharpened_knife.2,magnifying_lens.1,magnifying_lens.2\" data-customizable-snapshot-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4,sharpened_knife.1,sharpened_knife.2,magnifying_lens.1,magnifying_lens.2\" data-customizable-effective-ids=\"pry_bar.1,spring_loaded.1,spring_loaded.2,spring_loaded.3,spring_loaded.4,sharpened_knife.1,sharpened_knife.2,magnifying_lens.1,magnifying_lens.2\"><span class=\"draft-card-inline customized-card-inline\"><span class=\"card-ref\">Pocket Multi Tool<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pocket_multi_tool.png\" alt=\"Pocket Multi Tool\"></span></span><div class=\"customizable-row-summary\">Pry Bar 1/1 • Sharpened Knife 2/2 (+2) • Magnifying Lens 2/2 (+2) • Spring-Loaded 4/4</div></li></ul></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"1\" data-trauma-label=\"Trauma (Scenario III):\" data-entry-uid-link=\"e14\">Trauma (Scenario III): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">1</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e23\"><p class=\"upgrade-entry-head\">After Scenario IV (+11 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Randolph Carter: Expert Dreamer (Story Asset)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/randolph_carter_expert_dreamer_campaign.png\" alt=\"Randolph Carter: Expert Dreamer (Story Asset)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"2\" data-trauma-label=\"Trauma (Scenario IV):\" data-entry-uid-link=\"e23\">Trauma (Scenario IV): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">2</button>.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 3."
         },
         {
           "name": "Mandy Thompson",
           "imageSrc": "/assets/boardgames/ahlcg_investigators/mandy_thompson_the_researcher.png",
           "imageAlt": "Mandy Thompson: The Researcher",
-          "currentXp": "Current XP: 0",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e3\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Magnifying Glass (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/magnifying_glass.png\" alt=\"Magnifying Glass (x2)\"></span></li><li><span class=\"card-ref\">Higher Education (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/higher_education.png\" alt=\"Higher Education (x2)\"></span></li><li><span class=\"card-ref\">Open Gate (x3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/open_gate.png\" alt=\"Open Gate (x3)\"></span></li><li><span class=\"card-ref\">Hawk-Eye Folding Camera<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hawk_eye_folding_camera.png\" alt=\"Hawk-Eye Folding Camera\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Magnifying Glass (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/magnifying_glass_1.png\" alt=\"Magnifying Glass (1) (x2)\"></span></li><li><span class=\"card-ref\">Higher Education (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/higher_education_3.png\" alt=\"Higher Education (3)\"></span></li><li><span class=\"card-ref\">Segment of Onyx (1) (x3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/segment_of_onyx_1.png\" alt=\"Segment of Onyx (1) (x3)\"></span></li><li><span class=\"card-ref\">Pathfinder (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pathfinder_1.png\" alt=\"Pathfinder (1) (x2)\"></span></li><li><span class=\"card-ref\">Prophesiae Profana: Atlas of the Unknowable (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prophesiae_profana_atlas_of_the_unknowable_5.png\" alt=\"Prophesiae Profana: Atlas of the Unknowable (5)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e3\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e5\"><p class=\"upgrade-entry-head\">After Scenario II (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Hawk-Eye Folding Camera<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hawk_eye_folding_camera.png\" alt=\"Hawk-Eye Folding Camera\"></span></li><li><span class=\"card-ref\">Shortcut<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/shortcut.png\" alt=\"Shortcut\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Prophesiae Profana: Atlas of the Unknowable (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prophesiae_profana_atlas_of_the_unknowable_5.png\" alt=\"Prophesiae Profana: Atlas of the Unknowable (5)\"></span></li><li><span class=\"card-ref\">Seeking Answers (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/seeking_answers_2.png\" alt=\"Seeking Answers (2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e5\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e15\"><p class=\"upgrade-entry-head\">After Scenario III (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Astounding Revelation<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astounding_revelation.png\" alt=\"Astounding Revelation\"></span></li><li><span class=\"card-ref\">Fingerprint Kit<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fingerprint_kit.png\" alt=\"Fingerprint Kit\"></span></li><li><span class=\"card-ref\">Shortcut<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/shortcut.png\" alt=\"Shortcut\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Eon Chart (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/eon_chart_4.png\" alt=\"Eon Chart (4)\"></span></li><li><span class=\"card-ref\">Scroll of Secrets (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/scroll_of_secrets_3.png\" alt=\"Scroll of Secrets (3)\"></span></li><li><span class=\"card-ref\">Seeking Answers (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/seeking_answers_2.png\" alt=\"Seeking Answers (2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario III):\" data-entry-uid-link=\"e15\">Trauma (Scenario III): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
-          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+          "currentXp": "Current XP: 11",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (05/03/2026): Base deck recorded for the Dream-Eaters run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e3\"><p class=\"upgrade-entry-head\">After Scenario I (+13 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Magnifying Glass (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/magnifying_glass.png\" alt=\"Magnifying Glass (x2)\"></span></li><li><span class=\"card-ref\">Higher Education (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/higher_education.png\" alt=\"Higher Education (x2)\"></span></li><li><span class=\"card-ref\">Open Gate (x3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/open_gate.png\" alt=\"Open Gate (x3)\"></span></li><li><span class=\"card-ref\">Hawk-Eye Folding Camera<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hawk_eye_folding_camera.png\" alt=\"Hawk-Eye Folding Camera\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Magnifying Glass (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/magnifying_glass_1.png\" alt=\"Magnifying Glass (1) (x2)\"></span></li><li><span class=\"card-ref\">Higher Education (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/higher_education_3.png\" alt=\"Higher Education (3)\"></span></li><li><span class=\"card-ref\">Segment of Onyx (1) (x3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/segment_of_onyx_1.png\" alt=\"Segment of Onyx (1) (x3)\"></span></li><li><span class=\"card-ref\">Pathfinder (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pathfinder_1.png\" alt=\"Pathfinder (1) (x2)\"></span></li><li><span class=\"card-ref\">Prophesiae Profana: Atlas of the Unknowable (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prophesiae_profana_atlas_of_the_unknowable_5.png\" alt=\"Prophesiae Profana: Atlas of the Unknowable (5)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"e3\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e5\"><p class=\"upgrade-entry-head\">After Scenario II (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Hawk-Eye Folding Camera<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hawk_eye_folding_camera.png\" alt=\"Hawk-Eye Folding Camera\"></span></li><li><span class=\"card-ref\">Shortcut<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/shortcut.png\" alt=\"Shortcut\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Prophesiae Profana: Atlas of the Unknowable (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prophesiae_profana_atlas_of_the_unknowable_5.png\" alt=\"Prophesiae Profana: Atlas of the Unknowable (5)\"></span></li><li><span class=\"card-ref\">Seeking Answers (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/seeking_answers_2.png\" alt=\"Seeking Answers (2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario II):\" data-entry-uid-link=\"e5\">Trauma (Scenario II): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e15\"><p class=\"upgrade-entry-head\">After Scenario III (+8 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Astounding Revelation<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astounding_revelation.png\" alt=\"Astounding Revelation\"></span></li><li><span class=\"card-ref\">Fingerprint Kit<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fingerprint_kit.png\" alt=\"Fingerprint Kit\"></span></li><li><span class=\"card-ref\">Shortcut<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/shortcut.png\" alt=\"Shortcut\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Eon Chart (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/eon_chart_4.png\" alt=\"Eon Chart (4)\"></span></li><li><span class=\"card-ref\">Scroll of Secrets (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/scroll_of_secrets_3.png\" alt=\"Scroll of Secrets (3)\"></span></li><li><span class=\"card-ref\">Seeking Answers (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/seeking_answers_2.png\" alt=\"Seeking Answers (2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario III):\" data-entry-uid-link=\"e15\">Trauma (Scenario III): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e24\"><p class=\"upgrade-entry-head\">After Scenario IV (+11 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"2\" data-trauma-label=\"Trauma (Scenario IV):\" data-entry-uid-link=\"e24\">Trauma (Scenario IV): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">2</button>.</p>",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 2."
         }
       ]
     },
