@@ -460,21 +460,49 @@
     {
       "title": "Scenario VII: The Lair of Dagon",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed",
+        "Resolution Chain: 1 -> 3",
+        "Victory Display: 5",
+        "Outcome: The Order's ritual was disrupted"
       ],
       "notes": [
         {
-          "title": "Setup Notes",
-          "items": []
+          "title": "Return To The Esoteric Order Of Dagon",
+          "items": [
+            "One week before the present-day crisis, George Barnaby, Lily Chen, and Trish Scarborough stood with Agent Dawson outside the damaged masonic hall of the Esoteric Order of Dagon, ready to investigate the cult at the center of Innsmouth's conspiracy.",
+            "Because the mission was not successful, the successful-mission condition did not apply.",
+            "Because a decision to stick together was listed under Memories Recovered, Dawson opened the hall and entered alongside the investigators."
+          ]
         },
         {
-          "title": "Scenario Results",
+          "title": "Key Representations Read",
           "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
+            "Red: a crest engraved with a glyph depicting a great sacrifice.",
+            "Black: a crest carved with an arcane sigil.",
+            "Blue: a scroll detailing some of the Order's activities and secrets.",
+            "Purple: a crest inscribed with a circle of words in an alphabet the investigators did not comprehend.",
+            "Green: a crest depicting a widening fish-eye.",
+            "White / Yellow: crests whose glyphs depict the alignment of celestial bodies; the white key shows the moon overlapping the sun, while the yellow key shows the sun overlapping the moon."
+          ]
+        },
+        {
+          "title": "The Investigators Achieved Resolution I.",
+          "items": [
+            "George Barnaby, Lily Chen, and Trish Scarborough were all alive at the end of the scenario.",
+            "Resolution 1 was reached by advancing Act 3b, so the Campaign Log records that the Order's ritual was disrupted.",
+            "Dagon (Deep in Slumber) was in play, so the Campaign Log records that Dagon still slumbers.",
+            "A Suspect enemy was in the victory display, so the Campaign Log records that the gatekeeper has been defeated.",
+            "Each investigator earned 5 XP from the victory display. Record this under Unspent Experience and do not spend it yet."
+          ]
+        },
+        {
+          "title": "The Investigators Proceeded To Resolution III.",
+          "items": [
+            "The lead investigator chose to lie to Oceiros.",
+            "The investigators denied knowing Agent Dawson, but Oceiros ordered their stolen belongings taken to the lighthouse and had the captives cast into the darkness below the hall.",
+            "Add 1 bless token to the chaos bag for the remainder of the campaign.",
+            "No investigator suffered physical or mental trauma.",
+            "Proceed to Interlude IV: Hidden Truths."
           ]
         }
       ]
@@ -523,16 +551,19 @@
               "Lily Chen possesses a diving suit.",
               "Trish Scarborough possesses a diving suit.",
               "The investigators possess a map of Y'ha-nthlei.",
-              "The investigators possess the key to Y'ha-nthlei."
+              "The investigators possess the key to Y'ha-nthlei.",
+              "The Order's ritual was disrupted.",
+              "Dagon still slumbers.",
+              "The gatekeeper has been defeated."
             ]
           },
           {
             "title": "Unspent Experience",
             "listClass": "campaign-log-list",
             "items": [
-              "George Barnaby: 6 unspent XP.",
-              "Lily Chen: 6 unspent XP.",
-              "Trish Scarborough: 6 unspent XP.",
+              "George Barnaby: 5 unspent XP.",
+              "Lily Chen: 5 unspent XP.",
+              "Trish Scarborough: 5 unspent XP.",
               "Do not spend this experience yet."
             ]
           },
@@ -705,6 +736,23 @@
             ]
           },
           {
+            "title": "Scenario VII Records",
+            "listClass": "campaign-log-list",
+            "items": [
+              "Resolution chain: Resolution 1 -> Resolution 3.",
+              "Resolution 1 was reached by advancing Act 3b.",
+              "Victory display: 5.",
+              "Record: the Order's ritual was disrupted.",
+              "Record: Dagon still slumbers.",
+              "Record: the gatekeeper has been defeated.",
+              "The lead investigator chose to lie to Oceiros.",
+              "George Barnaby, Lily Chen, and Trish Scarborough survived the scenario without physical or mental trauma.",
+              "Each investigator records 5 unspent XP and must not spend it yet.",
+              "Add 1 bless token to the chaos bag for the remainder of the campaign.",
+              "Proceed to Interlude IV: Hidden Truths."
+            ]
+          },
+          {
             "title": "Campaign-Wide Chaos Bag Notes",
             "listClass": "campaign-log-list",
             "items": [
@@ -717,7 +765,8 @@
               "Add 1 tablet token to the chaos bag for the remainder of the campaign.",
               "Add 1 elder thing token to the chaos bag for the remainder of the campaign.",
               "Remove 1 elder thing token after Flashback XII for the remainder of the campaign.",
-              "Remove 1 tablet token after Flashback XIII for the remainder of the campaign."
+              "Remove 1 tablet token after Flashback XIII for the remainder of the campaign.",
+              "Add 1 bless token after Scenario VII for the remainder of the campaign."
             ]
           }
         ]
