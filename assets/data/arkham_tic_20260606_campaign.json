@@ -451,6 +451,13 @@
       ]
     },
     {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 08/02/2026",
+        "Session: Scenario VII + Interlude IV + Scenario VIII + Epilogue"
+      ]
+    },
+    {
       "title": "Scenario VII: The Lair of Dagon",
       "statusChips": [
         "Status: Pending"
