@@ -4,6 +4,24 @@
   "layout": "news",
   "items": [
     {
+      "kicker": "Announcement",
+      "date": "August 10, 2026",
+      "title": "Ark Nova World Championship — Coming in 2027",
+      "imageSrc": "/assets/news/ark-nova-world-championship.jpg",
+      "text": "Four qualifying champions will be invited to Berlin in summer 2027 to compete for the ultimate Ark Nova championship.",
+      "detail": "Tickets will go to the 2026 Ark Nova Ring Winner at WSBG Las Vegas, the Ark Nova Digital Champion, and the top players from the Western and Eastern Hemispheres in Board Game Arena Season 27. Each qualifier receives a flight to Berlin and hotel accommodation for the championship.",
+      "statLabel": "Finalists",
+      "statValue": "4",
+      "tags": [
+        "WSBG Las Vegas",
+        "Ark Nova Digital",
+        "Board Game Arena"
+      ],
+      "href": "https://www.feuerland-spiele.de/en/ark-nova-world-championship/",
+      "linkLabel": "Official Announcement",
+      "external": true
+    },
+    {
       "kicker": "Crowdfunding",
       "date": "August 4, 2026",
       "title": "Parks Europe - Chalet Edition + Free Expansion",
