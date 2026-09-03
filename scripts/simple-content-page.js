@@ -52,74 +52,119 @@
     return grid;
   }
 
-  function renderNews(items) {
-    const list = el("div", "news-list");
-    if (!items.length) {
-      list.appendChild(el("div", "card game-card category-placeholder", "No news yet"));
-      return list;
+  function renderNewsCard(item) {
+    const article = el("article", "news-card");
+    if (item.imageSrc) {
+      const imageUrl = String(item.imageSrc).replace(/"/g, "%22");
+      article.classList.add("has-news-image");
+      article.style.setProperty("--news-bg", `url("${imageUrl}")`);
     }
-    items.forEach((item) => {
-      const article = el("article", "news-card");
-      if (item.imageSrc) {
-        const imageUrl = String(item.imageSrc).replace(/"/g, "%22");
-        article.classList.add("has-news-image");
-        article.style.setProperty("--news-bg", `url("${imageUrl}")`);
-      }
-      const badge = el("div", "news-badge");
-      badge.appendChild(el("span", "news-badge-label", String(item.statLabel || "Update")));
-      badge.appendChild(el("strong", "news-badge-value", String(item.statValue || "")));
+    const badge = el("div", "news-badge");
+    badge.appendChild(el("span", "news-badge-label", String(item.statLabel || "Update")));
+    badge.appendChild(el("strong", "news-badge-value", String(item.statValue || "")));
 
-      const body = el("div", "news-card-body");
-      const meta = el("div", "news-meta");
-      if (item.kicker) meta.appendChild(el("span", "news-kicker", String(item.kicker)));
-      if (item.date) meta.appendChild(el("time", "news-date", String(item.date)));
-      body.appendChild(meta);
+    const body = el("div", "news-card-body");
+    const meta = el("div", "news-meta");
+    if (item.kicker) meta.appendChild(el("span", "news-kicker", String(item.kicker)));
+    if (item.date) meta.appendChild(el("time", "news-date", String(item.date)));
+    body.appendChild(meta);
 
-      if (item.title) body.appendChild(el("h3", "news-title", String(item.title)));
-      if (item.text) body.appendChild(el("p", "news-lede", String(item.text)));
-      if (item.detail) body.appendChild(el("p", "news-detail", String(item.detail)));
+    if (item.title) body.appendChild(el("h3", "news-title", String(item.title)));
+    if (item.text) body.appendChild(el("p", "news-lede", String(item.text)));
+    if (item.detail) body.appendChild(el("p", "news-detail", String(item.detail)));
 
-      if (Array.isArray(item.tags) && item.tags.length) {
-        const tags = el("div", "news-tags");
-        item.tags.forEach((tag) => {
-          if (tag && typeof tag === "object" && tag.href) {
-            const link = el("a", "news-tag");
-            link.href = String(tag.href);
-            if (tag.external) {
-              link.target = "_blank";
-              link.rel = "noopener noreferrer";
-            }
-            if (tag.iconSrc) {
-              const icon = document.createElement("img");
-              icon.className = "news-tag-icon";
-              icon.src = String(tag.iconSrc);
-              icon.alt = "";
-              icon.setAttribute("aria-hidden", "true");
-              link.appendChild(icon);
-            }
-            link.appendChild(el("span", "", String(tag.label || tag.href)));
-            tags.appendChild(link);
-          } else {
-            tags.appendChild(el("span", "news-tag", String(tag)));
+    if (Array.isArray(item.tags) && item.tags.length) {
+      const tags = el("div", "news-tags");
+      item.tags.forEach((tag) => {
+        if (tag && typeof tag === "object" && tag.href) {
+          const link = el("a", "news-tag");
+          link.href = String(tag.href);
+          if (tag.external) {
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
           }
-        });
-        body.appendChild(tags);
-      }
-
-      if (item.href) {
-        const link = el("a", "more-info-btn news-link", String(item.linkLabel || "Open"));
-        link.href = String(item.href);
-        if (item.external) {
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
+          if (tag.iconSrc) {
+            const icon = document.createElement("img");
+            icon.className = "news-tag-icon";
+            icon.src = String(tag.iconSrc);
+            icon.alt = "";
+            icon.setAttribute("aria-hidden", "true");
+            link.appendChild(icon);
+          }
+          link.appendChild(el("span", "", String(tag.label || tag.href)));
+          tags.appendChild(link);
+        } else {
+          tags.appendChild(el("span", "news-tag", String(tag)));
         }
-        body.appendChild(link);
+      });
+      body.appendChild(tags);
+    }
+
+    if (item.href) {
+      const link = el("a", "more-info-btn news-link", String(item.linkLabel || "Open"));
+      link.href = String(item.href);
+      if (item.external) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      body.appendChild(link);
+    }
+
+    article.append(badge, body);
+    return article;
+  }
+
+  function getNewsYear(item) {
+    const explicitYear = Number(item && item.year);
+    if (Number.isInteger(explicitYear) && explicitYear > 0) return String(explicitYear);
+
+    const match = String((item && item.date) || "").match(/\b(?:19|20)\d{2}\b/);
+    return match ? match[0] : "Undated";
+  }
+
+  function renderNews(items) {
+    const archive = el("div", "news-archive");
+    if (!items.length) {
+      archive.appendChild(el("div", "card game-card category-placeholder", "No news yet"));
+      return archive;
+    }
+
+    const groups = new Map();
+    items.forEach((item) => {
+      const year = getNewsYear(item);
+      if (!groups.has(year)) groups.set(year, []);
+      groups.get(year).push(item);
+    });
+
+    const currentYear = String(new Date().getFullYear());
+    const years = Array.from(groups.keys()).sort((a, b) => {
+      if (a === "Undated") return 1;
+      if (b === "Undated") return -1;
+      return Number(b) - Number(a);
+    });
+
+    years.forEach((year) => {
+      const yearItems = groups.get(year);
+      const group = el("details", "news-year-group");
+      if (year === currentYear) {
+        group.open = true;
+        group.classList.add("is-current-year");
       }
 
-      article.append(badge, body);
-      list.appendChild(article);
+      const summary = el("summary", "news-year-summary");
+      const heading = el("span", "news-year-heading");
+      heading.appendChild(el("span", "news-year-label", year));
+      if (year === currentYear) heading.appendChild(el("span", "news-year-current", "Current"));
+      summary.appendChild(heading);
+      summary.appendChild(el("span", "news-year-count", `${yearItems.length} ${yearItems.length === 1 ? "update" : "updates"}`));
+
+      const list = el("div", "news-list");
+      yearItems.forEach((item) => list.appendChild(renderNewsCard(item)));
+      group.append(summary, list);
+      archive.appendChild(group);
     });
-    return list;
+
+    return archive;
   }
 
   function renderPage(data) {
