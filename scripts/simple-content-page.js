@@ -83,12 +83,21 @@
         const tags = el("div", "news-tags");
         item.tags.forEach((tag) => {
           if (tag && typeof tag === "object" && tag.href) {
-            const link = el("a", "news-tag", String(tag.label || tag.href));
+            const link = el("a", "news-tag");
             link.href = String(tag.href);
             if (tag.external) {
               link.target = "_blank";
               link.rel = "noopener noreferrer";
             }
+            if (tag.iconSrc) {
+              const icon = document.createElement("img");
+              icon.className = "news-tag-icon";
+              icon.src = String(tag.iconSrc);
+              icon.alt = "";
+              icon.setAttribute("aria-hidden", "true");
+              link.appendChild(icon);
+            }
+            link.appendChild(el("span", "", String(tag.label || tag.href)));
             tags.appendChild(link);
           } else {
             tags.appendChild(el("span", "news-tag", String(tag)));

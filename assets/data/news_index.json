@@ -13,9 +13,24 @@
       "statLabel": "Finalists",
       "statValue": "4",
       "tags": [
-        "WSBG Las Vegas",
-        "Ark Nova Digital",
-        "Board Game Arena"
+        {
+          "label": "WSBG Las Vegas",
+          "iconSrc": "/assets/news/wsbg-las-vegas-icon.png",
+          "href": "https://wsbgvegas.com/",
+          "external": true
+        },
+        {
+          "label": "Ark Nova Digital",
+          "iconSrc": "/assets/news/ark-nova-digital-icon.png",
+          "href": "https://direwolfdigital.com/ark-nova/",
+          "external": true
+        },
+        {
+          "label": "Board Game Arena",
+          "iconSrc": "/assets/news/board-game-arena-icon.png",
+          "href": "https://boardgamearena.com/",
+          "external": true
+        }
       ],
       "href": "https://www.feuerland-spiele.de/en/ark-nova-world-championship/",
       "linkLabel": "Official Announcement",
@@ -33,16 +48,19 @@
       "tags": [
         {
           "label": "BackerKit",
+          "iconSrc": "/assets/news/backerkit-icon.png",
           "href": "https://www.backerkit.com/",
           "external": true
         },
         {
           "label": "Keymaster",
+          "iconSrc": "/assets/news/keymaster-icon.png",
           "href": "https://www.keymastergames.com/",
           "external": true
         },
         {
           "label": "PARKS Europe",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
           "href": "https://boardgamegeek.com/boardgame/458651/parks-europe",
           "external": true
         }
