@@ -204,6 +204,47 @@
     return elWithInlineArkhamText("li", item && item.className ? String(item.className) : "", String(item && item.text ? item.text : item || ""));
   }
 
+  function renderPartnerPortraits(partners) {
+    const gallery = el("div", "campaign-partner-gallery");
+    gallery.setAttribute("role", "list");
+
+    (Array.isArray(partners) ? partners : []).forEach((partner) => {
+      const name = String(partner && partner.name ? partner.name : "").trim();
+      const role = String(partner && partner.role ? partner.role : "").trim();
+      const item = el("button", "campaign-partner card-ref");
+      item.type = "button";
+      item.setAttribute("role", "listitem");
+      item.setAttribute("aria-label", role ? `${name}, ${role}` : name);
+
+      const portrait = el("span", "campaign-partner-portrait");
+      const avatar = document.createElement("img");
+      avatar.className = "campaign-partner-avatar";
+      avatar.src = String(partner && partner.avatarSrc ? partner.avatarSrc : "");
+      avatar.alt = "";
+      avatar.loading = "lazy";
+      portrait.appendChild(avatar);
+
+      const frame = document.createElement("img");
+      frame.className = "campaign-partner-frame";
+      frame.src = "/assets/boardgames/ahlcg_partner_avatars/medieval_round_frame.png";
+      frame.alt = "";
+      frame.loading = "lazy";
+      portrait.appendChild(frame);
+      item.appendChild(portrait);
+
+      item.appendChild(el("span", "campaign-partner-name", name));
+
+      const preview = document.createElement("img");
+      preview.className = "card-preview campaign-partner-card-preview";
+      preview.src = String(partner && partner.cardSrc ? partner.cardSrc : "");
+      preview.alt = `${name} card`;
+      item.appendChild(preview);
+      gallery.appendChild(item);
+    });
+
+    return gallery;
+  }
+
   function renderCustomizableStateNote(note) {
     const wrap = el("div", "story-note customizable-state-note");
     if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
@@ -247,6 +288,9 @@
     const wrap = el("div", "story-note");
     if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
     if (note.text) wrap.appendChild(elWithInlineArkhamText("p", "", String(note.text)));
+    if (Array.isArray(note.partnerPortraits) && note.partnerPortraits.length) {
+      wrap.appendChild(renderPartnerPortraits(note.partnerPortraits));
+    }
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
       note.items.forEach((item) => {
@@ -261,6 +305,9 @@
     if (!note || typeof note !== "object") return;
     if (note.title) parent.appendChild(el("h4", "", String(note.title)));
     if (note.text) parent.appendChild(elWithInlineArkhamText("p", "", String(note.text)));
+    if (Array.isArray(note.partnerPortraits) && note.partnerPortraits.length) {
+      parent.appendChild(renderPartnerPortraits(note.partnerPortraits));
+    }
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
       note.items.forEach((item) => {

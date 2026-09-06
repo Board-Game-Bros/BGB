@@ -2565,7 +2565,9 @@
     }
 
     function toDisplayNameFromFile(fileName) {
-      const disciplineNamesByFile = {
+      const exactNamesByFile = {
+        "avery_claypool_antarctic_guide_eoec_1.png": "Avery Claypool: Antarctic Guide",
+        "danforth_brilliant_student_eoec_1.png": "Danforth: Brilliant Student",
         "discipline_alignment_of_spirit.png": "Discipline: Alignment of Spirit (Unbroken)",
         "discipline_alignment_of_spirit_1.png": "Discipline: Alignment of Spirit (Broken)",
         "discipline_balance_of_body.png": "Discipline: Balance of Body (Unbroken)",
@@ -2574,9 +2576,16 @@
         "discipline_prescience_of_fate_1.png": "Discipline: Prescience of Fate (Broken)",
         "discipline_quiescence_of_thought.png": "Discipline: Quiescence of Thought (Unbroken)",
         "discipline_quiescence_of_thought_1.png": "Discipline: Quiescence of Thought (Broken)",
+        "dr_amy_kensler_professor_of_biology_eoec_1.png": "Dr. Amy Kensler: Professor of Biology",
+        "dr_mala_sinha_daring_physician_eoec_1.png": "Dr. Mala Sinha: Daring Physician",
+        "eliyah_ashevak_dog_handler_eoec_1.png": "Eliyah Ashevak: Dog Handler",
+        "james_cookie_fredericks_dubious_choice_eoec_1.png": "James \"Cookie\" Fredericks: Dubious Choice",
+        "professor_william_dyer_professor_of_geology_eoec_1.png": "Professor William Dyer: Professor of Geology",
+        "roald_ellsworth_intrepid_explorer_eoec_1.png": "Roald Ellsworth: Intrepid Explorer",
+        "takada_hiroko_aeroplane_mechanic_eoec_1.png": "Takada Hiroko: Aeroplane Mechanic",
       };
       const exactFileName = String(fileName || "").split("/").pop();
-      if (disciplineNamesByFile[exactFileName]) return disciplineNamesByFile[exactFileName];
+      if (exactNamesByFile[exactFileName]) return exactNamesByFile[exactFileName];
 
       let base = String(fileName || "").replace(/\.png$/i, "");
       let level = null;

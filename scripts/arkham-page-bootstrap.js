@@ -21,14 +21,14 @@
     "parallel-campaign": {
       rootId: "arkham-parallel-campaign-root",
       scripts: [
-        "/scripts/ahlcg-standard-library.js?v=20260628i",
+        "/scripts/ahlcg-standard-library.js?v=20260906a",
         "/scripts/ahlcg-customizable-library.js?v=20260628b",
         "/scripts/ahlcg-customizable-state.js?v=20260512a",
         "/scripts/shared-github-sync.js?v=20260401a",
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
-        "/scripts/ahlcg-upgrade-manager.js?v=20260629e",
-        "/scripts/arkham-parallel-campaign-page.js?v=20260629a",
+        "/scripts/ahlcg-upgrade-manager.js?v=20260906a",
+        "/scripts/arkham-parallel-campaign-page.js?v=20260906a",
       ],
     },
   };
@@ -41,7 +41,7 @@
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20260701a";
+  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20260906a";
   document.head.appendChild(stylesheet);
 
   const root = document.createElement("div");

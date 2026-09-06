@@ -105,16 +105,63 @@
         },
         {
           "title": "Nine Campaign Partners",
+          "partnerPortraits": [
+            {
+              "name": "Dr. Amy Kensler",
+              "role": "Expedition leader and biologist",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_amy_kensler.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/dr_amy_kensler_professor_of_biology_eoec_1.png"
+            },
+            {
+              "name": "Roald Ellsworth",
+              "role": "Veteran explorer and field expert",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/roald_ellsworth.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/roald_ellsworth_intrepid_explorer_eoec_1.png"
+            },
+            {
+              "name": "James \"Cookie\" Fredericks",
+              "role": "Cook and crewman",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/james_cookie_fredericks.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/james_cookie_fredericks_dubious_choice_eoec_1.png"
+            },
+            {
+              "name": "Takada Hiroko",
+              "role": "Aeroplane mechanic",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/takada_hiroko.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/takada_hiroko_aeroplane_mechanic_eoec_1.png"
+            },
+            {
+              "name": "Avery Claypool",
+              "role": "Antarctic guide",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/avery_claypool.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/avery_claypool_antarctic_guide_eoec_1.png"
+            },
+            {
+              "name": "Dr. Mala Sinha",
+              "role": "Expedition physician",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_mala_sinha.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/dr_mala_sinha_daring_physician_eoec_1.png"
+            },
+            {
+              "name": "Eliyah Ashevak",
+              "role": "Dog handler, accompanied by Anyu",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/eliyah_ashevak.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/eliyah_ashevak_dog_handler_eoec_1.png"
+            },
+            {
+              "name": "Professor William Dyer",
+              "role": "Survivor of the previous expedition",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/professor_william_dyer.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/professor_william_dyer_professor_of_geology_eoec_1.png"
+            },
+            {
+              "name": "Danforth",
+              "role": "Dyer's student and fellow survivor",
+              "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/danforth.png",
+              "cardSrc": "/assets/boardgames/ahlcg_cards/danforth_brilliant_student_eoec_1.png"
+            }
+          ],
           "items": [
-            "Dr. Amy Kensler - expedition leader and biologist.",
-            "Roald Ellsworth - veteran explorer and field expert.",
-            "James \"Cookie\" Fredericks - cook and crewman.",
-            "Takada Hiroko - aeroplane mechanic.",
-            "Avery Claypool - Antarctic guide.",
-            "Dr. Mala Sinha - expedition physician.",
-            "Eliyah Ashevak - dog handler, accompanied by Anyu.",
-            "Professor William Dyer - survivor of the previous expedition.",
-            "Danforth - Dyer's student and fellow survivor.",
             "These nine characters are the campaign's partners. Their physical injuries, mental strain, deaths, or insanity must be tracked throughout the expedition.",
             "Proceed to Scenario I: Ice and Death."
           ]

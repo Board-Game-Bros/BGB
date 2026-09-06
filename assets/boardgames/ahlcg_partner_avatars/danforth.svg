@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="165 130 450 450" role="img" aria-label="Danforth">
+  <defs><clipPath id="crop"><circle cx="390" cy="355" r="225"/></clipPath></defs>
+  <image href="../ahlcg_cards/danforth_brilliant_student_eoec_1.png" width="750" height="1050" clip-path="url(#crop)"/>
+</svg>
