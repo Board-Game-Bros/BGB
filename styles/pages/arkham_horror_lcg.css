@@ -304,7 +304,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   transform: translateY(-2px);
 }
 
-.campaign-partner-card-preview {
+.card-preview.campaign-partner-card-preview {
   bottom: calc(100% + 16px);
   width: min(292px, calc(100vw - 24px));
   border-color: #9f7129;

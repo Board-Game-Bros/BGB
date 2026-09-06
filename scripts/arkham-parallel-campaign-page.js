@@ -215,6 +215,11 @@
       item.type = "button";
       item.setAttribute("role", "listitem");
       item.setAttribute("aria-label", role ? `${name}, ${role}` : name);
+      item.addEventListener("pointerdown", (event) => {
+        if (event.pointerType !== "mouse") return;
+        event.preventDefault();
+        if (document.activeElement === item) item.blur();
+      });
 
       const portrait = el("span", "campaign-partner-portrait");
       const avatar = document.createElement("img");

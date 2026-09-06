@@ -243,6 +243,21 @@ const bindCardRefViewportPreviews = (root = document) => {
     }
     top = clamp(top, previewMargin, viewportHeight - displayHeight - previewMargin);
 
+    // Torch mode animates a filter on <body>, which turns it into the containing
+    // block for fixed descendants. Keep partner previews anchored to their
+    // portrait instead, while converting the clamped viewport position into a
+    // local offset. This prevents edge portraits from jumping up the document.
+    if (cardRef.classList.contains("campaign-partner")) {
+      preview.style.position = "absolute";
+      preview.style.left = `${Math.round(left - anchor.left)}px`;
+      preview.style.top = `${Math.round(top - anchor.top)}px`;
+      preview.style.right = "auto";
+      preview.style.bottom = "auto";
+      preview.style.transform = "none";
+      preview.style.zIndex = "2147483647";
+      return;
+    }
+
     preview.style.position = "fixed";
     preview.style.left = `${Math.round(left)}px`;
     preview.style.top = `${Math.round(top)}px`;
@@ -280,6 +295,10 @@ const bindCardRefViewportPreviews = (root = document) => {
       const preview = cardRef.querySelector(".card-preview");
       if (!preview) return;
       if (activeCardRef && activeCardRef !== cardRef) {
+        const focused = document.activeElement;
+        if (focused && activeCardRef.contains(focused) && typeof focused.blur === "function") {
+          focused.blur();
+        }
         resetPreview(activeCardRef.querySelector(".card-preview"));
       }
       activeCardRef = cardRef;
