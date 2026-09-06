@@ -1,0 +1,245 @@
+{
+  "pageTitle": "The Edge of the Earth Campaign - 09/06/2026",
+  "headerTitle": "The Edge of the Earth - 09/06/2026 Campaign",
+  "subnav": [
+    { "href": "#story-notes", "label": "Story Notes" },
+    { "href": "#campaign-log", "label": "Campaign Log" },
+    { "href": "#upgrade-history", "label": "Upgrade History" }
+  ],
+  "linearStoryLayout": true,
+  "overview": {
+    "title": "Story Notes",
+    "statusChips": [
+      "Difficulty: TBD",
+      "Players: 3",
+      "Mode: Variable 4-10 Session Campaign",
+      "Recorded Decks: 3",
+      "Campaign Start: 09/06/2026"
+    ],
+    "metaItems": [
+      "Date: 09/06/2026",
+      "Session: Campaign Setup"
+    ],
+    "sections": [
+      {
+        "title": "Run Structure",
+        "metaItems": [
+          "Status: Ready to Start",
+          "Cycle: The Edge of the Earth",
+          "Expansion: Campaign Expansion"
+        ],
+        "notes": [
+          {
+            "title": "How This Page Is Organized",
+            "items": [
+              "Use the Story Notes section for session-by-session setup, resolutions, XP, trauma, checkpoints, and narrative choices.",
+              "Use the Campaign Log section for expedition-team status, supplies, partners, chaos bag changes, and frost-token notes.",
+              "Use the Deck Upgrade History section to record changes for Ursula Downs, Marion Tavares, and Preston Fairmont."
+            ]
+          }
+        ]
+      }
+    ],
+    "teamColumns": [
+      {
+        "title": "Investigators",
+        "items": [
+          "Ursula Downs - LL",
+          "Marion Tavares - Shengbo",
+          "Preston Fairmont - Yan"
+        ],
+        "text": "Three 0 XP decks are recorded for the expedition into Antarctica."
+      }
+    ]
+  },
+  "storyNotes": [
+    {
+      "title": "Campaign Setup",
+      "statusChips": ["Status: Pending"],
+      "notes": [
+        {
+          "title": "Table Setup",
+          "items": [
+            "Difficulty: TBD",
+            "Lead investigator: TBD",
+            "Investigators: Ursula Downs, Marion Tavares, Preston Fairmont",
+            "Initial chaos bag: TBD",
+            "Expedition supplies and partners: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario I: Ice and Death",
+      "statusChips": ["Status: Pending"],
+      "notes": [
+        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Parts played: TBD",
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario II: Fatal Mirage",
+      "statusChips": ["Status: Pending"],
+      "notes": [
+        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario III: To the Forbidden Peaks",
+      "statusChips": ["Status: Pending"],
+      "notes": [
+        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario IV: City of the Elder Things",
+      "statusChips": ["Status: Pending"],
+      "notes": [
+        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign log changes: TBD"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario V: The Heart of Madness",
+      "statusChips": ["Status: Pending"],
+      "notes": [
+        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Scenario Results",
+          "items": [
+            "Parts played: TBD",
+            "Resolution: TBD",
+            "Victory Display: TBD",
+            "XP earned: TBD",
+            "Trauma: TBD",
+            "Campaign result: TBD"
+          ]
+        }
+      ]
+    }
+  ],
+  "campaignLog": {
+    "title": "Campaign Log",
+    "sections": [
+      {
+        "title": "Expedition Team",
+        "notes": [
+          { "title": "Partners and Status", "items": [] }
+        ]
+      },
+      {
+        "title": "Supplies",
+        "notes": [
+          { "title": "Expedition Supplies", "items": [] }
+        ]
+      },
+      {
+        "title": "Chaos Bag and Frost Tokens",
+        "notes": [
+          { "title": "Chaos Bag Changes", "items": [] },
+          { "title": "Frost Token Notes", "items": [] }
+        ]
+      },
+      {
+        "title": "General Campaign Notes",
+        "notes": [
+          { "title": "Open Notes", "items": [] }
+        ]
+      }
+    ]
+  },
+  "upgradeHistoryTitle": "Deck Upgrade History",
+  "upgradeTracks": [
+    {
+      "title": "The Edge of the Earth",
+      "cards": [
+        {
+          "name": "Ursula Downs",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png",
+          "imageAlt": "Ursula Downs: The Explorer",
+          "startingXp": 0,
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        },
+        {
+          "name": "Marion Tavares",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png",
+          "imageAlt": "Marion Tavares: The Trawler",
+          "startingXp": 0,
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        },
+        {
+          "name": "Preston Fairmont",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png",
+          "imageAlt": "Preston Fairmont: The Millionaire",
+          "startingXp": 0,
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "",
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
+        }
+      ]
+    }
+  ],
+  "backHref": "/arkham_horror_lcg/",
+  "backLabel": "Back to Arkham Horror LCG",
+  "upgradeManager": {
+    "storageKey": "ahlcg_eote_20260906_upgrade_state_v1",
+    "editPassword": "bgbzhangyan2026",
+    "campaignStartNote": {
+      "date": "09/06/2026",
+      "runName": "Edge of the Earth"
+    },
+    "inactivityMs": 120000,
+    "remoteSync": {
+      "provider": "github",
+      "owner": "Board-Game-Bros",
+      "repo": "BGB",
+      "branch": "main",
+      "filePath": "assets/data/arkham_eote_20260906_campaign.json"
+    },
+    "remoteSyncTokenStorageKey": "bgb_github_sync_token_v1",
+    "remoteSyncDebounceMs": 2800
+  }
+}

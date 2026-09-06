@@ -1,0 +1,84 @@
+{
+  "pageTitle": "Ursula Downs - Deck Build (09/06/2026)",
+  "title": "Ursula Downs Deck - 09/06/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png",
+    "imageAlt": "Ursula Downs",
+    "heading": "Ursula Downs",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "11 packs required",
+      "Class: Seeker",
+      "Built by LL on 09/06/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (15)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 2, "name": "Fingerprint Kit", "imageSrc": "/assets/boardgames/ahlcg_cards/fingerprint_kit.png", "imageAlt": "Fingerprint Kit" },
+            { "qty": 2, "name": "Grim Memoir", "imageSrc": "/assets/boardgames/ahlcg_cards/grim_memoir.png", "imageAlt": "Grim Memoir" },
+            { "qty": 2, "name": "Magnifying Glass", "imageSrc": "/assets/boardgames/ahlcg_cards/magnifying_glass.png", "imageAlt": "Magnifying Glass" }
+          ]
+        },
+        {
+          "label": "Arcane",
+          "cards": [
+            { "qty": 2, "name": "Arcane Enlightenment", "imageSrc": "/assets/boardgames/ahlcg_cards/arcane_enlightenment.png", "imageAlt": "Arcane Enlightenment" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Dr. Milan Christopher", "imageSrc": "/assets/boardgames/ahlcg_cards/dr_milan_christopher_professor_of_entomology.png", "imageAlt": "Dr. Milan Christopher" },
+            { "qty": 1, "name": "Jake Williams ★", "imageSrc": "/assets/boardgames/ahlcg_cards/jake_williams_loyal_companion.png", "imageAlt": "Jake Williams" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 2, "name": "Higher Education", "imageSrc": "/assets/boardgames/ahlcg_cards/higher_education.png", "imageAlt": "Higher Education" },
+            { "qty": 2, "name": "Strange Solution", "imageSrc": "/assets/boardgames/ahlcg_cards/strange_solution.png", "imageAlt": "Strange Solution" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (10)",
+          "cards": [
+            { "qty": 2, "name": "\"I've got a plan!\"", "imageSrc": "/assets/boardgames/ahlcg_cards/ive_got_a_plan.png", "imageAlt": "I've got a plan!" },
+            { "qty": 2, "name": "Connect the Dots", "imageSrc": "/assets/boardgames/ahlcg_cards/connect_the_dots.png", "imageAlt": "Connect the Dots" },
+            { "qty": 2, "name": "Crack the Case", "imageSrc": "/assets/boardgames/ahlcg_cards/crack_the_case.png", "imageAlt": "Crack the Case" },
+            { "qty": 2, "name": "Emergency Cache", "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png", "imageAlt": "Emergency Cache" },
+            { "qty": 2, "name": "Working a Hunch", "imageSrc": "/assets/boardgames/ahlcg_cards/working_a_hunch.png", "imageAlt": "Working a Hunch" }
+          ]
+        },
+        {
+          "title": "Skill (6)",
+          "cards": [
+            { "qty": 2, "name": "Deduction", "imageSrc": "/assets/boardgames/ahlcg_cards/deduction.png", "imageAlt": "Deduction" },
+            { "qty": 2, "name": "Literary Analysis", "imageSrc": "/assets/boardgames/ahlcg_cards/literary_analysis.png", "imageAlt": "Literary Analysis" },
+            { "qty": 2, "name": "Plan of Action", "imageSrc": "/assets/boardgames/ahlcg_cards/plan_of_action.png", "imageAlt": "Plan of Action" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "Call of the Unknown ★", "imageSrc": "/assets/boardgames/ahlcg_cards/call_of_the_unknown.png", "imageAlt": "Call of the Unknown" },
+            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Ursula-Downs-DeckBuild-20260906-LL.pdf",
+    "label": "Open Ursula Deck PDF"
+  }
+}

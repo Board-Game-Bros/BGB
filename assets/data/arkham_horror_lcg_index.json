@@ -138,6 +138,41 @@
           ]
         }
       ]
+    },
+    {
+      "title": "The Edge of the Earth Campaign",
+      "href": "https://www.fantasyflightgames.com/en/products/arkham-horror-the-card-game/products/arkham-horror-card-game-edge-earth-campaign-expansion/",
+      "hoverPreviewSrc": "/assets/boardgames/the_edge_of_the_earth.png",
+      "hoverPreviewAlt": "The Edge of the Earth Campaign",
+      "sessions": [
+        {
+          "href": "/arkham_horror_lcg_eote_20260906/",
+          "label": "09/06/2026 Campaign",
+          "investigators": [
+            {
+              "href": "/arkham_horror_lcg_eote_ursula_downs_20260906/",
+              "imageSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png",
+              "imageAlt": "Ursula Downs",
+              "builderName": "Built by LL",
+              "buildDate": "Built: 09/06/2026 \u00b7 XP: 0"
+            },
+            {
+              "href": "/arkham_horror_lcg_eote_marion_tavares_20260906/",
+              "imageSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png",
+              "imageAlt": "Marion Tavares",
+              "builderName": "Built by Shengbo",
+              "buildDate": "Built: 09/06/2026 \u00b7 XP: 0"
+            },
+            {
+              "href": "/arkham_horror_lcg_eote_preston_fairmont_20260906/",
+              "imageSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png",
+              "imageAlt": "Preston Fairmont",
+              "builderName": "Built by Yan",
+              "buildDate": "Built: 09/06/2026 \u00b7 XP: 0"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

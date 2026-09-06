@@ -1,0 +1,91 @@
+{
+  "pageTitle": "Preston Fairmont - Deck Build (09/06/2026)",
+  "title": "Preston Fairmont Deck - 09/06/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png",
+    "imageAlt": "Preston Fairmont",
+    "heading": "Preston Fairmont",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "14 packs required",
+      "Class: Rogue",
+      "Built by Yan on 09/06/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (14)",
+          "label": "Hand",
+          "cards": [
+            { "qty": 2, "name": "Fire Axe", "imageSrc": "/assets/boardgames/ahlcg_cards/fire_axe.png", "imageAlt": "Fire Axe" },
+            { "qty": 2, "name": "Flashlight", "imageSrc": "/assets/boardgames/ahlcg_cards/flashlight.png", "imageAlt": "Flashlight" }
+          ]
+        },
+        {
+          "label": "Accessory",
+          "cards": [
+            { "qty": 1, "name": "Cherished Keepsake", "imageSrc": "/assets/boardgames/ahlcg_cards/cherished_keepsake.png", "imageAlt": "Cherished Keepsake" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Leo De Luca", "imageSrc": "/assets/boardgames/ahlcg_cards/leo_de_luca_the_louisiana_lion.png", "imageAlt": "Leo De Luca" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 2, "name": "Dark Horse", "imageSrc": "/assets/boardgames/ahlcg_cards/dark_horse.png", "imageAlt": "Dark Horse" },
+            { "qty": 2, "name": "Dig Deep", "imageSrc": "/assets/boardgames/ahlcg_cards/dig_deep.png", "imageAlt": "Dig Deep" },
+            { "qty": 2, "name": "Drawing Thin", "imageSrc": "/assets/boardgames/ahlcg_cards/drawing_thin.png", "imageAlt": "Drawing Thin" },
+            { "qty": 1, "name": "Track Shoes", "imageSrc": "/assets/boardgames/ahlcg_cards/track_shoes.png", "imageAlt": "Track Shoes" }
+          ]
+        },
+        {
+          "title": "Permanent (1)",
+          "cards": [
+            { "qty": 1, "name": "Family Inheritance ★", "imageSrc": "/assets/boardgames/ahlcg_cards/family_inheritance_a_windfall_or_a_burden.png", "imageAlt": "Family Inheritance" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (11)",
+          "cards": [
+            { "qty": 2, "name": "\"Look what I found!\"", "imageSrc": "/assets/boardgames/ahlcg_cards/look_what_i_found.png", "imageAlt": "Look what I found!" },
+            { "qty": 2, "name": "\"You handle this one!\"", "imageSrc": "/assets/boardgames/ahlcg_cards/you_handle_this_one.png", "imageAlt": "You handle this one!" },
+            { "qty": 1, "name": "Cunning Distraction", "imageSrc": "/assets/boardgames/ahlcg_cards/cunning_distraction.png", "imageAlt": "Cunning Distraction" },
+            { "qty": 2, "name": "Intel Report", "imageSrc": "/assets/boardgames/ahlcg_cards/intel_report.png", "imageAlt": "Intel Report" },
+            { "qty": 1, "name": "Lodge \"Debts\" ★", "imageSrc": "/assets/boardgames/ahlcg_cards/lodge_debts.png", "imageAlt": "Lodge Debts" },
+            { "qty": 2, "name": "Lucky!", "imageSrc": "/assets/boardgames/ahlcg_cards/lucky.png", "imageAlt": "Lucky!" },
+            { "qty": 1, "name": "Perseverance", "imageSrc": "/assets/boardgames/ahlcg_cards/perseverance.png", "imageAlt": "Perseverance" }
+          ]
+        },
+        {
+          "title": "Skill (6)",
+          "cards": [
+            { "qty": 2, "name": "Resourceful", "imageSrc": "/assets/boardgames/ahlcg_cards/resourceful.png", "imageAlt": "Resourceful" },
+            { "qty": 2, "name": "Rise to the Occasion", "imageSrc": "/assets/boardgames/ahlcg_cards/rise_to_the_occasion.png", "imageAlt": "Rise to the Occasion" },
+            { "qty": 2, "name": "Take Heart", "imageSrc": "/assets/boardgames/ahlcg_cards/take_heart.png", "imageAlt": "Take Heart" }
+          ]
+        },
+        {
+          "title": "Treachery (1)",
+          "cards": [
+            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Preston-Fairmont-DeckBuild-20260906-Yan.pdf",
+    "label": "Open Preston Deck PDF"
+  }
+}

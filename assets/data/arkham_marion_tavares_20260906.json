@@ -1,0 +1,85 @@
+{
+  "pageTitle": "Marion Tavares - Deck Build (09/06/2026)",
+  "title": "Marion Tavares Deck - 09/06/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png",
+    "imageAlt": "Marion Tavares",
+    "heading": "Marion Tavares",
+    "details": [
+      "30 cards (34 total)",
+      "0 experience required",
+      "13 packs required",
+      "Class: Guardian",
+      "Built by Shengbo on 09/06/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "title": "Asset (8)",
+          "label": "Accessory",
+          "cards": [
+            { "qty": 1, "name": "Hallowed Mirror", "imageSrc": "/assets/boardgames/ahlcg_cards/hallowed_mirror.png", "imageAlt": "Hallowed Mirror" }
+          ]
+        },
+        {
+          "label": "Ally",
+          "cards": [
+            { "qty": 2, "name": "Guard Dog", "imageSrc": "/assets/boardgames/ahlcg_cards/guard_dog.png", "imageAlt": "Guard Dog" }
+          ]
+        },
+        {
+          "label": "Other",
+          "cards": [
+            { "qty": 2, "name": "Enchanted Blade", "imageSrc": "/assets/boardgames/ahlcg_cards/enchanted_blade.png", "imageAlt": "Enchanted Blade" },
+            { "qty": 1, "name": "Physical Training", "imageSrc": "/assets/boardgames/ahlcg_cards/physical_training.png", "imageAlt": "Physical Training" },
+            { "qty": 1, "name": "Safeguard", "imageSrc": "/assets/boardgames/ahlcg_cards/safeguard.png", "imageAlt": "Safeguard" },
+            { "qty": 1, "name": "Wolf Mask", "imageSrc": "/assets/boardgames/ahlcg_cards/wolf_mask_the_moons_sire.png", "imageAlt": "Wolf Mask" }
+          ]
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "title": "Event (12)",
+          "cards": [
+            { "qty": 1, "name": "Act of Desperation", "imageSrc": "/assets/boardgames/ahlcg_cards/act_of_desperation.png", "imageAlt": "Act of Desperation" },
+            { "qty": 1, "name": "Bank Job", "imageSrc": "/assets/boardgames/ahlcg_cards/bank_job.png", "imageAlt": "Bank Job" },
+            { "qty": 1, "name": "Emergency Cache", "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png", "imageAlt": "Emergency Cache" },
+            { "qty": 1, "name": "End of the Road", "imageSrc": "/assets/boardgames/ahlcg_cards/end_of_the_road.png", "imageAlt": "End of the Road" },
+            { "qty": 2, "name": "Practice Makes Perfect", "imageSrc": "/assets/boardgames/ahlcg_cards/practice_makes_perfect.png", "imageAlt": "Practice Makes Perfect" },
+            { "qty": 2, "name": "Scrounge for Supplies", "imageSrc": "/assets/boardgames/ahlcg_cards/scrounge_for_supplies.png", "imageAlt": "Scrounge for Supplies" },
+            { "qty": 1, "name": "Stand Together", "imageSrc": "/assets/boardgames/ahlcg_cards/stand_together.png", "imageAlt": "Stand Together" },
+            { "qty": 1, "name": "Stir the Pot", "imageSrc": "/assets/boardgames/ahlcg_cards/stir_the_pot.png", "imageAlt": "Stir the Pot" },
+            { "qty": 2, "name": "Toe to Toe", "imageSrc": "/assets/boardgames/ahlcg_cards/toe_to_toe.png", "imageAlt": "Toe to Toe" }
+          ]
+        },
+        {
+          "title": "Skill (12)",
+          "cards": [
+            { "qty": 2, "name": "Daring", "imageSrc": "/assets/boardgames/ahlcg_cards/daring.png", "imageAlt": "Daring" },
+            { "qty": 2, "name": "Determined ★", "imageSrc": "/assets/boardgames/ahlcg_cards/determined.png", "imageAlt": "Determined" },
+            { "qty": 2, "name": "Long Shot", "imageSrc": "/assets/boardgames/ahlcg_cards/long_shot.png", "imageAlt": "Long Shot" },
+            { "qty": 2, "name": "Overpower", "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png", "imageAlt": "Overpower" },
+            { "qty": 1, "name": "Unexpected Courage", "imageSrc": "/assets/boardgames/ahlcg_cards/unexpected_courage.png", "imageAlt": "Unexpected Courage" },
+            { "qty": 2, "name": "Vicious Blow", "imageSrc": "/assets/boardgames/ahlcg_cards/vicious_blow.png", "imageAlt": "Vicious Blow" },
+            { "qty": 1, "name": "Well-Dressed", "imageSrc": "/assets/boardgames/ahlcg_cards/well_dressed.png", "imageAlt": "Well-Dressed" }
+          ]
+        },
+        {
+          "title": "Treachery (2)",
+          "cards": [
+            { "qty": 1, "name": "\"I'll do it myself\" ★", "imageSrc": "/assets/boardgames/ahlcg_cards/ill_do_it_myself.png", "imageAlt": "I'll do it myself" },
+            { "qty": 1, "name": "Random Basic Weakness ★?", "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png", "imageAlt": "Random Basic Weakness" }
+          ]
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Marion-Tavares-DeckBuild-20260906-Shengbo.pdf",
+    "label": "Open Marion Deck PDF"
+  }
+}
