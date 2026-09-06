@@ -172,16 +172,106 @@
       "title": "Scenario I: Ice and Death",
       "statusChips": ["Status: In Progress"],
       "notes": [
-        { "title": "Setup Notes", "items": [] },
         {
-          "title": "Scenario Results",
+          "title": "Eight Weeks South",
           "items": [
-            "Parts played: TBD",
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
+            "Eight long and difficult weeks after leaving Boston, the Theodosia followed the route once taken by the Arkham and the Miskatonic: south along the eastern coast, through the Panama Canal, and onward toward the Antarctic Circle.",
+            "The weather grew steadily colder as the ship approached Antarctica, and increasingly frequent icebergs made navigation hazardous. The crew's experience and the surviving logs of earlier captains nevertheless allowed the expedition to maintain good time.",
+            "At last, the mist-covered peaks of Mount Erebus and Mount Terror appeared on the horizon. They marked Ross Island and the nearby ice shelf that would serve as the expedition's landing point."
+          ]
+        },
+        {
+          "title": "Preparing to Make Landfall",
+          "items": [
+            "Dr. Amy Kensler assembled the expedition team on the deck of the Theodosia and explained that they would use the same breeches-buoy system as the previous expedition to transfer supplies from the ship onto the ice shelf.",
+            "James \"Cookie\" Fredericks, Roald Ellsworth, and Avery Claypool were assigned to take one of the smaller boats ahead and locate a safe landing zone on the shelf.",
+            "Once camp was established, Takada Hiroko was to make assembling and preparing the expedition's aeroplanes her first priority.",
+            "Eliyah Ashevak and the sled dogs would move supplies from the landing site to camp. Expecting a great deal of work in very little time, Kensler ordered him to have the dogs ready before landfall; Eliyah answered with dry obedience while petting Anyu at his side."
+          ]
+        },
+        {
+          "title": "The Purpose of the Expedition",
+          "items": [
+            "Professor William Dyer noticed that the expedition had brought no ice-melting or drilling equipment and sarcastically asked whether Kensler had abandoned any plan to collect mineral samples.",
+            "Kensler replied that mineral collection was not their primary mission. Their purpose was to corroborate what Dyer and Danforth had discovered, and to return with stronger evidence of the ancient species they had named the Elder Things.",
+            "Kensler went further: if the expedition found a suitable specimen, she considered bringing back a living Elder Thing an ideal outcome, comparing such a discovery to finding a living woolly mammoth preserved in the ice.",
+            "Dyer reacted with alarm, reminding her that the creatures had killed several members of Lake's party and demanding to know how she expected to capture one. Kensler coolly answered that he was the expert and should tell her; furious, Dyer walked away muttering that the expedition had been a bad idea from the beginning."
+          ]
+        },
+        {
+          "title": "Approaching the Ice Shelf",
+          "items": [
+            "Kensler dismissed the meeting with the warning that they would reach land within the hour and that everyone must be ready to begin work immediately.",
+            "When the investigators pointed out that they had not yet been given a specific assignment, Kensler replied with a faint smirk that there would be more than enough manual labor to go around.",
+            "Proceed to Scenario I: Ice and Death, Part I."
+          ]
+        },
+        {
+          "title": "Ice and Death, Part I: Into the Mountains",
+          "items": [
+            "After two weeks of exhausting work on the ice shelf, Takada and the mechanics completed three aeroplanes. The investigators prepared to fly two of them over the jagged mountains and photograph the ancient stone city described in Dyer's report.",
+            "Kensler planned to establish a temporary outpost if the flight discovered a safe landing zone. Dyer, Danforth, Fredericks, and Claypool would remain there while the rest of the expedition returned to base camp and used the sledges to move supplies between the two camps.",
+            "The two aircraft took off into low visibility and violent Antarctic winds. As the storm abruptly intensified, the planes were tossed through the sky and forced toward the ground despite Claypool's warning that they had to turn back.",
+            "Moments before the crash, the passengers glimpsed an immense dark shape stretched across the mountains like a curtain or the tattered wings of some ancient creature. It watched them with hollow eyes and reached toward the aircraft before everything went black.",
+            "The investigators regained consciousness inside the burning wreckage and were dragged into the snow. Most of the expedition team survived with only bruises, but James \"Cookie\" Fredericks was killed in the plane crash."
+          ]
+        },
+        {
+          "title": "The Death of Cookie",
+          "items": [
+            "Roald Ellsworth and Avery Claypool knelt beside Cookie's body. Claypool called him a good man, and Ellsworth agreed that Cookie had been one despite his many attempts to make the others believe otherwise.",
+            "Kensler interrupted their mourning and insisted that the survivors had to keep moving. Eliyah objected, but Claypool accepted that she was right, saying Cookie himself would have been the first to tell everyone not to dawdle.",
+            "Cross James \"Cookie\" Fredericks off the Expedition Team. Record that he was killed in the plane crash."
+          ]
+        },
+        {
+          "title": "Partners and Recovered Supplies",
+          "items": [
+            "Ursula Downs was joined by Roald Ellsworth.",
+            "Preston Fairmont was joined by Dr. Mala Sinha.",
+            "Marion Tavares was joined by Dr. Amy Kensler.",
+            "Recovered supplies: Spare Parts, Small Radio, Green Soapstone, and Wooden Sledge.",
+            "Partner damage and horror after Part I: Dr. Amy Kensler has 0 damage and 1 horror; Roald Ellsworth and Dr. Mala Sinha each have 0 damage and 0 horror."
+          ]
+        },
+        {
+          "title": "Part I Results",
+          "items": [
+            "Parts played: Ice and Death, Part I.",
+            "Resolution: Resolution 1.",
+            "All three investigators survived.",
+            "Camp: Remnants of Lake's Camp (Shelter 7).",
+            "Victory Display: 0.",
+            "XP earned: 7 XP per investigator from the camp's Shelter value.",
+            "Trauma: None.",
+            "Do not clean up the game yet. Proceed to Checkpoint I: The Disappearance."
+          ]
+        },
+        {
+          "title": "Checkpoint I: The Disappearance",
+          "items": [
+            "The investigators' sleep at Remnants of Lake's Camp was plagued by the murderous cold, the ceaseless wind, and nightmares of misshapen black forms erupting from beneath the frozen ground.",
+            "A startled cry ended their rest. They awoke to find the camp in disarray and several companions missing, with footprints leading away from the shelter and into the Antarctic night.",
+            "Because the camp had Shelter 7, seven surviving expedition partners were randomly declared safe: Professor William Dyer, Eliyah Ashevak, Dr. Mala Sinha, Avery Claypool, Dr. Amy Kensler, Roald Ellsworth, and Takada Hiroko.",
+            "Danforth was the only surviving partner not among the seven safe members and was recorded as MIA.",
+            "The investigators chose to go after the missing team member and play the next part of the scenario, but decided to take a break before continuing.",
+            "Marion Tavares added 1 copy of the Tekeli-li (Horror) story weakness to her deck.",
+            "Proceed to Scenario I: Ice and Death, Part II."
+          ]
+        },
+        {
+          "title": "Locations Revealed",
+          "items": [
+            "Icebreaker Landing",
+            "Icy Wastes",
+            "Rocky Crags",
+            "Precarious Ice Sheet",
+            "Treacherous Path",
+            "Crash Site",
+            "Remnants of Lake's Camp",
+            "Frozen Shores",
+            "Broad Snowdrifts",
+            "Snow Graves"
           ]
         }
       ]
@@ -265,15 +355,15 @@
           {
             "title": "Partners and Status",
             "items": [
-              "Dr. Amy Kensler - Active",
-              "Roald Ellsworth - Active",
-              "James \"Cookie\" Fredericks - Active",
-              "Takada Hiroko - Active",
-              "Avery Claypool - Active",
-              "Dr. Mala Sinha - Active",
-              "Eliyah Ashevak - Active",
-              "Professor William Dyer - Active",
-              "Danforth - Active"
+              "Dr. Amy Kensler - Safe; 0 damage, 1 horror",
+              "Roald Ellsworth - Safe; 0 damage, 0 horror",
+              "James \"Cookie\" Fredericks - Killed in the plane crash",
+              "Takada Hiroko - Safe",
+              "Avery Claypool - Safe",
+              "Dr. Mala Sinha - Safe; 0 damage, 0 horror",
+              "Eliyah Ashevak - Safe",
+              "Professor William Dyer - Safe",
+              "Danforth - MIA"
             ]
           }
         ]
@@ -281,7 +371,15 @@
       {
         "title": "Supplies",
         "notes": [
-          { "title": "Expedition Supplies", "items": [] }
+          {
+            "title": "Recovered Supplies",
+            "items": [
+              "Spare Parts",
+              "Small Radio",
+              "Green Soapstone",
+              "Wooden Sledge"
+            ]
+          }
         ]
       },
       {
@@ -302,7 +400,11 @@
           {
             "title": "Active Records",
             "items": [
-              "The investigators convinced Dyer to allow the expedition."
+              "The investigators convinced Dyer to allow the expedition.",
+              "James \"Cookie\" Fredericks was killed in the plane crash.",
+              "Camp: Remnants of Lake's Camp (Shelter 7).",
+              "Danforth is MIA. The investigators chose to go after him.",
+              "Marion Tavares added 1 Tekeli-li (Horror) story weakness to her deck."
             ]
           }
         ]
@@ -319,7 +421,7 @@
           "imageSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png",
           "imageAlt": "Ursula Downs: The Explorer",
           "startingXp": 0,
-          "currentXp": "Current XP: 0",
+          "currentXp": "Current XP: 7",
           "upgradeHtml": "",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         },
@@ -328,8 +430,8 @@
           "imageSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png",
           "imageAlt": "Marion Tavares: The Trawler",
           "startingXp": 0,
-          "currentXp": "Current XP: 0",
-          "upgradeHtml": "",
+          "currentXp": "Current XP: 7",
+          "upgradeHtml": "<div class=\"upgrade-entry\" data-entry-uid=\"eote-s1-marion\"><p class=\"upgrade-entry-head\">After Ice and Death, Part I (+7 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Campaign Card Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Tekeli-li (Horror) (Story Weakness)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/tekeli_li_horror.png\" alt=\"Tekeli-li (Horror) (Story Weakness)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Ice and Death, Part I):\" data-entry-uid-link=\"eote-s1-marion\">Trauma (Ice and Death, Part I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         },
         {
@@ -337,7 +439,7 @@
           "imageSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png",
           "imageAlt": "Preston Fairmont: The Millionaire",
           "startingXp": 0,
-          "currentXp": "Current XP: 0",
+          "currentXp": "Current XP: 7",
           "upgradeHtml": "",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         }
