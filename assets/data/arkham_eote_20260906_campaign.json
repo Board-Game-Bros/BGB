@@ -170,7 +170,7 @@
     },
     {
       "title": "Scenario I: Ice and Death",
-      "statusChips": ["Status: In Progress"],
+      "statusChips": ["Status: Completed", "Section: Introduction"],
       "notes": [
         {
           "title": "Eight Weeks South",
@@ -205,9 +205,15 @@
             "When the investigators pointed out that they had not yet been given a specific assignment, Kensler replied with a faint smirk that there would be more than enough manual labor to go around.",
             "Proceed to Scenario I: Ice and Death, Part I."
           ]
-        },
+        }
+      ]
+    },
+    {
+      "title": "Scenario I: Ice and Death, Part I",
+      "statusChips": ["Status: Completed", "Resolution: 1", "XP: 7 Each"],
+      "notes": [
         {
-          "title": "Ice and Death, Part I: Into the Mountains",
+          "title": "Into the Mountains",
           "items": [
             "After two weeks of exhausting work on the ice shelf, Takada and the mechanics completed three aeroplanes. The investigators prepared to fly two of them over the jagged mountains and photograph the ancient stone city described in Dyer's report.",
             "Kensler planned to establish a temporary outpost if the flight discovered a safe landing zone. Dyer, Danforth, Fredericks, and Claypool would remain there while the rest of the expedition returned to base camp and used the sledges to move supplies between the two camps.",
@@ -246,9 +252,15 @@
             "Trauma: None.",
             "Do not clean up the game yet. Proceed to Checkpoint I: The Disappearance."
           ]
-        },
+        }
+      ]
+    },
+    {
+      "title": "Checkpoint I: The Disappearance",
+      "statusChips": ["Status: Completed", "Decision: Go After Danforth", "Next: Part II"],
+      "notes": [
         {
-          "title": "Checkpoint I: The Disappearance",
+          "title": "The Disappearance",
           "items": [
             "The investigators' sleep at Remnants of Lake's Camp was plagued by the murderous cold, the ceaseless wind, and nightmares of misshapen black forms erupting from beneath the frozen ground.",
             "A startled cry ended their rest. They awoke to find the camp in disarray and several companions missing, with footprints leading away from the shelter and into the Antarctic night.",
@@ -350,29 +362,38 @@
     "title": "Campaign Log",
     "sections": [
       {
-        "title": "Expedition Team",
+        "title": "Campaign Notes",
         "notes": [
           {
-            "title": "Partners and Status",
+            "title": "Recorded Notes",
             "items": [
-              "Dr. Amy Kensler - Safe; 0 damage, 1 horror",
-              "Roald Ellsworth - Safe; 0 damage, 0 horror",
-              "James \"Cookie\" Fredericks - Killed in the plane crash",
-              "Takada Hiroko - Safe",
-              "Avery Claypool - Safe",
-              "Dr. Mala Sinha - Safe; 0 damage, 0 horror",
-              "Eliyah Ashevak - Safe",
-              "Professor William Dyer - Safe",
-              "Danforth - MIA"
+              "The investigators convinced Dyer to allow the expedition.",
+              "James \"Cookie\" Fredericks was killed in the plane crash.",
+              "Camp - Remnants of Lake's Camp (7)"
             ]
           }
         ]
       },
       {
-        "title": "Supplies",
+        "title": "Ice and Death",
         "notes": [
           {
-            "title": "Recovered Supplies",
+            "title": "Locations Revealed",
+            "items": [
+              "Crash Site",
+              "Icy Wastes",
+              "Rocky Crags",
+              "Snow Graves",
+              "Frozen Shores",
+              "Broad Snowdrifts",
+              "Treacherous Path",
+              "Icebreaker Landing",
+              "Precarious Ice Sheet",
+              "Remnants of Lake's Camp"
+            ]
+          },
+          {
+            "title": "Supplies Recovered",
             "items": [
               "Spare Parts",
               "Small Radio",
@@ -383,28 +404,46 @@
         ]
       },
       {
-        "title": "Chaos Bag and Frost Tokens",
+        "title": "Fatal Mirage",
         "notes": [
           {
-            "title": "Chaos Bag Changes",
-            "items": [
-              "Prologue: Add 1 cultist token to the chaos bag for the remainder of the campaign."
-            ]
+            "title": "Memories Discovered",
+            "items": []
           },
-          { "title": "Frost Token Notes", "items": [] }
+          {
+            "title": "Memories Banished",
+            "items": []
+          }
         ]
       },
       {
-        "title": "General Campaign Notes",
+        "title": "The Heart of Madness",
         "notes": [
           {
-            "title": "Active Records",
+            "title": "Seals Placed",
+            "items": []
+          },
+          {
+            "title": "Seals Recovered",
+            "items": []
+          }
+        ]
+      },
+      {
+        "title": "Expedition Team",
+        "notes": [
+          {
+            "title": "Partners and Status",
             "items": [
-              "The investigators convinced Dyer to allow the expedition.",
-              "James \"Cookie\" Fredericks was killed in the plane crash.",
-              "Camp: Remnants of Lake's Camp (Shelter 7).",
-              "Danforth is MIA. The investigators chose to go after him.",
-              "Marion Tavares added 1 Tekeli-li (Horror) story weakness to her deck."
+              "Dr. Amy Kensler - Active; 1 horror",
+              "Professor William Dyer - Active",
+              "Danforth - MIA",
+              "Roald Ellsworth - Active",
+              "Takada Hiroko - Active",
+              "Avery Claypool - Active",
+              "Dr. Mala Sinha - Active",
+              "James \"Cookie\" Fredericks - Crossed out; killed in the plane crash",
+              "Eliyah Ashevak - Active"
             ]
           }
         ]
