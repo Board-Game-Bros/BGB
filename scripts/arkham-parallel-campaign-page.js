@@ -23,7 +23,7 @@
     { pattern: "tablet", src: "/assets/icon/tablet_token.png", alt: "tablet" },
   ];
   const inlineChaosTokenPattern = new RegExp(
-    `(${INLINE_CHAOS_TOKENS.map((token) => token.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+    `(${INLINE_CHAOS_TOKENS.map((token) => token.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?=\\s+tokens?\\b)`,
     "gi"
   );
 
