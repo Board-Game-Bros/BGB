@@ -10,7 +10,7 @@
   "overview": {
     "title": "Story Notes",
     "statusChips": [
-      "Difficulty: TBD",
+      "Difficulty: Standard",
       "Players: 3",
       "Mode: Variable 4-10 Session Campaign",
       "Recorded Decks: 3",
@@ -18,13 +18,13 @@
     ],
     "metaItems": [
       "Date: 09/06/2026",
-      "Session: Campaign Setup"
+      "Session: Prologue + Scenario I (Ice and Death) + Scenario I (Ice and Death, Part I) + Checkpoint I"
     ],
     "sections": [
       {
         "title": "Run Structure",
         "metaItems": [
-          "Status: Ready to Start",
+          "Status: In Progress",
           "Cycle: The Edge of the Earth",
           "Expansion: Campaign Expansion"
         ],
@@ -54,24 +54,76 @@
   },
   "storyNotes": [
     {
-      "title": "Campaign Setup",
-      "statusChips": ["Status: Pending"],
+      "title": "Prologue",
+      "statusChips": [
+        "Status: Completed",
+        "Choice: Investigate Further"
+      ],
       "notes": [
         {
-          "title": "Table Setup",
+          "title": "Dyer's Report and Warning",
           "items": [
-            "Difficulty: TBD",
-            "Lead investigator: TBD",
-            "Investigators: Ursula Downs, Marion Tavares, Preston Fairmont",
-            "Initial chaos bag: TBD",
-            "Expedition supplies and partners: TBD"
+            "Professor William Dyer summoned the investigators to his Miskatonic University office and asked them to help stop Dr. Amy Kensler's planned follow-up expedition to Antarctica.",
+            "The university's public account of Dyer's previous expedition had reported little of scientific value, but his newly revised report revealed the truth he had deliberately withheld in the hope of keeping others away from the polar ice.",
+            "Dyer supported his testimony with photographs, sketches, academic papers, and field records showing mangled and dissected bodies, five-pointed snow graves, unfamiliar specimens buried beneath the ice, and aerial views of jagged black mountains surrounding an ancient stone city.",
+            "He described that city as the work of primordial beings known as Elder Things and warned that renewed drilling, excavation, and melting of the ancient ice could expose forces humanity was not prepared to understand.",
+            "Danforth, the only other survivor known to have reached the city with Dyer, paced the office in an agitated state and muttered about a nameless black pit, lending a disturbing human weight to Dyer's account."
+          ]
+        },
+        {
+          "title": "The Debate",
+          "items": [
+            "The investigators found Dyer's evidence detailed and difficult to dismiss, yet the scale of his claims made complete belief almost impossible.",
+            "Dyer argued that scholars eventually reach boundaries science should not cross and that Dr. Kensler's party might never return if it followed the same route.",
+            "The investigators answered that Kensler had taken precautions and that learning what truly waited beneath the ice was the only way to understand the threat and prepare for future expeditions that might be far less cautious.",
+            "Danforth questioned whether the horrors remembered from the earlier expedition were real or the product of exhausted minds. Dyer sharply replied that his deepest concern was not the distant mirage but the terror he had witnessed in Danforth himself during their escape.",
+            "Chosen response: \"I believe you... but if what you say is true, should we not investigate these findings further?\"",
+            "Unable to persuade the investigators to abandon the journey, Dyer reluctantly agreed that he and Danforth would accompany the expedition, both to protect the party and to confront what they had left behind."
+          ]
+        },
+        {
+          "title": "Campaign Consequences",
+          "items": [
+            "Record in the Campaign Log: the investigators convinced Dyer to allow the expedition.",
+            "Add 1 cultist token to the chaos bag for the remainder of the campaign."
+          ]
+        },
+        {
+          "title": "Departure aboard the Theodosia",
+          "items": [
+            "At Boston Harbor, the investigators joined the expedition aboard the Theodosia while its crew loaded scientific equipment, supplies, aircraft components, and the team's sled dogs.",
+            "Dr. Amy Kensler, a Miskatonic biology professor and the expedition's disciplined leader, checked off each arrival while remaining determined to proceed despite Dyer's objections.",
+            "Roald Ellsworth, a veteran of more than a dozen expeditions, brought practical field experience and immediately helped move luggage and equipment aboard.",
+            "James \"Cookie\" Fredericks, the ship's forceful and hardworking cook, focused on finishing preparations before departure and showed little patience for delay.",
+            "Takada Hiroko joined as the aeroplane mechanic responsible for assembling and maintaining the expedition's aircraft after arrival in Antarctica.",
+            "Avery Claypool, an associate of Ellsworth, would serve as the Antarctic guide. An unresolved dispute between the two men was obvious when they met at the gangway, though Kensler expected them to work together.",
+            "Dr. Mala Sinha came aboard as the physician responsible for frostbite, hypothermia, gangrene, and the expedition's other medical dangers. Her exchange with Kensler revealed a personal unease beneath their professional relationship.",
+            "Eliyah Ashevak arrived with Anyu and took responsibility for the sled-dog team: forty-four dogs in addition to Anyu, making forty-five in total.",
+            "Professor William Dyer and Danforth arrived last. Dyer made clear that he had joined to keep Kensler and the others alive, while Danforth remained compelled to return despite the trauma of his earlier journey.",
+            "The remaining travelers were students, researchers, and independent explorers who completed the broader expedition aboard the ship."
+          ]
+        },
+        {
+          "title": "Nine Campaign Partners",
+          "items": [
+            "Dr. Amy Kensler - expedition leader and biologist.",
+            "Roald Ellsworth - veteran explorer and field expert.",
+            "James \"Cookie\" Fredericks - cook and crewman.",
+            "Takada Hiroko - aeroplane mechanic.",
+            "Avery Claypool - Antarctic guide.",
+            "Dr. Mala Sinha - expedition physician.",
+            "Eliyah Ashevak - dog handler, accompanied by Anyu.",
+            "Professor William Dyer - survivor of the previous expedition.",
+            "Danforth - Dyer's student and fellow survivor.",
+            "These nine characters are the campaign's partners. Their physical injuries, mental strain, deaths, or insanity must be tracked throughout the expedition.",
+            "Proceed to Scenario I: Ice and Death."
           ]
         }
       ]
     },
     {
       "title": "Scenario I: Ice and Death",
-      "statusChips": ["Status: Pending"],
+      "statusChips": ["Status: In Progress"],
       "notes": [
         { "title": "Setup Notes", "items": [] },
         {
@@ -163,7 +215,20 @@
       {
         "title": "Expedition Team",
         "notes": [
-          { "title": "Partners and Status", "items": [] }
+          {
+            "title": "Partners and Status",
+            "items": [
+              "Dr. Amy Kensler - Active",
+              "Roald Ellsworth - Active",
+              "James \"Cookie\" Fredericks - Active",
+              "Takada Hiroko - Active",
+              "Avery Claypool - Active",
+              "Dr. Mala Sinha - Active",
+              "Eliyah Ashevak - Active",
+              "Professor William Dyer - Active",
+              "Danforth - Active"
+            ]
+          }
         ]
       },
       {
@@ -175,14 +240,24 @@
       {
         "title": "Chaos Bag and Frost Tokens",
         "notes": [
-          { "title": "Chaos Bag Changes", "items": [] },
+          {
+            "title": "Chaos Bag Changes",
+            "items": [
+              "Prologue: Add 1 cultist token to the chaos bag for the remainder of the campaign."
+            ]
+          },
           { "title": "Frost Token Notes", "items": [] }
         ]
       },
       {
         "title": "General Campaign Notes",
         "notes": [
-          { "title": "Open Notes", "items": [] }
+          {
+            "title": "Active Records",
+            "items": [
+              "The investigators convinced Dyer to allow the expedition."
+            ]
+          }
         ]
       }
     ]
