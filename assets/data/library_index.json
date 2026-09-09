@@ -111,6 +111,34 @@
           "imageAlt": "A Feast for Odin Cover",
           "title": "A Feast for Odin",
           "moreInfoHref": "https://store.asmodee.com/products/a-feast-for-odin"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/scythe.png",
+          "imageAlt": "Scythe Cover",
+          "title": "Scythe",
+          "moreInfoHref": "https://store.stonemaiergames.com/products/scythe"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/hegemony.png",
+          "imageAlt": "Hegemony Cover",
+          "title": "Hegemony",
+          "moreInfoHref": "https://hegemonicproject.com/games/strategy/hegemony/"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/age_of_innovation.png",
+          "imageAlt": "Age of Innovation Cover",
+          "title": "Age of Innovation",
+          "moreInfoHref": "https://capstone-games.com/products/age-of-innovation/"
+        },
+        {
+          "href": "#",
+          "imageSrc": "/assets/boardgames/gaia_project.png",
+          "imageAlt": "Gaia Project Cover",
+          "title": "Gaia Project",
+          "moreInfoHref": "https://capstone-games.com/products/gaia-project"
         }
       ]
     },
