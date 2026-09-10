@@ -692,6 +692,7 @@
         exceptionalCardNames: ahlcgLibrary.exceptionalCardNames || [],
         customizableCardNames: ahlcgLibrary.customizableCardNames || [],
         signatureCardNames: ahlcgLibrary.signatureCardNames || [],
+        noXpCardNames: Array.isArray(upgradeConfig.noXpCardNames) ? upgradeConfig.noXpCardNames : [],
         permanentCardNames: ahlcgLibrary.permanentCardNames || [],
         initialDecks,
         customizableBaselineState: window.BGB_AHLCG_CUSTOMIZABLE_STATE || {},

@@ -12,6 +12,7 @@
     const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
     const customizableCardNames = Array.isArray(options.customizableCardNames) ? options.customizableCardNames : [];
     const signatureCardNames = Array.isArray(options.signatureCardNames) ? options.signatureCardNames : [];
+    const noXpCardNames = Array.isArray(options.noXpCardNames) ? options.noXpCardNames : [];
     const permanentCardNames = Array.isArray(options.permanentCardNames) ? options.permanentCardNames : [];
     const customizableLibraryCards = window.AHLCG_CUSTOMIZABLE_LIBRARY && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY === "object"
       && window.AHLCG_CUSTOMIZABLE_LIBRARY.cards && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY.cards === "object"
@@ -85,6 +86,12 @@
       .filter(Boolean);
     const signatureNameOnlySet = new Set(
       signatureCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
+    );
+    const noXpCatalogKeys = noXpCardNames
+      .map((name) => getCatalogKey(name))
+      .filter(Boolean);
+    const noXpNameOnlySet = new Set(
+      noXpCatalogKeys.map((key) => getNameOnly(key)).filter(Boolean)
     );
     const permanentCatalogKeys = permanentCardNames
       .map((name) => getCatalogKey(name))
@@ -2112,7 +2119,21 @@
     }
 
     function isNoXpCardName(cardName) {
-      return isStoryCardName(cardName) || isSignatureCardName(cardName);
+      if (isStoryCardName(cardName) || isSignatureCardName(cardName)) return true;
+      const key = getCatalogKey(cardName);
+      if (!key) return false;
+      const nameOnly = getNameOnly(key);
+      if (!nameOnly) return false;
+      if (noXpNameOnlySet.has(nameOnly)) return true;
+      return noXpCatalogKeys.some((noXpKey) => {
+        const noXpNameOnly = getNameOnly(noXpKey);
+        if (!noXpNameOnly) return false;
+        return (
+          nameOnly === noXpNameOnly ||
+          nameOnly.startsWith(noXpNameOnly + " ") ||
+          noXpNameOnly.startsWith(nameOnly + " ")
+        );
+      });
     }
 
     function isPermanentCardName(cardName) {
@@ -2607,6 +2628,13 @@
       const exactNamesByFile = {
         "avery_claypool_antarctic_guide_eoec_1.png": "Avery Claypool: Antarctic Guide",
         "danforth_brilliant_student_eoec_1.png": "Danforth: Brilliant Student",
+        "tekeli_li_action.png": "Tekeli LI (Action)",
+        "tekeli_li_asset.png": "Tekeli LI (Asset)",
+        "tekeli_li_clue.png": "Tekeli LI (Clue)",
+        "tekeli_li_damage.png": "Tekeli LI (Damage)",
+        "tekeli_li_horror.png": "Tekeli LI (Horror)",
+        "tekeli_li_random_discard.png": "Tekeli LI (Random Discard)",
+        "tekeli_li_resources.png": "Tekeli LI (Resources)",
         "discipline_alignment_of_spirit.png": "Discipline: Alignment of Spirit (Unbroken)",
         "discipline_alignment_of_spirit_1.png": "Discipline: Alignment of Spirit (Broken)",
         "discipline_balance_of_body.png": "Discipline: Balance of Body (Unbroken)",
