@@ -2,9 +2,18 @@
   "pageTitle": "The Edge of the Earth Campaign - 09/06/2026",
   "headerTitle": "The Edge of the Earth - 09/06/2026 Campaign",
   "subnav": [
-    { "href": "#story-notes", "label": "Story Notes" },
-    { "href": "#campaign-log", "label": "Campaign Log" },
-    { "href": "#upgrade-history", "label": "Upgrade History" }
+    {
+      "href": "#story-notes",
+      "label": "Story Notes"
+    },
+    {
+      "href": "#campaign-log",
+      "label": "Campaign Log"
+    },
+    {
+      "href": "#upgrade-history",
+      "label": "Upgrade History"
+    }
   ],
   "linearStoryLayout": true,
   "overview": {
@@ -170,7 +179,10 @@
     },
     {
       "title": "Scenario I: Ice and Death",
-      "statusChips": ["Status: Completed", "Section: Introduction"],
+      "statusChips": [
+        "Status: Completed",
+        "Section: Introduction"
+      ],
       "notes": [
         {
           "title": "Eight Weeks South",
@@ -210,7 +222,11 @@
     },
     {
       "title": "Scenario I: Ice and Death, Part I",
-      "statusChips": ["Status: Completed", "Resolution: 1", "XP: 7 Each"],
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1",
+        "XP: 7 Each"
+      ],
       "notes": [
         {
           "title": "Into the Mountains",
@@ -257,7 +273,11 @@
     },
     {
       "title": "Checkpoint I: The Disappearance",
-      "statusChips": ["Status: Completed", "Decision: Go After Danforth", "Next: Part II"],
+      "statusChips": [
+        "Status: Completed",
+        "Decision: Go After Danforth",
+        "Next: Part II"
+      ],
       "notes": [
         {
           "title": "The Disappearance",
@@ -290,9 +310,14 @@
     },
     {
       "title": "Scenario II: Fatal Mirage",
-      "statusChips": ["Status: Pending"],
+      "statusChips": [
+        "Status: Pending"
+      ],
       "notes": [
-        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
         {
           "title": "Scenario Results",
           "items": [
@@ -307,9 +332,14 @@
     },
     {
       "title": "Scenario III: To the Forbidden Peaks",
-      "statusChips": ["Status: Pending"],
+      "statusChips": [
+        "Status: Pending"
+      ],
       "notes": [
-        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
         {
           "title": "Scenario Results",
           "items": [
@@ -324,9 +354,14 @@
     },
     {
       "title": "Scenario IV: City of the Elder Things",
-      "statusChips": ["Status: Pending"],
+      "statusChips": [
+        "Status: Pending"
+      ],
       "notes": [
-        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
         {
           "title": "Scenario Results",
           "items": [
@@ -341,9 +376,14 @@
     },
     {
       "title": "Scenario V: The Heart of Madness",
-      "statusChips": ["Status: Pending"],
+      "statusChips": [
+        "Status: Pending"
+      ],
       "notes": [
-        { "title": "Setup Notes", "items": [] },
+        {
+          "title": "Setup Notes",
+          "items": []
+        },
         {
           "title": "Scenario Results",
           "items": [
@@ -461,7 +501,7 @@
           "imageAlt": "Ursula Downs: The Explorer",
           "startingXp": 0,
           "currentXp": "Current XP: 0",
-          "upgradeHtml": "<div class=\"upgrade-entry\" data-entry-uid=\"eote-s1-ursula\"><p class=\"upgrade-entry-head\">After Ice and Death, Part I (+7 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Higher Education (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/higher_education.png\" alt=\"Higher Education (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Higher Education (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/higher_education_3.png\" alt=\"Higher Education (3)\"></span></li><li><span class=\"card-ref\">Shortcut<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/shortcut.png\" alt=\"Shortcut\"></span></li><li><span class=\"card-ref\">The Red Clock: Broken but Reliable (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/the_red_clock_broken_but_reliable_2.png\" alt=\"The Red Clock: Broken but Reliable (2)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Ice and Death, Part I):\" data-entry-uid-link=\"eote-s1-ursula\">Trauma (Ice and Death, Part I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (09/06/2026): Base deck recorded for the Edge of the Earth run.</p><div class=\"upgrade-entry\" data-entry-uid=\"eote-s1-ursula\"><p class=\"upgrade-entry-head\">After Ice and Death, Part I (+7 XP)</p><div class=\"upgrade-columns\" style=\"\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Higher Education (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/higher_education.png\" alt=\"Higher Education (x2)\"></span></li></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Higher Education (3)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/higher_education_3.png\" alt=\"Higher Education (3)\"></span></li><li><span class=\"card-ref\">Shortcut<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/shortcut.png\" alt=\"Shortcut\" style=\"\"></span></li><li><span class=\"card-ref\">The Red Clock: Broken but Reliable (2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/the_red_clock_broken_but_reliable_2.png\" alt=\"The Red Clock: Broken but Reliable (2)\" style=\"\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Ice and Death, Part I):\" data-entry-uid-link=\"eote-s1-ursula\">Trauma (Ice and Death, Part I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         },
         {
@@ -469,8 +509,8 @@
           "imageSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png",
           "imageAlt": "Marion Tavares: The Trawler",
           "startingXp": 0,
-          "currentXp": "Current XP: 7",
-          "upgradeHtml": "<div class=\"upgrade-entry\" data-entry-uid=\"eote-s1-marion\"><p class=\"upgrade-entry-head\">After Ice and Death, Part I (+7 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Tekeli-li (Horror) (Story Weakness)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/tekeli_li_horror.png\" alt=\"Tekeli-li (Horror) (Story Weakness)\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Ice and Death, Part I):\" data-entry-uid-link=\"eote-s1-marion\">Trauma (Ice and Death, Part I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
+          "currentXp": "Current XP: 6",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (09/06/2026): Base deck recorded for the Edge of the Earth run.</p><div class=\"upgrade-entry\" data-entry-uid=\"eote-s1-marion\"><p class=\"upgrade-entry-head\">After Scenario I (+7 XP)</p><div class=\"upgrade-columns\" style=\"\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Campaign Card Added</h4><ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Tekeli LI Horror<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/tekeli_li_horror.png\" alt=\"Tekeli LI Horror\" style=\"\"></span></li></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Scenario I):\" data-entry-uid-link=\"eote-s1-marion\">Trauma (Scenario I): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         },
         {
@@ -478,8 +518,8 @@
           "imageSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png",
           "imageAlt": "Preston Fairmont: The Millionaire",
           "startingXp": 0,
-          "currentXp": "Current XP: 7",
-          "upgradeHtml": "",
+          "currentXp": "Current XP: 0",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (09/06/2026): Base deck recorded for the Edge of the Earth run.</p>",
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0."
         }
       ]
