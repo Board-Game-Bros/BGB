@@ -2993,6 +2993,19 @@
       return "After Scenario " + label + " (+" + xp + " XP)";
     }
 
+    function getEntryTitleFromHead(headText) {
+      return String(headText || "")
+        .replace(/\s*\([+-]?\d+\s*XP\)\s*$/i, "")
+        .replace(/\s*\(Draft\)\s*$/i, "")
+        .trim();
+    }
+
+    function formatEntryHeadWithTitle(titleText, xpValue, fallbackTitle) {
+      const title = getEntryTitleFromHead(titleText) || getEntryTitleFromHead(fallbackTitle) || "After Scenario I";
+      const xp = toNonNegativeInteger(xpValue);
+      return title + " (+" + xp + " XP)";
+    }
+
     function getUpgradeCardName(upgradeList) {
       const card = upgradeList ? upgradeList.closest(".upgrade-card") : null;
       return getCardOwnerName(card);
@@ -3350,6 +3363,10 @@
       editor.className = "upgrade-entry-editor";
       editor.innerHTML = `
         <div class="builder-input-row">
+          <label>Entry Title</label>
+          <input type="text" class="upgrade-input" data-edit="title" placeholder="After Scenario I" />
+        </div>
+        <div class="builder-input-row">
           <label>XP Gained</label>
           <input type="number" class="upgrade-input" data-edit="xp" min="0" step="1" />
         </div>
@@ -3394,7 +3411,9 @@
       refreshEntryCustomizedSection(entry, { container: editor, editMode: true });
       const head = entry.querySelector(".upgrade-entry-head");
       const currentHeadText = head ? head.textContent : "";
+      const editTitleInput = editor.querySelector('[data-edit="title"]');
       const editXpInput = editor.querySelector('[data-edit="xp"]');
+      editTitleInput.value = getEntryTitleFromHead(currentHeadText);
       editXpInput.value = String(getXpFromHead(currentHeadText));
       ["input", "change"].forEach((evtName) => {
         editXpInput.addEventListener(evtName, () => {
@@ -3422,7 +3441,12 @@
         const addedCards = listCardRows(addedEditList);
         const currentCustomizedEditList = getCustomizedList(editor);
         const customizedCards = currentCustomizedEditList ? listCardRows(currentCustomizedEditList) : [];
+        const titleValue = getEntryTitleFromHead(editor.querySelector('[data-edit="title"]').value);
         const xpValue = toNonNegativeInteger(editor.querySelector('[data-edit="xp"]').value);
+        if (!titleValue) {
+          setInlineValidationMessage(errorNode, "Entry title is required.");
+          return;
+        }
         const card = entry.closest(".upgrade-card");
         const removedValidation = validateRemovedCardsAgainstDeck(card, entry, removedCards);
         if (!removedValidation.valid) {
@@ -3451,8 +3475,7 @@
           if (section) section.remove();
         }
         if (head) {
-          const scenarioLabel = getScenarioLabelFromHead(currentHeadText) || "I";
-          head.textContent = formatEntryHead(scenarioLabel, xpValue);
+          head.textContent = formatEntryHeadWithTitle(titleValue, xpValue, currentHeadText);
         }
         editor.remove();
         showDisplayLayer();
@@ -3539,6 +3562,10 @@
         </div>
         <div class="upgrade-entry-builder">
           <div class="builder-input-row">
+            <label>Entry Title</label>
+            <input type="text" class="upgrade-input" data-draft="title" value="After Scenario ${intToRoman(scenarioNumber)}" />
+          </div>
+          <div class="builder-input-row">
             <label>XP Gained</label>
             <input type="number" class="upgrade-input" data-draft="xp" min="0" step="1" value="0" />
           </div>
@@ -3582,9 +3609,15 @@
 
       entry.querySelector('[data-action="confirm-draft"]').addEventListener("click", () => {
         const head = entry.querySelector(".upgrade-entry-head");
+        const titleInput = entry.querySelector('[data-draft="title"]');
         const xpInput = entry.querySelector('[data-draft="xp"]');
         const draftErrorNode = entry.querySelector('[data-draft-error]');
+        const titleValue = getEntryTitleFromHead(titleInput ? titleInput.value : "");
         const xpValue = toNonNegativeInteger(xpInput ? xpInput.value : 0);
+        if (!titleValue) {
+          setInlineValidationMessage(draftErrorNode, "Entry title is required.");
+          return;
+        }
         const { removedList, addedList, customizedList } = getEntryCardLists(entry);
         const removedCards = removedList ? listCardRows(removedList) : [];
         const addedCards = addedList ? listCardRows(addedList) : [];
@@ -3614,7 +3647,7 @@
           const list = section ? getCustomizedList(entry) : null;
           if (list) setCards(list, customizedCards);
         }
-        head.textContent = formatEntryHead(intToRoman(scenarioNumber), xpValue);
+        head.textContent = formatEntryHeadWithTitle(titleValue, xpValue, formatEntryHead(intToRoman(scenarioNumber), xpValue));
         const builder = entry.querySelector(".upgrade-entry-builder");
         if (builder) builder.remove();
         entry.classList.remove("upgrade-entry-draft");
