@@ -560,7 +560,7 @@
     }
 
     function inferImagePath(cardName) {
-      const normalized = normalizeText(cardName).replace(/\s+/g, "_");
+      const normalized = getCatalogKey(cardName).replace(/\s+/g, "_");
       if (!normalized) return null;
       return cardDir + "/" + normalized + ".png";
     }
@@ -2152,6 +2152,43 @@
       }, 0);
     }
 
+    function computePermanentUpgradeReplacementSlots(removedCardNames, addedCardNames) {
+      const removedLevelsByName = new Map();
+      (removedCardNames || []).forEach((name) => {
+        const key = getUpgradeDiscountKey(name);
+        if (!key) return;
+        const levels = removedLevelsByName.get(key) || [];
+        const qty = getCardQuantity(name);
+        for (let i = 0; i < qty; i += 1) {
+          levels.push(getCardLevel(name));
+        }
+        levels.sort((a, b) => b - a);
+        removedLevelsByName.set(key, levels);
+      });
+
+      let slots = 0;
+      (addedCardNames || []).forEach((name) => {
+        if (!isPermanentCardName(name)) return;
+        const addedLevel = getCardLevel(name);
+        if (addedLevel <= 0) return;
+        const key = getUpgradeDiscountKey(name);
+        const removedLevels = key ? removedLevelsByName.get(key) : null;
+        if (!removedLevels || !removedLevels.length) return;
+
+        const qty = getCardQuantity(name);
+        for (let i = 0; i < qty; i += 1) {
+          const matchIndex = removedLevels.findIndex((level) => level < addedLevel);
+          if (matchIndex < 0) break;
+          removedLevels.splice(matchIndex, 1);
+          // The upgraded Permanent no longer occupies the former card's deck
+          // slot. Arkham's deck-upgrade rules allow that vacancy to be filled
+          // by one level-0 card without paying the usual 1 XP insertion cost.
+          slots += 1;
+        }
+      });
+      return slots;
+    }
+
     function getAddedCardDeckSlots(cardName) {
       const rule = getDeckSizeAdjustmentRule(cardName);
       if (rule && Number.isFinite(Number(rule.deckSlots))) {
@@ -2322,9 +2359,11 @@
     function computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames) {
       const creditsByKey = buildSameNameUpgradeCreditMap(removedCardNames);
       // Replacing a removed card with a new level-0 card still costs 1 XP.
-      // Only explicit deck-building effects such as Versatile grant free
-      // level-0 card slots; ordinary vacancies in the deck do not.
-      let availableFreeLevel0Slots = computeDeckSizeAdjustmentSlots(addedCardNames);
+      // Explicit deck-building effects (such as Versatile) and a same-name
+      // upgrade into a higher-level Permanent grant free level-0 refill slots;
+      // ordinary vacancies in the deck do not.
+      let availableFreeLevel0Slots = computeDeckSizeAdjustmentSlots(addedCardNames)
+        + computePermanentUpgradeReplacementSlots(removedCardNames, addedCardNames);
       const costItems = buildAddedXpCostItems(addedCardNames).map((item) => {
         const key = item.key || "";
         let credit = 0;
@@ -2604,7 +2643,10 @@
     }
 
     function getCatalogKey(name) {
-      return normalizeText(stripCustomizableMetaMarkers(name))
+      const source = typeof name === "string" ? name : (name && name.name ? name.name : "");
+      const withoutNoXpMarkers = String(source || "")
+        .replace(/\(\s*[^)]*\b(?:story|campaign)\b[^)]*\)/gi, " ");
+      return normalizeText(stripCustomizableMetaMarkers(withoutNoXpMarkers))
         .replace(/\bcampaign\b/g, " ")
         .replace(/\bstory\b/g, " ")
         .replace(/\basset\b/g, " ")
@@ -4367,6 +4409,13 @@
       return "(x" + Number(num[0]) + ")";
     }
 
+    function extractNoXpMarkerSuffix(nameText) {
+      const groups = String(nameText || "").match(/\(([^)]*)\)/g) || [];
+      return groups
+        .filter((group) => /\b(?:story|campaign)\b/i.test(group))
+        .join(" ");
+    }
+
     function findStandardNameByFile(fileName) {
       const file = String(fileName || "").trim();
       if (!file) return "";
@@ -4394,6 +4443,7 @@
         const currentName = getCardNameFromRef(cardRef);
         if (!currentName) return;
         const qty = extractQuantitySuffix(currentName);
+        const noXpMarker = extractNoXpMarkerSuffix(currentName);
         const img = cardRef.querySelector("img.card-preview");
 
         let normalizedBase = "";
@@ -4405,7 +4455,11 @@
         }
         if (!normalizedBase) return;
 
-        const nextName = qty ? (normalizedBase + " " + qty) : normalizedBase;
+        let nextName = normalizedBase;
+        if (noXpMarker && !/\b(?:story|campaign)\b/i.test(normalizedBase)) {
+          nextName += " " + noXpMarker;
+        }
+        if (qty) nextName += " " + qty;
         if (nextName !== currentName) {
           replaceCardRefText(cardRef, nextName);
           changed = true;
