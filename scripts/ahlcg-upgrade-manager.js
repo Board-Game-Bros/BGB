@@ -2772,7 +2772,9 @@
       const panel = document.createElement("div");
       panel.className = "card-autocomplete";
       panel.hidden = true;
-      document.body.appendChild(panel);
+      // The torch-mode body filter creates a containing block for fixed nodes.
+      // Keep viewport-positioned suggestions and previews outside that block.
+      document.documentElement.appendChild(panel);
 
       let current = [];
       let activeIndex = -1;
@@ -2924,7 +2926,7 @@
           const preview = buildPreviewNode(item.name);
           preview.classList.add("card-autocomplete-preview");
           preview.dataset.autocompletePreviewOwner = "1";
-          document.body.appendChild(preview);
+          document.documentElement.appendChild(preview);
           resetAutocompletePreviewPosition(preview);
           option.addEventListener("mouseenter", () => {
             showAutocompletePreview(option, preview);
