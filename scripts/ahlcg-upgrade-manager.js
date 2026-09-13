@@ -13,6 +13,7 @@
     const customizableCardNames = Array.isArray(options.customizableCardNames) ? options.customizableCardNames : [];
     const signatureCardNames = Array.isArray(options.signatureCardNames) ? options.signatureCardNames : [];
     const noXpCardNames = Array.isArray(options.noXpCardNames) ? options.noXpCardNames : [];
+    const storyWeaknessNames = Array.isArray(options.storyWeaknessNames) ? options.storyWeaknessNames : [];
     const permanentCardNames = Array.isArray(options.permanentCardNames) ? options.permanentCardNames : [];
     const customizableLibraryCards = window.AHLCG_CUSTOMIZABLE_LIBRARY && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY === "object"
       && window.AHLCG_CUSTOMIZABLE_LIBRARY.cards && typeof window.AHLCG_CUSTOMIZABLE_LIBRARY.cards === "object"
@@ -1972,6 +1973,124 @@
       if (addedList) {
         listCardRows(addedList).forEach((row) => addInventoryCard(inventory, row));
       }
+      const status = readStoryWeaknessStatus(entry);
+      if (status) {
+        storyWeaknessNames.forEach((name) => {
+          const info = getInventoryCardInfo(name);
+          inventory.delete(info.key);
+          if (status[name] > 0) addInventoryCard(inventory, { name, qty: status[name] });
+        });
+      }
+    }
+
+    function readStoryWeaknessStatus(entry) {
+      try {
+        const status = JSON.parse(entry.dataset.storyWeaknessStatus || "null");
+        if (!status || !storyWeaknessNames.every((name) => Number.isSafeInteger(status[name]) && status[name] >= 0)) return null;
+        return status;
+      } catch (_error) {
+        return null;
+      }
+    }
+
+    function getStoryWeaknessCounts(entry) {
+      const saved = readStoryWeaknessStatus(entry);
+      if (saved) return saved;
+      const card = entry.closest(".upgrade-card");
+      const inventory = buildDeckInventoryBeforeEntry(card, entry);
+      // Draft entries are excluded from normal inventory; include their proposed changes here.
+      const lists = getEntryCardLists(entry);
+      if (lists.removedList) listCardRows(lists.removedList).forEach((row) => removeInventoryCard(inventory, row));
+      if (lists.addedList) listCardRows(lists.addedList).forEach((row) => addInventoryCard(inventory, row));
+      return Object.fromEntries(storyWeaknessNames.map((name) => [name, inventory.get(getInventoryCardInfo(name).key)?.qty || 0]));
+    }
+
+    function storyWeaknessControls(counts, editable, inputs) {
+      return '<div class="story-weakness-fields">' + storyWeaknessNames.map((name, index) => {
+        const label = escapeHtml(name.replace(/^Tekeli LI \(/, "").replace(/\)$/, ""));
+        const value = counts[name];
+        const disabled = editable ? '' : ' disabled';
+        return '<div class="story-weakness-row"><span class="story-weakness-name">' + label + '</span>'
+          + '<div class="story-weakness-stepper" role="group" aria-label="' + escapeHtml(name) + ' remaining">'
+          + '<button type="button" data-weakness-step="-1" data-weakness-type="' + index + '" aria-label="Decrease ' + label + '"'
+          + (value === 0 ? ' disabled' : disabled) + '>&minus;</button>'
+          + (inputs ? '<input type="number" min="0" step="1" inputmode="numeric" data-weakness-index="' + index
+            + '" value="' + value + '" aria-label="' + escapeHtml(name) + ' remaining" />'
+            : '<output aria-live="polite">' + value + '</output>')
+          + '<button type="button" data-weakness-step="1" data-weakness-type="' + index + '" aria-label="Increase ' + label + '"' + disabled + '>+</button>'
+          + '</div></div>';
+      }).join("") + '</div>';
+    }
+
+    function renderStoryWeaknessStatus(entry) {
+      if (!storyWeaknessNames.length || !shouldApplyEntryToDeckInventory(entry)) return;
+      let section = Array.from(entry.children).find((node) => node.classList.contains("story-weakness-status"));
+      if (!section) {
+        section = document.createElement("section");
+        section.className = "story-weakness-status";
+        entry.insertBefore(section, Array.from(entry.children).find((node) => node.classList.contains("entry-actions")) || null);
+      }
+      const status = readStoryWeaknessStatus(entry);
+      const counts = getStoryWeaknessCounts(entry);
+      const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+      const html = '<div class="story-weakness-heading"><h5>Tekeli-li</h5><span class="story-weakness-total">' + total + ' remaining</span></div>'
+        + '<div class="story-weakness-caption">Scenario-end quantities' + (status ? '' : ' &middot; Not yet recorded') + '</div>'
+        + storyWeaknessControls(counts, isEditEnabled(), false);
+      if (section.innerHTML !== html) section.innerHTML = html;
+      section.hidden = !!entry.querySelector(".upgrade-entry-editor");
+      section.onclick = (event) => {
+        const button = event.target.closest("[data-weakness-step]");
+        if (!button || !isEditEnabled()) return;
+        const index = Number(button.dataset.weaknessType);
+        const next = getStoryWeaknessCounts(entry);
+        next[storyWeaknessNames[index]] = Math.max(0, next[storyWeaknessNames[index]] + Number(button.dataset.weaknessStep));
+        entry.dataset.storyWeaknessStatus = JSON.stringify(next);
+        const step = button.dataset.weaknessStep;
+        syncDerivedUpgradeState();
+        const focusButton = section.querySelector('[data-weakness-type="' + index + '"][data-weakness-step="' + step + '"]:not(:disabled)')
+          || section.querySelector('[data-weakness-type="' + index + '"][data-weakness-step="1"]');
+        if (focusButton) focusButton.focus({ preventScroll: true });
+      };
+    }
+
+    function attachStoryWeaknessEditor(entry, container) {
+      if (!storyWeaknessNames.length) return;
+      const section = document.createElement("section");
+      section.className = "story-weakness-editor";
+      section.innerHTML = '<div class="story-weakness-heading"><h5>Tekeli-li</h5></div>'
+        + '<div class="story-weakness-caption">Remaining after this scenario</div>'
+        + storyWeaknessControls(getStoryWeaknessCounts(entry), true, true);
+      const refreshButtons = () => {
+        section.querySelectorAll("[data-weakness-index]").forEach((input) => {
+          input.previousElementSibling.disabled = Number(input.value) <= 0;
+        });
+      };
+      section.addEventListener("input", refreshButtons);
+      section.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-weakness-step]");
+        if (!button || !isEditEnabled()) return;
+        const input = section.querySelector('[data-weakness-index="' + button.dataset.weaknessType + '"]');
+        input.value = String(Math.max(0, toNonNegativeInteger(input.value) + Number(button.dataset.weaknessStep)));
+        refreshButtons();
+      });
+      container.insertBefore(section, container.querySelector(".entry-actions"));
+      renderStoryWeaknessStatus(entry);
+    }
+
+    function saveStoryWeaknessStatus(entry, container, errorNode) {
+      if (!storyWeaknessNames.length) return true;
+      const status = {};
+      for (const input of container.querySelectorAll("[data-weakness-index]")) {
+        const count = Number(input.value);
+        if (!input.value.trim() || !Number.isSafeInteger(count) || count < 0) {
+          setInlineValidationMessage(errorNode, "Weakness counts must be whole numbers of 0 or more.");
+          input.focus();
+          return false;
+        }
+        status[storyWeaknessNames[Number(input.dataset.weaknessIndex)]] = count;
+      }
+      entry.dataset.storyWeaknessStatus = JSON.stringify(status);
+      return true;
     }
 
     function buildDeckInventoryBeforeEntry(card, targetEntry) {
@@ -3156,6 +3275,7 @@
       if (displayColumns) displayColumns.style.removeProperty("display");
       if (displayCustomized) displayCustomized.style.removeProperty("display");
       if (displayActions) displayActions.style.removeProperty("display");
+      renderStoryWeaknessStatus(entry);
     }
 
     function stopInactivityTimer() {
@@ -3431,6 +3551,7 @@
       const errorNode = editor.querySelector('[data-edit-error]');
       hideDisplayLayer();
       entry.appendChild(editor);
+      attachStoryWeaknessEditor(entry, editor);
       setCardsWithInlineRemove(removedEditList, listCardRows(removedList));
       setCardsWithInlineRemove(addedEditList, listCardRows(addedList));
       const customizedEditSection = ensureCustomizedSection(editor, true);
@@ -3494,6 +3615,7 @@
           return;
         }
         setInlineValidationMessage(errorNode, "");
+        if (!saveStoryWeaknessStatus(entry, editor, errorNode)) return;
         setCards(removedList, removedCards);
         setCards(addedList, addedCards);
         if (customizedCards.length) {
@@ -3516,6 +3638,7 @@
       editor.querySelector('[data-action="cancel-edit"]').addEventListener("click", () => {
         editor.remove();
         showDisplayLayer();
+        renderStoryWeaknessStatus(entry);
       });
 
       editor.querySelector('[data-action="delete-entry"]').addEventListener("click", () => {
@@ -3547,6 +3670,7 @@
     }
 
     function ensureEntryActions(entry) {
+      renderStoryWeaknessStatus(entry);
       if (!isEditEnabled()) {
         const existing = entry.querySelector(".entry-actions");
         if (existing) existing.remove();
@@ -3670,6 +3794,7 @@
           return;
         }
         setInlineValidationMessage(draftErrorNode, "");
+        if (!saveStoryWeaknessStatus(entry, entry.querySelector(".upgrade-entry-builder"), draftErrorNode)) return;
         setCards(removedList, removedCards);
         setCards(addedList, addedCards);
         if (customizedCards.length) {
@@ -3718,6 +3843,7 @@
         traumaRow.dataset.entryUidLink = entryUid;
         upgradeList.appendChild(draftEntry);
         upgradeList.appendChild(traumaRow);
+        attachStoryWeaknessEditor(draftEntry, draftEntry.querySelector(".upgrade-entry-builder"));
         refreshEntryCustomizedSection(draftEntry);
         syncDerivedUpgradeState();
       };
@@ -3762,6 +3888,9 @@
       });
       clone.querySelectorAll(".has-customizable-popover").forEach((node) => {
         node.classList.remove("has-customizable-popover");
+      });
+      clone.querySelectorAll(".story-weakness-status").forEach((node) => {
+        node.hidden = false;
       });
       clone.querySelectorAll(".card-preview").forEach((node) => {
         if (!(node instanceof HTMLElement)) return;
@@ -4087,6 +4216,7 @@
     }
 
     function syncDerivedUpgradeState() {
+      document.querySelectorAll(".upgrade-entry").forEach(renderStoryWeaknessStatus);
       scheduleSaveUpgradeState();
       refreshCurrentXp();
       refreshTraumaStatus();

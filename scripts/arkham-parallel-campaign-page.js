@@ -693,6 +693,7 @@
         customizableCardNames: ahlcgLibrary.customizableCardNames || [],
         signatureCardNames: ahlcgLibrary.signatureCardNames || [],
         noXpCardNames: Array.isArray(upgradeConfig.noXpCardNames) ? upgradeConfig.noXpCardNames : [],
+        storyWeaknessNames: Array.isArray(upgradeConfig.storyWeaknessNames) ? upgradeConfig.storyWeaknessNames : [],
         permanentCardNames: ahlcgLibrary.permanentCardNames || [],
         initialDecks,
         customizableBaselineState: window.BGB_AHLCG_CUSTOMIZABLE_STATE || {},

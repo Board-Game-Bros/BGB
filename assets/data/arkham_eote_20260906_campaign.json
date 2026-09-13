@@ -534,6 +534,15 @@
       "date": "09/06/2026",
       "runName": "Edge of the Earth"
     },
+    "storyWeaknessNames": [
+      "Tekeli LI (Action)",
+      "Tekeli LI (Asset)",
+      "Tekeli LI (Clue)",
+      "Tekeli LI (Damage)",
+      "Tekeli LI (Horror)",
+      "Tekeli LI (Random Discard)",
+      "Tekeli LI (Resources)"
+    ],
     "noXpCardNames": [
       "Tekeli LI (Action)",
       "Tekeli LI (Asset)",
