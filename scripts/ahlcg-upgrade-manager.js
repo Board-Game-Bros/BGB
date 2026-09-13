@@ -2496,8 +2496,45 @@
       return Number.isFinite(value) && value >= 0 ? value : 1;
     }
 
-    function computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames) {
+    function getAdaptableSwapSlots(entry, removedCardNames, addedCardNames) {
+      if (!entry || entry.classList.contains("opening-deck-spend")) return 0;
+      const card = entry.closest(".upgrade-card");
+      const adaptableKey = getUpgradeDiscountKey("Adaptable (1)");
+      const countAdaptable = (rows) => (rows || []).reduce((total, row) => {
+        if (getUpgradeDiscountKey(row) !== adaptableKey) return total;
+        return total + getInventoryCardInfo(row).qty;
+      }, 0);
+      let copies = countAdaptable(getInitialDeckRowsForCard(card));
+      for (const previous of card ? card.querySelectorAll(".upgrade-entry") : []) {
+        if (previous === entry) break;
+        if (previous.classList.contains("upgrade-entry-draft")) continue;
+        const lists = getEntryCardLists(previous);
+        copies = Math.max(0, copies - countAdaptable(lists.removedList ? listCardRows(lists.removedList) : []));
+        copies += countAdaptable(lists.addedList ? listCardRows(lists.addedList) : []);
+      }
+      // Adaptable can be used immediately when bought between scenarios.
+      copies = Math.max(0, copies - countAdaptable(removedCardNames)) + countAdaptable(addedCardNames);
+      if (!copies) return 0;
+
+      const removedByName = new Map();
+      (removedCardNames || []).forEach((row) => {
+        if (getCardLevel(row) !== 0 || isNoXpCardName(row)) return;
+        const key = getUpgradeDiscountKey(row);
+        removedByName.set(key, (removedByName.get(key) || 0) + getCardQuantity(row));
+      });
+      // A level-0 copy used for a same-name upgrade cannot also fund a swap.
+      (addedCardNames || []).forEach((row) => {
+        if (getCardLevel(row) <= 0) return;
+        const key = getUpgradeDiscountKey(row);
+        removedByName.set(key, Math.max(0, (removedByName.get(key) || 0) - getCardQuantity(row)));
+      });
+      const removedCount = Array.from(removedByName.values()).reduce((sum, count) => sum + count, 0);
+      return Math.min(copies * 2, removedCount);
+    }
+
+    function computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames, entry) {
       const creditsByKey = buildSameNameUpgradeCreditMap(removedCardNames);
+      let adaptableSlots = getAdaptableSwapSlots(entry, removedCardNames, addedCardNames);
       // Replacing a removed card with a new level-0 card still costs 1 XP.
       // Explicit deck-building effects (such as Versatile) and a same-name
       // upgrade into a higher-level Permanent grant free level-0 refill slots;
@@ -2523,6 +2560,12 @@
             availableFreeLevel0Slots = Math.max(0, availableFreeLevel0Slots - deckSlots);
             return total;
           }
+        }
+        // Swaps count physical cards, including each copy in a Myriad group.
+        const swapCopies = Math.max(1, deckSlots);
+        if (item.adjustedCost > 0 && item.freeLevel0Eligible && adaptableSlots >= swapCopies) {
+          adaptableSlots -= swapCopies;
+          return total;
         }
         return total + item.adjustedCost;
       }, 0);
@@ -2581,8 +2624,8 @@
       return total;
     }
 
-    function computeNetSpentXp(removedCardNames, addedCardNames, customizedCardNames) {
-      const addedCost = computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames);
+    function computeNetSpentXp(removedCardNames, addedCardNames, customizedCardNames, entry) {
+      const addedCost = computeAddedXpWithSameNameDiscount(removedCardNames, addedCardNames, entry);
       const customizableSpent = computeCustomizableSpentXp(customizedCardNames);
       return addedCost + customizableSpent;
     }
@@ -2600,7 +2643,7 @@
       const removedRows = removedList ? listCardRows(removedList) : [];
       const addedRows = addedList ? listCardRows(addedList) : [];
       const customizedRows = customizedList ? listCardRows(customizedList) : [];
-      return computeNetSpentXp(removedRows, addedRows, customizedRows);
+      return computeNetSpentXp(removedRows, addedRows, customizedRows, entry);
     }
 
     function sumEarnedXpFromEntryHeads(card) {
@@ -3605,7 +3648,7 @@
           return;
         }
         const availableBefore = computeAvailableXpExcludingEntry(card, entry);
-        const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards);
+        const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards, entry);
         if (netSpent > availableBefore + xpValue) {
           const overBy = netSpent - (availableBefore + xpValue);
           setInlineValidationMessage(
@@ -3776,7 +3819,7 @@
         const removedCards = removedList ? listCardRows(removedList) : [];
         const addedCards = addedList ? listCardRows(addedList) : [];
         const customizedCards = customizedList ? listCardRows(customizedList) : [];
-        const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards);
+        const netSpent = computeNetSpentXp(removedCards, addedCards, customizedCards, entry);
         const card = entry.closest(".upgrade-card");
         const removedValidation = validateRemovedCardsAgainstDeck(card, entry, removedCards);
         if (!removedValidation.valid) {
