@@ -8,6 +8,7 @@
     const investigatorDir = options.investigatorDir || "/assets/boardgames/ahlcg_investigators";
     const cardImageFiles = Array.isArray(options.cardImageFiles) ? options.cardImageFiles : [];
     const standardCardNames = Array.isArray(options.standardCardNames) ? options.standardCardNames : [];
+    const standardNamesByImageKey = new Map(standardCardNames.map((name) => [normalizeText(name), name]));
     const myriadCardNames = Array.isArray(options.myriadCardNames) ? options.myriadCardNames : [];
     const exceptionalCardNames = Array.isArray(options.exceptionalCardNames) ? options.exceptionalCardNames : [];
     const customizableCardNames = Array.isArray(options.customizableCardNames) ? options.customizableCardNames : [];
@@ -139,8 +140,10 @@
 
     function normalizeText(value) {
       return String(value || "")
+        .normalize("NFKD")
+        .replace(/\p{M}/gu, "")
         .toLowerCase()
-        .replace(/["']/g, "")
+        .replace(/["'’]/g, "")
         .replace(/\(\s*x\s*\d+\s*\)/gi, " ")
         .replace(/\(([^)]*)\)/g, " $1 ")
         .replace(/[^\p{L}\p{N}]+/gu, " ")
@@ -2788,6 +2791,9 @@
 
     function toDisplayNameFromFile(fileName) {
       const exactNamesByFile = {
+        "becky_custom_marlin_model_1894_tom.png": "Becky: Custom Marlin Model 1894",
+        "the_black_fan_symbol_of_power_3_and.png": "The Black Fan: Symbol of Power (3)",
+        "strange_solution.png": "Strange Solution: Unidentified",
         "avery_claypool_antarctic_guide_eoec_1.png": "Avery Claypool: Antarctic Guide",
         "danforth_brilliant_student_eoec_1.png": "Danforth: Brilliant Student",
         "tekeli_li_action.png": "Tekeli LI (Action)",
@@ -2815,6 +2821,18 @@
       };
       const exactFileName = String(fileName || "").split("/").pop();
       if (exactNamesByFile[exactFileName]) return exactNamesByFile[exactFileName];
+
+      // Filenames omit title punctuation and accents. Resolve them back to
+      // the catalog before falling back to a generated, title-cased label.
+      const stem = exactFileName.replace(/\.png$/i, "");
+      const standardName = standardNamesByImageKey.get(normalizeText(stem));
+      if (standardName) return standardName;
+      // Duplicate image suffixes are not card levels (e.g. ..._3_1.png).
+      const originalStem = stem.replace(/_\d+$/, "");
+      if (originalStem !== stem) {
+        const originalName = standardNamesByImageKey.get(normalizeText(originalStem));
+        if (originalName) return originalName;
+      }
 
       let base = String(fileName || "").replace(/\.png$/i, "");
       let level = null;

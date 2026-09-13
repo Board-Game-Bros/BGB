@@ -266,11 +266,11 @@ def read_existing_library(path: Path) -> Dict[str, List[str]]:
         }
     text = path.read_text(encoding="utf-8")
     return {
-        "cardImageFiles": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "cardImageFiles")],
-        "standardCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "standardCardNames")],
-        "myriadCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "myriadCardNames")],
-        "exceptionalCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "exceptionalCardNames")],
-        "customizableCardNames": [bytes(s, "utf-8").decode("unicode_escape") for s in parse_library_array(text, "customizableCardNames")],
+        "cardImageFiles": [json.loads('"' + s + '"') for s in parse_library_array(text, "cardImageFiles")],
+        "standardCardNames": [json.loads('"' + s + '"') for s in parse_library_array(text, "standardCardNames")],
+        "myriadCardNames": [json.loads('"' + s + '"') for s in parse_library_array(text, "myriadCardNames")],
+        "exceptionalCardNames": [json.loads('"' + s + '"') for s in parse_library_array(text, "exceptionalCardNames")],
+        "customizableCardNames": [json.loads('"' + s + '"') for s in parse_library_array(text, "customizableCardNames")],
     }
 
 
