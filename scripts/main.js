@@ -67,12 +67,13 @@ setupSubnavActiveState();
 const INLINE_CHAOS_TOKENS = [
   { pattern: "elder thing", src: "/assets/icon/elder_thing_token.png", alt: "elder thing" },
   { pattern: "cultist", src: "/assets/icon/cultist_token.png", alt: "cultist" },
+  { pattern: "frost", src: "/assets/icon/frost_token.png", alt: "frost" },
   { pattern: "skull", src: "/assets/icon/skull_token.png", alt: "skull" },
   { pattern: "tablet", src: "/assets/icon/tablet_token.png", alt: "tablet" },
 ];
 
 const inlineChaosTokenPattern = new RegExp(
-  `(${INLINE_CHAOS_TOKENS.map((token) => token.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+  `(${INLINE_CHAOS_TOKENS.map((token) => token.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?=\\s+tokens?\\b)`,
   "gi"
 );
 
