@@ -680,11 +680,17 @@ body.torch-mode .campaign-assignment-connector {
 .campaign-log-group-expedition .campaign-log-group-title {
   width: min(640px, 88%);
   margin: 0 auto 10px;
-  padding: 5px 14px;
-  border: 1px solid rgba(58, 45, 26, 0.3);
-  border-radius: 999px;
-  background: rgba(255, 250, 232, 0.88);
+  padding: 7px 14px;
+  border: 1px solid rgba(190, 146, 70, 0.78);
+  border-radius: 9px;
+  background:
+    linear-gradient(180deg, rgba(102, 72, 34, 0.96) 0%, rgba(54, 34, 15, 0.98) 100%);
+  color: #f2d79a;
   text-align: center;
+  text-shadow: 0 1px 2px rgba(20, 10, 2, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 232, 177, 0.2),
+    0 3px 8px rgba(27, 14, 4, 0.24);
 }
 
 .campaign-expedition-team {
@@ -696,7 +702,7 @@ body.torch-mode .campaign-assignment-connector {
 
 .campaign-expedition-member {
   display: grid;
-  grid-template-columns: 46px minmax(0, 1fr) auto;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
   align-items: center;
   min-height: 58px;
   overflow: hidden;
@@ -710,14 +716,32 @@ body.torch-mode .campaign-assignment-connector {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
+.campaign-expedition-portrait {
+  position: relative;
+  display: block;
+  width: 54px;
+  height: 54px;
+  margin-left: 2px;
+  filter: drop-shadow(0 3px 3px rgba(24, 12, 3, 0.34));
+}
+
 .campaign-expedition-avatar {
-  width: 40px;
-  height: 40px;
-  margin-left: 4px;
-  border: 1px solid rgba(245, 235, 199, 0.66);
-  border-radius: 7px;
+  position: absolute;
+  inset: 13.5%;
+  width: 73%;
+  height: 73%;
+  border-radius: 50%;
   object-fit: cover;
-  background: rgba(20, 27, 31, 0.5);
+}
+
+.campaign-expedition-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 .campaign-expedition-identity {
@@ -772,7 +796,7 @@ body.torch-mode .campaign-assignment-connector {
   opacity: 0.47;
 }
 
-.campaign-expedition-member-crossed-out .campaign-expedition-avatar {
+.campaign-expedition-member-crossed-out .campaign-expedition-portrait {
   filter: grayscale(1) sepia(0.25);
 }
 
@@ -789,13 +813,13 @@ body.torch-mode .campaign-assignment-connector {
   }
 
   .campaign-expedition-member {
-    grid-template-columns: 42px minmax(0, 1fr) auto;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
     min-height: 54px;
   }
 
-  .campaign-expedition-avatar {
-    width: 36px;
-    height: 36px;
+  .campaign-expedition-portrait {
+    width: 48px;
+    height: 48px;
   }
 }
 

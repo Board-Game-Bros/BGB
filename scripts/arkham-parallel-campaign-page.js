@@ -330,12 +330,21 @@
       const row = el("div", `campaign-expedition-member campaign-expedition-member-${status}`);
       row.setAttribute("role", "listitem");
 
+      const portrait = el("span", "campaign-expedition-portrait");
       const avatar = document.createElement("img");
       avatar.className = "campaign-expedition-avatar";
       avatar.src = String(member && member.avatarSrc ? member.avatarSrc : "");
       avatar.alt = "";
       avatar.loading = "lazy";
-      row.appendChild(avatar);
+      portrait.appendChild(avatar);
+
+      const frame = document.createElement("img");
+      frame.className = "campaign-expedition-frame";
+      frame.src = "/assets/boardgames/ahlcg_partner_avatars/medieval_round_frame.png";
+      frame.alt = "";
+      frame.loading = "lazy";
+      portrait.appendChild(frame);
+      row.appendChild(portrait);
 
       const identity = el("span", "campaign-expedition-identity");
       identity.appendChild(el("strong", "campaign-expedition-name", name));
