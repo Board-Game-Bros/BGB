@@ -482,6 +482,15 @@
 
     const upgradeList = el("div", "upgrade-list");
     upgradeList.innerHTML = String(card.upgradeHtml || "").trim();
+    (Array.isArray(card.storyWeaknessOverrides) ? card.storyWeaknessOverrides : []).forEach((override) => {
+      const entryUid = String(override && override.entryUid ? override.entryUid : "").trim();
+      const counts = override && typeof override.counts === "object" && override.counts ? override.counts : null;
+      if (!entryUid || !counts) return;
+      const entry = Array.from(upgradeList.querySelectorAll("[data-entry-uid]")).find((node) => {
+        return String(node.getAttribute("data-entry-uid") || "").trim() === entryUid;
+      });
+      if (entry) entry.dataset.storyWeaknessStatus = JSON.stringify(counts);
+    });
     article.appendChild(upgradeList);
 
     article.appendChild(el("p", "current-trauma-status", String(card.currentTraumaStatus || "Current Trauma Status: Physical 0, Mental 0.")));
