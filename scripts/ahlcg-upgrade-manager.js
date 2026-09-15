@@ -2012,8 +2012,17 @@
       return '<div class="story-weakness-fields">' + storyWeaknessNames.map((name, index) => {
         const label = escapeHtml(name.replace(/^Tekeli LI \(/, "").replace(/\)$/, ""));
         const value = counts[name];
+        const previewSrc = findExactImage(name) || findMatchingImage(name) || inferImagePath(name);
+        const preview = previewSrc
+          ? '<img class="card-preview" src="' + escapeHtml(previewSrc) + '" alt="' + escapeHtml(name) + '" />'
+          : '';
         const disabled = editable ? '' : ' disabled';
-        return '<div class="story-weakness-row"><span class="story-weakness-name">' + label + '</span>'
+        const nameHtml = '<span class="story-weakness-name card-ref" tabindex="0">' + label + preview + '</span>';
+        if (!editable && !inputs) {
+          return '<div class="story-weakness-row">' + nameHtml
+            + '<output class="story-weakness-value" aria-label="' + escapeHtml(name) + ' remaining">' + value + '</output></div>';
+        }
+        return '<div class="story-weakness-row">' + nameHtml
           + '<div class="story-weakness-stepper" role="group" aria-label="' + escapeHtml(name) + ' remaining">'
           + '<button type="button" data-weakness-step="-1" data-weakness-type="' + index + '" aria-label="Decrease ' + label + '"'
           + (value === 0 ? ' disabled' : disabled) + '>&minus;</button>'
@@ -2036,12 +2045,31 @@
       const status = readStoryWeaknessStatus(entry);
       const counts = getStoryWeaknessCounts(entry);
       const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
-      const html = '<div class="story-weakness-heading"><h5>Tekeli-li</h5><span class="story-weakness-total">' + total + ' remaining</span></div>'
-        + '<div class="story-weakness-caption">Scenario-end quantities' + (status ? '' : ' &middot; Not yet recorded') + '</div>'
-        + storyWeaknessControls(counts, isEditEnabled(), false);
+      const editable = isEditEnabled();
+      const expanded = editable || section.dataset.expanded === "true";
+      const caption = '<div class="story-weakness-caption">Scenario-end quantities' + (status ? '' : ' &middot; Not yet recorded') + '</div>';
+      const fields = storyWeaknessControls(counts, editable, false);
+      const html = editable
+        ? '<div class="story-weakness-heading"><h5>Tekeli-li</h5><span class="story-weakness-total">' + total + ' remaining</span></div>'
+          + caption + fields
+        : '<button type="button" class="story-weakness-summary" aria-expanded="' + String(expanded) + '">'
+          + '<span class="story-weakness-title">Tekeli-li</span>'
+          + '<span class="story-weakness-total">' + total + ' remaining</span>'
+          + '<span class="story-weakness-chevron" aria-hidden="true"></span></button>'
+          + '<div class="story-weakness-details"' + (expanded ? '' : ' hidden') + '>' + caption + fields + '</div>';
       if (section.innerHTML !== html) section.innerHTML = html;
+      section.classList.toggle("is-collapsible", !editable);
       section.hidden = !!entry.querySelector(".upgrade-entry-editor");
       section.onclick = (event) => {
+        const summary = event.target.closest(".story-weakness-summary");
+        if (summary && !isEditEnabled()) {
+          const details = section.querySelector(".story-weakness-details");
+          const nextExpanded = summary.getAttribute("aria-expanded") !== "true";
+          section.dataset.expanded = String(nextExpanded);
+          summary.setAttribute("aria-expanded", String(nextExpanded));
+          if (details) details.hidden = !nextExpanded;
+          return;
+        }
         const button = event.target.closest("[data-weakness-step]");
         if (!button || !isEditEnabled()) return;
         const index = Number(button.dataset.weaknessType);

@@ -1640,6 +1640,63 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
   gap: 8px;
 }
 
+.story-weakness-status.is-collapsible {
+  padding: 0;
+  overflow: visible;
+}
+
+.story-weakness-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 14px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: inherit;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.story-weakness-summary:hover {
+  background: rgba(223, 188, 119, 0.08);
+}
+
+.story-weakness-summary:focus-visible {
+  outline: 2px solid #ae792a;
+  outline-offset: -3px;
+}
+
+.story-weakness-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.story-weakness-chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 160ms ease;
+}
+
+.story-weakness-summary[aria-expanded="true"] .story-weakness-chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.story-weakness-details {
+  padding: 0 14px 12px;
+}
+
+.story-weakness-details[hidden] {
+  display: none;
+}
+
 .story-weakness-heading h5 {
   margin: 0;
   font-size: 1rem;
@@ -1683,6 +1740,21 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
 .story-weakness-name {
   font-size: 0.85rem;
   overflow-wrap: anywhere;
+}
+
+.story-weakness-name.card-ref {
+  cursor: help;
+}
+
+.story-weakness-value {
+  min-width: 36px;
+  padding: 7px 10px;
+  border: 1px solid rgba(127, 88, 34, 0.45);
+  border-radius: 9px;
+  background: rgba(255, 248, 225, 0.16);
+  text-align: center;
+  font: 600 17px Georgia, serif;
+  font-variant-numeric: tabular-nums;
 }
 
 .story-weakness-stepper {
