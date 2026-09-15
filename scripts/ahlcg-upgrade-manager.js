@@ -60,11 +60,12 @@
       ? campaignStartNote.runName.trim()
       : "";
 
-    const cardCatalog = cardImageFiles.map((file) => ({
-      file,
-      key: normalizeText(file.replace(/\.png$/i, "")),
-      level: getLevelFromFileName(file),
-    }));
+    // Filename suffixes can be duplicate scan numbers, not XP levels.
+    const cardCatalog = cardImageFiles.map((file) => {
+      const name = toDisplayNameFromFile(file);
+      return { file, key: normalizeText(name), level: getRequestedLevel(name) };
+    });
+    let cardNameCatalogCache = null;
     const exceptionalCatalogKeys = exceptionalCardNames
       .map((name) => getCatalogKey(name))
       .filter(Boolean);
@@ -363,12 +364,6 @@
       }
     }
 
-    function getLevelFromFileName(fileName) {
-      const match = String(fileName || "").match(/_(\d+)\.png$/i);
-      if (!match) return null;
-      return Number(match[1]);
-    }
-
     function getRequestedLevel(inputName) {
       const text = String(inputName || "");
       const parenGroups = text.match(/\(([^)]*)\)/g) || [];
@@ -496,6 +491,7 @@
       let bestScore = 0;
 
       cardCatalog.forEach((item) => {
+        if ((item.level || 0) !== (requestedLevel || 0)) return;
         const itemNameOnly = getNameOnly(item.key);
         if (requiredTokens.length > 0) {
           const missingRequired = requiredTokens.some((token) => !itemNameOnly.includes(token));
@@ -552,9 +548,9 @@
         if (byLevel) return cardDir + "/" + byLevel.file;
       }
 
-      const noLevel = cardCatalog.find((item) => (
+      const noLevel = requestedLevel === null ? cardCatalog.find((item) => (
         getNameOnly(item.key) === targetNameOnly && item.level === null
-      ));
+      )) : null;
       if (noLevel) return cardDir + "/" + noLevel.file;
 
       // Fallback by catalog key to bridge labels like "(Story Asset)" vs "_campaign".
@@ -2816,6 +2812,9 @@
 
     function toDisplayNameFromFile(fileName) {
       const exactNamesByFile = {
+        // This legacy _1 file is a second level-0 scan; _1_1 is level 1.
+        "leo_de_luca_the_louisiana_lion_1.png": "Leo De Luca: The Louisiana Lion",
+        "leo_de_luca_the_louisiana_lion_1_1.png": "Leo De Luca: The Louisiana Lion (1)",
         "becky_custom_marlin_model_1894_tom.png": "Becky: Custom Marlin Model 1894",
         "the_black_fan_symbol_of_power_3_and.png": "The Black Fan: Symbol of Power (3)",
         "strange_solution.png": "Strange Solution: Unidentified",
@@ -2852,6 +2851,12 @@
       const stem = exactFileName.replace(/\.png$/i, "");
       const standardName = standardNamesByImageKey.get(normalizeText(stem));
       if (standardName) return standardName;
+      // Set/reprint suffixes are metadata, not part of the title or XP.
+      const withoutPack = stem.replace(/_(?:core_2026|and)(?:_\d+)?$/, "");
+      if (withoutPack !== stem) {
+        const packName = standardNamesByImageKey.get(normalizeText(withoutPack));
+        if (packName) return packName;
+      }
       // Duplicate image suffixes are not card levels (e.g. ..._3_1.png).
       const originalStem = stem.replace(/_\d+$/, "");
       if (originalStem !== stem) {
@@ -2888,6 +2893,7 @@
     }
 
     function getCardNameCatalog() {
+      if (cardNameCatalogCache) return cardNameCatalogCache;
       const map = new Map();
       const playableKeys = new Set(
         cardImageFiles
@@ -2914,7 +2920,8 @@
         map.set(key, { name, key });
       });
 
-      return Array.from(map.values());
+      cardNameCatalogCache = Array.from(map.values());
+      return cardNameCatalogCache;
     }
 
     function getCardNameSuggestions(queryText, limit) {
@@ -2946,20 +2953,24 @@
       const exact = catalog.find((item) => item.key === normalized);
       if (exact) return exact.name;
       const requestedLevel = getRequestedLevel(original);
-      if (requestedLevel !== null) {
-        const levelMatched = catalog.filter((item) => getRequestedLevel(item.name) === requestedLevel);
-        const exactLevel = levelMatched.find((item) => getCatalogKey(item.name) === normalized);
-        if (exactLevel) return exactLevel.name;
-      }
+      const levelMatched = catalog.filter((item) => (
+        (getRequestedLevel(item.name) || 0) === (requestedLevel || 0)
+      ));
       const nameOnly = getNameOnly(normalized);
       if (!nameOnly) return original;
-      const sameBaseName = catalog.filter((item) => getNameOnly(item.key) === nameOnly);
+      // A deck may store only the title, while the picker includes a subtitle.
+      // Resolve aliases within the requested level; an omitted level means 0.
+      const shortTitle = levelMatched.filter((item) => (
+        getCatalogKey(item.name.split(":")[0]) === nameOnly
+      ));
+      if (shortTitle.length === 1) return shortTitle[0].name;
+      const sameBaseName = levelMatched.filter((item) => getNameOnly(item.key) === nameOnly);
       if (sameBaseName.length === 1) {
         return sameBaseName[0].name;
       }
-      const prefixedName = catalog.filter((item) => (
-        item.key.startsWith(normalized + " ") ||
-        normalized.startsWith(item.key + " ")
+      const prefixedName = levelMatched.filter((item) => (
+        getNameOnly(item.key).startsWith(nameOnly + " ") ||
+        nameOnly.startsWith(getNameOnly(item.key) + " ")
       ));
       if (prefixedName.length === 1) {
         return prefixedName[0].name;
@@ -4725,8 +4736,13 @@
         const noXpMarker = extractNoXpMarkerSuffix(currentName);
         const img = cardRef.querySelector("img.card-preview");
 
-        let normalizedBase = "";
-        if (img && img.getAttribute("src")) {
+        // Persisted previews may point at a scan of the wrong level. A known
+        // card label is authoritative; never downgrade it from the image path.
+        const labelBase = parseTrailingQuantity(currentName).base || currentName;
+        const labelName = normalizeCardNameInput(labelBase);
+        let normalizedBase = getCardNameCatalog().some((item) => item.key === getCatalogKey(labelName))
+          ? labelName : "";
+        if (!normalizedBase && img && img.getAttribute("src")) {
           normalizedBase = findStandardNameByFile(extractFileNameFromSrc(img.getAttribute("src")));
         }
         if (!normalizedBase) {
