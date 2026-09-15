@@ -251,6 +251,73 @@
     return gallery;
   }
 
+  function renderAssignmentCharacter(person, kind) {
+    const name = String(person && person.name ? person.name : "").trim();
+    const role = String(person && person.role ? person.role : "").trim();
+    const item = el("button", `campaign-assignment-character campaign-assignment-${kind} card-ref`);
+    item.type = "button";
+    item.setAttribute("aria-label", role ? `${name}, ${role}` : name);
+    item.addEventListener("pointerdown", (event) => {
+      if (event.pointerType !== "mouse") return;
+      event.preventDefault();
+      if (document.activeElement === item) item.blur();
+    });
+
+    const portrait = el("span", "campaign-assignment-portrait");
+    const avatar = document.createElement("img");
+    avatar.className = "campaign-assignment-avatar";
+    avatar.src = String(person && person.avatarSrc ? person.avatarSrc : "");
+    avatar.alt = "";
+    avatar.loading = "lazy";
+    portrait.appendChild(avatar);
+
+    const frame = document.createElement("img");
+    frame.className = "campaign-assignment-frame";
+    frame.src = "/assets/boardgames/ahlcg_partner_avatars/medieval_round_frame.png";
+    frame.alt = "";
+    frame.loading = "lazy";
+    portrait.appendChild(frame);
+    item.appendChild(portrait);
+
+    const text = el("span", "campaign-assignment-character-text");
+    text.appendChild(el("strong", "campaign-assignment-name", name));
+    if (role) text.appendChild(el("small", "campaign-assignment-role", role));
+    item.appendChild(text);
+
+    const cardSrc = String(person && person.cardSrc ? person.cardSrc : "").trim();
+    if (cardSrc) {
+      const preview = document.createElement("img");
+      preview.className = "card-preview campaign-assignment-card-preview";
+      preview.src = cardSrc;
+      preview.alt = `${name} card`;
+      item.appendChild(preview);
+    }
+    return item;
+  }
+
+  function renderPartnerAssignments(assignments) {
+    const list = el("div", "campaign-partner-assignments");
+    list.setAttribute("role", "list");
+    list.setAttribute("aria-label", "Investigator partner assignments");
+
+    (Array.isArray(assignments) ? assignments : []).forEach((assignment) => {
+      const row = el("div", "campaign-partner-assignment");
+      row.setAttribute("role", "listitem");
+      row.appendChild(renderAssignmentCharacter(assignment && assignment.investigator, "investigator"));
+
+      const connector = el("span", "campaign-assignment-connector");
+      connector.appendChild(el("span", "campaign-assignment-line"));
+      connector.appendChild(el("span", "campaign-assignment-label", "accompanied by"));
+      connector.appendChild(el("span", "campaign-assignment-arrow", "›"));
+      row.appendChild(connector);
+
+      row.appendChild(renderAssignmentCharacter(assignment && assignment.partner, "partner"));
+      list.appendChild(row);
+    });
+
+    return list;
+  }
+
   function renderCustomizableStateNote(note) {
     const wrap = el("div", "story-note customizable-state-note");
     if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
@@ -297,6 +364,9 @@
     if (Array.isArray(note.partnerPortraits) && note.partnerPortraits.length) {
       wrap.appendChild(renderPartnerPortraits(note.partnerPortraits));
     }
+    if (Array.isArray(note.partnerAssignments) && note.partnerAssignments.length) {
+      wrap.appendChild(renderPartnerAssignments(note.partnerAssignments));
+    }
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
       note.items.forEach((item) => {
@@ -313,6 +383,9 @@
     if (note.text) parent.appendChild(elWithInlineArkhamText("p", "", String(note.text)));
     if (Array.isArray(note.partnerPortraits) && note.partnerPortraits.length) {
       parent.appendChild(renderPartnerPortraits(note.partnerPortraits));
+    }
+    if (Array.isArray(note.partnerAssignments) && note.partnerAssignments.length) {
+      parent.appendChild(renderPartnerAssignments(note.partnerAssignments));
     }
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");

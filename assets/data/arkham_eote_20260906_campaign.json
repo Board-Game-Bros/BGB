@@ -248,6 +248,50 @@
         },
         {
           "title": "Partners and Recovered Supplies",
+          "partnerAssignments": [
+            {
+              "investigator": {
+                "name": "Ursula Downs",
+                "role": "The Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/ursula_downs.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png"
+              },
+              "partner": {
+                "name": "Roald Ellsworth",
+                "role": "Intrepid Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/roald_ellsworth.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/roald_ellsworth_intrepid_explorer_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Preston Fairmont",
+                "role": "The Millionaire",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/preston_fairmont.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png"
+              },
+              "partner": {
+                "name": "Dr. Mala Sinha",
+                "role": "Daring Physician",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_mala_sinha.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/dr_mala_sinha_daring_physician_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Marion Tavares",
+                "role": "The Trawler",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/marion_tavares.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png"
+              },
+              "partner": {
+                "name": "Dr. Amy Kensler",
+                "role": "Professor of Biology",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_amy_kensler.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/dr_amy_kensler_professor_of_biology_eoec_1.png"
+              }
+            }
+          ],
           "items": [
             "Ursula Downs was joined by Roald Ellsworth.",
             "Preston Fairmont was joined by Dr. Mala Sinha.",
@@ -345,6 +389,50 @@
         },
         {
           "title": "Partners and Recovered Supplies",
+          "partnerAssignments": [
+            {
+              "investigator": {
+                "name": "Ursula Downs",
+                "role": "The Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/ursula_downs.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png"
+              },
+              "partner": {
+                "name": "Takada Hiroko",
+                "role": "Aeroplane Mechanic",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/takada_hiroko.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/takada_hiroko_aeroplane_mechanic_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Preston Fairmont",
+                "role": "The Millionaire",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/preston_fairmont.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png"
+              },
+              "partner": {
+                "name": "Dr. Amy Kensler",
+                "role": "Professor of Biology · 1 horror carried over",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_amy_kensler.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/dr_amy_kensler_professor_of_biology_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Marion Tavares",
+                "role": "The Trawler",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/marion_tavares.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png"
+              },
+              "partner": {
+                "name": "Professor William Dyer",
+                "role": "Professor of Geology",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/professor_william_dyer.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/professor_william_dyer_professor_of_geology_eoec_1.png"
+              }
+            }
+          ],
           "items": [
             "Ursula Downs was joined by Takada Hiroko.",
             "Preston Fairmont was joined by Dr. Amy Kensler, who retained 1 horror from Part I.",
@@ -399,6 +487,92 @@
             "Preston Fairmont added Tekeli LI (Damage).",
             "Marion Tavares added 1 additional Tekeli LI (Horror), bringing her total to 2, plus Tekeli LI (Resources), Tekeli LI (Action), and Tekeli LI (Clue).",
             "No additional XP was awarded at Checkpoint II; the +1 XP shown in the deck records is the XP already earned from Ice and Death, Part II."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario I: Ice and Death, Part III",
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 0",
+        "Bonus XP: 5 Each"
+      ],
+      "notes": [
+        {
+          "title": "The Hunting Creatures Advance",
+          "items": [
+            "The expedition moved just outside the camp to find a defensible position and saw more hunting creatures emerging from the ice by the minute.",
+            "The ice shelf split open and multicolored miasma seeped from the cracks in a succession of geysers. With no safe route left, the investigators prepared to fight.",
+            "Add 1 frost token to the chaos bag.",
+            "Each investigator's base starting resources were equal to the camp's shelter value of 7 instead of 5."
+          ]
+        },
+        {
+          "title": "Partners",
+          "partnerAssignments": [
+            {
+              "investigator": {
+                "name": "Ursula Downs",
+                "role": "The Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/ursula_downs.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png"
+              },
+              "partner": {
+                "name": "Professor William Dyer",
+                "role": "Professor of Geology",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/professor_william_dyer.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/professor_william_dyer_professor_of_geology_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Preston Fairmont",
+                "role": "The Millionaire",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/preston_fairmont.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png"
+              },
+              "partner": {
+                "name": "Dr. Mala Sinha",
+                "role": "Daring Physician",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_mala_sinha.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/dr_mala_sinha_daring_physician_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Marion Tavares",
+                "role": "The Trawler",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/marion_tavares.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png"
+              },
+              "partner": {
+                "name": "Danforth",
+                "role": "Brilliant Student",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/danforth.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/danforth_brilliant_student_eoec_1.png"
+              }
+            }
+          ],
+          "items": [
+            "Ursula Downs was joined by Professor William Dyer.",
+            "Preston Fairmont was joined by Dr. Mala Sinha.",
+            "Marion Tavares was joined by Danforth.",
+            "Partner damage and horror after Part III: Professor William Dyer, Dr. Mala Sinha, and Danforth each have 0 damage and 0 horror."
+          ]
+        },
+        {
+          "title": "Part III Results",
+          "items": [
+            "Resolution: Resolution 1.",
+            "All three investigators survived.",
+            "Victory Display: 0.",
+            "Each investigator earned 5 bonus XP for gaining insight into the entities that dwell in Antarctica.",
+            "The team defeated the hunting creatures.",
+            "After the battle, the survivors trudged onward in bitter silence. Hours passed without another sign of danger before exhaustion finally forced them to stop and decide how to proceed.",
+            "Clean up the game. The investigators will not return to this scenario for the remainder of the campaign.",
+            "Proceed to Interlude I: Restful Night."
           ]
         }
       ]
@@ -504,14 +678,16 @@
           "items": [
             "The investigators convinced Dyer to allow the expedition.",
             "James \"Cookie\" Fredericks was killed in the plane crash.",
-            "Camp - Remnants of Lake's Camp (7)"
+            "Camp - Remnants of Lake's Camp (7)",
+            "The team defeated the hunting creatures."
           ]
         },
         {
           "title": "Chaos Bag Changes",
           "items": [
             "+1 cultist token (from the Prologue).",
-            "+1 frost token (from Ice and Death, Part II)."
+            "+1 frost token (from Ice and Death, Part II).",
+            "+1 frost token (from Ice and Death, Part III)."
           ]
         }
         ]

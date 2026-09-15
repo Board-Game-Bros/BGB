@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 75 300 300" role="img" aria-label="Marion Tavares portrait">
+  <defs><clipPath id="crop"><circle cx="168" cy="225" r="150"/></clipPath></defs>
+  <image href="../ahlcg_investigators/marion_tavares_the_trawler.png" width="600" height="420" clip-path="url(#crop)"/>
+</svg>
