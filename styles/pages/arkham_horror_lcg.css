@@ -677,6 +677,128 @@ body.torch-mode .campaign-assignment-connector {
   text-decoration-color: rgba(90, 68, 39, 0.78);
 }
 
+.campaign-log-group-expedition .campaign-log-group-title {
+  width: min(640px, 88%);
+  margin: 0 auto 10px;
+  padding: 5px 14px;
+  border: 1px solid rgba(58, 45, 26, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 250, 232, 0.88);
+  text-align: center;
+}
+
+.campaign-expedition-team {
+  display: grid;
+  gap: 6px;
+  width: min(640px, 88%);
+  margin: 0 auto;
+}
+
+.campaign-expedition-member {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 58px;
+  overflow: hidden;
+  border: 1px solid rgba(73, 80, 82, 0.56);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.045) 25%, transparent 25%) 0 0 / 22px 22px,
+    linear-gradient(315deg, rgba(255, 255, 255, 0.035) 25%, transparent 25%) 0 0 / 22px 22px,
+    #526066;
+  color: #f7f4e8;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.campaign-expedition-avatar {
+  width: 40px;
+  height: 40px;
+  margin-left: 4px;
+  border: 1px solid rgba(245, 235, 199, 0.66);
+  border-radius: 7px;
+  object-fit: cover;
+  background: rgba(20, 27, 31, 0.5);
+}
+
+.campaign-expedition-identity {
+  display: grid;
+  min-width: 0;
+  padding: 4px 8px;
+}
+
+.campaign-expedition-name,
+.campaign-expedition-role {
+  overflow-wrap: anywhere;
+}
+
+.campaign-expedition-name {
+  font-size: clamp(1rem, 1.55vw, 1.32rem);
+  line-height: 1.05;
+}
+
+.campaign-expedition-role {
+  margin-top: 2px;
+  font-size: clamp(0.78rem, 1.1vw, 1rem);
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.campaign-expedition-state {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  min-width: 36px;
+  padding: 4px 9px 4px 4px;
+}
+
+.campaign-expedition-condition {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.campaign-expedition-status-label {
+  font-size: clamp(0.9rem, 1.3vw, 1.12rem);
+}
+
+.campaign-expedition-status-rescued {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.campaign-expedition-member-crossed-out {
+  opacity: 0.47;
+}
+
+.campaign-expedition-member-crossed-out .campaign-expedition-avatar {
+  filter: grayscale(1) sepia(0.25);
+}
+
+.campaign-expedition-member-crossed-out .campaign-expedition-identity {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-skip-ink: none;
+}
+
+@media (max-width: 640px) {
+  .campaign-log-group-expedition .campaign-log-group-title,
+  .campaign-expedition-team {
+    width: 100%;
+  }
+
+  .campaign-expedition-member {
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    min-height: 54px;
+  }
+
+  .campaign-expedition-avatar {
+    width: 36px;
+    height: 36px;
+  }
+}
+
 .upgrade-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

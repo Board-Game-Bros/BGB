@@ -318,6 +318,56 @@
     return list;
   }
 
+  function renderExpeditionTeam(members) {
+    const list = el("div", "campaign-expedition-team");
+    list.setAttribute("role", "list");
+    list.setAttribute("aria-label", "Expedition Team status");
+
+    (Array.isArray(members) ? members : []).forEach((member) => {
+      const name = String(member && member.name ? member.name : "").trim();
+      const role = String(member && member.role ? member.role : "").trim();
+      const status = String(member && member.status ? member.status : "active").trim();
+      const row = el("div", `campaign-expedition-member campaign-expedition-member-${status}`);
+      row.setAttribute("role", "listitem");
+
+      const avatar = document.createElement("img");
+      avatar.className = "campaign-expedition-avatar";
+      avatar.src = String(member && member.avatarSrc ? member.avatarSrc : "");
+      avatar.alt = "";
+      avatar.loading = "lazy";
+      row.appendChild(avatar);
+
+      const identity = el("span", "campaign-expedition-identity");
+      identity.appendChild(el("strong", "campaign-expedition-name", name));
+      if (role) identity.appendChild(el("small", "campaign-expedition-role", role));
+      row.appendChild(identity);
+
+      const state = el("span", "campaign-expedition-state");
+      const appendConditionIcons = (type, count) => {
+        const amount = Math.max(0, Number.parseInt(String(count || 0), 10) || 0);
+        for (let index = 0; index < amount; index += 1) {
+          const icon = document.createElement("img");
+          icon.className = `campaign-expedition-condition campaign-expedition-${type}`;
+          icon.src = `/assets/icon/${type}_icon.png`;
+          icon.alt = type;
+          icon.title = `${name}: ${amount} ${type}`;
+          state.appendChild(icon);
+        }
+      };
+      appendConditionIcons("damage", member && member.damage);
+      appendConditionIcons("horror", member && member.horror);
+      if (status === "mia" || status === "rescued") {
+        const statusLabel = el("span", "campaign-expedition-status-label", "MIA");
+        if (status === "rescued") statusLabel.classList.add("campaign-expedition-status-rescued");
+        state.appendChild(statusLabel);
+      }
+      row.appendChild(state);
+      list.appendChild(row);
+    });
+
+    return list;
+  }
+
   function renderCustomizableStateNote(note) {
     const wrap = el("div", "story-note customizable-state-note");
     if (note.title) wrap.appendChild(el("h4", "", String(note.title)));
@@ -367,6 +417,9 @@
     if (Array.isArray(note.partnerAssignments) && note.partnerAssignments.length) {
       wrap.appendChild(renderPartnerAssignments(note.partnerAssignments));
     }
+    if (Array.isArray(note.expeditionTeam) && note.expeditionTeam.length) {
+      wrap.appendChild(renderExpeditionTeam(note.expeditionTeam));
+    }
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
       note.items.forEach((item) => {
@@ -386,6 +439,9 @@
     }
     if (Array.isArray(note.partnerAssignments) && note.partnerAssignments.length) {
       parent.appendChild(renderPartnerAssignments(note.partnerAssignments));
+    }
+    if (Array.isArray(note.expeditionTeam) && note.expeditionTeam.length) {
+      parent.appendChild(renderExpeditionTeam(note.expeditionTeam));
     }
     if (Array.isArray(note.items) && note.items.length) {
       const list = el("ul", note.listClass || "");
@@ -434,6 +490,9 @@
     const card = el("div", "record-card");
     (Array.isArray(data.sections) ? data.sections : []).forEach((entry) => {
       const block = el("div", "campaign-log-group");
+      if (String(entry.title || "").trim() === "Expedition Team") {
+        block.classList.add("campaign-log-group-expedition");
+      }
       if (entry.title) {
         block.appendChild(el("h3", "campaign-log-group-title", String(entry.title)));
       }

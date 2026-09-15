@@ -799,17 +799,79 @@
         "title": "Expedition Team",
         "notes": [
           {
-            "title": "Partners and Status",
-            "items": [
-            "Dr. Amy Kensler - Active; 1 horror",
-            "Professor William Dyer - Active",
-            "Danforth - Active; rescued in Ice and Death, Part II",
-              "Roald Ellsworth - Active",
-              "Takada Hiroko - Active",
-              "Avery Claypool - Active",
-              "Dr. Mala Sinha - Active",
-              "James \"Cookie\" Fredericks - Crossed out; killed in the plane crash",
-              "Eliyah Ashevak - Active"
+            "expeditionTeam": [
+              {
+                "name": "Dr. Amy Kensler",
+                "role": "Professor of Biology",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_amy_kensler.png",
+                "status": "active",
+                "damage": 0,
+                "horror": 1
+              },
+              {
+                "name": "Prof. William Dyer",
+                "role": "Professor of Geology",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/professor_william_dyer.png",
+                "status": "active",
+                "damage": 0,
+                "horror": 0
+              },
+              {
+                "name": "Danforth",
+                "role": "Brilliant Student",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/danforth.png",
+                "status": "rescued",
+                "damage": 0,
+                "horror": 0
+              },
+              {
+                "name": "Roald Ellsworth",
+                "role": "Intrepid Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/roald_ellsworth.png",
+                "status": "active",
+                "damage": 0,
+                "horror": 0
+              },
+              {
+                "name": "Takada Hiroko",
+                "role": "Aeroplane Mechanic",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/takada_hiroko.png",
+                "status": "active",
+                "damage": 0,
+                "horror": 0
+              },
+              {
+                "name": "Avery Claypool",
+                "role": "Antarctic Guide",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/avery_claypool.png",
+                "status": "active",
+                "damage": 0,
+                "horror": 0
+              },
+              {
+                "name": "Dr. Mala Sinha",
+                "role": "Daring Physician",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_mala_sinha.png",
+                "status": "active",
+                "damage": 0,
+                "horror": 0
+              },
+              {
+                "name": "James \"Cookie\" Fredericks",
+                "role": "Dubious Choice",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/james_cookie_fredericks.png",
+                "status": "crossed-out",
+                "damage": 0,
+                "horror": 0
+              },
+              {
+                "name": "Eliyah Ashevak",
+                "role": "Dog Handler",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/eliyah_ashevak.png",
+                "status": "active",
+                "damage": 0,
+                "horror": 0
+              }
             ]
           }
         ]
