@@ -1703,19 +1703,16 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
   letter-spacing: 0.04em;
 }
 
+.story-weakness-caption {
+  display: none;
+}
+
 .story-weakness-total {
   padding: 4px 8px;
   border-radius: 20px;
   background: rgba(123, 81, 24, 0.12);
   font-size: 0.72rem;
   white-space: nowrap;
-}
-
-.story-weakness-caption {
-  margin: 6px 0 12px;
-  font-size: 0.74rem;
-  opacity: 0.75;
-  line-height: 1.5;
 }
 
 .story-weakness-fields {

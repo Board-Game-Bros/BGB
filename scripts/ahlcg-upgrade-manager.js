@@ -2042,21 +2042,19 @@
         section.className = "story-weakness-status";
         entry.insertBefore(section, Array.from(entry.children).find((node) => node.classList.contains("entry-actions")) || null);
       }
-      const status = readStoryWeaknessStatus(entry);
       const counts = getStoryWeaknessCounts(entry);
       const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
       const editable = isEditEnabled();
       const expanded = editable || section.dataset.expanded === "true";
-      const caption = '<div class="story-weakness-caption">Scenario-end quantities' + (status ? '' : ' &middot; Not yet recorded') + '</div>';
       const fields = storyWeaknessControls(counts, editable, false);
       const html = editable
         ? '<div class="story-weakness-heading"><h5>Tekeli-li</h5><span class="story-weakness-total">' + total + ' remaining</span></div>'
-          + caption + fields
+          + fields
         : '<button type="button" class="story-weakness-summary" aria-expanded="' + String(expanded) + '">'
           + '<span class="story-weakness-title">Tekeli-li</span>'
           + '<span class="story-weakness-total">' + total + ' remaining</span>'
           + '<span class="story-weakness-chevron" aria-hidden="true"></span></button>'
-          + '<div class="story-weakness-details"' + (expanded ? '' : ' hidden') + '>' + caption + fields + '</div>';
+          + '<div class="story-weakness-details"' + (expanded ? '' : ' hidden') + '>' + fields + '</div>';
       if (section.innerHTML !== html) section.innerHTML = html;
       section.classList.toggle("is-collapsible", !editable);
       section.hidden = !!entry.querySelector(".upgrade-entry-editor");
@@ -2089,7 +2087,6 @@
       const section = document.createElement("section");
       section.className = "story-weakness-editor";
       section.innerHTML = '<div class="story-weakness-heading"><h5>Tekeli-li</h5></div>'
-        + '<div class="story-weakness-caption">Remaining after this scenario</div>'
         + storyWeaknessControls(getStoryWeaknessCounts(entry), true, true);
       const refreshButtons = () => {
         section.querySelectorAll("[data-weakness-index]").forEach((input) => {
