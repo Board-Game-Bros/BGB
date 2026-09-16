@@ -223,17 +223,31 @@ const bindCardRefViewportPreviews = (root = document) => {
     const rect = preview.getBoundingClientRect();
     const width = rect.width || 0;
     const height = rect.height || 0;
-    if (!width || !height) return;
+    if (!width || !height) {
+      if (preview instanceof HTMLImageElement && !preview.complete && preview.dataset.viewportLoadBound !== "1") {
+        preview.dataset.viewportLoadBound = "1";
+        preview.addEventListener("load", () => {
+          delete preview.dataset.viewportLoadBound;
+          if (activeCardRef === cardRef) window.requestAnimationFrame(() => clampPreview(cardRef));
+        }, { once: true });
+      }
+      return;
+    }
 
-    const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
-    const viewportHeight = document.documentElement.clientHeight || window.innerHeight || 0;
+    const visualViewport = window.visualViewport;
+    const viewportLeft = visualViewport ? visualViewport.offsetLeft : 0;
+    const viewportTop = visualViewport ? visualViewport.offsetTop : 0;
+    const viewportWidth = visualViewport?.width || document.documentElement.clientWidth || window.innerWidth || 0;
+    const viewportHeight = visualViewport?.height || document.documentElement.clientHeight || window.innerHeight || 0;
     if (!viewportWidth || !viewportHeight) return;
+    const viewportRight = viewportLeft + viewportWidth;
+    const viewportBottom = viewportTop + viewportHeight;
     const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
     const maxHeight = Math.max(160, viewportHeight - (previewMargin * 2));
-    const overflowLeft = rect.left < previewMargin;
-    const overflowRight = rect.right > (viewportWidth - previewMargin);
-    const overflowTop = rect.top < previewMargin;
-    const overflowBottom = rect.bottom > (viewportHeight - previewMargin);
+    const overflowLeft = rect.left < (viewportLeft + previewMargin);
+    const overflowRight = rect.right > (viewportRight - previewMargin);
+    const overflowTop = rect.top < (viewportTop + previewMargin);
+    const overflowBottom = rect.bottom > (viewportBottom - previewMargin);
     if (!(overflowLeft || overflowRight || overflowTop || overflowBottom)) {
       preview.style.removeProperty("display");
       preview.style.removeProperty("visibility");
@@ -264,13 +278,13 @@ const bindCardRefViewportPreviews = (root = document) => {
 
     const anchor = cardRef.getBoundingClientRect();
     let left = anchor.left + (anchor.width / 2) - (displayWidth / 2);
-    left = clamp(left, previewMargin, viewportWidth - displayWidth - previewMargin);
+    left = clamp(left, viewportLeft + previewMargin, viewportRight - displayWidth - previewMargin);
 
     let top = anchor.top - previewGap - displayHeight;
-    if (top < previewMargin) {
+    if (top < (viewportTop + previewMargin)) {
       top = anchor.bottom + previewGap;
     }
-    top = clamp(top, previewMargin, viewportHeight - displayHeight - previewMargin);
+    top = clamp(top, viewportTop + previewMargin, viewportBottom - displayHeight - previewMargin);
 
     // Torch mode animates a filter on <body>, which turns it into the containing
     // block for fixed descendants. Keep partner previews anchored to their
@@ -312,6 +326,12 @@ const bindCardRefViewportPreviews = (root = document) => {
       window.requestAnimationFrame(refreshActive);
     }, { passive: true });
     window.addEventListener("resize", () => {
+      window.requestAnimationFrame(refreshActive);
+    }, { passive: true });
+    window.visualViewport?.addEventListener("scroll", () => {
+      window.requestAnimationFrame(refreshActive);
+    }, { passive: true });
+    window.visualViewport?.addEventListener("resize", () => {
       window.requestAnimationFrame(refreshActive);
     }, { passive: true });
   }
