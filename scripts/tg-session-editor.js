@@ -1537,6 +1537,7 @@
 
     group.append(subtitleWrap, summary, logsCard);
     root.appendChild(group);
+    window.BGB?.setupContentLists?.(root);
   }
 
   async function init() {

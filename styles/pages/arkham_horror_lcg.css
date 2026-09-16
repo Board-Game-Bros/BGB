@@ -1,4 +1,4 @@
-@import url("../base.css");
+@import url("../base.css?v=20260915lists");
 @import url("../modules/banner-title.css");
 @import url("../modules/cards.css");
 @import url("../modules/investigator-cards.css");
@@ -164,13 +164,13 @@ body.torch-mode #campaigns .campaign-subtitle {
 }
 
 .story-note ul {
-  margin: 0 0 12px 18px;
+  margin: 0 0 12px;
   padding: 0;
 }
 
 .story-note li {
   margin: 0 0 6px;
-  line-height: 1.35;
+  line-height: 1.55;
 }
 
 .story-note h4 + p,
@@ -1021,11 +1021,12 @@ body.torch-mode .campaign-assignment-connector {
 
 .card-list {
   margin: 0;
-  padding-left: 18px;
+  padding: 0;
+  list-style: none;
 }
 
 .card-list li {
-  margin: 0 0 5px;
+  margin: 0 0 7px;
   min-width: 0;
 }
 

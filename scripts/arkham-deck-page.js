@@ -148,6 +148,8 @@
 
     root.appendChild(main);
 
+    window.BGB?.setupContentLists?.(root);
+
     if (window.BGB && typeof window.BGB.setupSmoothScrollLinks === "function") {
       window.BGB.setupSmoothScrollLinks();
     }

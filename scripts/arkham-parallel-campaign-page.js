@@ -814,6 +814,8 @@
 
     root.appendChild(main);
 
+    window.BGB?.setupContentLists?.(root);
+
     if (window.BGB && typeof window.BGB.setupHoverImagePreview === "function") {
       window.BGB.setupHoverImagePreview();
     }

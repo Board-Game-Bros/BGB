@@ -14,7 +14,7 @@
     "deck": {
       rootId: "arkham-deck-page-root",
       scripts: [
-        "/scripts/arkham-deck-page.js?v=20260401a",
+        "/scripts/arkham-deck-page.js?v=20260915lists",
         "/scripts/arkham-deck-preview.js?v=20260401a",
       ],
     },
@@ -28,7 +28,7 @@
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
         "/scripts/ahlcg-upgrade-manager.js?v=20260915a",
-        "/scripts/arkham-parallel-campaign-page.js?v=20260912b",
+        "/scripts/arkham-parallel-campaign-page.js?v=20260915lists",
       ],
     },
   };
@@ -41,7 +41,7 @@
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20260912b";
+  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20260915lists";
   document.head.appendChild(stylesheet);
 
   const root = document.createElement("div");
@@ -60,7 +60,7 @@
   (async () => {
     try {
       await loadScript("/scripts/shell-layout.js");
-      await loadScript("/scripts/main.js?v=20260906c");
+      await loadScript("/scripts/main.js?v=20260915lists");
       for (const src of config.scripts) {
         await loadScript(src);
       }

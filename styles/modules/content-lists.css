@@ -1,0 +1,56 @@
+/* Shared list presentation: plain inventories, ruled narrative, aligned facts. */
+:root {
+  --list-rule: rgba(145, 108, 55, 0.42);
+  --list-gap: 0.55rem;
+}
+
+body.torch-mode {
+  --list-rule: rgba(221, 183, 119, 0.42);
+}
+
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+:is(.story-note, .record-card) > ul:not(.card-list),
+.campaign-log-list,
+.session-notes-list {
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+:is(.story-note, .record-card) > ul:not(.card-list) > li:not(.content-fact),
+.campaign-log-list > li:not(.content-fact),
+.session-notes-list > li:not(.content-fact) {
+  border-inline-start: 2px solid var(--list-rule);
+  padding-inline-start: 0.8rem;
+  margin-block: 0 var(--list-gap);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+ul > li.content-fact {
+  display: grid;
+  grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr);
+  gap: 0.25rem 1rem;
+  border-inline-start: 0;
+  border-bottom: 1px solid var(--list-rule);
+  padding: 0.35rem 0 0.55rem;
+}
+
+.content-fact-label {
+  font-weight: 700;
+}
+
+.content-fact-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 540px) {
+  ul > li.content-fact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.15rem;
+  }
+}

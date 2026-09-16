@@ -1,6 +1,34 @@
 // ===================== MAIN.JS =====================
 // Medieval-themed interactions and future expansion hooks
 
+// Shared presentation for both static logs and data-rendered campaign pages.
+const setupContentLists = (root = document) => {
+  root.querySelectorAll("ul").forEach((list) => list.setAttribute("role", "list"));
+  const rows = root.querySelectorAll(
+    ".story-note > ul:not(.card-list) > li, .record-card > ul:not(.card-list) > li, " +
+    ".campaign-log-list > li, .session-notes-list > li"
+  );
+  rows.forEach((row) => {
+    if (row.classList.contains("content-fact") || row.closest('[contenteditable="true"]')) return;
+    const first = row.firstChild;
+    if (!first || first.nodeType !== Node.TEXT_NODE) return;
+    // Only explicit result fields, never arbitrary card titles or prose colons.
+    const match = first.textContent.match(/^(\s*(?:Resolution|Victory Display|Bonus XP|Experience|XP earned|Trauma|Physical trauma|Mental trauma|Outcome|Survivors)\s*:\s*)/i);
+    if (!match || !row.textContent.slice(match[1].length).trim()) return;
+    const label = document.createElement("span");
+    label.className = "content-fact-label";
+    label.textContent = match[1];
+    first.textContent = first.textContent.slice(match[1].length);
+    const value = document.createElement("span");
+    value.className = "content-fact-value";
+    while (row.firstChild) value.appendChild(row.firstChild);
+    row.append(label, value);
+    row.classList.add("content-fact");
+  });
+};
+
+setupContentLists();
+
 // 1. Smooth Scrolling for Anchor Links
 const setupSmoothScrollLinks = () => {
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -485,6 +513,7 @@ if (document.body.classList.contains("torch-mode")) {
 // 4. Shared helpers used by page-specific scripts.
 window.BGB = {
   ...(window.BGB || {}),
+  setupContentLists,
   setupSmoothScrollLinks,
   setupSubnavActiveState,
   setupHoverImagePreview,

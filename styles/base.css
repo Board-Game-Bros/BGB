@@ -1,3 +1,5 @@
+@import url("modules/content-lists.css?v=20260915a");
+
 /* Base: shared parchment shell, header/nav, containers, footer, torch mode */
 :root {
   --frame-border-color: #4e3920;
