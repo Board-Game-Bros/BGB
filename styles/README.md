@@ -29,3 +29,11 @@ This project now uses a page-entry + module architecture.
 
 - Legacy monolithic stylesheet has been archived to `archive/styles_legacy_main.css`.
 - Do not re-link archived files from HTML.
+
+## Surface hierarchy
+
+- Page shells and content panels are borderless. Avoid adding nested decorative frames.
+- Separate large sections with spacing and headings; separate cards with warm surface colors and diffuse shadows.
+- Use tinted backgrounds for nested metadata, badges, and notes, keeping their contrast in torch mode.
+- Preserve functional focus outlines, input boundaries, checkboxes, and meaningful list separators.
+- Version local stylesheet imports and page entry URLs together when shared styles change; dynamic Arkham entries also need the bootstrap script version refreshed.

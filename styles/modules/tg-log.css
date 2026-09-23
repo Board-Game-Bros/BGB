@@ -42,7 +42,7 @@
 
 .session-status li {
   background: rgba(255, 248, 230, 0.65);
-  border: 2px solid rgba(58, 45, 26, 0.55);
+  border: 0;
   border-radius: 10px;
   padding: 10px 12px;
   line-height: 1.55;
@@ -57,7 +57,7 @@
 .session-notes {
   margin-top: 12px;
   background: rgba(255, 248, 230, 0.55);
-  border: 2px solid rgba(58, 45, 26, 0.45);
+  border: 0;
   border-radius: 10px;
   padding: 12px;
 }
@@ -90,7 +90,7 @@
 .tg-block {
   margin-top: 12px;
   padding: 14px;
-  border: 2px solid rgba(58, 45, 26, 0.58);
+  border: 0;
   border-radius: 12px;
   background: rgba(233, 223, 196, 0.40);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
@@ -103,7 +103,7 @@
 .tg-menhir-head,
 .tg-menhir-row,
 .tg-menhir-cell {
-  border: 2px solid var(--tg-border);
+  border: 0;
   background: var(--tg-fill);
   box-shadow: var(--tg-shadow);
   transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;

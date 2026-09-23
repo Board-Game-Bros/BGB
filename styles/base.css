@@ -1,4 +1,4 @@
-@import url("modules/content-lists.css?v=20260915a");
+@import url("modules/content-lists.css?v=20260923soft");
 
 /* Base: shared parchment shell, header/nav, containers, footer, torch mode */
 :root {
@@ -12,7 +12,8 @@
   --gold-2: #ddb777;
   --gold-3: #a87b3e;
   --shadow-deep: 0 22px 48px rgba(21, 13, 7, 0.34);
-  --shadow-panel: 0 12px 28px rgba(34, 22, 11, 0.2);
+  --shadow-panel: 0 12px 30px rgba(34, 22, 11, 0.12);
+  --shadow-soft: 0 6px 18px rgba(34, 22, 11, 0.08);
   --radius-lg: 20px;
   --radius-md: 14px;
   --radius-sm: 10px;
@@ -88,7 +89,6 @@ header {
   text-align: center;
   border-bottom: 1px solid rgba(237, 202, 142, 0.32);
   box-shadow:
-    inset 0 -1px 0 rgba(255, 235, 196, 0.08),
     0 18px 36px rgba(0, 0, 0, 0.3);
 }
 
@@ -169,7 +169,7 @@ nav a {
   font-weight: 900;
   font-size: 1.2rem;
   border-radius: 999px;
-  border: 1px solid rgba(247, 223, 171, 0.18);
+  border: 0;
   background:
     linear-gradient(180deg, rgba(255, 233, 190, 0.05) 0%, rgba(255, 233, 190, 0.01) 100%);
   text-shadow:
@@ -192,7 +192,6 @@ nav a[aria-current="page"] {
   background:
     linear-gradient(180deg, rgba(255, 220, 140, 0.16) 0%, rgba(255, 206, 116, 0.08) 100%);
   box-shadow:
-    0 0 0 1px rgba(255, 226, 170, 0.1),
     0 8px 20px rgba(20, 12, 7, 0.24),
     inset 0 1px 0 rgba(255, 241, 208, 0.16);
   transform: translateY(-1px);
@@ -214,23 +213,13 @@ nav a:focus-visible {
   position: relative;
   background:
     linear-gradient(180deg, rgba(255, 247, 228, 0.95) 0%, rgba(242, 228, 197, 0.93) 100%);
-  border: 5px solid var(--frame-border-color);
+  border: 0;
   border-radius: 24px;
   box-shadow: var(--shadow-deep);
 }
 
 .container::before {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border-radius: 18px;
-  border: 2px solid rgba(237, 202, 142, 0.88);
-  box-shadow:
-    inset 0 0 0 1px rgba(77, 57, 30, 0.34),
-    inset 0 18px 28px rgba(255, 250, 240, 0.32),
-    inset 0 -18px 28px rgba(110, 82, 44, 0.08);
-  pointer-events: none;
-  z-index: 0;
+  content: none;
 }
 
 .container::after {
@@ -248,7 +237,7 @@ nav a:focus-visible {
 
 .section-title {
   font-size: clamp(2rem, 3vw, 2.75rem);
-  border-bottom: 4px solid var(--frame-border-color);
+  border-bottom: 0;
   padding-bottom: 6px;
   margin-bottom: 20px;
   text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.24);
@@ -273,14 +262,13 @@ nav a:focus-visible {
   padding: 11px 20px;
   border-radius: 999px;
   text-decoration: none;
-  border: 2px solid #6a4d29;
+  border: 0;
   background:
     linear-gradient(180deg, #f8ecd0 0%, #e4c68f 100%);
   color: #2f2213;
   font-weight: 700;
   letter-spacing: 0.24px;
   box-shadow:
-    0 3px 0 rgba(58, 45, 26, 0.44),
     0 10px 20px rgba(0, 0, 0, 0.14);
   transition:
     background 0.22s ease,
@@ -296,7 +284,6 @@ nav a:focus-visible {
   border-color: #7c5a31;
   transform: translateY(-2px);
   box-shadow:
-    0 3px 0 rgba(58, 45, 26, 0.48),
     0 14px 24px rgba(0, 0, 0, 0.16);
 }
 
@@ -347,7 +334,7 @@ footer::before {
   width: 48px;
   height: 48px;
   background: rgba(49, 34, 17, 0.78);
-  border: 2px solid #e6c27a;
+  border: 0;
   border-radius: 50%;
   backdrop-filter: blur(4px);
   padding: 7px;
@@ -430,12 +417,7 @@ body.torch-mode a.pill-btn[href$=".pdf"] {
   }
 
   .container::before {
-    inset: 8px;
-  }
-
-  .container::after {
-    content: none;
-  }
+  content: none;
 }
 
 @media (max-width: 720px) {
@@ -464,7 +446,7 @@ body.torch-mode a.pill-btn[href$=".pdf"] {
   .container {
     margin: 18px auto 34px;
     padding: 20px 16px 22px;
-    border-width: 4px;
+    border-width: 0;
     border-radius: 18px;
   }
 

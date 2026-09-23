@@ -1,6 +1,6 @@
-@import url("../base.css?v=20260915lists");
-@import url("../modules/cards.css");
-@import url("../modules/banner-title.css");
+@import url("../base.css?v=20260923soft");
+@import url("../modules/cards.css?v=20260923soft");
+@import url("../modules/banner-title.css?v=20260923soft");
 @import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English+SC&display=swap");
 
 /* Page: library.html */
@@ -15,14 +15,14 @@ nav a {
 }
 
 .collection-category {
-  margin: 30px 0 40px;
+  margin: 36px 0 48px;
 }
 
 .category-title {
   margin: 0 0 16px;
   font-size: 1.75rem;
   letter-spacing: 0.5px;
-  border-bottom: 2px solid rgba(58, 45, 26, 0.28);
+  border-bottom: 0;
   padding-bottom: 10px;
 }
 
@@ -59,7 +59,7 @@ nav a {
   align-items: center;
   justify-content: center;
   border-style: dashed;
-  border-width: 3px;
+  border-width: 0;
   border-color: rgba(58, 45, 26, 0.45);
   color: rgba(58, 45, 26, 0.7);
   font-size: 1.05rem;
