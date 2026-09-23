@@ -16,11 +16,19 @@
         {
           "label": "Gamefound",
           "href": "https://gamefound.com/",
-          "external": true
+          "external": true,
+          "iconSrc": "/assets/news/gamefound-icon.png"
         },
         {
           "label": "Archon Studio",
           "href": "https://archon-studio.com/",
+          "external": true,
+          "iconSrc": "/assets/news/archon-studio-icon.png"
+        },
+        {
+          "label": "Heroes of Might and Magic III",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/355326/heroes-of-might-and-magic-iii-the-board-game",
           "external": true
         }
       ],
