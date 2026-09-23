@@ -4,6 +4,31 @@
   "layout": "news",
   "items": [
     {
+      "kicker": "Crowdfunding",
+      "date": "September 22, 2026",
+      "title": "Heroes of Might and Magic III: The Board Game - Factory, Bulwark & Forge Expansions",
+      "imageSrc": "/assets/news/heroes-iii-factory-bulwark-forge.png",
+      "text": "Proud to be the 2,755th backer on Gamefound for Heroes of Might and Magic III: The Board Game - Factory, Bulwark & Forge Expansions.",
+      "detail": "Backed the latest Heroes III board game campaign from Archon Studio, featuring the Factory, Bulwark, and Forge expansions.",
+      "statLabel": "Backer",
+      "statValue": "2,755",
+      "tags": [
+        {
+          "label": "Gamefound",
+          "href": "https://gamefound.com/",
+          "external": true
+        },
+        {
+          "label": "Archon Studio",
+          "href": "https://archon-studio.com/",
+          "external": true
+        }
+      ],
+      "href": "https://gamefound.com/en/projects/archon-studio/heroes-of-might-and-magic-iii-the-board-game-factory-bulwark-forge-expansions",
+      "linkLabel": "View Campaign",
+      "external": true
+    },
+    {
       "kicker": "Announcement",
       "date": "August 10, 2026",
       "title": "Ark Nova World Championship — Coming in 2027",
