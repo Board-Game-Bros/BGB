@@ -1,0 +1,8 @@
+Generated with the built-in image_gen tool on 2026-09-24.
+Used as the shared section-heading background in styles/modules/banner-title.css.
+The PNG preserves the generated transparency; heading text is rendered in HTML.
+
+Use case: stylized-concept
+Asset type: production website section-heading background, reusable transparent PNG.
+Create ONE elegant medieval horizontal textile ribbon banner, isolated on a genuinely transparent background. Very wide horizontal silhouette, roughly 5.5:1 width to height; let the object fill the canvas with only tiny transparent margins. Front-facing straight flat broad central ribbon, deep oxblood/burgundy woven velvet, muted antique gold embroidered edging and very restrained small foliate gold embroidery ONLY on the far left and right ends. Short folded swallowtail ribbon ends behind the main face on BOTH sides, understated realistic fabric folds at the ends. Main central 75 percent completely blank and even dark burgundy so cream HTML text can be placed on top. Straight horizontal upper and lower edges of main face; no perspective angle, no arched ribbon. Premium vintage fantasy board-game manual illustration, tactile subtly weathered fabric, warm restrained palette harmonious with parchment cream and dark brown website. Delicate edge stitching not a thick solid frame. Soft dimensional shading within fabric, minimal external shadow.
+No letters, no words, no symbols, no crest, no shield, no pole, no background scene, no mockup, no watermark. Actual transparent alpha background, not checkerboard drawn into image. Output a single usable asset, not a sheet of variants.

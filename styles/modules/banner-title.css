@@ -1,67 +1,52 @@
-/* Module: banner-style section title for non-AHLCG pages */
+/* Shared textile banner: generated artwork, accessible live heading text. */
 .section-title {
-  display: inline-block;
+  display: inline-grid;
+  place-items: center;
   position: relative;
+  isolation: isolate;
   width: fit-content;
-  max-width: calc(100% - 46px);
-  margin-bottom: 26px;
-  padding: 14px 72px 14px 22px;
+  min-width: min(360px, 100%);
+  max-width: 100%;
+  min-height: 116px;
+  margin-bottom: 28px;
+  padding: 30px 88px 38px;
   border: 0;
-  border-radius: 14px;
-  background: linear-gradient(180deg, #f2ddae 0%, #d6af71 100%);
-  color: #382816;
-  line-height: 1.15;
-  text-shadow:
-    0 1px 1px rgba(0, 0, 0, 0.42),
-    0 0 10px rgba(255, 232, 184, 0.1);
-  filter:
-    drop-shadow(0 14px 16px rgba(41, 27, 12, 0.2))
-    drop-shadow(0 3px 0 rgba(73, 52, 27, 0.28));
-}
-
-.section-title::before,
-.section-title::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%) rotate(45deg);
-  pointer-events: none;
+  border-radius: 0;
+  background: none;
+  color: #fff0cc;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.22;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 3px rgba(30, 5, 7, 0.8);
+  filter: none;
 }
 
 .section-title::before {
-  right: -25px;
-  width: 46px;
-  height: 46px;
-  border-radius: 10px;
-  background: #6b4e2b;
-  box-shadow: 0 6px 12px rgba(41, 27, 12, 0.22);
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* The original transparent canvas includes generous space above/below
+     the cloth. Scale that space away without modifying its alpha channel.
+     Align the fabric face (not the full canvas or hanging tails) with the
+     optical center of the heading; 50% places the face above the text. */
+  background: url("../../assets/misc/medieval_burgundy_banner.png") center 40% / 100% 190% no-repeat;
+  filter: drop-shadow(0 7px 7px rgba(41, 18, 12, 0.22));
+  pointer-events: none;
 }
 
 .section-title::after {
-  right: -20px;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: linear-gradient(180deg, #f2ddae 0%, #d6af71 100%);
+  content: none;
 }
 
 @media (max-width: 720px) {
   .section-title {
-    max-width: calc(100% - 24px);
-    padding: 12px 48px 12px 16px;
-  }
-
-  .section-title::before {
-    right: -15px;
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-  }
-
-  .section-title::after {
-    right: -12px;
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
+    min-width: min(300px, 100%);
+    min-height: 96px;
+    padding: 26px 52px 32px;
+    margin-bottom: 22px;
+    font-size: clamp(1.25rem, 5.2vw, 1.8rem);
   }
 }
