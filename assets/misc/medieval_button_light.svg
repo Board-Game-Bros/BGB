@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="72" viewBox="0 0 240 72">
+<defs>
+ <linearGradient id="metal" x2="0" y2="1"><stop stop-color="#f0dba0"/><stop offset=".24" stop-color="#b78e49"/><stop offset=".55" stop-color="#69502d"/><stop offset=".78" stop-color="#b99250"/><stop offset="1" stop-color="#e5c486"/></linearGradient>
+ <linearGradient id="face" x2="0" y2="1"><stop stop-color="#e8d4a5"/><stop offset=".48" stop-color="#d3b77e"/><stop offset="1" stop-color="#bf975e"/></linearGradient>
+ <linearGradient id="leaf" x2="1" y2="1"><stop stop-color="#fff0b9"/><stop offset=".4" stop-color="#d5ae66"/><stop offset="1" stop-color="#7b552b"/></linearGradient>
+ <g id="corner" fill="url(#leaf)" stroke="#74512b" stroke-width=".7">
+  <path d="M5 25C6 15 12 7 28 5C20 9 16 13 14 19C12 24 9 26 5 25Z"/>
+  <path d="M9 16C5 13 5 8 6 4C11 6 14 8 13 13Z"/>
+  <path d="M14 12C14 6 20 3 24 3C23 8 20 12 14 12Z"/>
+  <path d="M7 23C13 17 20 16 24 18C19 23 13 25 7 23Z"/>
+  <path d="M9 24Q12 12 25 7" fill="none" stroke="#f6df9e"/>
+  <circle cx="8" cy="8" r="2.3" fill="#e4c487"/>
+ </g>
+ <pattern id="engraving" width="12" height="6" patternUnits="userSpaceOnUse"><path d="M0 4Q3 0 6 4T12 4" fill="none" stroke="#e3bf78" stroke-width=".8"/><path d="M0 5Q3 1 6 5T12 5" fill="none" stroke="#4d3622" stroke-width=".6"/></pattern>
+</defs>
+<path d="M15 1H225L239 15V57L225 71H15L1 57V15Z" fill="#38281c"/>
+<path d="M16 3H224L237 16V56L224 69H16L3 56V16Z" fill="url(#metal)" stroke="#b69352"/>
+<path d="M23 9H217Q220 15 231 20V52Q220 57 217 63H23Q20 57 9 52V20Q20 15 23 9Z" fill="url(#face)" stroke="#6b4a26" stroke-width="1.4"/>
+<path d="M29 12H211M29 60H211" stroke="#f7dfaa" stroke-opacity=".55" fill="none"/>
+<path d="M30 3H210V8H30ZM30 64H210V69H30Z" fill="url(#engraving)"/>
+<use href="#corner"/>
+<use href="#corner" transform="translate(240 0) scale(-1 1)"/>
+<use href="#corner" transform="translate(0 72) scale(1 -1)"/>
+<use href="#corner" transform="translate(240 72) scale(-1 -1)"/>
+<path d="M5 29Q12 36 5 43M235 29Q228 36 235 43" fill="none" stroke="#e2bf7c" stroke-width="1.1"/>
+</svg>

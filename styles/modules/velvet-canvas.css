@@ -1,0 +1,101 @@
+/* Main canvas only: textile grain + repeating gold embroidery.
+   Content panels keep their own reading palette, independent of the cloth. */
+body .container,
+body.torch-mode .container {
+  --ink: #fff0d4;
+  --ink-soft: #efddc3;
+  --list-rule: rgba(221, 183, 119, 0.42);
+  color: var(--ink);
+  background:
+    linear-gradient(110deg, rgba(40, 22, 28, 0.56), rgba(54, 28, 35, 0.38) 48%, rgba(30, 17, 24, 0.62)),
+    url("../../assets/misc/burgundy_velvet_texture.png") repeat;
+  background-size: auto, 520px 520px;
+  box-shadow: 0 22px 48px rgba(21, 8, 12, 0.36), inset 0 0 44px rgba(17, 4, 9, 0.35);
+  padding: 36px 40px 40px;
+}
+
+body.torch-mode .container {
+  background:
+    linear-gradient(110deg, rgba(24, 16, 22, 0.7), rgba(42, 22, 30, 0.58) 48%, rgba(20, 12, 19, 0.74)),
+    url("../../assets/misc/burgundy_velvet_texture.png") repeat;
+  background-size: auto, 520px 520px;
+}
+
+body .container::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 26px solid transparent;
+  border-image: url("../../assets/misc/antique_gold_embroidered_frame.png") 14% / 26px / 0 round;
+  pointer-events: none;
+  opacity: 0.78;
+}
+
+/* Warm reading surfaces isolate body copy from the dark textile. */
+body:not(.torch-mode) :is(.card, .record-card, .campaign-group, .upgrade-card, .news-card) {
+  --ink: #362715;
+  --ink-soft: #51402c;
+  --list-rule: rgba(145, 108, 55, 0.42);
+  color: var(--ink);
+}
+
+body:not(.torch-mode) :is(.record-card, .campaign-group, .upgrade-card) {
+  background: linear-gradient(180deg, #f4e8ce, #e9d7b5);
+}
+
+body.torch-mode :is(.record-card, .campaign-group, .upgrade-card) {
+  --ink: #f5e2be;
+  --ink-soft: #efddc3;
+  color: var(--ink);
+  background: linear-gradient(180deg, #49382a, #382b23);
+}
+
+/* These labels live directly on the cloth, outside the reading cards. */
+body .news-year-summary,
+body .news-year-count,
+body.torch-mode .news-year-summary,
+body.torch-mode .news-year-count {
+  color: #f3e1c4;
+}
+
+body .news-year-current,
+body.torch-mode .news-year-current {
+  color: #e1edcc;
+  background: #3c513c;
+}
+
+body .news-year-summary::after,
+body.torch-mode .news-year-summary::after {
+  background: rgba(255, 233, 191, 0.14);
+}
+
+body .news-year-summary:focus-visible {
+  outline-color: #efcf91;
+}
+
+body .category-title,
+body .page-title {
+  color: #fff0d4;
+  text-shadow: 0 2px 4px rgba(25, 6, 12, 0.45);
+}
+
+@media (max-width: 900px) {
+  body .container,
+  body.torch-mode .container {
+    padding: 30px 28px 32px;
+  }
+}
+
+@media (max-width: 720px) {
+  body .container,
+  body.torch-mode .container {
+    padding: 24px 20px 28px;
+  }
+
+  body .container::before {
+    inset: 5px;
+    border-width: 16px;
+    border-image-width: 16px;
+    opacity: 0.72;
+  }
+}

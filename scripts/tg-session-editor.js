@@ -791,7 +791,7 @@
       doneBtn.disabled = locked;
       doneBtn.addEventListener("click", stopEditSession);
 
-      const deleteBtn = el("button", "tg-add-btn", "Delete Session");
+      const deleteBtn = el("button", "tg-add-btn tg-delete-session", "Delete Session");
       deleteBtn.type = "button";
       deleteBtn.disabled = locked;
       deleteBtn.addEventListener("click", deleteEditingSession);

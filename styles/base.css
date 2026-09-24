@@ -416,8 +416,6 @@ body.torch-mode a.pill-btn[href$=".pdf"] {
     padding: 24px 20px 26px;
   }
 
-  .container::before {
-  content: none;
 }
 
 @media (max-width: 720px) {

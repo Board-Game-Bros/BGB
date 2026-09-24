@@ -1,0 +1,135 @@
+/* Cast-bronze relief controls: acanthus corners and engraved rims drawn as SVG
+   plates (assets/misc/medieval_button_*.svg), nine-sliced so the ornament keeps
+   its size on wide links and compact editor controls alike. The plates are
+   chamfered, so depth comes from drop-shadow rather than a rectangular box-shadow. */
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character) {
+  --plate-shadow: drop-shadow(0 2px 2px rgba(24, 15, 8, 0.32)) drop-shadow(0 4px 6px rgba(24, 15, 8, 0.16));
+  border: 1px solid transparent;
+  border-image: url("../../assets/misc/medieval_button_light.svg") 24 30 fill / 14px 20px / 0 stretch;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #352618;
+  -webkit-text-fill-color: currentColor;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(255, 241, 202, 0.4);
+  filter: var(--plate-shadow);
+  transition: filter 150ms ease, transform 150ms ease;
+  cursor: pointer;
+}
+
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link) {
+  min-height: 50px;
+  padding: 14px 26px;
+  text-align: center;
+}
+
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character):hover:not(:disabled) {
+  filter: brightness(1.1) var(--plate-shadow);
+  transform: translateY(-1px);
+}
+
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character):active:not(:disabled) {
+  filter: brightness(0.94) drop-shadow(0 1px 1px rgba(24, 15, 8, 0.3));
+  transform: translateY(1px);
+}
+
+/* Dark bronze navigation; the current page is a light brass plate. */
+html body nav a[href]:any-link {
+  border-image-source: url("../../assets/misc/medieval_button_dark.svg");
+  min-height: 52px;
+  padding-inline: 24px;
+  color: #f4e3ba;
+  text-shadow: 0 1px 2px #2b2118;
+}
+
+html body nav a[href][aria-current="page"],
+html body .subnav a[href].is-active {
+  border-image-source: url("../../assets/misc/medieval_button_light.svg");
+  color: #352618;
+  text-shadow: 0 1px 0 rgba(255, 244, 213, 0.5);
+}
+
+/* Secondary and read-only controls share the dark plate. */
+html body button:is(.upgrade-btn-secondary, [data-action="cancel-edit"], .customizable-inline-chip.is-inherited, .torch-btn):not(:disabled) {
+  border-image-source: url("../../assets/misc/medieval_button_dark.svg");
+  color: #f4e3ba;
+  text-shadow: 0 1px 1px #2c2018;
+}
+
+html body button.customizable-inline-chip.is-inherited { cursor: default; }
+
+html body button:is(.upgrade-btn-danger, .tg-inline-del, .draft-card-remove, .edit-card-remove, .tg-delete-session):not(:disabled) {
+  border-image-source: url("../../assets/misc/medieval_button_danger.svg");
+  color: #fff0d5;
+  text-shadow: 0 1px 1px #502b21;
+}
+
+html body button:is(.tg-status-slot.is-owned, .customizable-inline-chip.is-upgrade, [aria-pressed="true"], .card-autocomplete-item.is-active) {
+  border-image-source: url("../../assets/misc/medieval_button_selected.svg");
+  color: #fff2ce;
+  text-shadow: 0 1px 1px #293526;
+}
+
+html body :is(button, input[type="button"], input[type="submit"], input[type="reset"]):disabled,
+html body [aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  filter: saturate(0.35);
+}
+
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"], summary):focus-visible {
+  outline: 3px solid #ffe1a0;
+  outline-offset: 4px;
+}
+
+/* Sizing: standard actions get room for the corners; compact controls keep
+   their original footprint with a finer rim. */
+html body button:is(.upgrade-btn, .tg-add-btn, .customizable-edit-btn) {
+  min-height: 40px;
+  padding: 9px 20px;
+}
+
+html body button.story-weakness-summary:not(:disabled) { padding: 12px 18px; }
+
+html body button:is(.trauma-value, .tg-inline-del, .draft-card-remove, .edit-card-remove, .customizable-inline-chip, .customizable-overlay-close, .tg-status-slot, .torch-btn),
+html body .story-weakness-stepper button {
+  border-image-width: 6px 7px;
+}
+
+html body button:is(.trauma-value, .customizable-inline-chip, .customizable-overlay-close) { padding: 0 6px; }
+html body button.tg-inline-del { padding: 3px 9px; }
+html body .story-weakness-stepper button:focus-visible { outline-offset: -3px; }
+html body .edit-gate { flex-wrap: wrap; }
+
+html body .news-year-summary::after {
+  border: 1px solid transparent;
+  border-image: url("../../assets/misc/medieval_button_light.svg") 24 30 fill / 7px / 0 stretch;
+  border-radius: 0;
+  background: transparent;
+  color: #352618;
+}
+
+@media (max-width: 720px) {
+  html body nav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    padding-inline: 8px;
+  }
+
+  html body nav a[href]:any-link {
+    min-width: 0;
+    min-height: 46px;
+    padding-inline: 9px;
+    border-image-width: 12px;
+    font-size: clamp(0.72rem, 3.6vw, 0.94rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button) {
+    transition: none;
+  }
+}

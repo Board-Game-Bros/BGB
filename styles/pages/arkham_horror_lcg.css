@@ -1,10 +1,12 @@
-@import url("../base.css?v=20260923soft");
+@import url("../base.css?v=20260924velvet");
 @import url("../modules/banner-title.css?v=20260924banner2");
 @import url("../modules/cards.css?v=20260923soft");
 @import url("../modules/investigator-cards.css?v=20260923soft");
 @import url("../modules/campaign.css?v=20260923soft");
 @import url("../modules/subnav.css?v=20260923soft");
 @import url("https://fonts.googleapis.com/css2?family=Eater&family=IM+Fell+English+SC&family=Uncial+Antiqua&display=swap");
+@import url("../modules/velvet-canvas.css?v=20260924velvet");
+@import url("../modules/medieval-buttons.css?v=20260924relief2");
 
 /* Page: arkham_horror_lcg.html */
 body {

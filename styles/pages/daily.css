@@ -1,7 +1,9 @@
-@import url("../base.css?v=20260923soft");
+@import url("../base.css?v=20260924velvet");
 @import url("../modules/photo-grid.css?v=20260923soft");
 @import url("../modules/banner-title.css?v=20260924banner2");
 @import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English+SC&display=swap");
+@import url("../modules/velvet-canvas.css?v=20260924velvet");
+@import url("../modules/medieval-buttons.css?v=20260924relief2");
 
 /* Page: daily.html */
 body {

@@ -1,0 +1,5 @@
+Generated with the built-in image_gen tool on 2026-09-24.
+
+Use case: stylized-concept
+Asset type: square nine-slice website frame texture, actual transparent PNG background.
+One elegant thin rectangular frame made only of muted antique gold embroidery thread, isolated on transparent background. Front-on orthographic view. Square image 1024x1024. Outer bounds of embroidery at image edges (very small 6px margin), all decorative details contained within outermost 90 pixels. Empty fully transparent central square, no cloth backing anywhere. Four restrained rounded right-angle corners embroidered with tiny oak leaves. Straight edge runs consist of two slender braided gold threads and tiny diagonal stitches, regular repeating small pattern, identical thickness on all four sides, designed for CSS border-image slicing and repeating edge segments. Delicate textile fiber detail, tarnished warm champagne brass and ochre gold, low-key elegant medieval tapestry craftsmanship, not shiny metal, not a thick picture frame. No writing, no objects, no crest, no ribbon tails, no thick bars, no background, no drawn checkerboard. Frame occupies whole canvas.
