@@ -41,7 +41,7 @@
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20260927banner";
+  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20260927tapestry";
   document.head.appendChild(stylesheet);
 
   const root = document.createElement("div");

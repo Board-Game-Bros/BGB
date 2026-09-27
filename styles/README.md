@@ -56,7 +56,9 @@ This project now uses a page-entry + module architecture.
 
 ## Navigation banner
 
-- `modules/nav-banner.css` hangs the sticky navigation as a cloth banner from a cast-bronze rod: `nav::before` is the cloth (stitched hem, gold trim, thread fringe), `nav::after` is the rod. The `nav` element itself is transparent.
-- The rod is `assets/misc/medieval_banner_rod.svg` (ball finials and ringed collars), nine-sliced at 47px so only the cylinder stretches; its metal gradients match the button plates.
+- `modules/nav-banner.css` hangs the sticky navigation as a cloth banner from a cast-bronze rod: `nav::before` is the generated damask cloth (acanthus embroidery, braided trim, bullion fringe and corner tassels), `nav::after` is the rod. The `nav` element itself is transparent.
+- The rod is `assets/misc/medieval_banner_rod_generated.png`, created with imagegen (aged bronze, Gothic leaf finials). CSS image slices discard the transparent canvas margins and preserve each finial while stretching only the shaft. The original SVG is retained as a previous version.
 - The rod replaces the header's bottom rule and highlight band; don't reintroduce horizontal stripes between header and nav.
 - Size via `--rod-height`, `--cloth-width` and `--fringe` on `nav`.
+
+- `assets/misc/medieval_nav_tapestry.png` is the imagegen source; its exact prompt is in the adjacent `.prompt.txt`. `medieval_nav_tapestry_slice.svg` embeds that PNG in a tight viewport, preserving its alpha. Nine-slice edge repetition keeps the braid and individual fringe threads proportional across screen widths.
