@@ -53,3 +53,10 @@ This project now uses a page-entry + module architecture.
 - The plates are chamfered, so use `filter: drop-shadow()` for depth, not `box-shadow` (a rectangular shadow shows at the cut corners).
 - Compact controls keep their original dimensions with a thinner rim (`border-image-width: 6px 7px`).
 - Keep button surfaces separate from the velvet canvas; do not reuse the cloth texture for buttons.
+
+## Navigation banner
+
+- `modules/nav-banner.css` hangs the sticky navigation as a cloth banner from a cast-bronze rod: `nav::before` is the cloth (stitched hem, gold trim, thread fringe), `nav::after` is the rod. The `nav` element itself is transparent.
+- The rod is `assets/misc/medieval_banner_rod.svg` (ball finials and ringed collars), nine-sliced at 47px so only the cylinder stretches; its metal gradients match the button plates.
+- The rod replaces the header's bottom rule and highlight band; don't reintroduce horizontal stripes between header and nav.
+- Size via `--rod-height`, `--cloth-width` and `--fringe` on `nav`.

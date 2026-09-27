@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="40" viewBox="0 0 400 40">
+<!-- Cast-bronze banner rod: ball finials and ringed collars at each end, plain
+     cylinder between. Nine-sliced at 46px so only the cylinder stretches. -->
+<defs>
+ <linearGradient id="rod" x2="0" y2="1"><stop stop-color="#f3e1ab"/><stop offset=".26" stop-color="#d1a95f"/><stop offset=".58" stop-color="#6b502c"/><stop offset=".84" stop-color="#a8834a"/><stop offset="1" stop-color="#d9b979"/></linearGradient>
+ <linearGradient id="collar" x2="0" y2="1"><stop stop-color="#f0dba0"/><stop offset=".24" stop-color="#b78e49"/><stop offset=".55" stop-color="#5f4527"/><stop offset=".8" stop-color="#b99250"/><stop offset="1" stop-color="#e5c486"/></linearGradient>
+ <radialGradient id="ball" cx=".36" cy=".3" r=".75"><stop stop-color="#fff2c4"/><stop offset=".22" stop-color="#e2bf7a"/><stop offset=".6" stop-color="#8e6a37"/><stop offset="1" stop-color="#3f2d18"/></radialGradient>
+ <g id="finial">
+  <circle cx="17" cy="20" r="15.5" fill="url(#ball)" stroke="#3a2a17" stroke-width="1"/>
+  <ellipse cx="12" cy="13" rx="5" ry="3" fill="#fff6d6" opacity=".55"/>
+  <rect x="31" y="14.5" width="4" height="11" fill="url(#rod)" stroke="#3a2a17" stroke-width=".8"/>
+  <rect x="34.5" y="7" width="8" height="26" rx="2" fill="url(#collar)" stroke="#3a2a17" stroke-width="1"/>
+  <path d="M37.2 7.5V32.5M39.8 7.5V32.5" stroke="#4a361e" stroke-width=".8" opacity=".7"/>
+  <rect x="42.5" y="10" width="4" height="20" rx="1" fill="url(#collar)" stroke="#3a2a17" stroke-width=".8"/>
+ </g>
+</defs>
+<rect x="45" y="12" width="310" height="16" fill="url(#rod)"/>
+<path d="M45 12H355M45 28H355" stroke="#3a2a17" stroke-width="1"/>
+<use href="#finial"/>
+<use href="#finial" transform="translate(400 0) scale(-1 1)"/>
+</svg>
