@@ -47,12 +47,10 @@ This project now uses a page-entry + module architecture.
 
 ## Buttons
 
-- `modules/medieval-buttons.css` gives every control (navigation, action links, native buttons, dynamically created editor controls) a cast-bronze relief plate: acanthus-leaf corners, engraved rims, and a chamfered outline.
-- Plates are hand-drawn SVGs in `assets/misc/medieval_button_{light,dark,danger,selected}.svg`, applied as nine-slice `border-image` so the corners keep their size on wide links and 23px editor controls alike. They share one frame and differ only in the face gradient; edit all four together.
-- Light brass is the default and the current page; dark bronze is navigation, secondary/cancel, read-only chips, and the torch toggle; copper-red is destructive; green is selected/owned. Disabled controls are desaturated.
-- The plates are chamfered, so use `filter: drop-shadow()` for depth, not `box-shadow` (a rectangular shadow shows at the cut corners).
-- Compact controls keep their original dimensions with a thinner rim (`border-image-width: 6px 7px`).
-- Keep button surfaces separate from the velvet canvas; do not reuse the cloth texture for buttons.
+- `modules/medieval-buttons.css` uses the imagegen symmetric botanical cartouche in `assets/misc/medieval_cartouche_button.png`; its prompt is in the adjacent `.prompt.txt`.
+- `medieval_cartouche_button_slice.svg` retains the source alpha and provides a tight viewport. Horizontal slicing preserves the mirrored curved botanical ends on wide action links.
+- Wine ink and an underline identify the active navigation item; red ink marks destructive actions; green underlined text marks selected controls. Disabled controls are muted. Compact controls retain their original dimensions and portrait buttons retain their artwork.
+- Light mode uses ivory with dark ink; torch mode uses `medieval_cartouche_button_dark.png` with cream ink. The two theme variants retain the same silhouette. Mobile navigation uses two columns to preserve the rounded ornament instead of compressing it into pointed slivers. The previous angular bronze SVG assets remain available as earlier versions.
 
 ## Navigation banner
 
