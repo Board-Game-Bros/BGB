@@ -53,7 +53,7 @@ html body > footer::after {
   transform: translateX(-50%);
   width: 216px;
   height: 72px;
-  background: url("../../assets/misc/medieval_footer_crest_bgb_heraldic.png") center / contain no-repeat;
+  background: url("../../assets/misc/medieval_footer_crest_bgb_calligraphy.png") center / contain no-repeat;
   filter: var(--shell-metal-filter);
   pointer-events: none;
 }
