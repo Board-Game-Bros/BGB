@@ -51,6 +51,7 @@ This project now uses a page-entry + module architecture.
 - `medieval_cartouche_button_slice.svg` retains the source alpha and provides a tight viewport. Horizontal slicing preserves the mirrored curved botanical ends on wide action links.
 - Wine ink and an underline identify the active navigation item; red ink marks destructive actions; green underlined text marks selected controls. Disabled controls are muted. Compact controls retain their original dimensions and portrait buttons retain their artwork.
 - Light mode uses ivory with dark ink; torch mode uses `medieval_cartouche_button_dark.png` with cream ink. The two theme variants retain the same silhouette. Mobile navigation uses two columns to preserve the ornament instead of compressing it into pointed slivers. The previous angular bronze SVG assets remain available as earlier versions.
+- The fixed torch toggle uses generated lit and extinguished medallion art in `assets/icon/medieval-torch-lit.png` and `assets/icon/medieval-torch-unlit.png`; torch mode shows the unlit state and exposes an “Extinguish the torch” label.
 
 ## Navigation banner
 

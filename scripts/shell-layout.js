@@ -49,10 +49,12 @@
     btn.id = "torch-toggle";
     btn.className = "torch-btn";
     btn.setAttribute("type", "button");
+    btn.setAttribute("aria-label", "Light the torch to enter torch mode");
+    btn.title = "Light the torch";
 
     const img = document.createElement("img");
     img.src = cfg.torchIconSrc || "/assets/icon/torch.svg";
-    img.alt = "Torch Mode";
+    img.alt = "Lit medieval torch";
     btn.appendChild(img);
     return btn;
   };

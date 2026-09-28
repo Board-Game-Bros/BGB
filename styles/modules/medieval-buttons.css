@@ -18,7 +18,7 @@ body.torch-mode {
 
 /* Symmetric illuminated cartouche controls. Mirrored botanical ends frame a
    straight, quiet label area; horizontal slices preserve the curved ornaments. */
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn) {
   --cartouche-shadow: drop-shadow(0 2px 2px rgba(24, 15, 8, 0.32)) drop-shadow(0 4px 6px rgba(24, 15, 8, 0.16));
   border: 1px solid transparent;
   border-image: var(--control-art) 0 420 fill / 0 38px / 0 stretch;
@@ -40,12 +40,12 @@ html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link) {
   text-align: center;
 }
 
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character):hover:not(:disabled) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn):hover:not(:disabled) {
   filter: brightness(1.1) var(--cartouche-shadow);
   transform: translateY(-1px);
 }
 
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character):active:not(:disabled) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn):active:not(:disabled) {
   filter: brightness(0.94) drop-shadow(0 1px 1px rgba(24, 15, 8, 0.3));
   transform: translateY(1px);
 }
@@ -90,7 +90,7 @@ html body button:is(.tg-status-slot.is-owned, .customizable-inline-chip.is-upgra
   text-shadow: none;
 }
 
-html body :is(button, input[type="button"], input[type="submit"], input[type="reset"]):disabled,
+html body :is(button, input[type="button"], input[type="submit"], input[type="reset"]):not(.torch-btn):disabled,
 html body [aria-disabled="true"] {
   opacity: 0.65;
   cursor: not-allowed;
@@ -98,7 +98,7 @@ html body [aria-disabled="true"] {
   filter: saturate(0.35);
 }
 
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"], summary):focus-visible {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"], summary):not(.torch-btn):focus-visible {
   outline: 3px solid #ffe1a0;
   outline-offset: 4px;
 }
@@ -152,11 +152,43 @@ html body .news-year-summary::after {
   }
 }
 
-/* The torch glyph needs bronze ink against the light parchment control. */
-html body .torch-btn img {
-  filter: brightness(0.48) sepia(0.6);
+/* Generated medallions keep the torch toggle distinct from ordinary buttons. */
+html body button.torch-btn {
+  width: 84px;
+  height: 84px;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  filter: drop-shadow(0 5px 8px rgba(30, 19, 8, 0.3));
+  transition: transform 180ms ease, filter 180ms ease;
 }
 
-html body.torch-mode .torch-btn img {
-  filter: drop-shadow(0 0 3px rgba(247, 217, 135, 0.35));
+html body button.torch-btn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  content: url("../../assets/icon/medieval-torch-lit.png");
+  transition: transform 180ms ease;
+}
+
+html body.torch-mode button.torch-btn img {
+  content: url("../../assets/icon/medieval-torch-unlit.png");
+}
+
+html body button.torch-btn:hover:not(:disabled) {
+  background: none;
+  box-shadow: none;
+  filter: drop-shadow(0 7px 10px rgba(30, 19, 8, 0.34)) brightness(1.06);
+  transform: translateY(-2px) scale(1.04);
+}
+
+html body button.torch-btn:active:not(:disabled) { transform: translateY(0) scale(0.98); }
+html body button.torch-btn:focus-visible { outline: 3px solid #f5d98e; outline-offset: 3px; }
+
+@media (max-width: 720px) {
+  html body button.torch-btn { width: 70px; height: 70px; }
 }

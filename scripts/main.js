@@ -487,6 +487,18 @@ window.addEventListener("load", () => {
 // 3. Dark Mode Toggle (Medieval Torchlight Theme)
 let torchFlickerTimer = 0;
 
+const updateTorchToggleLabel = () => {
+  const button = document.getElementById("torch-toggle");
+  if (!button) return;
+  const isTorchMode = document.body.classList.contains("torch-mode");
+  button.setAttribute("aria-label", isTorchMode
+    ? "Extinguish the torch and switch to light mode"
+    : "Light the torch and switch to torch mode");
+  button.title = isTorchMode ? "Extinguish the torch" : "Light the torch";
+  const image = button.querySelector("img");
+  if (image) image.alt = isTorchMode ? "Extinguished medieval torch" : "Lit medieval torch";
+};
+
 const startTorchFlicker = () => {
   if (torchFlickerTimer) return;
   torchFlickerTimer = window.setInterval(() => {
@@ -503,12 +515,14 @@ const stopTorchFlicker = () => {
 
 const enableTorchMode = () => {
   document.body.classList.add("torch-mode");
+  updateTorchToggleLabel();
   localStorage.setItem("torchMode", "enabled");
   startTorchFlicker();
 };
 
 const disableTorchMode = () => {
   document.body.classList.remove("torch-mode");
+  updateTorchToggleLabel();
   localStorage.setItem("torchMode", "disabled");
   stopTorchFlicker();
   document.body.style.filter = "brightness(1)";
