@@ -18,7 +18,7 @@ body.torch-mode {
 
 /* Symmetric illuminated cartouche controls. Mirrored botanical ends frame a
    straight, quiet label area; horizontal slices preserve the curved ornaments. */
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value) {
   --cartouche-shadow: drop-shadow(0 2px 2px rgba(24, 15, 8, 0.32)) drop-shadow(0 4px 6px rgba(24, 15, 8, 0.16));
   border: 1px solid transparent;
   border-image: var(--control-art) 0 420 fill / 0 38px / 0 stretch;
@@ -40,12 +40,12 @@ html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link) {
   text-align: center;
 }
 
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn):hover:not(:disabled) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value):hover:not(:disabled) {
   filter: brightness(1.1) var(--cartouche-shadow);
   transform: translateY(-1px);
 }
 
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn):active:not(:disabled) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value):active:not(:disabled) {
   filter: brightness(0.94) drop-shadow(0 1px 1px rgba(24, 15, 8, 0.3));
   transform: translateY(1px);
 }
@@ -109,14 +109,65 @@ html body button:is(.upgrade-btn, .tg-add-btn, .customizable-edit-btn) {
   padding: 14px 24px;
 }
 
-html body button.story-weakness-summary:not(:disabled) { padding: 12px 18px; }
+/* Reserve the full ornamental ends outside the disclosure content. */
+html body button.story-weakness-summary:not(:disabled) {
+  box-sizing: border-box;
+  min-height: 58px;
+  padding: 16px 48px;
+}
 
-html body button:is(.trauma-value, .tg-inline-del, .draft-card-remove, .edit-card-remove, .customizable-inline-chip, .customizable-overlay-close, .tg-status-slot, .torch-btn),
+/* Inline editable numbers need a readable field, not a compressed cartouche. */
+html body button.trauma-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 2px 7px;
+  vertical-align: middle;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-image: none;
+  border-radius: 5px;
+  background: rgba(123, 81, 24, .12);
+  color: var(--control-ink);
+  font-style: normal;
+  line-height: 1.2;
+  text-shadow: none;
+  filter: none;
+  cursor: pointer;
+}
+html body button.trauma-value:hover:not(:disabled) {
+  background: rgba(174, 121, 42, .24);
+}
+html body.torch-mode button.trauma-value {
+  background: rgba(242, 211, 154, .14);
+}
+
+@media (max-width: 600px) {
+  html body button.story-weakness-summary:not(:disabled) {
+    border-image-width: 0 24px;
+    padding: 14px 30px;
+    grid-template-columns: minmax(0, 1fr) 12px;
+    gap: 4px 8px;
+  }
+  html body .story-weakness-summary .story-weakness-total {
+    grid-row: 2;
+    grid-column: 1;
+    justify-self: start;
+  }
+  html body .story-weakness-summary .story-weakness-chevron {
+    grid-row: 1 / 3;
+    grid-column: 2;
+  }
+}
+
+html body button:is(.tg-inline-del, .draft-card-remove, .edit-card-remove, .customizable-inline-chip, .customizable-overlay-close, .tg-status-slot, .torch-btn),
 html body .story-weakness-stepper button {
   border-image-width: 0 9px;
 }
 
-html body button:is(.trauma-value, .customizable-inline-chip, .customizable-overlay-close) { padding: 0 6px; }
+html body button:is(.customizable-inline-chip, .customizable-overlay-close) { padding: 0 6px; }
 html body button.tg-inline-del { padding: 3px 9px; }
 html body .story-weakness-stepper button:focus-visible { outline-offset: -3px; }
 html body .edit-gate { flex-wrap: wrap; }
