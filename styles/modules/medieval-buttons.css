@@ -103,10 +103,10 @@ html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, i
   outline-offset: 4px;
 }
 
-/* Standard labels stay between the ornaments; inline controls stay compact. */
-html body button:is(.upgrade-btn, .tg-add-btn, .customizable-edit-btn) {
+/* Standard labels stay between the 38px ornaments; inline controls stay compact. */
+html body button:is(.upgrade-btn, .tg-add-btn, .tg-new-session-btn, .customizable-edit-btn) {
   min-height: 44px;
-  padding: 14px 24px;
+  padding: 14px 46px;
 }
 
 /* Reserve the full ornamental ends outside the disclosure content. */
@@ -116,32 +116,67 @@ html body button.story-weakness-summary:not(:disabled) {
   padding: 16px 48px;
 }
 
-/* Inline editable numbers need a readable field, not a compressed cartouche. */
-html body button.trauma-value {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 32px;
-  min-height: 32px;
-  padding: 2px 7px;
-  vertical-align: middle;
+/* Inline editable numbers are small parchment seals with a gilt double rim,
+   sized to the text so they sit in the sentence without stretching the line. */
+html body :is(button.trauma-value, input.trauma-input) {
+  --seal-rim:
+    0 0 0 1px #7d5f30,
+    0 0 0 2.5px #dcb86e,
+    0 0 0 3.5px #6a4f28,
+    0 2px 4px 2px rgba(58, 34, 8, 0.22);
+  box-sizing: border-box;
+  height: 1.55em;
+  margin: 0 0.3em;
+  padding: 0;
+  vertical-align: -0.38em;
   border: 0;
-  border-bottom: 1px dashed currentColor;
   border-image: none;
-  border-radius: 5px;
-  background: rgba(123, 81, 24, .12);
-  color: var(--control-ink);
-  font-style: normal;
-  line-height: 1.2;
-  text-shadow: none;
+  background: radial-gradient(circle at 36% 30%, #fdf5df 0%, #eed9aa 55%, #d4b278 100%);
+  box-shadow: var(--seal-rim), inset 0 1px 1px rgba(255, 252, 238, 0.7), inset 0 -2px 3px rgba(125, 88, 36, 0.22);
+  color: var(--control-active);
+  -webkit-text-fill-color: currentColor;
+  font: normal 400 0.92em/1 "Uncial Antiqua", Georgia, serif;
+  font-variant: normal;
+  font-variant-numeric: lining-nums tabular-nums;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 246, 222, 0.6);
   filter: none;
+}
+
+html body button.trauma-value {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.55em;
+  padding-inline: 0.3em;
+  border-radius: 999px;
   cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
 }
+
+html body input.trauma-input {
+  width: 2.6em;
+  border-radius: 999px;
+}
+
 html body button.trauma-value:hover:not(:disabled) {
-  background: rgba(174, 121, 42, .24);
+  --seal-rim:
+    0 0 0 1px #7d5f30,
+    0 0 0 2.5px #f0d08a,
+    0 0 0 3.5px #6a4f28,
+    0 3px 6px 2px rgba(58, 34, 8, 0.26);
+  transform: translateY(-1px) scale(1.06);
 }
-html body.torch-mode button.trauma-value {
-  background: rgba(242, 211, 154, .14);
+
+html body :is(button.trauma-value, input.trauma-input):not(.torch-btn):focus-visible,
+html body input.trauma-input:not(.torch-btn):focus {
+  outline: 2px solid #b8863c;
+  outline-offset: 5px;
+}
+
+html body.torch-mode :is(button.trauma-value, input.trauma-input) {
+  background: radial-gradient(circle at 36% 30%, #7a5c34 0%, #53391f 60%, #3a2815 100%);
+  box-shadow: var(--seal-rim), inset 0 1px 1px rgba(255, 226, 160, 0.25), inset 0 -2px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 600px) {
