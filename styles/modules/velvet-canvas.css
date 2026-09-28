@@ -39,8 +39,31 @@ body:not(.torch-mode) :is(.card, .record-card, .campaign-group, .upgrade-card, .
   color: var(--ink);
 }
 
-body:not(.torch-mode) :is(.record-card, .campaign-group, .upgrade-card) {
-  background: linear-gradient(180deg, #f4e8ce, #e9d7b5);
+/* Aged parchment: toned-down vellum with fibre grain and a burnt edge, so the
+   sheet sits on the velvet instead of glowing against it. Investigator cards
+   (artwork nested in a sheet) and news cards (cover-art backgrounds) keep
+   their own surfaces. */
+body:not(.torch-mode) :is(.card:not(.investigator-card), .record-card, .campaign-group, .upgrade-card) {
+  border-radius: 8px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .12 0 0 0 .5 -.18'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 120% 90% at 50% 45%, transparent 58%, rgba(122, 78, 28, 0.2) 100%),
+    radial-gradient(ellipse 60% 45% at 30% 22%, rgba(255, 246, 220, 0.38), transparent 70%),
+    linear-gradient(180deg, #e9d7ad 0%, #dfc796 60%, #d6ba86 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(112, 74, 30, 0.26),
+    inset 0 0 34px rgba(118, 76, 28, 0.24),
+    0 16px 30px rgba(18, 6, 10, 0.34);
+}
+
+/* One sheet per group: nested campaign panels become plain regions on it. */
+body:not(.torch-mode) :is(.campaign-run, .campaign-track) {
+  background: transparent;
+  box-shadow: none;
+}
+
+body:not(.torch-mode) .campaign-run + .campaign-run {
+  border-top: 1px solid rgba(112, 74, 30, 0.28);
 }
 
 body.torch-mode :is(.record-card, .campaign-group, .upgrade-card) {
