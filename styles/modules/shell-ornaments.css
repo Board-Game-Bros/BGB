@@ -1,0 +1,69 @@
+/* Imagegen cast-metal bookbinding: narrow relief trim, not a second tapestry. */
+html body {
+  --shell-trim-height: 30px;
+  --shell-trim-end: 31px;
+  --shell-metal-filter: saturate(.78) brightness(.94) drop-shadow(0 3px 2px rgba(16, 8, 3, .65));
+}
+html body.torch-mode {
+  --shell-metal-filter: saturate(.65) brightness(.76) drop-shadow(0 3px 3px rgba(0, 0, 0, .8));
+}
+
+html body > header.site-header {
+  padding-bottom: 58px;
+}
+
+html body > header.site-header::after,
+html body > footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--shell-trim-height);
+  box-sizing: border-box;
+  border: 0;
+  background:
+    url("../../assets/misc/medieval_bookbinding_border_left.svg") left center / var(--shell-trim-end) 100% no-repeat,
+    url("../../assets/misc/medieval_bookbinding_border_right.svg") right center / var(--shell-trim-end) 100% no-repeat,
+    url("../../assets/misc/medieval_bookbinding_border_repeat.svg") center / auto 100% repeat-x;
+  background-origin: border-box, border-box, content-box;
+  background-clip: border-box, border-box, content-box;
+  padding-inline: var(--shell-trim-end);
+  pointer-events: none;
+  filter: var(--shell-metal-filter);
+}
+
+html body > header.site-header::after {
+  bottom: 0;
+}
+
+html body > footer {
+  border-top: 0;
+  padding-top: 66px;
+}
+
+html body > footer::before {
+  top: 0;
+}
+
+html body > footer::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 216px;
+  height: 72px;
+  background: url("../../assets/misc/medieval_footer_crest.png") center / contain no-repeat;
+  filter: var(--shell-metal-filter);
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  html body {
+    --shell-trim-height: 22px;
+    --shell-trim-end: 23px;
+  }
+  html body > header.site-header { padding-bottom: 44px; }
+  html body > footer { padding-top: 50px; }
+  html body > footer::after { width: 168px; height: 56px; top: -10px; }
+}

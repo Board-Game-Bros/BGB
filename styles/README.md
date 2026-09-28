@@ -64,4 +64,8 @@ This project now uses a page-entry + module architecture.
 
 ## Card depth
 
-`modules/card-depth.css` provides shared warm edge, contact and cast shadows for cards on velvet. Nested panels use a smaller elevation; torch mode adjusts the edge and shadow tones. Library/photo spacing reserves room for shadows. Only interactive cards lift on pointer hover, with reduced-motion support.
+`modules/card-depth.css` provides shared soft contact and cast shadows without a solid rim for cards on velvet. Nested panels use a smaller elevation; torch mode adjusts the shadow tones. Library/photo spacing reserves room for shadows. Only interactive cards lift on pointer hover, with reduced-motion support.
+
+## Shell ornaments
+
+`modules/shell-ornaments.css` decorates the shared header/footer with generated antique-metal vines and a central footer shield. Raster viewport wrappers preserve alpha and the end ornaments; the middle repeats at its natural aspect ratio. Mobile uses a narrower trim and smaller shield, and torch mode dims the metal. Generation prompts are recorded in `assets/misc/shell-ornaments-prompts.md`.
