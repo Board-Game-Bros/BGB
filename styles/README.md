@@ -61,3 +61,7 @@ This project now uses a page-entry + module architecture.
 - Size via `--rod-height`, `--cloth-width` and `--fringe` on `nav`.
 
 - `assets/misc/medieval_nav_tapestry.png` is the imagegen source; its exact prompt is in the adjacent `.prompt.txt`. `medieval_nav_tapestry_slice.svg` embeds that PNG in a tight viewport, preserving its alpha. Nine-slice edge repetition keeps the braid and individual fringe threads proportional across screen widths.
+
+## Card depth
+
+`modules/card-depth.css` provides shared warm edge, contact and cast shadows for cards on velvet. Nested panels use a smaller elevation; torch mode adjusts the edge and shadow tones. Library/photo spacing reserves room for shadows. Only interactive cards lift on pointer hover, with reduced-motion support.
