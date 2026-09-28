@@ -179,6 +179,62 @@ html body.torch-mode :is(button.trauma-value, input.trauma-input) {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 }
 
+/* Stepper −/+ use the same parchment seal, centred in the original 34px
+   cells; 23px + 3.5px rim leaves 2px clear of the stepper frame. */
+html body .story-weakness-stepper {
+  grid-template-rows: 36px;
+}
+
+html body .story-weakness-stepper > button:not(.torch-btn) {
+  --seal-rim:
+    0 0 0 1px #7d5f30,
+    0 0 0 2.5px #dcb86e,
+    0 0 0 3.5px #6a4f28,
+    0 1px 2px 1px rgba(58, 34, 8, 0.22);
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  width: 23px;
+  height: 23px;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, #fdf5df 0%, #eed9aa 55%, #d4b278 100%);
+  box-shadow: var(--seal-rim), inset 0 1px 1px rgba(255, 252, 238, 0.7), inset 0 -2px 3px rgba(125, 88, 36, 0.22);
+  color: var(--control-active);
+  font: 700 17px/1 Georgia, serif;
+  text-shadow: 0 1px 0 rgba(255, 246, 222, 0.6);
+  filter: none;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+html body .story-weakness-stepper > button:not(.torch-btn):hover:not(:disabled) {
+  --seal-rim:
+    0 0 0 1px #7d5f30,
+    0 0 0 2.5px #f0d08a,
+    0 0 0 3.5px #6a4f28,
+    0 1px 3px 1px rgba(58, 34, 8, 0.26);
+  filter: brightness(1.05);
+  transform: scale(1.06);
+}
+
+html body .story-weakness-stepper > button:not(.torch-btn):active:not(:disabled) {
+  filter: none;
+  transform: scale(0.96);
+}
+
+html body .story-weakness-stepper > button:not(.torch-btn):focus-visible {
+  outline: 2px solid #b8863c;
+  outline-offset: 2px;
+}
+
+html body.torch-mode .story-weakness-stepper > button:not(.torch-btn) {
+  background: radial-gradient(circle at 36% 30%, #7a5c34 0%, #53391f 60%, #3a2815 100%);
+  box-shadow: var(--seal-rim), inset 0 1px 1px rgba(255, 226, 160, 0.25), inset 0 -2px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
 @media (max-width: 600px) {
   html body button.story-weakness-summary:not(:disabled) {
     border-image-width: 0 24px;
@@ -197,14 +253,12 @@ html body.torch-mode :is(button.trauma-value, input.trauma-input) {
   }
 }
 
-html body button:is(.tg-inline-del, .draft-card-remove, .edit-card-remove, .customizable-inline-chip, .customizable-overlay-close, .tg-status-slot, .torch-btn),
-html body .story-weakness-stepper button {
+html body button:is(.tg-inline-del, .draft-card-remove, .edit-card-remove, .customizable-inline-chip, .customizable-overlay-close, .tg-status-slot, .torch-btn) {
   border-image-width: 0 9px;
 }
 
 html body button:is(.customizable-inline-chip, .customizable-overlay-close) { padding: 0 6px; }
 html body button.tg-inline-del { padding: 3px 9px; }
-html body .story-weakness-stepper button:focus-visible { outline-offset: -3px; }
 html body .edit-gate { flex-wrap: wrap; }
 
 html body .news-year-summary::after {
