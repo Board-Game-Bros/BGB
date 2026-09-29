@@ -66,7 +66,10 @@
       const section = el("section", "collection-category");
       section.appendChild(el("h3", "category-title", String(category.title || "")));
       const grid = el("div", "grid category-grid");
-      (Array.isArray(category.items) ? category.items : []).forEach((item) => {
+      const items = Array.isArray(category.items) ? category.items : [];
+      // Short collections fill across the row instead of balancing down columns.
+      grid.classList.toggle("category-grid--small", items.length <= 3);
+      items.forEach((item) => {
         grid.appendChild(renderGameCard(item || {}));
       });
       section.appendChild(grid);
