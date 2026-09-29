@@ -35,17 +35,6 @@ html body .container :is(.card:not(.investigator-card), .campaign-group, .record
   filter: var(--surface-filter);
 }
 
-/* Nested notes are quiet inset sheets, rather than another ornamental frame. */
-html body .container :is(.campaign-group, .record-card) :is(.card:not(.investigator-card), .record-card, .upgrade-card) {
-  --surface-opacity: .3;
-}
-
-html body .container :is(.campaign-group, .record-card) :is(.card:not(.investigator-card), .record-card, .upgrade-card)::before {
-  border-image: none;
-  border: 0;
-  background: var(--surface-art) center / cover;
-}
-
 html body .container :is(.campaign-run, .campaign-track) {
   background: transparent;
 }
@@ -62,10 +51,6 @@ html body.torch-mode[data-arkham-page] .container :is(.card:not(.investigator-ca
   --surface-filter: grayscale(1) invert(1) sepia(.6) brightness(1.05);
 }
 
-html body.torch-mode .container :is(.campaign-group, .record-card) :is(.card:not(.investigator-card), .record-card, .upgrade-card) {
-  --surface-opacity: .22;
-}
-
 /* Small collection cards show the lower ornamental corners below the cover. */
 html body .container .card.game-card::before {
   bottom: 0;
@@ -74,8 +59,118 @@ html body .container .card.game-card::before {
   background-position: bottom center;
 }
 
+/* Three depths: illustrated outer cover, plain inset sheet, flat data rows. */
+html body .container {
+  --sheet-inset: #f4ecd7;
+  --sheet-section: rgba(113, 86, 45, .055);
+  --sheet-row: rgba(113, 86, 45, .085);
+  --sheet-rule: rgba(113, 86, 45, .23);
+  --sheet-accent: #866334;
+}
+
+html body.torch-mode .container {
+  --sheet-inset: #2d261f;
+  --sheet-section: rgba(234, 206, 158, .045);
+  --sheet-row: rgba(234, 206, 158, .085);
+  --sheet-rule: rgba(234, 206, 158, .23);
+  --sheet-accent: #c8a871;
+}
+
+html body[data-arkham-page] .container {
+  --sheet-inset: #eeeddd;
+  --sheet-accent: #69725c;
+}
+
+html body.torch-mode[data-arkham-page] .container {
+  --sheet-inset: #24312c;
+  --sheet-accent: #aab99b;
+}
+
+html body .container :is(.campaign-group, .record-card) :is(.card:not(.investigator-card), .record-card, .upgrade-card) {
+  background: var(--sheet-inset);
+  border: 1px solid var(--sheet-rule);
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(24, 15, 8, .09);
+}
+
 html body .container :is(.campaign-group, .record-card) :is(.card:not(.investigator-card), .record-card, .upgrade-card)::before {
-  height: 100%;
-  aspect-ratio: auto;
-  mask-image: none;
+  content: none;
+}
+
+html body .container :is(.campaign-run, .campaign-track) {
+  box-shadow: none;
+}
+
+html body .container .campaign-run + .campaign-run {
+  border-top: 1px solid var(--sheet-rule);
+}
+
+html body .container .campaign-track {
+  border-inline-start: 2px solid var(--sheet-rule);
+  border-radius: 0;
+}
+
+/* Journal sections read as sections, rather than floating stacks of cards. */
+html body .container .tg-block {
+  background: var(--sheet-section);
+  border: 0;
+  border-top: 1px solid var(--sheet-rule);
+  border-radius: 0;
+  box-shadow: none;
+  padding-top: 18px;
+}
+
+html body .container .tg-block :is(.tg-title, .tg-text, .tg-note, .tg-menhir-head, .tg-menhir-row, .tg-menhir-cell, .tg-status-row) {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  text-shadow: none;
+}
+
+html body .container .tg-block .tg-title {
+  border-inline-start: 3px solid var(--sheet-accent);
+  padding: 2px 12px;
+}
+
+html body .container .tg-block :is(.tg-tag, .tg-menhir-cell) {
+  background: var(--sheet-row);
+  border-radius: 4px;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+html body .container .tg-block :is(.tg-line, .tg-status-row) {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--sheet-rule);
+}
+
+html body .container .tg-block :is(.tg-menhir-head, .tg-menhir-row) {
+  color: inherit;
+}
+
+/* Reading text stays crisp in torch mode; controls keep their own states. */
+html body.torch-mode .container :is(.session, .card) :is(p, h3, .session-title) {
+  text-shadow: none;
+}
+
+@media (max-width: 600px) {
+  html body .container .campaign-group {
+    padding: 26px 16px 20px;
+  }
+
+  html body .container .tg-block {
+    padding-inline: 10px;
+  }
+
+  html body .container .tg-menhir-grid {
+    grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(0, 1fr));
+    column-gap: 6px;
+  }
+
+  html body .container .tg-menhir-grid > * {
+    min-width: 0;
+    padding-inline: 4px;
+    overflow-wrap: anywhere;
+    font-size: .85rem;
+  }
 }
