@@ -60,7 +60,6 @@ html body .container :is(.campaign-status, .record-meta) {
 /* Nine-slice frame preserves corners; repeating center paper never stretches
    to the length of the record. No overflow clipping: card previews stay free. */
 html body .container .story-note {
-  display: flow-root;
   position: relative;
   isolation: isolate;
   padding: 36px 38px;
@@ -124,13 +123,16 @@ html body .container .scenario-log + .scenario-log {
   }
 }
 
-/* The floated ornament reserves space only beside the first lines of text. */
+/* The bottle straddles the top-right frame; the feather rises outside it. */
 html body .container .story-note::before {
   content: "";
-  float: right;
+  position: absolute;
+  top: -116px;
+  right: -52px;
+  z-index: 2;
   width: 92px;
   height: 138px;
-  margin: -16px -16px 12px 20px;
+  margin: 0;
   background: url("../../assets/misc/campaign-stationery/quill-inkwell.png") center / contain no-repeat;
   pointer-events: none;
 }
@@ -139,6 +141,7 @@ html body .container .story-note::before {
   html body .container .story-note::before {
     width: 60px;
     height: 90px;
-    margin: -10px -8px 8px 12px;
+    top: -75px;
+    right: -32px;
   }
 }

@@ -1,6 +1,6 @@
 # Quill and inkwell
 
-Generated with built-in image_gen on 2026-09-29. Final asset: quill-inkwell.png, resized to 320 × 480 with alpha preserved. Placement: top right of story-note journal leaves, floats alongside initial text, smaller on mobile.
+Generated with built-in image_gen on 2026-09-29. Final asset: quill-inkwell.png, resized to 320 × 480 with alpha preserved. Placement: overlapping the top-right corner of story-note journal leaves, with the bottle crossing the frame and the feather extending outside; smaller on mobile.
 
 ## Generation prompt
 Use case: stylized-concept
