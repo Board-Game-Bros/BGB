@@ -25,8 +25,6 @@ html body.torch-mode .container #tg-campaign-root .campaign-group {
   color: var(--journal-ink);
   background: linear-gradient(var(--journal-wash), var(--journal-wash)), var(--journal-paper) repeat;
   background-size: auto, 660px 660px;
-  --card-highlight-rim: transparent;
-  --card-highlight-glow: transparent;
 }
 
 html body .container #tg-campaign-root .campaign-group::before {
@@ -40,14 +38,13 @@ html body.torch-mode .container #tg-campaign-root .campaign-group::before {
 }
 
 html body .container #tg-campaign-root .campaign-group .card:not(.investigator-card) {
-  --card-depth: none;
-  --panel-depth: none;
-  --card-highlight-rim: transparent;
-  --card-highlight-glow: transparent;
+  --card-depth: 0 0 0 transparent;
+  --panel-depth: 0 0 0 transparent;
   color: var(--journal-ink);
   background: transparent;
   border: 0;
   border-radius: 0;
+  outline: none;
   box-shadow: none;
 }
 
@@ -57,10 +54,8 @@ html body .container #tg-campaign-root .campaign-group .card:not(.investigator-c
 }
 
 html body .container #tg-campaign-root .campaign-group .tg-block {
-  --card-depth: none;
-  --panel-depth: none;
-  --card-highlight-rim: transparent;
-  --card-highlight-glow: transparent;
+  --card-depth: 0 0 0 transparent;
+  --panel-depth: 0 0 0 transparent;
   position: relative;
   background: transparent;
   border: 0;
@@ -166,4 +161,15 @@ body.torch-mode .journal-scroll-roller {
   }
   .journal-scroll-roller-top { top: -14px; }
   .journal-scroll-roller-bottom { bottom: -14px; }
+}
+
+/* Two hover levels, one lit at a time: a small journal section under the
+   pointer, otherwise the whole parchment. Transparent intermediate cards never
+   light up. A zero shadow (not `none`) remains valid inside a shadow list. */
+@media (hover: hover) and (pointer: fine) {
+  html body .container #tg-campaign-root :is(.campaign-group, .tg-block):hover:not(:has(.tg-block:hover)) {
+    outline: 1px solid var(--card-highlight-rim);
+    outline-offset: -1px;
+    box-shadow: var(--card-depth), inset 0 0 14px var(--card-highlight-glow);
+  }
 }
