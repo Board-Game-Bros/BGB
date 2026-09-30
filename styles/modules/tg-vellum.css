@@ -1,0 +1,169 @@
+/* ImageGen vellum provides one continuous illuminated journal sheet.
+   Tile at a fixed scale so long sessions retain fine, readable paper grain. */
+html body .container {
+  --journal-paper: url("../../assets/misc/card-surfaces/journal-vellum-light.jpg");
+  --journal-wash: rgba(245, 229, 194, .28);
+  --journal-ink: #342514;
+  --journal-rule: rgba(124, 84, 32, .28);
+  --journal-gilt: #9a733a;
+  --journal-row: rgba(126, 83, 31, .09);
+}
+
+html body.torch-mode .container {
+  --journal-paper: url("../../assets/misc/card-surfaces/journal-vellum-dark.jpg");
+  --journal-wash: rgba(37, 28, 23, .42);
+  --journal-ink: #f3dfbb;
+  --journal-rule: rgba(212, 175, 113, .28);
+  --journal-gilt: #c2a16a;
+  --journal-row: rgba(226, 190, 130, .09);
+}
+
+/* One continuous sheet: the outer group owns all paper, inner regions only ink.
+   The existing illuminated artwork is blended into that same material. */
+html body .container #tg-campaign-root .campaign-group,
+html body.torch-mode .container #tg-campaign-root .campaign-group {
+  color: var(--journal-ink);
+  background: linear-gradient(var(--journal-wash), var(--journal-wash)), var(--journal-paper) repeat;
+  background-size: auto, 660px 660px;
+  --card-highlight-rim: transparent;
+  --card-highlight-glow: transparent;
+}
+
+html body .container #tg-campaign-root .campaign-group::before {
+  mix-blend-mode: multiply;
+  opacity: .48;
+}
+
+html body.torch-mode .container #tg-campaign-root .campaign-group::before {
+  mix-blend-mode: screen;
+  opacity: .2;
+}
+
+html body .container #tg-campaign-root .campaign-group .card:not(.investigator-card) {
+  --card-depth: none;
+  --panel-depth: none;
+  --card-highlight-rim: transparent;
+  --card-highlight-glow: transparent;
+  color: var(--journal-ink);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html body .container #tg-campaign-root .campaign-group .card:not(.investigator-card)::before,
+html body .container #tg-campaign-root .campaign-group .card:not(.investigator-card)::after {
+  content: none;
+}
+
+html body .container #tg-campaign-root .campaign-group .tg-block {
+  --card-depth: none;
+  --panel-depth: none;
+  --card-highlight-rim: transparent;
+  --card-highlight-glow: transparent;
+  position: relative;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding-top: 24px;
+  margin-top: 18px;
+  color: var(--journal-ink);
+}
+
+/* A fine manuscript rule and tiny lozenge separate sections on one sheet. */
+html body .container #tg-campaign-root .campaign-group .tg-block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--journal-gilt), var(--journal-rule) 35%, transparent);
+  pointer-events: none;
+}
+
+html body .container #tg-campaign-root .campaign-group .tg-block::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 14px;
+  width: 7px;
+  height: 7px;
+  background: var(--journal-gilt);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+html body .container #tg-campaign-root .campaign-group .tg-block .tg-title {
+  border: 0;
+  padding-inline: 0;
+  color: var(--journal-ink);
+  letter-spacing: .04em;
+}
+
+html body .container #tg-campaign-root .campaign-group .tg-block :is(.tg-tag, .tg-menhir-cell) {
+  background: var(--journal-row);
+  color: var(--journal-ink);
+  border-radius: 2px 5px 3px 4px;
+  box-shadow: inset 0 -1px var(--journal-rule);
+}
+
+html body .container #tg-campaign-root .campaign-group :is(.session, .tg-line, .tg-status-row) {
+  border-color: var(--journal-rule);
+}
+
+html body.torch-mode .container #tg-campaign-root .campaign-group .card:not(.investigator-card) :is(p, h3, .session-title, .tg-title, .tg-tag, .tg-text, .tg-note, .tg-menhir-head, .tg-menhir-row, .tg-menhir-cell) {
+  color: var(--journal-ink);
+  text-shadow: none;
+}
+
+@media (max-width: 600px) {
+  html body .container #tg-campaign-root .campaign-group .tg-block { padding-top: 20px; }
+  html body .container #tg-campaign-root .campaign-group .tg-block::before { left: 10px; right: 10px; }
+  html body .container #tg-campaign-root .campaign-group .tg-block::after { left: 10px; }
+}
+
+/* Horizontal rollers: fixed-size turned finials, extensible parchment shaft. */
+html body .container #tg-campaign-root .campaign-group {
+  margin-block: 54px 46px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+  border-radius: 0;
+}
+
+.journal-scroll-roller {
+  position: absolute;
+  z-index: 2;
+  left: -32px;
+  right: -32px;
+  height: 40px;
+  pointer-events: none;
+  border: solid transparent;
+  border-width: 0 68px;
+  border-image: url("../../assets/misc/card-surfaces/journal-scroll-roller-slice.svg") 0 340 fill / 0 68px / 0 stretch;
+  filter: drop-shadow(0 4px 3px rgba(38, 19, 9, .38));
+}
+
+.journal-scroll-roller-top { top: -20px; }
+.journal-scroll-roller-bottom { bottom: -20px; }
+
+body.torch-mode .journal-scroll-roller {
+  filter: brightness(.62) saturate(.7) drop-shadow(0 4px 4px rgba(9, 4, 3, .65));
+}
+
+@media (max-width: 600px) {
+  html body .container #tg-campaign-root .campaign-group {
+    padding-top: 34px;
+    padding-bottom: 34px;
+    margin-block: 38px;
+  }
+  .journal-scroll-roller {
+    left: -12px;
+    right: -12px;
+    height: 28px;
+    border-inline-width: 46px;
+    border-image-width: 0 46px;
+  }
+  .journal-scroll-roller-top { top: -14px; }
+  .journal-scroll-roller-bottom { bottom: -14px; }
+}

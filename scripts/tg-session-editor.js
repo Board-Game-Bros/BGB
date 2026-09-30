@@ -1494,6 +1494,10 @@
     root.innerHTML = "";
 
     const group = el("div", "campaign-group");
+    const scrollTop = el("span", "journal-scroll-roller journal-scroll-roller-top");
+    const scrollBottom = el("span", "journal-scroll-roller journal-scroll-roller-bottom");
+    scrollTop.setAttribute("aria-hidden", "true");
+    scrollBottom.setAttribute("aria-hidden", "true");
     const subtitleWrap = el("div", "campaign-subtitle-wrapper");
     const subtitleHeader = el("div", "subtitle-header");
     subtitleHeader.append(
@@ -1542,7 +1546,7 @@
 
     renderControlBar(logsCard);
 
-    group.append(subtitleWrap, summary, logsCard);
+    group.append(scrollTop, subtitleWrap, summary, logsCard, scrollBottom);
     root.appendChild(group);
     window.BGB?.setupContentLists?.(root);
   }
