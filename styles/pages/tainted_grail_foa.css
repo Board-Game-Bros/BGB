@@ -39,6 +39,22 @@ nav a,
   text-shadow: 1px 1px 0 rgba(255, 230, 180, 0.3);
 }
 
+/* The title block shares the inner cards' 18px inset so title, date and
+   summary start on one line; the date uses the journal face, not Cinzel. */
+#overview .campaign-subtitle-wrapper {
+  padding: 0 18px;
+}
+
+#overview .campaign-meta {
+  font-family: "IM Fell English SC", serif;
+  font-size: 1.05rem;
+  margin-top: 4px;
+}
+
+#overview #logs > h3 {
+  font-size: 1.7rem;
+}
+
 /* Torch mode: force high-contrast copy on light cards/log blocks. */
 body.torch-mode .campaign-group {
   background: rgba(60, 45, 25, 0.8);
