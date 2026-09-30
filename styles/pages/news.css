@@ -37,6 +37,9 @@ nav a {
 }
 
 .news-year-summary {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,13 +74,55 @@ nav a {
   content: "−";
 }
 
-.news-year-summary:hover {
-  background: rgba(255, 249, 232, 0.24);
+/* A tapered gilt rule highlights the cloth without a filled shape or frame. */
+.news-year-summary::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto 18px 5px;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #b88845 12%, #edcc87 35%, #b88845 70%, transparent);
+  opacity: 0;
+  transition: opacity 180ms ease;
 }
 
-.news-year-summary:focus-visible {
-  outline: 2px solid rgba(94, 67, 34, 0.72);
-  outline-offset: -3px;
+.news-year-summary:is(:hover, :focus-visible)::before {
+  opacity: 1;
+}
+
+.news-year-summary:is(:hover, :focus-visible) .news-year-label {
+  color: #ffe6af;
+  text-shadow: 0 0 14px rgba(233, 167, 67, 0.5), 0 2px 2px rgba(33, 9, 12, 0.8);
+}
+
+.news-year-label,
+.news-year-summary::after {
+  transition: color 180ms ease, text-shadow 180ms ease, filter 180ms ease;
+}
+
+.news-year-summary:is(:hover, :focus-visible)::after {
+  filter: brightness(1.15) drop-shadow(0 0 5px rgba(226, 167, 68, 0.5));
+}
+
+/* Keyboard users get a distinct underlined year, without an enclosing outline. */
+html body details.news-year-group > summary.news-year-summary:focus-visible {
+  outline: none;
+}
+
+.news-year-summary:focus-visible .news-year-label {
+  text-decoration: underline;
+  text-decoration-color: #efcf91;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-year-summary::before,
+  .news-year-summary::after,
+  .news-year-label {
+    transition: none;
+  }
 }
 
 .news-year-heading {
