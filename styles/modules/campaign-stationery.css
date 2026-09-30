@@ -60,6 +60,7 @@ html body .container :is(.campaign-status, .record-meta) {
 /* Nine-slice frame preserves corners; repeating center paper never stretches
    to the length of the record. No overflow clipping: card previews stay free. */
 html body .container .story-note {
+  display: flow-root;
   position: relative;
   isolation: isolate;
   padding: 36px 38px;
@@ -70,7 +71,7 @@ html body .container .story-note {
   box-shadow: var(--panel-depth);
 }
 
-html body .container .story-note::before {
+html body .container .story-note::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -109,7 +110,7 @@ html body .container .scenario-log + .scenario-log {
     padding: 28px 22px;
   }
 
-  html body .container .story-note::before {
+  html body .container .story-note::after {
     border-width: 24px;
     border-image-width: 24px;
   }
@@ -120,5 +121,24 @@ html body .container .scenario-log + .scenario-log {
 
   html body .container :is(.status-chip, .meta-item)::before {
     border-image-width: 0 30px;
+  }
+}
+
+/* The floated ornament reserves space only beside the first lines of text. */
+html body .container .story-note::before {
+  content: "";
+  float: right;
+  width: 92px;
+  height: 138px;
+  margin: -16px -16px 12px 20px;
+  background: url("../../assets/misc/campaign-stationery/quill-inkwell.png") center / contain no-repeat;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  html body .container .story-note::before {
+    width: 60px;
+    height: 90px;
+    margin: -10px -8px 8px 12px;
   }
 }
