@@ -170,6 +170,8 @@ body.torch-mode .journal-scroll-roller {
   html body .container #tg-campaign-root :is(.campaign-group, .tg-block):hover:not(:has(.tg-block:hover)) {
     outline: 1px solid var(--card-highlight-rim);
     outline-offset: -1px;
-    box-shadow: var(--card-depth), inset 0 0 14px var(--card-highlight-glow);
+    box-shadow: var(--hover-resting-depth),
+      0 0 0 2px var(--card-highlight-glow),
+      0 0 22px 3px var(--card-highlight-glow);
   }
 }
