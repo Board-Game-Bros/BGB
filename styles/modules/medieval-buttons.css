@@ -1,6 +1,6 @@
 /* Theme tokens apply to every native and link-based control. */
 :root {
-  --control-art: url("../../assets/misc/medieval_cartouche_button_slice.svg");
+  --control-art: url("../../assets/misc/medieval_cartouche_button_vellum_slice.svg");
   --control-ink: #352618;
   --control-muted: #4b3723;
   --control-active: #78262f;
@@ -17,7 +17,7 @@ body.torch-mode {
 }
 
 /* Symmetric illuminated cartouche controls. Mirrored botanical ends frame a
-   straight, quiet label area; horizontal slices preserve the curved ornaments. */
+   warm embossed vellum label area; horizontal slices preserve the curved ornaments. */
 html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value) {
   --cartouche-shadow: drop-shadow(0 2px 2px rgba(24, 15, 8, 0.32)) drop-shadow(0 4px 6px rgba(24, 15, 8, 0.16));
   border: 1px solid transparent;
@@ -50,7 +50,7 @@ html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, i
   transform: translateY(1px);
 }
 
-/* The active page has wine-colored ink and a brighter parchment face. */
+/* The active page has wine-colored ink and a softly illuminated vellum face. */
 html body nav a[href]:any-link {
   min-height: 60px;
   padding-inline: 38px;
@@ -64,7 +64,7 @@ html body .subnav a[href].is-active {
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 5px;
-  filter: brightness(1.08) var(--cartouche-shadow);
+  filter: brightness(1.03) saturate(1.08) var(--cartouche-shadow);
   text-shadow: none;
 }
 

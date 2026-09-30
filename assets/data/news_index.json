@@ -5,6 +5,39 @@
   "items": [
     {
       "kicker": "Crowdfunding",
+      "date": "September 30, 2026",
+      "title": "Clank! — Cube of Holding and The Forgotten Vault",
+      "imageSrc": "/assets/news/clank-cube-of-holding-forgotten-vault.jpg",
+      "text": "Proud to be the 7,700th backer on Kickstarter for Clank! — Cube of Holding and The Forgotten Vault.",
+      "detail": "Backed the Clank! 10th anniversary campaign from Dire Wolf, featuring the Cube of Holding deluxe storage box with 33 premium miniatures, The Forgotten Vault expansion, and upgraded Master Thief Editions.",
+      "statLabel": "Backer",
+      "statValue": "7,700",
+      "tags": [
+        {
+          "label": "Kickstarter",
+          "iconSrc": "/assets/news/kickstarter-icon.png",
+          "href": "https://www.kickstarter.com/",
+          "external": true
+        },
+        {
+          "label": "Dire Wolf",
+          "iconSrc": "/assets/news/dire-wolf-icon.png",
+          "href": "https://direwolfdigital.com/",
+          "external": true
+        },
+        {
+          "label": "Clank!: A Deck-Building Adventure",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/201808/clank",
+          "external": true
+        }
+      ],
+      "href": "https://www.kickstarter.com/projects/direwolf/clank-cube-of-holding-and-the-forgotten-vault",
+      "linkLabel": "View Campaign",
+      "external": true
+    },
+    {
+      "kicker": "Crowdfunding",
       "date": "September 22, 2026",
       "title": "Heroes of Might and Magic III: The Board Game - Factory, Bulwark & Forge Expansions",
       "imageSrc": "/assets/news/heroes-iii-factory-bulwark-forge.png",

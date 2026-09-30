@@ -69,3 +69,5 @@ This project now uses a page-entry + module architecture.
 ## Shell ornaments
 
 `modules/shell-ornaments.css` decorates the shared header/footer with generated antique-metal vines and a central footer shield. Raster viewport wrappers preserve alpha and the end ornaments; the middle repeats at its natural aspect ratio. Mobile uses a narrower trim and smaller shield, and torch mode dims the metal. Generation prompts are recorded in `assets/misc/shell-ornaments-prompts.md`.
+
+Button face refresh (2026-09-30): light controls use `medieval_cartouche_button_vellum.png` through its self-contained slice SVG. Honey-gold aged vellum, recessed botanical embossing and softly shaded edges add material depth while retaining the cartouche silhouette and existing slicing. The adjacent prompt records the built-in image edit. Torch mode retains its burgundy variant.
