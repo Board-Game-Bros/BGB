@@ -1018,6 +1018,11 @@
     if (!slotButton) return;
     slotButton.classList.toggle("is-owned", !!owned);
     slotButton.setAttribute("aria-pressed", owned ? "true" : "false");
+    const label = slotButton.dataset.slotLabel || "";
+    slotButton.textContent = label || (owned ? "✓" : "○");
+    const description = `${slotButton.dataset.statusName || "状态"} · ${label ? "第 " + label + " 部分" : "第 " + slotButton.dataset.slotNumber + " 格"}：${owned ? "已获得" : "未获得"}`;
+    slotButton.setAttribute("aria-label", description);
+    slotButton.title = description;
   }
 
   function toggleStatusSlot(statusIndex, slotIndex, slotButton) {
@@ -1060,7 +1065,9 @@
           slotButton.type = "button";
           slotButton.className = "tg-status-slot";
           slotButton.disabled = !canEditNow();
-          slotButton.textContent = String((slot && slot.label) || "");
+          slotButton.dataset.slotLabel = String((slot && slot.label) || "");
+          slotButton.dataset.slotNumber = String(slotIndex + 1);
+          slotButton.dataset.statusName = statusZhMap[statusName] || statusName;
           setStatusSlotVisual(slotButton, !!(slot && slot.owned));
           slotButton.addEventListener("click", () => {
             toggleStatusSlot(rowIndex, slotIndex, slotButton);

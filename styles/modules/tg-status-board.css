@@ -1,0 +1,116 @@
+/* Dedicated ImageGen counters; deliberately independent of cartouche buttons. */
+html body .container .tg-status-columns {
+  align-items: start;
+  gap: 20px 28px;
+}
+
+html body .container .tg-status-col {
+  min-width: 0;
+  gap: 10px;
+  align-content: start;
+}
+
+html body .container .tg-status-row-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  min-width: 0;
+}
+
+html body .container .tg-status-name {
+  text-shadow: none;
+  font-size: 1.06rem;
+  line-height: 1.5;
+}
+
+html body .container .tg-status-slots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 100%;
+  gap: 5px;
+}
+
+html body .container .tg-status-board button.tg-status-slot {
+  --status-art: url("../../assets/misc/tg-status/unowned.png");
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  border-radius: 50%;
+  background: var(--status-art) center / contain no-repeat;
+  color: #302012;
+  -webkit-text-fill-color: currentColor;
+  font: 700 15px/1 Georgia, serif;
+  text-decoration: none;
+  text-shadow: none;
+  opacity: 1;
+  filter: none;
+  box-shadow: none;
+  transform: none;
+  cursor: pointer;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+html body .container .tg-status-board button.tg-status-slot.is-owned {
+  --status-art: url("../../assets/misc/tg-status/owned.png");
+  color: #fff2d6;
+}
+
+/* Locked editing must not fade the campaign's recorded progress. */
+html body .container .tg-status-board button.tg-status-slot:disabled {
+  opacity: 1;
+  filter: none;
+  cursor: default;
+}
+
+html body .container .tg-status-board button.tg-status-slot.is-owned:not([data-slot-label=""])::after {
+  content: "✓";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #4b291d;
+  color: #fff2d6;
+  font: 700 10px/12px sans-serif;
+  text-align: center;
+}
+
+html body .container .tg-status-board button.tg-status-slot {
+  position: relative;
+}
+
+html body .container .tg-status-board button.tg-status-slot:focus-visible {
+  outline: 2px solid #a47937;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body .container .tg-status-board button.tg-status-slot:hover:not(:disabled) {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+  }
+}
+
+@media (pointer: coarse) {
+  html body .container .tg-status-board button.tg-status-slot {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .container .tg-status-board button.tg-status-slot {
+    transition: none;
+  }
+}
