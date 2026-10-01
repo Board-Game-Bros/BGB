@@ -225,15 +225,15 @@
 
 .tg-arrow-img {
   display: block;
-  width: 64px;
+  width: 48px;
   height: 20px;
-  object-fit: fill;
+  object-fit: contain;
   justify-self: center;
   pointer-events: none;
 }
 
 body.torch-mode .tg-arrow-img {
-  filter: brightness(1.45) saturate(.7);
+  filter: brightness(0) saturate(100%) invert(83%) sepia(25%) saturate(480%) hue-rotate(351deg) brightness(102%) contrast(87%);
 }
 
 @media (max-width: 720px) {

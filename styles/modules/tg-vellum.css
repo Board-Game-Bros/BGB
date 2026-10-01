@@ -207,7 +207,7 @@ body.torch-mode .journal-scroll-roller::after {
 html body .container #tg-campaign-root .campaign-group .tg-move {
   width: fit-content;
   max-width: 100%;
-  grid-template-columns: minmax(48px, auto) 64px minmax(48px, auto);
+  grid-template-columns: minmax(48px, auto) 48px minmax(48px, auto);
   gap: 0;
   padding: 5px 12px;
   background: linear-gradient(90deg, transparent, var(--journal-row) 12%, var(--journal-row) 88%, transparent);
@@ -225,7 +225,7 @@ html body .container #tg-campaign-root .campaign-group .tg-move > .tg-tag {
 
 html body .container #tg-campaign-root .campaign-group .tg-edit-move {
   width: auto;
-  grid-template-columns: minmax(60px, 1fr) 64px minmax(60px, 1fr) auto;
+  grid-template-columns: minmax(60px, 1fr) 48px minmax(60px, 1fr) auto;
 }
 
 @media (max-width: 720px) {

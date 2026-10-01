@@ -1,0 +1,1 @@
+Built-in imagegen: A single right-pointing medieval scribe’s arrow, minimal warm sepia ink, tapered horizontal stroke and small open arrowhead. Crisp at 48px wide; no feather, metal, rings, 3D, shadow, ornament, text, digits or paper background. Genuine transparency. SVG crops empty margins and preserves artwork aspect ratio.

@@ -920,9 +920,9 @@
 
   function locationArrow() {
     const arrow = el("img", "tg-arrow-img");
-    arrow.src = "/assets/misc/card-surfaces/journal-location-arrow-slice.svg";
+    arrow.src = "/assets/misc/card-surfaces/journal-location-arrow-v2-slice.svg";
     arrow.alt = "→";
-    arrow.width = 64;
+    arrow.width = 48;
     arrow.height = 20;
     return arrow;
   }
