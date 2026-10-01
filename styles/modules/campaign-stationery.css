@@ -6,7 +6,7 @@ html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-
   isolation: isolate;
   box-sizing: border-box;
   width: fit-content;
-  min-width: min(320px, 100%);
+  min-width: 0;
   max-width: 100%;
   margin: 0 0 18px;
   padding: 6px 8px 40px;
