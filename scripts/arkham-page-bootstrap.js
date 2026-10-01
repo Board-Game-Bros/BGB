@@ -14,7 +14,7 @@
     "deck": {
       rootId: "arkham-deck-page-root",
       scripts: [
-        "/scripts/arkham-deck-page.js?v=20260915lists",
+        "/scripts/arkham-deck-page.js?v=20261001folders",
         "/scripts/arkham-deck-preview.js?v=20260401a",
       ],
     },
@@ -27,8 +27,8 @@
         "/scripts/shared-github-sync.js?v=20260401a",
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
-        "/scripts/ahlcg-upgrade-manager.js?v=20260915a",
-        "/scripts/arkham-parallel-campaign-page.js?v=20260915lists",
+        "/scripts/ahlcg-upgrade-manager.js?v=20261001folders",
+        "/scripts/arkham-parallel-campaign-page.js?v=20261001folders",
       ],
     },
   };

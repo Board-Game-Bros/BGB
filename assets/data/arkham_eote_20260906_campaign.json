@@ -955,7 +955,7 @@
       ]
     }
   ],
-  "backHref": "/arkham_horror_lcg/",
+  "backHref": "/games/ahlcg/",
   "backLabel": "Back to Arkham Horror LCG",
   "upgradeManager": {
     "storageKey": "ahlcg_eote_20260906_upgrade_state_v1",

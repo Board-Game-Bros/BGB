@@ -142,7 +142,7 @@
 
     const backWrap = el("div", "back-link-wrap");
     const backLink = el("a", "back-link", "Back to Arkham Horror LCG");
-    backLink.href = "/arkham_horror_lcg/";
+    backLink.href = "/games/ahlcg/";
     backWrap.appendChild(backLink);
     main.appendChild(backWrap);
 

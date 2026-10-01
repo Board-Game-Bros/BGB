@@ -808,7 +808,7 @@
 
     const backWrap = el("div", "back-link-wrap");
     const backLink = el("a", "back-link", String(data.backLabel || "Back to Arkham Horror LCG"));
-    backLink.href = String(data.backHref || "/arkham_horror_lcg/");
+    backLink.href = String(data.backHref || "/games/ahlcg/");
     backWrap.appendChild(backLink);
     main.appendChild(backWrap);
 

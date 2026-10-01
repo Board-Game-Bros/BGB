@@ -823,8 +823,8 @@
       const menhirLabel = `Menhir #${index + 1}`;
       if (!editable) {
         grid.appendChild(el("div", "tg-menhir-row", menhirLabel));
-        grid.appendChild(el("div", "tg-menhir-cell", row.value || ""));
-        grid.appendChild(el("div", "tg-menhir-cell", row.dial || ""));
+        grid.appendChild(el("div", "tg-menhir-cell tg-location-value", row.value || ""));
+        grid.appendChild(el("div", "tg-menhir-cell tg-dial-value", row.dial || ""));
         return;
       }
 
@@ -850,8 +850,8 @@
       del.addEventListener("click", () => handlers.deleteRow("menhirs", index));
 
       const locWrap = el("div", "tg-menhir-row tg-edit-box");
-      const valWrap = el("div", "tg-menhir-cell tg-edit-box");
-      const dialWrap = el("div", "tg-menhir-cell tg-edit-box");
+      const valWrap = el("div", "tg-menhir-cell tg-location-value tg-edit-box");
+      const dialWrap = el("div", "tg-menhir-cell tg-dial-value tg-edit-box");
       locWrap.append(menhirName, del);
       valWrap.appendChild(val);
       dialWrap.appendChild(dial);

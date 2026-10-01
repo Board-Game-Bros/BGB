@@ -16,14 +16,16 @@ The repo currently mixes hand-authored pages with small data-driven renderers fo
 │   ├── data/                        # JSON data for rendered pages
 │   ├── icon/
 │   └── misc/
-├── arkham_horror_lcg*/              # Arkham directory pages and record pages
-├── arkham_horror_lcg*.html          # Compatibility redirects to directory pages
+├── games/
+│   ├── ahlcg/                      # Arkham index, campaigns and investigator pages
+│   └── tg_foa/                     # Tainted Grail campaign journal
+├── 404.html                        # Central compatibility routing for old game URLs
 ├── scripts/
 │   ├── main.js                      # Shared site interactions
 │   ├── shell-layout.js              # Shared header/nav/footer shell
 │   ├── redirect-page.js             # Shared redirect-page bootstrap
 │   ├── arkham-page-bootstrap.js     # Shared Arkham page bootstrap
-│   ├── create_arkham_deck_page.py   # Scaffold Arkham deck JSON/page/redirect files
+│   ├── create_arkham_deck_page.py   # Scaffold Arkham deck JSON and nested pages
 │   ├── shared-edit-sync-gate.js     # Shared edit/sync UI controls
 │   ├── shared-local-state-envelope.js
 │   ├── shared-github-sync.js        # Shared GitHub sync helpers
@@ -47,16 +49,16 @@ The repo currently mixes hand-authored pages with small data-driven renderers fo
 - `/library/`
 - `/news/`
 - `/daily/`
-- `/arkham_horror_lcg/`
-- `/arkham_horror_lcg_tcu_20260215/`
-- `/arkham_horror_lcg_tcu_harvey_walters_20260214/`
-- `/arkham_horror_lcg_tcu_michael_mcglen_20260214/`
-- `/arkham_horror_lcg_tcu_wendy_adams_20260214/`
-- `/arkham_horror_lcg_tde_20260503/`
-- `/arkham_horror_lcg_tde_silas_marsh_20260508/`
-- `/arkham_horror_lcg_tde_wilson_richards_20260503/`
-- `/arkham_horror_lcg_tde_mandy_thompson_20260508/`
-- `/tainted_grail_foa/`
+- `/games/ahlcg/`
+- `/games/ahlcg/tcu_20260215/`
+- `/games/ahlcg/tcu_harvey_walters_20260214/`
+- `/games/ahlcg/tcu_michael_mcglen_20260214/`
+- `/games/ahlcg/tcu_wendy_adams_20260214/`
+- `/games/ahlcg/tde_20260503/`
+- `/games/ahlcg/tde_silas_marsh_20260508/`
+- `/games/ahlcg/tde_wilson_richards_20260503/`
+- `/games/ahlcg/tde_mandy_thompson_20260508/`
+- `/games/tg_foa/`
 
 ## Data-Driven Pages
 
@@ -98,10 +100,10 @@ Lightweight Arkham pages now use shared bootstraps instead of repeating static H
 - `scripts/redirect-page.js` handles root-level compatibility redirects based on `data-redirect-to`.
 - `scripts/arkham-parallel-campaign-page.js` renders linked multi-track campaign record pages such as Dream-Eaters from JSON data.
 - `scripts/create_arkham_deck_page.py` scaffolds the standard JSON page, directory page, and root-level redirect for new investigator deck pages, and can optionally append the investigator to an existing campaign session in the index JSON.
-- `arkham_horror_lcg/index.html` is the campaign index entry page.
-- Investigator deck pages such as `arkham_horror_lcg_tcu_harvey_walters_20260214/index.html` are thin wrappers that only declare page type, title, and JSON source.
-- Parallel campaign record pages such as `arkham_horror_lcg_tde_20260503/index.html` are thin wrappers that declare `data-arkham-page="parallel-campaign"` and point at a JSON record file.
-- Root-level `arkham_horror_lcg*.html` files are thin wrappers that only declare a redirect target.
+- `games/ahlcg/index.html` is the campaign index entry page.
+- Investigator deck pages such as `games/ahlcg/tcu_harvey_walters_20260214/index.html` are thin wrappers that only declare page type, title, and JSON source.
+- Parallel campaign record pages such as `games/ahlcg/tde_20260503/index.html` are thin wrappers that declare `data-arkham-page="parallel-campaign"` and point at a JSON record file.
+- Legacy game URLs are mapped in `scripts/legacy-game-routes.js`; GitHub Pages serves `404.html` to redirect old bookmarks, preserving query strings and anchors.
 
 Recommended workflow for adding a new investigator deck page:
 
@@ -131,8 +133,7 @@ python3 scripts/create_arkham_deck_page.py \
 The script creates:
 
 - `assets/data/arkham_<investigator>_<yyyymmdd>.json`
-- `arkham_horror_lcg_<campaign>_<investigator>_<yyyymmdd>/index.html`
-- `arkham_horror_lcg_<campaign>_<investigator>_<yyyymmdd>.html`
+- `games/ahlcg/<campaign>_<investigator>_<yyyymmdd>/index.html`
 
 Optional index-update arguments:
 
@@ -154,7 +155,7 @@ Typical workflow for adding a new Arkham campaign session:
 
 1. Add or update the campaign entry inside `assets/data/arkham_horror_lcg_index.json`
 2. Add a new session object under that campaign's `sessions` array
-3. Create the detailed campaign record page under its own directory, for example `arkham_horror_lcg_tde_20260503/index.html`
+3. Create the detailed campaign record page under its own directory, for example `games/ahlcg/tde_20260503/index.html`
 4. Add the matching root-level redirect file if you need compatibility with non-directory URLs
 
 For special cases like Dream-Eaters that run as two linked campaign tracks, prefer the parallel-campaign renderer instead of hand-authoring the page:
@@ -277,8 +278,8 @@ Then visit:
 
 ## Notes
 
-- Root-level `arkham_horror_lcg*.html` files are compatibility redirects to directory pages.
-- Long-form campaign record pages like `arkham_horror_lcg_tcu_20260215/index.html` are still largely hand-authored content pages.
+- Legacy game bookmarks are redirected centrally by `404.html` and `scripts/legacy-game-routes.js`. Local static servers need a 404 fallback to test these legacy URLs.
+- Long-form campaign record pages like `games/ahlcg/tcu_20260215/index.html` are still largely hand-authored content pages.
 - Lightweight Arkham pages should prefer the shared bootstraps over inline shell/redirect code.
 - Archived files should go under `archive/`, not back into active `styles/` or `scripts/`.
-- `tainted_grail_foa/` and `arkham_horror_lcg_tcu_20260215/` contain edit/sync flows that can write back to GitHub when configured with a token.
+- `games/tg_foa/` and `games/ahlcg/tcu_20260215/` contain edit/sync flows that can write back to GitHub when configured with a token.

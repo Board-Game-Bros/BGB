@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Scaffold a data-driven Arkham investigator deck page.
 
-Creates three files following the current repo conventions:
+Creates two files following the current repo conventions:
 1. assets/data/arkham_<investigator>_<yyyymmdd>.json
-2. arkham_horror_lcg_<campaign>_<investigator>_<yyyymmdd>/index.html
-3. arkham_horror_lcg_<campaign>_<investigator>_<yyyymmdd>.html
+2. games/ahlcg/<campaign>_<investigator>_<yyyymmdd>/index.html
 """
 
 from __future__ import annotations
@@ -70,10 +69,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--main-deck-size", type=int, default=30, help="Main deck size used in overview.")
     parser.add_argument("--total-deck-size", type=int, default=33, help="Total deck size used in overview.")
     parser.add_argument("--xp-required", type=int, default=0, help="XP required display value.")
-    parser.add_argument("--page-dir-prefix", default="arkham_horror_lcg", help="Directory prefix for generated page folders.")
+    parser.add_argument("--page-dir-prefix", default="", help="Optional prefix for generated page folder names.")
+    parser.add_argument("--pages-dir", default="games/ahlcg", help="Parent directory for generated game pages.")
     parser.add_argument("--template-json", default="assets/data/templates/arkham_investigator_deck_template.json", help="Template JSON path relative to repo root.")
     parser.add_argument("--deck-template", default="archive/arkham_investigator_page_shell.template.html", help="Deck page template path relative to repo root.")
-    parser.add_argument("--redirect-template", default="archive/redirect_page.template.html", help="Redirect page template path relative to repo root.")
     parser.add_argument("--index-json", default="assets/data/arkham_horror_lcg_index.json", help="Campaign index JSON to update when index arguments are provided.")
     parser.add_argument("--index-campaign-title", help="Existing campaign title inside the index JSON, for example 'The Dream-Eaters Campaign'.")
     parser.add_argument("--index-session-label", help="Existing session label inside the chosen campaign, for example '05/03/2026 Campaign'.")
@@ -174,7 +173,6 @@ def main() -> int:
     root = Path(args.project_root).resolve()
     template_json_path = root / args.template_json
     deck_template_path = root / args.deck_template
-    redirect_template_path = root / args.redirect_template
     index_json_path = root / args.index_json
     pdf_path = (root / args.pdf_path).resolve()
 
@@ -183,9 +181,6 @@ def main() -> int:
         return 1
     if not deck_template_path.is_file():
         print(f"Missing deck template: {deck_template_path}", file=sys.stderr)
-        return 1
-    if not redirect_template_path.is_file():
-        print(f"Missing redirect template: {redirect_template_path}", file=sys.stderr)
         return 1
     if not pdf_path.is_file():
         print(f"Missing PDF: {pdf_path}", file=sys.stderr)
@@ -197,18 +192,17 @@ def main() -> int:
     campaign_slug = slugify(args.campaign_code)
 
     data_filename = f"arkham_{investigator_slug}_{date_compact}.json"
-    page_basename = f"{args.page_dir_prefix}_{campaign_slug}_{investigator_slug}_{date_compact}"
+    page_basename = "_".join(filter(None, [args.page_dir_prefix, campaign_slug, investigator_slug, date_compact]))
 
     data_path = root / "assets" / "data" / data_filename
-    page_dir = root / page_basename
+    page_dir = root / args.pages_dir / page_basename
     page_index_path = page_dir / "index.html"
-    redirect_path = root / f"{page_basename}.html"
 
     pdf_href = repo_relative_path(pdf_path, root)
     payload = build_json_payload(load_json(template_json_path), args, pdf_href)
 
     data_href = repo_relative_path(data_path, root)
-    page_href = f"/{page_basename}/"
+    page_href = repo_relative_path(page_dir, root) + "/"
 
     deck_html = render_template(
         deck_template_path,
@@ -217,24 +211,16 @@ def main() -> int:
             "/assets/data/your_deck_file.json": data_href,
         },
     )
-    redirect_html = render_template(
-        redirect_template_path,
-        {
-            "/target-directory/": page_href,
-        },
-    )
 
     try:
         write_json(data_path, payload, args.force)
         write_text(page_index_path, deck_html, args.force)
-        write_text(redirect_path, redirect_html, args.force)
     except FileExistsError as error:
         print(error, file=sys.stderr)
         return 1
 
     print(f"Created {data_path.relative_to(root)}")
     print(f"Created {page_index_path.relative_to(root)}")
-    print(f"Created {redirect_path.relative_to(root)}")
 
     if args.index_campaign_title and args.index_session_label:
         investigator_entry = {

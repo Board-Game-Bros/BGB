@@ -1,0 +1,1 @@
+Built-in imagegen. Single wide rounded rectangular medieval heraldic frame, 3:1. Transparent center and surroundings. Thin muted antique brass engraved border, restrained acanthus corners, small blank shield at top center. Illuminated manuscript style. No text, numbers, red, animals, crowns, paper fill or shadow.

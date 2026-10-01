@@ -5,14 +5,14 @@
       "title": "Currently Active",
       "items": [
         {
-          "href": "/arkham_horror_lcg/",
+          "href": "/games/ahlcg/",
           "imageSrc": "/assets/boardgames/library/arkham_horror_lcg.webp",
           "imageAlt": "Arkham Horror LCG Cover",
           "title": "Arkham Horror: The Card Game",
           "moreInfoHref": "https://www.fantasyflightgames.com/en/products/arkham-horror-the-card-game/"
         },
         {
-          "href": "/tainted_grail_foa/",
+          "href": "/games/tg_foa/",
           "imageSrc": "/assets/boardgames/library/tainted_grail_foa.webp",
           "imageAlt": "Tainted Grail: the Fall of Avalon Cover",
           "title": "Tainted Grail: The Fall of Avalon",

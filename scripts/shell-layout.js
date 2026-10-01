@@ -16,6 +16,7 @@
     const file = (segments[segments.length - 1] || "index.html").toLowerCase();
     const directory = pathname.endsWith("/") ? (segments[segments.length - 1] || "") : "";
 
+    if (pathname.startsWith("/games/")) return "library";
     if (directory === "library") return "library";
     if (directory === "news") return "news";
     if (directory === "daily") return "daily";
@@ -24,9 +25,6 @@
     if (file === "daily.html") return "daily";
     if ([
       "library.html",
-      "arkham_horror_lcg.html",
-      "arkham_horror_lcg_tcu_20260215.html",
-      "tainted_grail_foa.html",
     ].includes(file)) return "library";
     return "home";
   };

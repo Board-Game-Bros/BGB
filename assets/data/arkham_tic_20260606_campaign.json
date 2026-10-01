@@ -937,7 +937,7 @@
       ]
     }
   ],
-  "backHref": "/arkham_horror_lcg/",
+  "backHref": "/games/ahlcg/",
   "backLabel": "Back to Arkham Horror LCG",
   "upgradeManager": {
     "storageKey": "ahlcg_tic_20260606_upgrade_state_v1",
