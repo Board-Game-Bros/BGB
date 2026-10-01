@@ -142,10 +142,9 @@ html body .container #tg-campaign-root #logs > h3 {
   max-width: 100%;
   padding: 30px 46px;
   text-align: center;
-}
-
-html body .container #tg-campaign-root #logs > h3::after {
-  background: linear-gradient(110deg, var(--journal-banner), var(--journal-banner-end));
+  /* Same light inset as the section titles; only the frame stays stronger. */
+  color: var(--journal-rubric);
+  text-shadow: none;
 }
 
 html body .container #tg-campaign-root #logs > h3::before { opacity: 1; }
