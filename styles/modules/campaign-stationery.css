@@ -1,5 +1,45 @@
 /* All ornament and material detail comes from ImageGen artwork.
    CSS only sizes the raster slices and lays live text over them. */
+/* Nine-slicing keeps the engraved corners intact as chapter titles wrap. */
+html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title) {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 18px;
+  padding: 22px 44px;
+  border: 0;
+  background: none;
+  color: #ff858a;
+  -webkit-text-fill-color: currentColor;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 2px #190709;
+}
+
+html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 30px solid transparent;
+  border-image: url("../../assets/boardgames/ahlcg_campaign_ui/chapter-heading.png") 240 fill / 30px / 0 stretch;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title) {
+    padding: 18px 26px;
+    font-size: clamp(1.2rem, 5vw, 1.7rem);
+  }
+
+  html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title)::before {
+    border-width: 22px;
+    border-image-width: 22px;
+  }
+}
+
 html body .container {
   --archive-label: url("../../assets/misc/campaign-stationery/label-light.png");
   --archive-frame: url("../../assets/misc/campaign-stationery/page-light.jpg");
