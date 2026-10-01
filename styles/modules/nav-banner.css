@@ -1,0 +1,83 @@
+/* Navigation as a cloth banner hung from a cast-bronze rod, matching the relief
+   buttons. The nav element itself stays a transparent sticky strip; ::before is
+   the cloth (hem, body, gold trim, fringe) and ::after is the rod. */
+html body nav {
+  --rod-height: 34px;
+  --cloth-width: min(1180px, calc(100% - 72px));
+  --fringe: 48px;
+  background: none;
+  box-shadow: none;
+  padding-top: calc(var(--rod-height) + 8px);
+  padding-bottom: calc(var(--fringe) + 20px);
+}
+
+html body nav::before,
+html body nav::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+html body nav::before {
+  z-index: -1;
+  top: calc(var(--rod-height) / 2);
+  bottom: 0;
+  width: var(--cloth-width);
+  /* Alpha-preserving viewport wrapper; edge motifs repeat instead of
+     stretching individual threads across the full navigation width. */
+  border: solid transparent;
+  border-width: 5px 26px var(--fringe);
+  border-image: url("../../assets/misc/medieval_nav_tapestry_slice.svg") 24 112 205 fill / 5px 26px var(--fringe) / 0 round stretch;
+  background: none;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.35));
+}
+
+html body nav::after {
+  top: 0;
+  width: calc(var(--cloth-width) + 64px);
+  height: var(--rod-height);
+  /* Discard transparent top/bottom margins via image slices; preserve the
+     leaf finials at their natural aspect ratio and stretch only the shaft. */
+  border-style: solid;
+  border-width: 0 calc(var(--rod-height) * 1.747);
+  border-image: url("../../assets/misc/medieval_banner_rod_generated.png") 278 290 312 290 fill / 0 calc(var(--rod-height) * 1.747) / 0 stretch;
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.45));
+}
+
+/* The rod replaces the header's bottom rule and highlight band. */
+html body :is(.site-header, header) {
+  border-bottom: 0;
+}
+
+html body :is(.site-header, header)::after {
+  content: none;
+}
+
+html body.torch-mode nav {
+  background: none;
+}
+
+html body.torch-mode nav::before {
+  filter: brightness(0.85) drop-shadow(0 8px 10px rgba(0, 0, 0, 0.35));
+}
+
+@media (max-width: 720px) {
+  html body nav {
+    --rod-height: 28px;
+    --cloth-width: calc(100% - 36px);
+    --fringe: 34px;
+    padding-inline: 32px;
+    padding-bottom: calc(var(--fringe) + 14px);
+  }
+
+  html body nav::before {
+    border-inline-width: 14px;
+    border-image-width: 4px 14px var(--fringe);
+  }
+
+  html body nav::after {
+    width: calc(var(--cloth-width) + 30px);
+  }
+}

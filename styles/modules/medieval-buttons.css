@@ -1,0 +1,334 @@
+/* Theme tokens apply to every native and link-based control. */
+:root {
+  --control-art: url("../../assets/misc/medieval_cartouche_button_vellum_slice.svg");
+  --control-ink: #352618;
+  --control-muted: #4b3723;
+  --control-active: #78262f;
+  --control-danger: #8b241e;
+  --control-selected: #244d31;
+}
+body.torch-mode {
+  --control-art: url("../../assets/misc/medieval_cartouche_button_dark_slice.svg");
+  --control-ink: #fff0ce;
+  --control-muted: #efddba;
+  --control-active: #ffe3a0;
+  --control-danger: #ffbdab;
+  --control-selected: #c9e6b3;
+}
+
+/* Symmetric illuminated cartouche controls. Mirrored botanical ends frame a
+   warm embossed vellum label area; horizontal slices preserve the curved ornaments. */
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value) {
+  --cartouche-shadow: drop-shadow(0 2px 2px rgba(24, 15, 8, 0.32)) drop-shadow(0 4px 6px rgba(24, 15, 8, 0.16));
+  border: 1px solid transparent;
+  border-image: var(--control-art) 0 420 fill / 0 38px / 0 stretch;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--control-ink);
+  -webkit-text-fill-color: currentColor;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(255, 241, 202, 0.4);
+  filter: var(--cartouche-shadow);
+  transition: filter 150ms ease, transform 150ms ease;
+  cursor: pointer;
+}
+
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link) {
+  min-height: 58px;
+  padding: 20px 38px;
+  text-align: center;
+}
+
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value):hover:not(:disabled) {
+  filter: brightness(1.1) var(--cartouche-shadow);
+  transform: translateY(-1px);
+}
+
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value):active:not(:disabled) {
+  filter: brightness(0.94) drop-shadow(0 1px 1px rgba(24, 15, 8, 0.3));
+  transform: translateY(1px);
+}
+
+/* The active page has wine-colored ink and a softly illuminated vellum face. */
+html body nav a[href]:any-link {
+  min-height: 60px;
+  padding-inline: 38px;
+  color: var(--control-muted);
+  text-shadow: none;
+}
+
+html body nav a[href][aria-current="page"],
+html body .subnav a[href].is-active {
+  color: var(--control-active);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  filter: brightness(1.03) saturate(1.08) var(--cartouche-shadow);
+  text-shadow: none;
+}
+
+/* Shared paper material; ink and emphasis distinguish action states. */
+html body button:is(.upgrade-btn-secondary, [data-action="cancel-edit"], .customizable-inline-chip.is-inherited, .torch-btn):not(:disabled) {
+  color: var(--control-muted);
+  text-shadow: none;
+}
+
+html body button.customizable-inline-chip.is-inherited { cursor: default; }
+
+html body button:is(.upgrade-btn-danger, .tg-inline-del, .draft-card-remove, .edit-card-remove, .tg-delete-session):not(:disabled) {
+  color: var(--control-danger);
+  font-weight: 900;
+  text-shadow: none;
+}
+
+html body button:is(.tg-status-slot.is-owned, .customizable-inline-chip.is-upgrade, [aria-pressed="true"], .card-autocomplete-item.is-active) {
+  color: var(--control-selected);
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-shadow: none;
+}
+
+html body :is(button, input[type="button"], input[type="submit"], input[type="reset"]):not(.torch-btn):disabled,
+html body [aria-disabled="true"] {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  filter: saturate(0.35);
+}
+
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"], summary):not(.torch-btn):focus-visible {
+  outline: 3px solid #ffe1a0;
+  outline-offset: 4px;
+}
+
+/* Standard labels stay between the 38px ornaments; inline controls stay compact. */
+html body button:is(.upgrade-btn, .tg-add-btn, .tg-new-session-btn, .customizable-edit-btn) {
+  min-height: 44px;
+  padding: 14px 46px;
+}
+
+/* Reserve the full ornamental ends outside the disclosure content. */
+html body button.story-weakness-summary:not(:disabled) {
+  box-sizing: border-box;
+  min-height: 58px;
+  padding: 16px 48px;
+}
+
+/* Inline editable numbers are small parchment seals with a gilt double rim,
+   sized to the text so they sit in the sentence without stretching the line. */
+html body :is(button.trauma-value, input.trauma-input) {
+  --seal-rim:
+    0 0 0 1px #7d5f30,
+    0 0 0 2.5px #dcb86e,
+    0 0 0 3.5px #6a4f28,
+    0 2px 4px 2px rgba(58, 34, 8, 0.22);
+  box-sizing: border-box;
+  height: 1.55em;
+  margin: 0 0.3em;
+  padding: 0;
+  vertical-align: -0.38em;
+  border: 0;
+  border-image: none;
+  background: radial-gradient(circle at 36% 30%, #fdf5df 0%, #eed9aa 55%, #d4b278 100%);
+  box-shadow: var(--seal-rim), inset 0 1px 1px rgba(255, 252, 238, 0.7), inset 0 -2px 3px rgba(125, 88, 36, 0.22);
+  color: var(--control-active);
+  -webkit-text-fill-color: currentColor;
+  font: normal 400 0.92em/1 "Uncial Antiqua", Georgia, serif;
+  font-variant: normal;
+  font-variant-numeric: lining-nums tabular-nums;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 246, 222, 0.6);
+  filter: none;
+}
+
+html body button.trauma-value {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.55em;
+  padding-inline: 0.3em;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+html body input.trauma-input {
+  width: 2.6em;
+  border-radius: 999px;
+}
+
+html body button.trauma-value:hover:not(:disabled) {
+  --seal-rim:
+    0 0 0 1px #7d5f30,
+    0 0 0 2.5px #f0d08a,
+    0 0 0 3.5px #6a4f28,
+    0 3px 6px 2px rgba(58, 34, 8, 0.26);
+  transform: translateY(-1px) scale(1.06);
+}
+
+html body :is(button.trauma-value, input.trauma-input):not(.torch-btn):focus-visible,
+html body input.trauma-input:not(.torch-btn):focus {
+  outline: 2px solid #b8863c;
+  outline-offset: 5px;
+}
+
+html body.torch-mode :is(button.trauma-value, input.trauma-input) {
+  background: radial-gradient(circle at 36% 30%, #7a5c34 0%, #53391f 60%, #3a2815 100%);
+  box-shadow: var(--seal-rim), inset 0 1px 1px rgba(255, 226, 160, 0.25), inset 0 -2px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+/* Stepper −/+ use the same parchment seal, centred in the original 34px
+   cells; 23px + 3.5px rim leaves 2px clear of the stepper frame. */
+html body .story-weakness-stepper {
+  grid-template-rows: 36px;
+}
+
+html body .story-weakness-stepper > button:not(.torch-btn) {
+  --seal-rim:
+    0 0 0 1px #7d5f30,
+    0 0 0 2.5px #dcb86e,
+    0 0 0 3.5px #6a4f28,
+    0 1px 2px 1px rgba(58, 34, 8, 0.22);
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  width: 23px;
+  height: 23px;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, #fdf5df 0%, #eed9aa 55%, #d4b278 100%);
+  box-shadow: var(--seal-rim), inset 0 1px 1px rgba(255, 252, 238, 0.7), inset 0 -2px 3px rgba(125, 88, 36, 0.22);
+  color: var(--control-active);
+  font: 700 17px/1 Georgia, serif;
+  text-shadow: 0 1px 0 rgba(255, 246, 222, 0.6);
+  filter: none;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+html body .story-weakness-stepper > button:not(.torch-btn):hover:not(:disabled) {
+  --seal-rim:
+    0 0 0 1px #7d5f30,
+    0 0 0 2.5px #f0d08a,
+    0 0 0 3.5px #6a4f28,
+    0 1px 3px 1px rgba(58, 34, 8, 0.26);
+  filter: brightness(1.05);
+  transform: scale(1.06);
+}
+
+html body .story-weakness-stepper > button:not(.torch-btn):active:not(:disabled) {
+  filter: none;
+  transform: scale(0.96);
+}
+
+html body .story-weakness-stepper > button:not(.torch-btn):focus-visible {
+  outline: 2px solid #b8863c;
+  outline-offset: 2px;
+}
+
+html body.torch-mode .story-weakness-stepper > button:not(.torch-btn) {
+  background: radial-gradient(circle at 36% 30%, #7a5c34 0%, #53391f 60%, #3a2815 100%);
+  box-shadow: var(--seal-rim), inset 0 1px 1px rgba(255, 226, 160, 0.25), inset 0 -2px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 600px) {
+  html body button.story-weakness-summary:not(:disabled) {
+    border-image-width: 0 24px;
+    padding: 14px 30px;
+    grid-template-columns: minmax(0, 1fr) 12px;
+    gap: 4px 8px;
+  }
+  html body .story-weakness-summary .story-weakness-total {
+    grid-row: 2;
+    grid-column: 1;
+    justify-self: start;
+  }
+  html body .story-weakness-summary .story-weakness-chevron {
+    grid-row: 1 / 3;
+    grid-column: 2;
+  }
+}
+
+html body button:is(.tg-inline-del, .draft-card-remove, .edit-card-remove, .customizable-inline-chip, .customizable-overlay-close, .tg-status-slot, .torch-btn) {
+  border-image-width: 0 9px;
+}
+
+html body button:is(.customizable-inline-chip, .customizable-overlay-close) { padding: 0 6px; }
+html body button.tg-inline-del { padding: 3px 9px; }
+html body .edit-gate { flex-wrap: wrap; }
+
+html body .news-year-summary::after {
+  border: 1px solid transparent;
+  border-image: var(--control-art) 0 420 fill / 0 8px / 0 stretch;
+  border-radius: 0;
+  background: transparent;
+  color: var(--control-ink);
+}
+
+@media (max-width: 720px) {
+  html body nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding-inline: 8px;
+  }
+
+  html body nav a[href]:any-link {
+    min-width: 0;
+    min-height: 56px;
+    padding: 12px 30px;
+    border-image-width: 0 34px;
+    font-size: clamp(0.72rem, 3.6vw, 0.94rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button) {
+    transition: none;
+  }
+}
+
+/* Generated medallions keep the torch toggle distinct from ordinary buttons. */
+html body button.torch-btn {
+  width: 84px;
+  height: 84px;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  filter: drop-shadow(0 5px 8px rgba(30, 19, 8, 0.3));
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+html body button.torch-btn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  content: url("../../assets/icon/medieval-torch-lit.png");
+  transition: transform 180ms ease;
+}
+
+html body.torch-mode button.torch-btn img {
+  content: url("../../assets/icon/medieval-torch-unlit.png");
+}
+
+html body button.torch-btn:hover:not(:disabled) {
+  background: none;
+  box-shadow: none;
+  filter: drop-shadow(0 7px 10px rgba(30, 19, 8, 0.34)) brightness(1.06);
+  transform: translateY(-2px) scale(1.04);
+}
+
+html body button.torch-btn:active:not(:disabled) { transform: translateY(0) scale(0.98); }
+html body button.torch-btn:focus-visible { outline: 3px solid #f5d98e; outline-offset: 3px; }
+
+@media (max-width: 720px) {
+  html body button.torch-btn { width: 70px; height: 70px; }
+}

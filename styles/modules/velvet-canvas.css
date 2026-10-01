@@ -1,0 +1,124 @@
+/* Main canvas only: textile grain + repeating gold embroidery.
+   Content panels keep their own reading palette, independent of the cloth. */
+body .container,
+body.torch-mode .container {
+  --ink: #fff0d4;
+  --ink-soft: #efddc3;
+  --list-rule: rgba(221, 183, 119, 0.42);
+  color: var(--ink);
+  background:
+    linear-gradient(110deg, rgba(40, 22, 28, 0.56), rgba(54, 28, 35, 0.38) 48%, rgba(30, 17, 24, 0.62)),
+    url("../../assets/misc/burgundy_velvet_texture.png") repeat;
+  background-size: auto, 520px 520px;
+  box-shadow: 0 22px 48px rgba(21, 8, 12, 0.36), inset 0 0 44px rgba(17, 4, 9, 0.35);
+  padding: 36px 40px 40px;
+}
+
+body.torch-mode .container {
+  background:
+    linear-gradient(110deg, rgba(24, 16, 22, 0.7), rgba(42, 22, 30, 0.58) 48%, rgba(20, 12, 19, 0.74)),
+    url("../../assets/misc/burgundy_velvet_texture.png") repeat;
+  background-size: auto, 520px 520px;
+}
+
+body .container::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 26px solid transparent;
+  border-image: url("../../assets/misc/antique_gold_embroidered_frame.png") 14% / 26px / 0 round;
+  pointer-events: none;
+  opacity: 0.78;
+}
+
+/* Warm reading surfaces isolate body copy from the dark textile. */
+body:not(.torch-mode) :is(.card, .record-card, .campaign-group, .upgrade-card, .news-card) {
+  --ink: #362715;
+  --ink-soft: #51402c;
+  --list-rule: rgba(145, 108, 55, 0.42);
+  color: var(--ink);
+}
+
+/* Aged parchment: toned-down vellum with fibre grain and a burnt edge, so the
+   sheet sits on the velvet instead of glowing against it. Investigator cards
+   (artwork nested in a sheet) and news cards (cover-art backgrounds) keep
+   their own surfaces. */
+body:not(.torch-mode) :is(.card:not(.investigator-card), .record-card, .campaign-group, .upgrade-card) {
+  border-radius: 8px;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .12 0 0 0 .5 -.18'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 120% 90% at 50% 45%, transparent 58%, rgba(122, 78, 28, 0.2) 100%),
+    radial-gradient(ellipse 60% 45% at 30% 22%, rgba(255, 246, 220, 0.38), transparent 70%),
+    linear-gradient(180deg, #e9d7ad 0%, #dfc796 60%, #d6ba86 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(112, 74, 30, 0.26),
+    inset 0 0 34px rgba(118, 76, 28, 0.24),
+    0 16px 30px rgba(18, 6, 10, 0.34);
+}
+
+/* One sheet per group: nested campaign panels become plain regions on it. */
+body:not(.torch-mode) :is(.campaign-run, .campaign-track) {
+  background: transparent;
+  box-shadow: none;
+}
+
+body:not(.torch-mode) .campaign-run + .campaign-run {
+  border-top: 1px solid rgba(112, 74, 30, 0.28);
+}
+
+body.torch-mode :is(.record-card, .campaign-group, .upgrade-card) {
+  --ink: #f5e2be;
+  --ink-soft: #efddc3;
+  color: var(--ink);
+  background: linear-gradient(180deg, #49382a, #382b23);
+}
+
+/* These labels live directly on the cloth, outside the reading cards. */
+body .news-year-summary,
+body .news-year-count,
+body.torch-mode .news-year-summary,
+body.torch-mode .news-year-count {
+  color: #f3e1c4;
+}
+
+body .news-year-current,
+body.torch-mode .news-year-current {
+  color: #e1edcc;
+  background: #3c513c;
+}
+
+body .news-year-summary::after,
+body.torch-mode .news-year-summary::after {
+  background: rgba(255, 233, 191, 0.14);
+}
+
+body .news-year-summary:focus-visible {
+  outline-color: #efcf91;
+}
+
+body .category-title,
+body .page-title {
+  color: #fff0d4;
+  text-shadow: 0 2px 4px rgba(25, 6, 12, 0.45);
+}
+
+@media (max-width: 900px) {
+  body .container,
+  body.torch-mode .container {
+    padding: 30px 28px 32px;
+  }
+}
+
+@media (max-width: 720px) {
+  body .container,
+  body.torch-mode .container {
+    padding: 24px 20px 28px;
+  }
+
+  body .container::before {
+    inset: 5px;
+    border-width: 16px;
+    border-image-width: 16px;
+    opacity: 0.72;
+  }
+}

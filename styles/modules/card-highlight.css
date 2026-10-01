@@ -1,0 +1,39 @@
+/* Shared hover feedback. Only the innermost card under the pointer lights up.
+   Outlines and shadows do not change layout or cover artwork and controls. */
+body {
+  --card-highlight-rim: rgba(173, 124, 48, .8);
+  --card-highlight-glow: rgba(223, 176, 89, .3);
+}
+
+body.torch-mode {
+  --card-highlight-rim: rgba(245, 210, 142, .9);
+  --card-highlight-glow: rgba(238, 187, 94, .34);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body .container :is(.card:not(.investigator-card):not(.category-placeholder), .game-card:not(.category-placeholder), .news-card, .campaign-group, .campaign-run, .campaign-track, .record-card, .upgrade-card, .dream-track-card, .story-note, .tg-block, .session-notes, .event-photo, .photo-grid img, .investigator-card .card-wrapper) {
+    --hover-resting-depth: var(--card-depth);
+    transition-property: box-shadow, outline-color, transform;
+    transition-duration: 180ms;
+    transition-timing-function: ease;
+  }
+
+  html body .container :is(.campaign-group, .record-card, .card) :is(.card:not(.investigator-card):not(.category-placeholder), .game-card:not(.category-placeholder), .news-card, .campaign-group, .campaign-run, .campaign-track, .record-card, .upgrade-card, .dream-track-card, .story-note, .tg-block, .session-notes, .event-photo, .photo-grid img, .investigator-card .card-wrapper) {
+    --hover-resting-depth: var(--panel-depth);
+  }
+
+  html body .container :is(.card:not(.investigator-card):not(.category-placeholder), .game-card:not(.category-placeholder), .news-card, .campaign-group, .campaign-run, .campaign-track, .record-card, .upgrade-card, .dream-track-card, .story-note, .tg-block, .session-notes, .event-photo, .photo-grid img, .investigator-card .card-wrapper):hover:not(:has(:is(.card:not(.investigator-card):not(.category-placeholder), .game-card:not(.category-placeholder), .news-card, .campaign-group, .campaign-run, .campaign-track, .record-card, .upgrade-card, .dream-track-card, .story-note, .tg-block, .session-notes, .event-photo, .photo-grid img, .investigator-card .card-wrapper):hover)) {
+    outline: 1px solid var(--card-highlight-rim);
+    outline-offset: -1px;
+    box-shadow: var(--hover-resting-depth),
+      0 0 0 2px var(--card-highlight-glow),
+      0 0 22px 3px var(--card-highlight-glow);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .container :is(.card:not(.investigator-card):not(.category-placeholder), .game-card:not(.category-placeholder), .news-card, .campaign-group, .campaign-run, .campaign-track, .record-card, .upgrade-card, .dream-track-card, .story-note, .tg-block, .session-notes, .event-photo, .photo-grid img, .investigator-card .card-wrapper) {
+    transition: none;
+  }
+}
+

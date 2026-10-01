@@ -1,0 +1,85 @@
+/* Soft floating shadows separate content from velvet without a solid rim. */
+body {
+  --card-contact: rgba(12, 4, 7, .56);
+  --card-cast: rgba(12, 4, 7, .52);
+  --card-ambient: rgba(12, 4, 7, .3);
+  --card-depth: 0 5px 10px -3px var(--card-contact),
+    0 16px 28px -6px var(--card-cast),
+    0 30px 44px -16px var(--card-ambient);
+  --panel-depth: 0 3px 8px -3px var(--card-contact),
+    0 9px 18px -7px var(--card-cast);
+}
+
+body.torch-mode {
+  --card-contact: rgba(5, 2, 3, .7);
+  --card-cast: rgba(5, 2, 3, .64);
+  --card-ambient: rgba(5, 2, 3, .42);
+}
+
+/* Shared across collections, news, photographs and campaign records. */
+html body .container :is(.card, .game-card, .news-card, .campaign-group,
+  .record-card, .event-photo, .photo-grid img, .investigator-card .card-wrapper) {
+  box-shadow: var(--card-depth);
+}
+
+/* Nested content sits closer to its parent, preserving the hierarchy. */
+html body .container :is(.upgrade-card, .campaign-track, .tg-block),
+html body .container :is(.campaign-group, .record-card) :is(.card, .record-card) {
+  box-shadow: var(--panel-depth);
+}
+
+html body .container .game-card {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+html body .container .investigator-card {
+  box-shadow: none;
+  transform: none;
+}
+
+html body .container .category-grid {
+  column-gap: 28px;
+}
+
+html body .container .category-grid .game-card {
+  margin-bottom: 30px;
+}
+
+html body .container .photo-grid {
+  column-gap: 26px;
+}
+
+html body .container .photo-grid img {
+  margin-bottom: 26px;
+}
+
+/* Only interactive cards lift; reading panels and photographs stay still. */
+@media (hover: hover) and (pointer: fine) {
+  html body .container .game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px -5px var(--card-contact),
+      0 24px 36px -8px var(--card-cast),
+      0 36px 48px -18px var(--card-ambient);
+  }
+  html body .container .investigator-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+html body .container .game-card:focus-within {
+  box-shadow: var(--card-depth), 0 0 0 3px rgba(235, 195, 116, .7);
+}
+
+@media (max-width: 600px) {
+  body {
+    --card-depth: 0 4px 9px -3px var(--card-contact),
+      0 12px 22px -5px var(--card-cast);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .container :is(.game-card, .investigator-card) {
+    transition: none;
+    transform: none;
+  }
+}

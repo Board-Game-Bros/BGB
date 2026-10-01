@@ -1,7 +1,13 @@
-@import url("../base.css?v=20260915lists");
-@import url("../modules/photo-grid.css");
-@import url("../modules/banner-title.css");
+@import url("../base.css?v=20260924velvet");
+@import url("../modules/photo-grid.css?v=20260923soft");
+@import url("../modules/banner-title.css?v=20260924banner2");
 @import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English+SC&display=swap");
+@import url("../modules/velvet-canvas.css?v=20260928parchment2");
+@import url("../modules/medieval-buttons.css?v=20260930vellum1");
+@import url("../modules/nav-banner.css?v=20260927torch1");
+@import url("../modules/card-depth.css?v=20260928depth2");
+@import url("../modules/shell-ornaments.css?v=20260928bgb3");
+@import url("../modules/card-highlight.css?v=20260929hover1");
 
 /* Page: daily.html */
 body {

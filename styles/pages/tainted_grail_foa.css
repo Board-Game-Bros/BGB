@@ -1,11 +1,20 @@
-@import url("../base.css?v=20260915lists");
-@import url("../modules/cards.css");
-@import url("../modules/banner-title.css");
-@import url("../modules/campaign.css");
-@import url("../modules/subnav.css");
-@import url("../modules/tg-log.css?v=20260915lists");
-@import url("../modules/tg-editor.css");
+@import url("../base.css?v=20260924velvet");
+@import url("../modules/cards.css?v=20260923soft");
+@import url("../modules/banner-title.css?v=20260924banner2");
+@import url("../modules/campaign.css?v=20260923soft");
+@import url("../modules/subnav.css?v=20260923soft");
+@import url("../modules/tg-log.css?v=20260923soft");
+@import url("../modules/tg-editor.css?v=20260923soft");
 @import url("https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English+SC&display=swap");
+@import url("../modules/velvet-canvas.css?v=20260928parchment2");
+@import url("../modules/medieval-buttons.css?v=20260930vellum1");
+@import url("../modules/nav-banner.css?v=20260927torch1");
+@import url("../modules/card-depth.css?v=20260928depth2");
+@import url("../modules/shell-ornaments.css?v=20260928bgb3");
+@import url("../modules/card-surfaces.css?v=20260929surfaces2");
+@import url("../modules/card-highlight.css?v=20260929hover1");
+@import url("../modules/tg-status-board.css?v=20260929status1");
+@import url("../modules/tg-vellum.css?v=20260930glow1");
 
 /* Page: tainted_grail_foa.html */
 body {
@@ -28,6 +37,22 @@ nav a,
   -webkit-text-fill-color: currentColor;
   color: inherit;
   text-shadow: 1px 1px 0 rgba(255, 230, 180, 0.3);
+}
+
+/* The title block shares the inner cards' 18px inset so title, date and
+   summary start on one line; the date uses the journal face, not Cinzel. */
+#overview .campaign-subtitle-wrapper {
+  padding: 0 18px;
+}
+
+#overview .campaign-meta {
+  font-family: "IM Fell English SC", serif;
+  font-size: 1.05rem;
+  margin-top: 4px;
+}
+
+#overview #logs > h3 {
+  font-size: 1.7rem;
 }
 
 /* Torch mode: force high-contrast copy on light cards/log blocks. */

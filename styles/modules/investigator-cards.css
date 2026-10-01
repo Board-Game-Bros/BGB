@@ -22,19 +22,12 @@
   justify-content: center;
   opacity: 0;
   transition: opacity 0.4s ease;
-  border: 2px solid #e6c27a;
+  border: 0;
   box-sizing: border-box;
 }
 
 .card-overlay::before {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  right: 5px;
-  bottom: 5px;
-  border: 1px solid rgba(230, 194, 122, 0.4);
-  pointer-events: none;
+  content: none;
 }
 
 .investigator-card:hover .card-overlay {

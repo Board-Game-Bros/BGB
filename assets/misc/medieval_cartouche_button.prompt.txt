@@ -1,0 +1,1 @@
+ImageGen design prompt: Preserve the symmetrical gold botanical cartouche with ivory parchment in light mode. Extend the left and right side ornaments horizontally and reduce their vertical thickness; keep the center plaque length unchanged. Dark mode uses the same geometry with burgundy velvet and antique gold. Transparent wide PNGs; no text.
