@@ -918,6 +918,15 @@
     return block;
   }
 
+  function locationArrow() {
+    const arrow = el("img", "tg-arrow-img");
+    arrow.src = "/assets/misc/card-surfaces/journal-location-arrow-slice.svg";
+    arrow.alt = "→";
+    arrow.width = 64;
+    arrow.height = 20;
+    return arrow;
+  }
+
   function renderLocationBlock(session, editable, handlers) {
     const locked = handlers ? !!handlers.locked : !canEditNow();
     const block = el("div", "tg-block cn");
@@ -928,7 +937,7 @@
     session.locationChanges.forEach((row, index) => {
       if (!editable) {
         const move = el("div", "tg-move");
-        move.append(el("span", "tg-tag", row.from || ""), el("span", "tg-arrow-img"), el("span", "tg-tag", row.to || ""));
+        move.append(el("span", "tg-tag", row.from || ""), locationArrow(), el("span", "tg-tag", row.to || ""));
         list.appendChild(move);
         return;
       }
@@ -957,7 +966,7 @@
       const toWrap = el("span", "tg-tag tg-edit-box");
       fromWrap.appendChild(from);
       toWrap.appendChild(to);
-      line.append(fromWrap, el("span", "tg-arrow-img"), toWrap, del);
+      line.append(fromWrap, locationArrow(), toWrap, del);
       list.appendChild(line);
     });
 

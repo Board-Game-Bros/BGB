@@ -202,3 +202,38 @@ body.torch-mode .journal-scroll-roller::after {
       0 0 22px 3px var(--card-highlight-glow);
   }
 }
+
+/* Location changes read as a single inked route on the shared parchment. */
+html body .container #tg-campaign-root .campaign-group .tg-move {
+  width: fit-content;
+  max-width: 100%;
+  grid-template-columns: minmax(48px, auto) 64px minmax(48px, auto);
+  gap: 0;
+  padding: 5px 12px;
+  background: linear-gradient(90deg, transparent, var(--journal-row) 12%, var(--journal-row) 88%, transparent);
+}
+
+html body .container #tg-campaign-root .campaign-group .tg-move > .tg-tag {
+  min-width: 0;
+  padding: 7px 9px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-variant-numeric: tabular-nums;
+}
+
+html body .container #tg-campaign-root .campaign-group .tg-edit-move {
+  width: auto;
+  grid-template-columns: minmax(60px, 1fr) 64px minmax(60px, 1fr) auto;
+}
+
+@media (max-width: 720px) {
+  html body .container #tg-campaign-root .campaign-group .tg-move {
+    grid-template-columns: minmax(42px, auto) 42px minmax(42px, auto);
+    padding-inline: 6px;
+  }
+  html body .container #tg-campaign-root .campaign-group .tg-edit-move {
+    grid-template-columns: minmax(48px, 1fr) 42px minmax(48px, 1fr) auto;
+  }
+}

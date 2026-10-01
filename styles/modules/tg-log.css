@@ -224,41 +224,16 @@
 }
 
 .tg-arrow-img {
-  display: inline-block;
-  position: relative;
-  width: 54px;
-  height: 26px;
+  display: block;
+  width: 64px;
+  height: 20px;
+  object-fit: fill;
   justify-self: center;
-  color: inherit;
-  filter: none;
+  pointer-events: none;
 }
 
-.tg-arrow-img::before {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 50%;
-  width: 16px;
-  height: 16px;
-  transform: translateY(-50%);
-  background: currentColor;
-  opacity: 0.88;
-  clip-path: polygon(18% 0, 100% 50%, 18% 100%, 0 82%, 48% 50%, 0 18%);
-  border-radius: 3px;
-}
-
-.tg-arrow-img::after {
-  content: "";
-  position: absolute;
-  left: 24px;
-  top: 50%;
-  width: 16px;
-  height: 16px;
-  transform: translateY(-50%);
-  background: currentColor;
-  opacity: 0.88;
-  clip-path: polygon(18% 0, 100% 50%, 18% 100%, 0 82%, 48% 50%, 0 18%);
-  border-radius: 3px;
+body.torch-mode .tg-arrow-img {
+  filter: brightness(1.45) saturate(.7);
 }
 
 @media (max-width: 720px) {
@@ -302,17 +277,7 @@
     height: 20px;
   }
 
-  .tg-arrow-img::before {
-    left: 5px;
-    width: 12px;
-    height: 12px;
-  }
 
-  .tg-arrow-img::after {
-    left: 19px;
-    width: 12px;
-    height: 12px;
-  }
 }
 
 @media (max-width: 420px) {
