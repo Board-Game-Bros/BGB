@@ -691,7 +691,14 @@
   function renderSessionReadOnly(session) {
     const wrap = el("div", "session");
     const header = el("div", "session-header");
-    header.appendChild(el("h4", "session-title", `Session ${String(session.sessionNo).padStart(2, "0")} - ${fmtDate(session.date)}`));
+    const chapter = el("h4", "session-title journal-session-title");
+    const number = el("span", "journal-session-number", String(session.sessionNo).padStart(2, "0"));
+    const caption = el("span", "journal-session-caption");
+    const date = el("time", "journal-session-date", fmtDate(session.date));
+    date.dateTime = session.date || "";
+    caption.append(el("span", "journal-session-label", "Session"), date);
+    chapter.append(number, caption);
+    header.appendChild(chapter);
     const actions = el("div", "tg-draft-head");
     const editBtn = el("button", "tg-add-btn", "Edit");
     editBtn.type = "button";
@@ -864,6 +871,21 @@
     return block;
   }
 
+  // Presentation only: keep stored text and all editor values untouched.
+  function journalCopy(text, className) {
+    const copy = el("span", className);
+    const parts = String(text || "").split(/(（已完成）|\(已完成\)|（进行中）|（结局）)/g);
+    parts.forEach((part) => {
+      if (!part) return;
+      if (/^[（(](已完成|进行中|结局)[）)]$/.test(part)) {
+        copy.appendChild(el("span", "journal-annotation", part));
+      } else {
+        copy.appendChild(document.createTextNode(part));
+      }
+    });
+    return copy;
+  }
+
   function renderTasksBlock(session, editable, handlers) {
     const locked = handlers ? !!handlers.locked : !canEditNow();
     const block = el("div", "tg-block cn");
@@ -874,7 +896,7 @@
     session.tasks.forEach((row, index) => {
       if (!editable) {
         const line = el("div", "tg-line");
-        line.append(el("span", "tg-tag", row.tag || ""), el("span", "tg-text", row.text || ""));
+        line.append(el("span", "tg-tag", row.tag || ""), journalCopy(row.text, "tg-text"));
         list.appendChild(line);
         return;
       }
@@ -990,7 +1012,7 @@
 
     session.notes.forEach((note, index) => {
       if (!editable) {
-        list.appendChild(el("div", "tg-note", note || ""));
+        list.appendChild(journalCopy(note, "tg-note"));
         return;
       }
 
@@ -1515,8 +1537,8 @@
     );
     subtitleWrap.appendChild(subtitleHeader);
 
-    const summary = el("div", "card");
-    const h4 = el("h4", "", state.campaign.summary || "");
+    const summary = el("div", "card journal-summary");
+    const h4 = el("p", "journal-intro", state.campaign.summary || "");
     h4.style.marginBottom = "0";
     summary.appendChild(h4);
 
