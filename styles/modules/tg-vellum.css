@@ -118,7 +118,8 @@ html body.torch-mode .container #tg-campaign-root .campaign-group .card:not(.inv
   html body .container #tg-campaign-root .campaign-group .tg-block::after { left: 10px; }
 }
 
-/* Horizontal rollers: fixed-size turned finials, extensible parchment shaft. */
+/* The sheet wraps the spindle: exposed finials sit outside the sheet edges,
+   while the rolled center uses the same material and wash as the hanging sheet. */
 html body .container #tg-campaign-root .campaign-group {
   margin-block: 54px 46px;
   padding-top: 48px;
@@ -129,20 +130,41 @@ html body .container #tg-campaign-root .campaign-group {
 .journal-scroll-roller {
   position: absolute;
   z-index: 2;
-  left: -32px;
-  right: -32px;
+  left: -68px;
+  right: -68px;
   height: 40px;
   pointer-events: none;
+}
+
+.journal-scroll-roller::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   border: solid transparent;
   border-width: 0 68px;
-  border-image: url("../../assets/misc/card-surfaces/journal-scroll-roller-slice.svg") 0 340 fill / 0 68px / 0 stretch;
-  filter: drop-shadow(0 4px 3px rgba(38, 19, 9, .38));
+  /* No center fill: only the original carved wooden and brass finials. */
+  border-image: url("../../assets/misc/card-surfaces/journal-scroll-roller-slice.svg") 0 340 / 0 68px / 0 stretch;
+  filter: drop-shadow(0 3px 3px rgba(38, 19, 9, .38));
+}
+
+.journal-scroll-roller::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 6px 65px 4px;
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, .28), rgba(255, 243, 209, .24) 24%, transparent 52%, rgba(0, 0, 0, .42) 94%),
+    linear-gradient(var(--journal-wash), var(--journal-wash)),
+    var(--journal-paper) repeat;
+  background-size: auto, auto, 660px 660px;
+  box-shadow: 0 4px 4px rgba(22, 13, 7, .3);
 }
 
 .journal-scroll-roller-top { top: -20px; }
 .journal-scroll-roller-bottom { bottom: -20px; }
 
-body.torch-mode .journal-scroll-roller {
+body.torch-mode .journal-scroll-roller::after {
   filter: brightness(.62) saturate(.7) drop-shadow(0 4px 4px rgba(9, 4, 3, .65));
 }
 
@@ -153,14 +175,19 @@ body.torch-mode .journal-scroll-roller {
     margin-block: 38px;
   }
   .journal-scroll-roller {
-    left: -12px;
-    right: -12px;
-    height: 28px;
-    border-inline-width: 46px;
-    border-image-width: 0 46px;
+    left: -24px;
+    right: -24px;
+    height: 16px;
   }
-  .journal-scroll-roller-top { top: -14px; }
-  .journal-scroll-roller-bottom { bottom: -14px; }
+  .journal-scroll-roller::after {
+    border-inline-width: 24px;
+    border-image-width: 0 24px;
+  }
+  .journal-scroll-roller::before {
+    inset: 2px 23px 1px;
+  }
+  .journal-scroll-roller-top { top: -8px; }
+  .journal-scroll-roller-bottom { bottom: -8px; }
 }
 
 /* Two hover levels, one lit at a time: a small journal section under the
