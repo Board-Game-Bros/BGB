@@ -4561,9 +4561,12 @@
         }
         top = clamp(top, viewportTop + previewMargin, viewportBottom - displayHeight - previewMargin);
 
-        preview.style.position = "fixed";
-        preview.style.left = Math.round(left) + "px";
-        preview.style.top = Math.round(top) + "px";
+        // Torch-mode body filters change the containing block of fixed previews.
+        // Ledger references are positioned anchors; use local offsets here.
+        const inUpgradeLedger = !!cardRef.closest("#upgrade-history");
+        preview.style.position = inUpgradeLedger ? "absolute" : "fixed";
+        preview.style.left = Math.round(inUpgradeLedger ? left - anchor.left : left) + "px";
+        preview.style.top = Math.round(inUpgradeLedger ? top - anchor.top : top) + "px";
         preview.style.right = "auto";
         preview.style.bottom = "auto";
         preview.style.transform = "none";

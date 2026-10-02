@@ -48,13 +48,24 @@ html body #upgrade-history .upgrade-card::before {
   pointer-events: none;
 }
 
+/* The artwork isolates each sheet. Raise the sheet containing an open preview
+   above its siblings so even the preview's large z-index can cross columns. */
+html body #upgrade-history .upgrade-card:has(.card-ref:is(:hover, :focus-within)) {
+  z-index: 10;
+}
+
+html body #upgrade-history .investigator-pill:is(:hover, :focus-within) {
+  z-index: 1;
+}
+
 html body #upgrade-history .upgrade-card > h3 { margin-bottom: 18px; }
 
 html body #upgrade-history .investigator-pill {
   position: relative;
   isolation: isolate;
   min-height: 58px;
-  padding: 15px 28px;
+  /* The display font's visible capitals sit below its line-box center. */
+  padding: 12px 28px 18px;
   border: 0;
   border-radius: 0;
   background: none;

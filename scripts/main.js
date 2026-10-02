@@ -290,7 +290,7 @@ const bindCardRefViewportPreviews = (root = document) => {
     // block for fixed descendants. Keep partner previews anchored to their
     // portrait instead, while converting the clamped viewport position into a
     // local offset. This prevents edge portraits from jumping up the document.
-    if (cardRef.classList.contains("campaign-partner")) {
+    if (cardRef.classList.contains("campaign-partner") || cardRef.closest("#upgrade-history")) {
       preview.style.position = "absolute";
       preview.style.left = `${Math.round(left - anchor.left)}px`;
       preview.style.top = `${Math.round(top - anchor.top)}px`;
