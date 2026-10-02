@@ -112,6 +112,22 @@
   margin-top: 10px;
 }
 
+/* Align status copy with the center of the illustrated controls. Standalone
+   page messages retain their spacing; only toolbar children lose top margins. */
+.tg-sync-bar {
+  align-items: center;
+}
+
+.tg-sync-bar > .tg-add-btn,
+.tg-sync-bar > .tg-page-status {
+  margin-top: 0;
+}
+
+.tg-sync-bar > .tg-page-status {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 720px) {
   .tg-draft-head,
   .tg-draft-actions,
@@ -130,6 +146,12 @@
 
   .tg-edit-tag {
     width: 70px;
+  }
+
+  .tg-sync-bar > .tg-page-status {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
   }
 }
 
