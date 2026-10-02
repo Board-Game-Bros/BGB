@@ -1157,6 +1157,15 @@ img.card-preview,
   pointer-events: none;
 }
 
+/* Use the same visible silhouette for every card scan and preview variant. */
+html body .container .card-preview {
+  border-radius: 16px;
+}
+
+html body img.card-preview {
+  clip-path: inset(0 round 16px);
+}
+
 .customizable-preview {
   box-sizing: border-box;
   width: min(760px, calc(100vw - 16px));
