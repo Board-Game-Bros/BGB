@@ -108,6 +108,9 @@ html body #upgrade-history .upgrade-list > p:first-child {
 }
 
 html body #upgrade-history .upgrade-entry {
+  /* Scenario sections share the sheet: hover adds only the journal's gilt glow. */
+  --card-depth: 0 0 0 transparent;
+  --panel-depth: 0 0 0 transparent;
   position: relative;
   margin-top: 20px;
   padding: 28px 0 0;
@@ -120,6 +123,16 @@ html body #upgrade-history .upgrade-entry::before {
   height: 20px;
   background: url("../../assets/boardgames/ahlcg_campaign_ui/chapter-flourish.png") center 48% / 100% 280% no-repeat;
   pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body .container #upgrade-history .upgrade-entry:hover {
+    outline: 1px solid var(--card-highlight-rim);
+    outline-offset: -1px;
+    box-shadow: var(--hover-resting-depth),
+      0 0 0 2px var(--card-highlight-glow),
+      0 0 22px 3px var(--card-highlight-glow);
+  }
 }
 
 html body #upgrade-history .upgrade-entry-head {
