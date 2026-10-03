@@ -27,7 +27,7 @@
         "/scripts/shared-github-sync.js?v=20260401a",
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
-        "/scripts/ahlcg-upgrade-manager.js?v=20261002trauma",
+        "/scripts/ahlcg-upgrade-manager.js?v=20261003traumahover",
         "/scripts/arkham-parallel-campaign-page.js?v=20261001folders",
       ],
     },
@@ -41,7 +41,7 @@
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20261003scenario";
+  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20261003traumahover";
   document.head.appendChild(stylesheet);
 
   const root = document.createElement("div");

@@ -112,14 +112,14 @@ html body #upgrade-history .upgrade-entry {
   --card-depth: 0 0 0 transparent;
   --panel-depth: 0 0 0 transparent;
   position: relative;
-  margin-top: 20px;
-  padding: 28px 0 0;
+  margin: 20px -8px 0;
+  padding: 28px 8px 4px;
 }
 
 html body #upgrade-history .upgrade-entry::before {
   content: "";
   position: absolute;
-  inset: 0 0 auto;
+  inset: 0 8px auto;
   height: 20px;
   background: url("../../assets/boardgames/ahlcg_campaign_ui/chapter-flourish.png") center 48% / 100% 280% no-repeat;
   pointer-events: none;

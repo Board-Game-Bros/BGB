@@ -3316,7 +3316,8 @@
     function serializeEntryForPendingDelete(entry) {
       if (!entry) return "";
       const clone = entry.cloneNode(true);
-      clone.querySelectorAll(".upgrade-entry-editor").forEach((node) => node.remove());
+      // Pending deletes store the linked trauma row separately.
+      clone.querySelectorAll(".upgrade-entry-editor, .scenario-trauma").forEach((node) => node.remove());
       clone.querySelectorAll("[data-bound]").forEach((node) => {
         node.removeAttribute("data-bound");
       });
@@ -3561,8 +3562,7 @@
 
         insertBeforeIfChild(upgradeList, entry, nextSibling);
         if (traumaRow) {
-          const insertionAnchor = entry.nextSibling;
-          insertBeforeIfChild(upgradeList, traumaRow, insertionAnchor);
+          entry.appendChild(traumaRow);
         }
         normalizeStaticEntryCardRows(entry);
         ensureEntryActions(entry);
@@ -3742,7 +3742,9 @@
         if (!ok) return;
         const upgradeList = entry.closest(".upgrade-list");
         const linkedTrauma = findLinkedTraumaRow(entry);
-        const nextSibling = linkedTrauma ? linkedTrauma.nextElementSibling : entry.nextElementSibling;
+        const nextSibling = linkedTrauma && linkedTrauma.parentNode !== entry
+          ? linkedTrauma.nextElementSibling
+          : entry.nextElementSibling;
         clearUndo({ forceClearPending: true });
         if (upgradeList) {
           const nextHead = nextSibling && nextSibling.classList.contains("upgrade-entry")
@@ -3939,7 +3941,7 @@
         const entryUid = ensureEntryUid(draftEntry);
         traumaRow.dataset.entryUidLink = entryUid;
         upgradeList.appendChild(draftEntry);
-        upgradeList.appendChild(traumaRow);
+        draftEntry.appendChild(traumaRow);
         attachStoryWeaknessEditor(draftEntry, draftEntry.querySelector(".upgrade-entry-builder"));
         refreshEntryCustomizedSection(draftEntry);
         syncDerivedUpgradeState();
@@ -3973,6 +3975,11 @@
       const clone = listEl.cloneNode(true);
       clone.querySelectorAll(".upgrade-toolbar, .undo-toast, .upgrade-entry-editor, .upgrade-entry-draft, .customizable-inline-editor, .customizable-popover").forEach((node) => {
         node.remove();
+      });
+      // Keep the saved ledger's existing entry/trauma sibling format.
+      clone.querySelectorAll(".upgrade-entry > .scenario-trauma").forEach((row) => {
+        const entry = row.parentNode;
+        entry.parentNode.insertBefore(row, entry.nextSibling);
       });
       clone.querySelectorAll("[data-bound]").forEach((node) => {
         node.removeAttribute("data-bound");
@@ -5105,11 +5112,13 @@
             row = createScenarioTraumaRow(scenarioLabel);
             entryTraumaMap.set(entryUid, row);
           }
-          const anchor = entry.nextSibling;
           row.dataset.entryUidLink = entryUid;
           row.dataset.traumaLabel = `Trauma (${scenarioLabel}):`;
           renderTraumaRow(row);
-          insertBeforeIfChild(upgradeList, row, anchor);
+          // Include trauma in the scenario's reading and hover region.
+          if (row.parentNode !== entry || row !== entry.lastElementChild) {
+            entry.appendChild(row);
+          }
         });
       });
     }
