@@ -119,18 +119,22 @@ html body button.story-weakness-summary:not(:disabled) {
 /* Live ledger numbers sit above an ImageGen gilt flourish, without a frame. */
 html body :is(button.trauma-value, input.trauma-input) {
   box-sizing: border-box;
-  height: 1.85em;
+  height: auto;
   margin: 0 0.15em;
-  padding: 0 0.25em 0.5em;
-  vertical-align: -0.4em;
+  padding: 0 0.25em 0.65em;
+  vertical-align: baseline;
   border: 0;
   border-image: none;
   border-radius: 0;
-  background: url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-flourish.png") center calc(100% + 0.5em) / 100% 1.8em no-repeat;
+  background: url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-flourish.png") center calc(100% + 0.65em) / 100% 1.8em no-repeat;
   box-shadow: none;
   color: var(--control-active);
   -webkit-text-fill-color: currentColor;
-  font: normal 400 0.92em/1 "Uncial Antiqua", Georgia, serif;
+  font: inherit;
+  font-family: Georgia, "IM Fell English SC", serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
   font-variant: normal;
   font-variant-numeric: lining-nums tabular-nums;
   text-align: center;
@@ -139,8 +143,7 @@ html body :is(button.trauma-value, input.trauma-input) {
 }
 
 html body button.trauma-value {
-  display: inline-grid;
-  place-items: center;
+  display: inline-block;
   min-width: 1.85em;
   cursor: pointer;
   transition: color 150ms ease, filter 150ms ease;
