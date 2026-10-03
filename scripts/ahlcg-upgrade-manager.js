@@ -2774,8 +2774,8 @@
       const fromData = String(row.dataset.traumaLabel || "");
       const fromText = String(row.textContent || "");
       const source = fromData || fromText;
-      const match = source.match(/Scenario\s+([IVXLCDM]+)/i);
-      return match ? match[1].toUpperCase() : "";
+      const match = source.match(/^Trauma\s*\((.*)\)\s*:/i);
+      return match ? match[1].trim() : "";
     }
 
     function findLinkedTraumaRow(entry) {
@@ -2805,7 +2805,7 @@
       row.className = "scenario-trauma";
       row.dataset.physical = String(physical);
       row.dataset.mental = String(mental);
-      row.dataset.traumaLabel = `Trauma (Scenario ${scenarioLabel}):`;
+      row.dataset.traumaLabel = `Trauma (${scenarioLabel}):`;
       renderTraumaRow(row);
       return row;
     }
@@ -3218,8 +3218,7 @@
     }
 
     function getScenarioLabelFromHead(headText) {
-      const match = String(headText || "").match(/After Scenario\s+([IVXLCDM]+)/i);
-      return match ? match[1].toUpperCase() : "";
+      return getEntryTitleFromHead(headText).replace(/^After\s+/i, "").trim();
     }
 
     function getXpFromHead(headText) {
@@ -3935,7 +3934,8 @@
         if (hasDraft) return;
         const scenarioNum = nextScenarioNumber(upgradeList);
         const draftEntry = createScenarioDraft(scenarioNum);
-        const traumaRow = createScenarioTraumaRow(intToRoman(scenarioNum));
+        const head = draftEntry.querySelector(".upgrade-entry-head");
+        const traumaRow = createScenarioTraumaRow(getScenarioLabelFromHead(head ? head.textContent : ""));
         const entryUid = ensureEntryUid(draftEntry);
         traumaRow.dataset.entryUidLink = entryUid;
         upgradeList.appendChild(draftEntry);
@@ -4314,6 +4314,7 @@
 
     function syncDerivedUpgradeState() {
       document.querySelectorAll(".upgrade-entry").forEach(renderStoryWeaknessStatus);
+      normalizeScenarioTraumaRows();
       scheduleSaveUpgradeState();
       refreshCurrentXp();
       refreshTraumaStatus();
@@ -5106,7 +5107,7 @@
           }
           const anchor = entry.nextSibling;
           row.dataset.entryUidLink = entryUid;
-          row.dataset.traumaLabel = `Trauma (Scenario ${scenarioLabel}):`;
+          row.dataset.traumaLabel = `Trauma (${scenarioLabel}):`;
           renderTraumaRow(row);
           insertBeforeIfChild(upgradeList, row, anchor);
         });

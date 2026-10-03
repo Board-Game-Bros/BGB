@@ -6,7 +6,7 @@
 @import url("../modules/subnav.css?v=20260923soft");
 @import url("https://fonts.googleapis.com/css2?family=Eater&family=IM+Fell+English+SC&family=Uncial+Antiqua&display=swap");
 @import url("../modules/velvet-canvas.css?v=20260928parchment2");
-@import url("../modules/medieval-buttons.css?v=20260930vellum1");
+@import url("../modules/medieval-buttons.css?v=20261002trauma");
 @import url("../modules/nav-banner.css?v=20260927torch1");
 @import url("../modules/card-depth.css?v=20260928depth2");
 @import url("../modules/shell-ornaments.css?v=20260928bgb3");
@@ -16,6 +16,12 @@
 @import url("../modules/upgrade-ledger.css?v=20261002alignment");
 
 /* Page: arkham_horror_lcg.html */
+/* Raise the preview's outer contexts above footer trim and nearby sections. */
+html body .container:has(.card-ref:is(:hover, :focus-within)),
+html body .container > :has(.card-ref:is(:hover, :focus-within)) {
+  z-index: 1;
+}
+
 body {
   font-family: "IM Fell English SC", serif;
 }
