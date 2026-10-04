@@ -847,6 +847,7 @@
       const del = el("button", "tg-inline-del", "×");
       del.type = "button";
       del.disabled = locked;
+      del.setAttribute("aria-label", `Remove ${menhirLabel}`);
       del.addEventListener("click", () => handlers.deleteRow("menhirs", index));
 
       const locWrap = el("div", "tg-menhir-row tg-edit-box");
@@ -919,6 +920,7 @@
       const del = el("button", "tg-inline-del", "×");
       del.type = "button";
       del.disabled = locked;
+      del.setAttribute("aria-label", `Remove task ${index + 1}`);
       del.addEventListener("click", () => handlers.deleteRow("tasks", index));
 
       const tagWrap = el("span", "tg-tag tg-edit-box");
@@ -982,6 +984,7 @@
       const del = el("button", "tg-inline-del", "×");
       del.type = "button";
       del.disabled = locked;
+      del.setAttribute("aria-label", `Remove location change ${index + 1}`);
       del.addEventListener("click", () => handlers.deleteRow("locationChanges", index));
 
       const fromWrap = el("span", "tg-tag tg-edit-box");
@@ -1027,6 +1030,7 @@
       const del = el("button", "tg-inline-del", "×");
       del.type = "button";
       del.disabled = locked;
+      del.setAttribute("aria-label", `Remove note ${index + 1}`);
       del.addEventListener("click", () => handlers.deleteRow("notes", index));
 
       noteWrap.append(input, del);

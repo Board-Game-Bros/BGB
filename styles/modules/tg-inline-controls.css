@@ -1,0 +1,5 @@
+/* Inputs yield space to the shared ImageGen seal instead of squeezing it. */
+html body .container #tg-campaign-root .tg-edit-box > .tg-edit-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}

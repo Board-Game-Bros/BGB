@@ -18,7 +18,7 @@ body.torch-mode {
 
 /* Symmetric illuminated cartouche controls. Mirrored botanical ends frame a
    warm embossed vellum label area; horizontal slices preserve the curved ornaments. */
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value, .draft-card-remove) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value, .draft-card-remove, .tg-inline-del, .customizable-overlay-close) {
   --cartouche-shadow: drop-shadow(0 2px 2px rgba(24, 15, 8, 0.32)) drop-shadow(0 4px 6px rgba(24, 15, 8, 0.16));
   border: 1px solid transparent;
   border-image: var(--control-art) 0 420 fill / 0 38px / 0 stretch;
@@ -40,12 +40,12 @@ html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link) {
   text-align: center;
 }
 
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value, .draft-card-remove):hover:not(:disabled) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value, .draft-card-remove, .tg-inline-del, .customizable-overlay-close):hover:not(:disabled) {
   filter: brightness(1.1) var(--cartouche-shadow);
   transform: translateY(-1px);
 }
 
-html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value, .draft-card-remove):active:not(:disabled) {
+html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, input[type="button"], input[type="submit"], input[type="reset"]):not(.campaign-partner, .campaign-assignment-character, .torch-btn, .trauma-value, .draft-card-remove, .tg-inline-del, .customizable-overlay-close):active:not(:disabled) {
   filter: brightness(0.94) drop-shadow(0 1px 1px rgba(24, 15, 8, 0.3));
   transform: translateY(1px);
 }
@@ -76,7 +76,7 @@ html body button:is(.upgrade-btn-secondary, [data-action="cancel-edit"], .custom
 
 html body button.customizable-inline-chip.is-inherited { cursor: default; }
 
-html body button:is(.upgrade-btn-danger, .tg-inline-del, .edit-card-remove, .tg-delete-session):not(:disabled) {
+html body button:is(.upgrade-btn-danger, .edit-card-remove, .tg-delete-session):not(:disabled) {
   color: var(--control-danger);
   font-weight: 900;
   text-shadow: none;
@@ -244,12 +244,11 @@ html body.torch-mode .story-weakness-stepper > button:not(.torch-btn) {
   }
 }
 
-html body button:is(.tg-inline-del, .edit-card-remove, .customizable-inline-chip, .customizable-overlay-close, .tg-status-slot, .torch-btn) {
+html body button:is(.edit-card-remove, .customizable-inline-chip, .tg-status-slot, .torch-btn) {
   border-image-width: 0 9px;
 }
 
-html body button:is(.customizable-inline-chip, .customizable-overlay-close) { padding: 0 6px; }
-html body button.tg-inline-del { padding: 3px 9px; }
+html body button.customizable-inline-chip { padding: 0 6px; }
 html body .edit-gate { flex-wrap: wrap; }
 
 html body .news-year-summary::after {

@@ -1,0 +1,64 @@
+/* ImageGen draws both the Celtic seal and its cross, with a dedicated dark face. */
+body {
+  --icon-seal-size: 32px;
+  --icon-seal-art: url("../../assets/misc/card-surfaces/journal-delete-seal-light-v2.png");
+}
+
+body.torch-mode {
+  --icon-seal-art: url("../../assets/misc/card-surfaces/journal-delete-seal-dark-v2.png");
+}
+
+html body .container button:is(.tg-inline-del, .draft-card-remove, .customizable-overlay-close) {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--icon-seal-size);
+  height: var(--icon-seal-size);
+  min-width: var(--icon-seal-size);
+  min-height: var(--icon-seal-size);
+  flex: 0 0 var(--icon-seal-size);
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-image: none;
+  border-radius: 50%;
+  background: var(--icon-seal-art) center / contain no-repeat;
+  /* Keep existing accessible labels; hide the old typeset cross. */
+  font: 0/1 sans-serif;
+  text-shadow: none;
+  box-shadow: none;
+  filter: none;
+  transform: none;
+  cursor: pointer;
+  transition: filter 150ms ease;
+}
+
+html body .container button:is(.tg-inline-del, .draft-card-remove, .customizable-overlay-close):hover:not(:disabled) {
+  filter: brightness(1.1) drop-shadow(0 1px 2px rgba(58, 34, 8, .25));
+}
+
+html body .container button:is(.tg-inline-del, .draft-card-remove, .customizable-overlay-close):active:not(:disabled) {
+  filter: brightness(.94);
+}
+
+html body .container button:is(.tg-inline-del, .draft-card-remove, .customizable-overlay-close):focus-visible {
+  outline: 2px solid var(--control-active, #9a733a);
+  outline-offset: 3px;
+}
+
+html body .container button:is(.tg-inline-del, .draft-card-remove, .customizable-overlay-close):disabled {
+  opacity: .55;
+  filter: grayscale(.5);
+  cursor: not-allowed;
+}
+
+@media (pointer: coarse) {
+  body { --icon-seal-size: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .container button:is(.tg-inline-del, .draft-card-remove, .customizable-overlay-close) {
+    transition: none;
+  }
+}
