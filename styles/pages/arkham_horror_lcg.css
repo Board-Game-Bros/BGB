@@ -6,7 +6,7 @@
 @import url("../modules/subnav.css?v=20260923soft");
 @import url("https://fonts.googleapis.com/css2?family=Eater&family=IM+Fell+English+SC&family=Uncial+Antiqua&display=swap");
 @import url("../modules/velvet-canvas.css?v=20260928parchment2");
-@import url("../modules/medieval-buttons.css?v=20261002trauma2");
+@import url("../modules/medieval-buttons.css?v=20261003remove");
 @import url("../modules/nav-banner.css?v=20260927torch1");
 @import url("../modules/card-depth.css?v=20260928depth2");
 @import url("../modules/shell-ornaments.css?v=20260928bgb3");
@@ -1070,7 +1070,7 @@ body.torch-mode .campaign-assignment-connector {
 .draft-card-inline {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   max-width: 100%;
 }
 
@@ -1081,28 +1081,62 @@ body.torch-mode .campaign-assignment-connector {
 
 .draft-card-item .card-ref {
   display: inline-block;
-  max-width: calc(100% - 18px);
+  min-width: 0;
+  max-width: calc(100% - 30px);
   line-height: 1.25;
 }
 
-.draft-card-remove {
-  border: 0;
-  background: transparent;
-  color: rgba(58, 45, 26, 0.86);
-  font: inherit;
-  font-size: 0.95rem;
-  line-height: 1;
-  padding: 0 1px;
+/* Inline removal needs a clear cross, independent of the cartouche artwork. */
+html body .container button.draft-card-remove {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(120, 38, 47, 0.45);
+  border-image: none;
+  background: #f5e5ce;
+  color: #78262f;
+  -webkit-text-fill-color: currentColor;
+  font: 600 20px/1 Arial, sans-serif;
+  text-shadow: none;
+  box-shadow: none;
+  filter: none;
+  padding: 0;
   margin: 0;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 5px;
   flex: 0 0 auto;
   align-self: center;
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
 }
 
-.draft-card-remove:hover {
-  color: #8f2e20;
-  background: rgba(143, 46, 32, 0.08);
+html body.torch-mode .container button.draft-card-remove {
+  border-color: #cb9480;
+  background: #4b2925;
+  color: #ffd2bf;
+}
+
+html body .container button.draft-card-remove:hover:not(:disabled) {
+  border-color: #78262f;
+  background: #78262f;
+  color: #fff4e4;
+}
+
+html body.torch-mode .container button.draft-card-remove:hover:not(:disabled) {
+  border-color: #ffd2bf;
+  background: #753a32;
+}
+
+html body .container button.draft-card-remove:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .container button.draft-card-remove {
+    transition: none;
+  }
 }
 
 .card-ref {
