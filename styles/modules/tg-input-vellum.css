@@ -1,0 +1,91 @@
+/* ImageGen paper stays at a fixed grain scale; theme washes keep fields quiet. */
+html body .container #tg-campaign-root {
+  --field-wash: rgba(242, 229, 201, .42);
+  --field-base: #e7d6b3;
+  --field-blend: normal, normal;
+  --field-ink: #392b1c;
+  --field-placeholder: #766246;
+  --field-edge: rgba(108, 77, 38, .38);
+  --field-rim: rgba(255, 246, 219, .48);
+  --field-recess: rgba(68, 43, 18, .09);
+  --field-focus: #876336;
+  --field-focus-halo: rgba(135, 99, 54, .14);
+  --field-scheme: light;
+}
+
+html body.torch-mode .container #tg-campaign-root {
+  --field-wash: rgba(39, 31, 24, .22);
+  --field-base: #695e4c;
+  --field-blend: normal, multiply;
+  --field-ink: #eddbb7;
+  --field-placeholder: #baa889;
+  --field-edge: rgba(202, 170, 111, .35);
+  --field-rim: rgba(231, 197, 139, .1);
+  --field-recess: rgba(10, 7, 4, .2);
+  --field-focus: #b69a63;
+  --field-focus-halo: rgba(182, 154, 99, .13);
+  --field-scheme: dark;
+}
+
+html body .container #tg-campaign-root :is(input.tg-edit-input, .tg-mini-label input) {
+  box-sizing: border-box;
+  border: 1px solid var(--field-edge);
+  border-radius: 4px;
+  background-color: var(--field-base);
+  background-image:
+    linear-gradient(var(--field-wash), var(--field-wash)),
+    url("../../assets/misc/card-surfaces/journal-input-vellum.webp");
+  background-size: auto, 340px 340px;
+  background-repeat: repeat;
+  background-blend-mode: var(--field-blend);
+  box-shadow: inset 0 1px 2px var(--field-recess), inset 0 -1px var(--field-rim);
+  color: var(--field-ink);
+  -webkit-text-fill-color: var(--field-ink);
+  caret-color: var(--field-ink);
+  color-scheme: var(--field-scheme);
+  text-shadow: none;
+  opacity: 1;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+html body .container #tg-campaign-root :is(input.tg-edit-input, .tg-mini-label input)::placeholder {
+  color: var(--field-placeholder);
+  -webkit-text-fill-color: var(--field-placeholder);
+  text-shadow: none;
+  opacity: 1;
+}
+
+html body .container #tg-campaign-root :is(input.tg-edit-input, .tg-mini-label input):focus {
+  border-color: var(--field-focus);
+  outline: 2px solid var(--field-focus-halo);
+  outline-offset: 1px;
+  box-shadow: inset 0 1px 2px var(--field-recess), inset 0 -1px var(--field-rim);
+}
+
+/* Menhir names are fixed labels, so reserve the paper inset for real inputs. */
+html body .container #tg-campaign-root span.tg-edit-input {
+  background: none;
+  border-color: transparent;
+  color: var(--journal-secondary);
+  -webkit-text-fill-color: currentColor;
+  text-shadow: none;
+}
+
+@media (max-width: 600px) {
+  html body .container #tg-campaign-root .tg-menhir-row.tg-edit-box {
+    padding-inline: 0;
+    gap: 4px;
+  }
+  html body .container #tg-campaign-root span.tg-edit-input {
+    padding-inline: 0;
+    font-size: .86rem;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .container #tg-campaign-root :is(input.tg-edit-input, .tg-mini-label input) {
+    transition: none;
+  }
+}
