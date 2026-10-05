@@ -939,8 +939,8 @@
           "title": "Avery Claypool",
           "items": [
             "Claypool noticed that the underground cold was unnatural: even without windchill, it was colder than expected. A fleeting shadow moved within the ice, alarming both him and the investigator.",
-            "Claypool's effect would remove 1 frost token, but there were no frost tokens left in the chaos bag. No token was removed, and an additional conversation was available.",
-            "No further conversation was taken."
+            "Claypool's predictions helped the expedition avoid the unnatural cold. Remove 1 frost token from the chaos bag.",
+            "This conversation counted toward the three-conversation limit. No additional conversation was granted, and the investigators did not check on Takada Hiroko."
           ]
         },
         {
@@ -1030,7 +1030,7 @@
               "+1 elder thing token (from Scenario III: City of the Elder Things).",
               "Remove 2 frost tokens (recorded choice during Scenario III: City of the Elder Things).",
               "+1 \"0\" token (recorded choice during Scenario III: City of the Elder Things).",
-              "No change during Interlude III: Final Night: Claypool could not remove a frost token because none remained in the chaos bag."
+              "-1 frost token (during Interlude III: Final Night, after checking on Avery Claypool)."
             ]
           },
           {

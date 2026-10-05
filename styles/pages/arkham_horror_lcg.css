@@ -1096,6 +1096,17 @@ body.torch-mode .campaign-assignment-connector {
   overflow-wrap: anywhere;
 }
 
+/* Story awards stay identifiable in both Added and Removed card lists. */
+html body .card-ref.story-card-ref {
+  color: #763a86;
+  font-weight: 600;
+  border-bottom-color: currentColor;
+}
+
+html body.torch-mode .card-ref.story-card-ref {
+  color: #e4b9f2;
+}
+
 .card-name-token {
   display: inline-block;
   width: 0.9em;

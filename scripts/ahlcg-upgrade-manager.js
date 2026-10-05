@@ -762,7 +762,7 @@
     function createCardListItem(cardName, previewContext) {
       const li = document.createElement("li");
       const ref = document.createElement("span");
-      ref.className = "card-ref";
+      ref.className = isStoryCardName(cardName) ? "card-ref story-card-ref" : "card-ref";
       ref.appendChild(document.createTextNode(cardName));
       ref.appendChild(buildPreviewNode(cardName, previewContext));
       li.appendChild(ref);
@@ -776,7 +776,7 @@
       inline.className = "draft-card-inline";
 
       const ref = document.createElement("span");
-      ref.className = "card-ref";
+      ref.className = isStoryCardName(cardName) ? "card-ref story-card-ref" : "card-ref";
       ref.appendChild(document.createTextNode(cardName));
       ref.appendChild(buildPreviewNode(cardName, previewContext));
 
@@ -805,7 +805,7 @@
       inline.className = "draft-card-inline customized-card-inline";
 
       const ref = document.createElement("span");
-      ref.className = "card-ref";
+      ref.className = isStoryCardName(cardName) ? "card-ref story-card-ref" : "card-ref";
       ref.appendChild(document.createTextNode(cardName));
       ref.appendChild(buildPreviewNode(cardName, previewContext));
 
@@ -4616,6 +4616,7 @@
       }
 
       root.querySelectorAll(".card-ref").forEach((cardRef) => {
+        cardRef.classList.toggle("story-card-ref", isStoryCardName(getCardNameFromRef(cardRef)));
         if (cardRef.__bgbViewportPreviewBound === true) return;
         if (cardRef.__bgbPreviewBound === true) return;
         cardRef.__bgbPreviewBound = true;
