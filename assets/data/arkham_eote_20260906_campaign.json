@@ -629,7 +629,121 @@
       ]
     },
     {
-      "title": "Scenario II: Fatal Mirage",
+      "title": "Scenario II: To the Forbidden Peaks",
+      "statusChips": [
+        "Status: Completed",
+        "Resolution: 1",
+        "Victory Display: 7",
+        "XP: Ursula 9 / Marion 9 / Preston 10"
+      ],
+      "notes": [
+        {
+          "title": "The Journey to the Mountains",
+          "items": [
+            "Ursula Downs, Preston Fairmont, and lead investigator Marion Tavares set out across the frozen tundra toward the distant jagged peaks. The party traveled in uneasy silence, still shaken by the horrors of the previous days.",
+            "Eliyah Ashevak was alive and Wooden Sledge had been recovered. He secured the provisions and equipment to the sledge and prepared Anyu and the dogs for the journey. The investigators suffered no ill effects.",
+            "Avery Claypool was alive. He led the party across the ice, checking its thickness with an auger and warning everyone to watch for cracks and sudden changes in weather. The investigators suffered no ill effects.",
+            "Takada Hiroko was alive. She shared a song her father had taught her, and the expedition sang together as they traveled. The investigators suffered no ill effects.",
+            "The investigators had not scouted the mountain pass. The recorded journey imposed no ill effects, although the snow, rough terrain, and fierce wind made progress slow.",
+            "Near the foot of the mountains, the party discovered a frozen, half-buried Elder Thing. Its leathery wings, star-shaped head, and tentacles matched the beings described by Dyer and Danforth, but the cause of its death was unknown."
+          ]
+        },
+        {
+          "title": "Partners",
+          "partnerAssignments": [
+            {
+              "investigator": {
+                "name": "Ursula Downs",
+                "role": "The Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/ursula_downs.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png"
+              },
+              "partner": {
+                "name": "Danforth",
+                "role": "Brilliant Student",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/danforth.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/danforth_brilliant_student_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Preston Fairmont",
+                "role": "The Millionaire",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/preston_fairmont.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png"
+              },
+              "partner": {
+                "name": "Dr. Mala Sinha",
+                "role": "Daring Physician",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_mala_sinha.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/dr_mala_sinha_daring_physician_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Marion Tavares",
+                "role": "The Trawler",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/marion_tavares.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png"
+              },
+              "partner": {
+                "name": "Dr. Amy Kensler",
+                "role": "Professor of Biology · 1 horror carried over",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_amy_kensler.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/dr_amy_kensler_professor_of_biology_eoec_1.png"
+              }
+            }
+          ],
+          "items": [
+            "Dr. Amy Kensler began with 0 damage and 1 horror, as recorded in the Campaign Log."
+          ]
+        },
+        {
+          "title": "Chaos Bag",
+          "items": [
+            "Add 1 elder thing token to the chaos bag."
+          ]
+        },
+        {
+          "title": "Scenario Interlude: Tragedy Strikes",
+          "items": [
+            "The app randomly selected Dr. Amy Kensler from the surviving expedition members without a checkmark beside their names.",
+            "A shifting creature seized and killed Kensler before the investigators could save her. Cross off her name in the Expedition Team section of the Campaign Log.",
+            "Kensler was accompanying Marion Tavares; she was defeated and removed from the game."
+          ]
+        },
+        {
+          "title": "Resolution 1: The Summit",
+          "items": [
+            "All three investigators survived. From the summit, they saw the ancient city from Dyer's report: a labyrinth of dark stone buildings concealed beyond the mountains. After the losses suffered during the climb, the achievement felt hollow.",
+            "The expedition began descending toward the city, planning to make camp before reaching the bottom.",
+            "Record in the Campaign Log: the team climbed to the summit.",
+            "Victory display: 7 XP. Each investigator gained this base experience plus 1 bonus XP for each Expedition asset added to their deck."
+          ]
+        },
+        {
+          "title": "Recovered Expedition Assets",
+          "items": [
+            "All seven recovered Expedition assets were in the victory display: Green Soapstone, Wooden Sledge, Dynamite, Miasmic Crystal, Mineral Specimen, Small Radio, and Spare Parts. No recovered supplies were crossed off.",
+            "Ursula Downs added Spare Parts and Wooden Sledge to her deck: 7 base XP + 2 bonus XP = 9 XP.",
+            "Marion Tavares added Small Radio and Green Soapstone to her deck: 7 base XP + 2 bonus XP = 9 XP.",
+            "Preston Fairmont added Dynamite, Miasmic Crystal, and Mineral Specimen to his deck: 7 base XP + 3 bonus XP = 10 XP.",
+            "These Expedition assets do not count toward investigator deck size."
+          ]
+        },
+        {
+          "title": "Partner Status and Next Chapter",
+          "items": [
+            "Danforth: 0 damage, 0 horror.",
+            "Dr. Mala Sinha: 0 damage, 0 horror.",
+            "Dr. Amy Kensler: killed during Tragedy Strikes; crossed off the Expedition Team.",
+            "Proceed to Interlude II: Endless Night."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario III: City of the Elder Things",
       "statusChips": [
         "Status: Pending"
       ],
@@ -651,51 +765,7 @@
       ]
     },
     {
-      "title": "Scenario III: To the Forbidden Peaks",
-      "statusChips": [
-        "Status: Pending"
-      ],
-      "notes": [
-        {
-          "title": "Setup Notes",
-          "items": []
-        },
-        {
-          "title": "Scenario Results",
-          "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Scenario IV: City of the Elder Things",
-      "statusChips": [
-        "Status: Pending"
-      ],
-      "notes": [
-        {
-          "title": "Setup Notes",
-          "items": []
-        },
-        {
-          "title": "Scenario Results",
-          "items": [
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign log changes: TBD"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Scenario V: The Heart of Madness",
+      "title": "Scenario IV: The Heart of Madness",
       "statusChips": [
         "Status: Pending"
       ],
@@ -730,7 +800,9 @@
               "The investigators convinced Dyer to allow the expedition.",
               "James \"Cookie\" Fredericks was killed in the plane crash.",
               "Camp - Remnants of Lake's Camp (7)",
-              "The team defeated the hunting creatures."
+              "The team defeated the hunting creatures.",
+              "Dr. Amy Kensler was killed during Tragedy Strikes in To the Forbidden Peaks.",
+              "The team climbed to the summit."
             ]
           },
           {
@@ -739,7 +811,8 @@
               "+1 cultist token (from the Prologue).",
               "+1 frost token (from Ice and Death, Part II).",
               "+1 frost token (from Ice and Death, Part III).",
-              "-1 frost token (during Interlude I: Restful Night, after checking on Avery Claypool)."
+              "-1 frost token (during Interlude I: Restful Night, after checking on Avery Claypool).",
+              "+1 elder thing token (from Scenario II: To the Forbidden Peaks)."
             ]
           }
         ]
@@ -772,6 +845,20 @@
               "Miasmic Crystal",
               "Dynamite",
               "Mineral Specimen"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "To the Forbidden Peaks",
+        "notes": [
+          {
+            "title": "Expedition Asset Distribution",
+            "items": [
+              "Ursula Downs: Spare Parts and Wooden Sledge (+2 bonus XP).",
+              "Marion Tavares: Small Radio and Green Soapstone (+2 bonus XP).",
+              "Preston Fairmont: Dynamite, Miasmic Crystal, and Mineral Specimen (+3 bonus XP).",
+              "All seven recovered supplies were retained; these assets do not count toward deck size."
             ]
           }
         ]
@@ -811,7 +898,7 @@
                 "name": "Dr. Amy Kensler",
                 "role": "Professor of Biology",
                 "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_amy_kensler.png",
-                "status": "active",
+                "status": "crossed-out",
                 "damage": 0,
                 "horror": 1
               },
