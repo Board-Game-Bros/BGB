@@ -286,10 +286,8 @@ const bindCardRefViewportPreviews = (root = document) => {
     }
     top = clamp(top, viewportTop + previewMargin, viewportBottom - displayHeight - previewMargin);
 
-    // Torch mode animates a filter on <body>, which turns it into the containing
-    // block for fixed descendants. Keep partner previews anchored to their
-    // portrait instead, while converting the clamped viewport position into a
-    // local offset. This prevents edge portraits from jumping up the document.
+    // Keep partner and upgrade previews anchored to their portrait while
+    // converting the clamped viewport position into a local offset.
     if (cardRef.classList.contains("campaign-partner") || cardRef.closest("#upgrade-history")) {
       preview.style.position = "absolute";
       preview.style.left = `${Math.round(left - anchor.left)}px`;
@@ -503,7 +501,9 @@ const startTorchFlicker = () => {
   if (torchFlickerTimer) return;
   torchFlickerTimer = window.setInterval(() => {
     if (!document.body.classList.contains("torch-mode")) return;
-    document.body.style.filter = `brightness(${0.9 + Math.random() * 0.2})`;
+    // A body filter makes fixed controls scroll with the document. Flicker only
+    // the background glow so the torch and other viewport controls stay fixed.
+    document.body.style.setProperty("--torch-glow-opacity", String(0.05 + Math.random() * 0.08));
   }, 200);
 };
 
@@ -525,7 +525,7 @@ const disableTorchMode = () => {
   updateTorchToggleLabel();
   localStorage.setItem("torchMode", "disabled");
   stopTorchFlicker();
-  document.body.style.filter = "brightness(1)";
+  document.body.style.removeProperty("--torch-glow-opacity");
 };
 
 // Restore saved mode

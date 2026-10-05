@@ -372,7 +372,7 @@ body.torch-mode {
   --ink: #f3ddb2;
   --ink-soft: rgba(243, 221, 178, 0.84);
   background:
-    radial-gradient(circle at top, rgba(255, 211, 123, 0.09), transparent 28%),
+    radial-gradient(circle at top, rgba(255, 211, 123, var(--torch-glow-opacity, 0.09)), transparent 28%),
     radial-gradient(circle at 20% 28%, rgba(133, 87, 32, 0.18), transparent 24%),
     linear-gradient(180deg, rgba(25, 18, 9, 0.96) 0%, rgba(41, 29, 15, 0.96) 20%, rgba(55, 39, 21, 0.94) 100%),
     #2e2214 url("../assets/misc/dark_parchment.jpg");
@@ -453,8 +453,10 @@ body.torch-mode a.pill-btn[href$=".pdf"] {
   }
 
   .torch-btn {
-    top: 12px;
-    right: 14px;
+    /* Keep the floating toggle clear of the two-row mobile navigation. */
+    top: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    right: max(14px, env(safe-area-inset-right));
     width: 42px;
     height: 42px;
     padding: 6px;
