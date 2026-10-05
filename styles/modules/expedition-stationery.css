@@ -1,0 +1,53 @@
+/* ImageGen blue bookcloth and the existing engraved archive frame. */
+html body .container .campaign-expedition-team {
+  --expedition-cloth-base: #66757c;
+  gap: 8px;
+}
+
+html body.torch-mode .container .campaign-expedition-team {
+  --expedition-cloth-base: #4e5d65;
+}
+
+html body .container .campaign-expedition-member {
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-image: url("../../assets/misc/campaign-stationery/annotation-frame.png") 160 / 16px / 0 stretch;
+  border-radius: 0;
+  background-color: var(--expedition-cloth-base);
+  background-image: url("../../assets/misc/campaign-stationery/expedition-bookcloth.webp");
+  background-size: 384px 384px;
+  background-blend-mode: soft-light;
+  box-shadow: none;
+  color: #f3e4c8;
+  text-shadow: none;
+}
+
+html body .container .campaign-expedition-member :is(.campaign-expedition-name, .campaign-expedition-status-label) {
+  color: #f3dfb1;
+  text-shadow: none;
+}
+
+html body .container .campaign-expedition-member .campaign-expedition-role {
+  color: #e0d3b8;
+  text-shadow: none;
+}
+
+html body .container .campaign-expedition-state:empty {
+  display: none;
+}
+
+/* Keep the blue material intact while the existing strikeout marks the loss. */
+html body .container .campaign-expedition-member-crossed-out {
+  opacity: 1;
+}
+
+html body .container .campaign-expedition-member-crossed-out :is(.campaign-expedition-identity, .campaign-expedition-state) {
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  html body .container .campaign-expedition-member {
+    padding: 4px 6px;
+    border-image-width: 14px;
+  }
+}
