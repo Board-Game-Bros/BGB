@@ -622,6 +622,13 @@
       ]
     },
     {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 10/03/2026",
+        "Session: Scenario II + Interlude II + Scenario III + Interlude III"
+      ]
+    },
+    {
       "title": "Scenario II: Fatal Mirage",
       "statusChips": [
         "Status: Pending"
