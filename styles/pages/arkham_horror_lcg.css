@@ -12,10 +12,10 @@
 @import url("../modules/shell-ornaments.css?v=20260928bgb3");
 @import url("../modules/card-surfaces.css?v=20260929surfaces2");
 @import url("../modules/campaign-stationery.css?v=20261001flourish2");
-@import url("../modules/card-highlight.css?v=20261003scenario");
-@import url("../modules/upgrade-ledger.css?v=20261003traumahover");
+@import url("../modules/card-highlight.css?v=20261005framehover");
+@import url("../modules/upgrade-ledger.css?v=20261005framehover");
 @import url("../modules/icon-seals.css?v=20261004crossseal");
-@import url("../modules/arkham-text-surfaces.css?v=20261004archive1");
+@import url("../modules/arkham-text-surfaces.css?v=20261005framehover2");
 
 /* Page: arkham_horror_lcg.html */
 /* Raise the preview's outer contexts above footer trim and nearby sections. */

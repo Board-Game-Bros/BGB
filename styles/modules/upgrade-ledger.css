@@ -126,7 +126,7 @@ html body #upgrade-history .upgrade-entry::before {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  html body .container #upgrade-history .upgrade-entry:hover {
+  html body .container #upgrade-history .upgrade-entry:hover:not(:has(:is(.upgrade-entry, .campaign-log-highlight, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value, .upgrade-entry-builder, .upgrade-entry-editor, .customizable-preview-panel, .customizable-field-panel, .customizable-inline-editor, .customizable-inline-head, .edit-card-row, .deck-preview-panel, .undo-toast, .story-weakness-editor, .upgrade-input, .editor-textarea, .customizable-field-input, .trauma-input, .story-weakness-stepper input):hover)) {
     outline: 1px solid var(--card-highlight-rim);
     outline-offset: -1px;
     box-shadow: var(--hover-resting-depth),

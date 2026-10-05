@@ -27,7 +27,9 @@ html body .container #upgrade-history :is(.customizable-group-text, .customizabl
   position: relative;
   isolation: isolate;
   min-width: 0;
-  padding: 10px 18px;
+  padding: 12px 28px;
+  --card-depth: 0 0 0 transparent;
+  --panel-depth: 0 0 0 transparent;
   border: 0;
   border-radius: 0;
   background: var(--annotation-paper) center / 512px 512px repeat;
@@ -42,16 +44,16 @@ html body .container :is(.campaign-log-highlight, .customizable-group-text, .cus
   position: absolute;
   inset: 0;
   z-index: -1;
-  border: 14px solid transparent;
-  border-image: var(--annotation-frame) 160 / 14px / 0 stretch;
-  opacity: .75;
+  border: 24px solid transparent;
+  border-image: var(--annotation-frame) 160 / 24px / 0 stretch;
+  opacity: 1;
   pointer-events: none;
 }
 
 /* Override the plain-list rule's left border as well as its inset. */
 html body .container .campaign-log-list > li.campaign-log-highlight {
   border: 0;
-  padding: 10px 18px;
+  padding: 12px 28px;
 }
 
 html body .container .campaign-log-highlight strong {
@@ -61,8 +63,10 @@ html body .container .campaign-log-highlight strong {
 
 /* Larger editors and preview text panels share the archive paper and trim. */
 html body .container :is(.upgrade-entry-builder, .upgrade-entry-editor, .customizable-preview, .customizable-preview-panel, .customizable-field-panel, .customizable-inline-editor, .customizable-inline-head, .edit-card-row, .deck-preview-panel, .undo-toast, .story-weakness-editor) {
+  --card-depth: 0 0 0 transparent;
+  --panel-depth: 0 0 0 transparent;
   border: 1px solid transparent;
-  border-image: var(--annotation-frame) 160 / 12px / 0 stretch;
+  border-image: var(--annotation-frame) 160 / 20px / 0 stretch;
   border-radius: 0;
   background: var(--annotation-paper) center / 512px 512px repeat;
   box-shadow: none;
@@ -89,8 +93,10 @@ html body .container .customizable-field-preview {
 
 /* Native fields carry the matching ImageGen archive grain in each theme. */
 html body .container :is(.upgrade-input, .editor-textarea, .customizable-field-input, input.trauma-input, .story-weakness-stepper input) {
+  --card-depth: 0 0 0 transparent;
+  --panel-depth: 0 0 0 transparent;
   border: 1px solid transparent;
-  border-image: var(--annotation-frame) 160 / 8px / 0 stretch;
+  border-image: var(--annotation-frame) 160 / 12px / 0 stretch;
   border-radius: 0;
   background-color: var(--annotation-field-base);
   background-image: var(--annotation-paper);
@@ -121,7 +127,7 @@ html body .container :is(.upgrade-input, .editor-textarea, .customizable-field-i
 html .card-autocomplete,
 html .card-preview-placeholder {
   border: 1px solid transparent;
-  border-image: var(--annotation-frame) 160 / 10px / 0 stretch;
+  border-image: var(--annotation-frame) 160 / 16px / 0 stretch;
   border-radius: 0;
   background: var(--annotation-paper) center / 512px 512px repeat;
   color: var(--annotation-ink);
@@ -145,10 +151,10 @@ html .card-autocomplete-item:is(:hover, .is-active) {
   html body .container .campaign-log-list > li.campaign-log-highlight,
   html body .container #upgrade-history :is(.customizable-group-text, .customizable-inline-text, .customizable-field-preview-value),
   html body .container :is(.campaign-log-highlight, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value) {
-    padding: 10px 14px;
+    padding: 12px 20px;
   }
   html body .container :is(.campaign-log-highlight, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value)::before {
-    border-width: 12px;
-    border-image-width: 12px;
+    border-width: 18px;
+    border-image-width: 18px;
   }
 }
