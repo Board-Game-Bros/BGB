@@ -1054,8 +1054,14 @@
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
       const margin = 18;
       const gap = 16;
+      const navigation = document.querySelector("body > nav");
+      const navRect = navigation ? navigation.getBoundingClientRect() : null;
+      // Keep the title and close control below the sticky navigation.
+      const topInset = navRect && navRect.top <= 0 && navRect.bottom > 0
+        ? Math.max(margin, Math.min(navRect.bottom + gap, viewportHeight - margin - 80))
+        : margin;
       const preferredWidth = Math.min(560, Math.max(280, viewportWidth - (margin * 2)));
-      const maxPanelHeight = Math.max(280, viewportHeight - (margin * 2));
+      const maxPanelHeight = Math.max(80, viewportHeight - topInset - margin);
 
       panel.style.width = `${Math.round(preferredWidth)}px`;
       panel.style.maxWidth = `${Math.round(Math.max(280, viewportWidth - (margin * 2)))}px`;
@@ -1075,8 +1081,8 @@
       left = Math.min(Math.max(left, margin), maxLeft);
 
       let top = buttonRect.top + (buttonRect.height / 2) - (panelRect.height / 2);
-      const maxTop = Math.max(margin, viewportHeight - panelRect.height - margin);
-      top = Math.min(Math.max(top, margin), maxTop);
+      const maxTop = Math.max(topInset, viewportHeight - panelRect.height - margin);
+      top = Math.min(Math.max(top, topInset), maxTop);
 
       panel.style.left = `${Math.round(left)}px`;
       panel.style.top = `${Math.round(top)}px`;

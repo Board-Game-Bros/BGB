@@ -1,0 +1,154 @@
+/* ImageGen archive materials replace the remaining painted text panels.
+   All text stays live; the raster frame scales independently of the paper. */
+html {
+  --annotation-frame: url("../../assets/misc/campaign-stationery/annotation-frame.png");
+  --annotation-paper: url("../../assets/misc/campaign-stationery/paper-light.jpg");
+  --annotation-ink: #38291c;
+  --annotation-muted: #685338;
+  --annotation-focus: #876336;
+  --annotation-field-base: #f0e5ce;
+  --annotation-field-blend: normal;
+  --annotation-scheme: light;
+}
+
+html:has(body.torch-mode) {
+  --annotation-paper: url("../../assets/misc/campaign-stationery/paper-dark.jpg");
+  --annotation-ink: #f3e4c8;
+  --annotation-muted: #c8b78f;
+  --annotation-focus: #c2a16a;
+  --annotation-field-base: #544a3b;
+  --annotation-field-blend: normal;
+  --annotation-scheme: dark;
+}
+
+/* Highlighted records and customizable-card prose use the same quiet strip. */
+html body .container :is(.campaign-log-highlight, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value),
+html body .container #upgrade-history :is(.customizable-group-text, .customizable-inline-text, .customizable-field-preview-value) {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 0;
+  background: var(--annotation-paper) center / 512px 512px repeat;
+  box-shadow: none;
+  color: var(--annotation-ink);
+  text-shadow: none;
+  overflow-wrap: anywhere;
+}
+
+html body .container :is(.campaign-log-highlight, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 14px solid transparent;
+  border-image: var(--annotation-frame) 160 / 14px / 0 stretch;
+  opacity: .75;
+  pointer-events: none;
+}
+
+/* Override the plain-list rule's left border as well as its inset. */
+html body .container .campaign-log-list > li.campaign-log-highlight {
+  border: 0;
+  padding: 10px 18px;
+}
+
+html body .container .campaign-log-highlight strong {
+  color: inherit;
+  text-shadow: none;
+}
+
+/* Larger editors and preview text panels share the archive paper and trim. */
+html body .container :is(.upgrade-entry-builder, .upgrade-entry-editor, .customizable-preview, .customizable-preview-panel, .customizable-field-panel, .customizable-inline-editor, .customizable-inline-head, .edit-card-row, .deck-preview-panel, .undo-toast, .story-weakness-editor) {
+  border: 1px solid transparent;
+  border-image: var(--annotation-frame) 160 / 12px / 0 stretch;
+  border-radius: 0;
+  background: var(--annotation-paper) center / 512px 512px repeat;
+  box-shadow: none;
+  color: var(--annotation-ink);
+  text-shadow: none;
+}
+
+html body .container :is(.customizable-preview-panel, .customizable-field-panel, .customizable-inline-editor, .customizable-inline-head, .story-weakness-editor) :is(h4, h5, strong, label, .customizable-group-label, .customizable-field-panel-title, .customizable-field-label, .customizable-row-summary, .customizable-overlay-title, .customizable-inline-intro) {
+  color: var(--annotation-ink) !important;
+  text-shadow: none !important;
+}
+
+/* Fixed palette chips remain distinct, while prose follows the active theme. */
+html body .container :is(.record-card, .story-note):has(.card-ref:is(:hover, :focus-within)) {
+  z-index: 10;
+}
+
+html body .container .customizable-preview-panel .customizable-group-text,
+html body .container .customizable-popover .customizable-inline-text,
+html body .container .customizable-field-preview {
+  color: var(--annotation-ink) !important;
+  text-shadow: none !important;
+}
+
+/* Native fields carry the matching ImageGen archive grain in each theme. */
+html body .container :is(.upgrade-input, .editor-textarea, .customizable-field-input, input.trauma-input, .story-weakness-stepper input) {
+  border: 1px solid transparent;
+  border-image: var(--annotation-frame) 160 / 8px / 0 stretch;
+  border-radius: 0;
+  background-color: var(--annotation-field-base);
+  background-image: var(--annotation-paper);
+  background-size: 340px 340px;
+  background-blend-mode: var(--annotation-field-blend);
+  box-shadow: none;
+  color: var(--annotation-ink);
+  -webkit-text-fill-color: var(--annotation-ink);
+  caret-color: var(--annotation-ink);
+  color-scheme: var(--annotation-scheme);
+  text-shadow: none;
+}
+
+html body .container :is(.upgrade-input, .editor-textarea, .customizable-field-input)::placeholder {
+  color: var(--annotation-muted);
+  -webkit-text-fill-color: var(--annotation-muted);
+  opacity: 1;
+  text-shadow: none;
+}
+
+html body .container :is(.upgrade-input, .editor-textarea, .customizable-field-input, input.trauma-input, .story-weakness-stepper input):focus-visible {
+  outline: 2px solid var(--annotation-focus);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* Search suggestions are portaled into html, outside body and the container. */
+html .card-autocomplete,
+html .card-preview-placeholder {
+  border: 1px solid transparent;
+  border-image: var(--annotation-frame) 160 / 10px / 0 stretch;
+  border-radius: 0;
+  background: var(--annotation-paper) center / 512px 512px repeat;
+  color: var(--annotation-ink);
+  text-shadow: none;
+}
+
+html .card-autocomplete-item {
+  color: var(--annotation-ink);
+  text-shadow: none;
+}
+
+html .card-autocomplete-item:is(:hover, .is-active) {
+  background: var(--annotation-paper) center / 340px 340px repeat;
+  background-color: var(--annotation-field-base);
+  background-blend-mode: var(--annotation-field-blend);
+  outline: 1px solid var(--annotation-focus);
+  outline-offset: -2px;
+}
+
+@media (max-width: 600px) {
+  html body .container .campaign-log-list > li.campaign-log-highlight,
+  html body .container #upgrade-history :is(.customizable-group-text, .customizable-inline-text, .customizable-field-preview-value),
+  html body .container :is(.campaign-log-highlight, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value) {
+    padding: 10px 14px;
+  }
+  html body .container :is(.campaign-log-highlight, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value)::before {
+    border-width: 12px;
+    border-image-width: 12px;
+  }
+}
