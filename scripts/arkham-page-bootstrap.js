@@ -21,7 +21,7 @@
     "parallel-campaign": {
       rootId: "arkham-parallel-campaign-root",
       scripts: [
-        "/scripts/ahlcg-standard-library.js?v=20260913a",
+        "/scripts/ahlcg-standard-library.js?v=20261005expedition",
         "/scripts/ahlcg-customizable-library.js?v=20260628b",
         "/scripts/ahlcg-customizable-state.js?v=20260512a",
         "/scripts/shared-github-sync.js?v=20260401a",
