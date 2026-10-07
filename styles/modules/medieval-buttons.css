@@ -116,19 +116,20 @@ html body button.story-weakness-summary:not(:disabled) {
   padding: 16px 48px;
 }
 
-/* Live ledger numbers sit above an ImageGen gilt flourish, without a frame. */
+/* Complete ImageGen brass frames stay inside each live number control. */
 html body :is(button.trauma-value, input.trauma-input) {
   box-sizing: border-box;
-  height: auto;
-  margin: 0 0.15em;
-  padding: 0 0.25em 0.65em;
-  vertical-align: baseline;
+  width: max(38px, 2.5em);
+  height: max(38px, 2.5em);
+  margin: 0.12em 0.15em;
+  padding: 0.55em;
+  vertical-align: middle;
   border: 0;
   border-image: none;
   border-radius: 0;
-  background: url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-flourish.png") center calc(100% + 0.65em) / 100% 1.8em no-repeat;
+  background: url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-frame.png") center / contain no-repeat;
   box-shadow: none;
-  color: var(--control-active);
+  color: #78262f;
   -webkit-text-fill-color: currentColor;
   font: inherit;
   font-family: Georgia, "IM Fell English SC", serif;
@@ -144,17 +145,18 @@ html body :is(button.trauma-value, input.trauma-input) {
 
 html body button.trauma-value {
   display: inline-block;
-  min-width: 1.85em;
+  min-width: 2.5em;
   cursor: pointer;
   transition: color 150ms ease, filter 150ms ease;
 }
 
 html body input.trauma-input {
-  width: 2.8em;
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 html body button.trauma-value:hover:not(:disabled) {
-  color: var(--control-ink);
+  color: #352618;
   filter: brightness(1.15);
   transform: none;
 }
@@ -167,7 +169,14 @@ html body input.trauma-input:not(.torch-btn):focus {
 }
 
 html body.torch-mode :is(button.trauma-value, input.trauma-input) {
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  color: #78262f;
+  text-shadow: none;
+}
+
+html body input.trauma-input::-webkit-inner-spin-button,
+html body input.trauma-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Stepper −/+ use the same parchment seal, centred in the original 34px

@@ -41,7 +41,7 @@
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20261005storycolor";
+  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20261007numberframe";
   document.head.appendChild(stylesheet);
 
   const root = document.createElement("div");
