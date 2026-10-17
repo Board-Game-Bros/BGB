@@ -1068,7 +1068,7 @@
           "items": [
             "Roald Ellsworth: 0 damage, 0 horror.",
             "Dr. Mala Sinha: 0 damage, 0 horror.",
-            "Eliyah Ashevak: 0 damage, 1 horror.",
+            "Eliyah Ashevak: 0 damage, 0 horror.",
             "Next chapter: Scenario IV: The Heart of Madness."
           ]
         }
@@ -1303,7 +1303,7 @@
                 "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/eliyah_ashevak.png",
                 "status": "active",
                 "damage": 0,
-                "horror": 1
+                "horror": 0
               }
             ]
           },
