@@ -953,15 +953,131 @@
       ]
     },
     {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 10/17/2026",
+        "Session: Scenario ??? + Scenario IV (The Heart of Madness) + Scenario IV (The Heart of Madness, Part I)"
+      ]
+    },
+    {
       "title": "Scenario ???: Fatal Mirage",
       "statusChips": [
-        "Status: Pending"
+        "Status: Completed",
+        "Resolution: 1",
+        "XP: 7 Each",
+        "Danforth: Resolute"
       ],
       "notes": [
         {
-          "title": "Next Scenario",
+          "title": "A Prison of Memories",
           "items": [
-            "The investigators chose to enter the mirage at the end of Interlude III: Final Night."
+            "After choosing to enter the mirage at the end of Interlude III, the investigators stepped into icy tunnels filled with miasma, prismatic ichor, and reflections. The doorway vanished behind them.",
+            "They glimpsed Cookie, impossibly alive and younger, reloading his rifle in a wartime memory as another soldier warned that the Germans had broken through their lines. The vision vanished, leaving the investigators to explore the memories within the mirage."
+          ]
+        },
+        {
+          "title": "Partners",
+          "partnerAssignments": [
+            {
+              "investigator": {
+                "name": "Ursula Downs",
+                "role": "The Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/ursula_downs.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png"
+              },
+              "partner": {
+                "name": "Roald Ellsworth",
+                "role": "Intrepid Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/roald_ellsworth.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/roald_ellsworth_intrepid_explorer_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Preston Fairmont",
+                "role": "The Millionaire",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/preston_fairmont.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png"
+              },
+              "partner": {
+                "name": "Dr. Mala Sinha",
+                "role": "Daring Physician",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_mala_sinha.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/dr_mala_sinha_daring_physician_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Marion Tavares",
+                "role": "The Trawler",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/marion_tavares.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png"
+              },
+              "partner": {
+                "name": "Eliyah Ashevak",
+                "role": "Dog Handler",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/eliyah_ashevak.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/eliyah_ashevak_dog_handler_eoec_1.png"
+              }
+            }
+          ]
+        },
+        {
+          "title": "Danforth's Demons",
+          "items": [
+            "Danforth confronted his demons. Record this in the Campaign Log and place a check mark next to his name in the Expedition Team; he is now Resolute."
+          ]
+        },
+        {
+          "title": "Memories Discovered",
+          "items": [
+            "Base Camp",
+            "Elder Chamber",
+            "Coastal Waters",
+            "University Halls",
+            "Riverview Theatre",
+            "Cluttered Dormitory",
+            "Deck of the Theodosia"
+          ]
+        },
+        {
+          "title": "Memories Banished",
+          "items": [
+            "Airfield",
+            "Ottoman Front",
+            "Memory of an Unspeakable Evil",
+            "Dr. Kensler's Office"
+          ]
+        },
+        {
+          "title": "Chaos Bag",
+          "items": [
+            "No chaos-bag changes were made during setup on Standard difficulty or recorded during this scenario."
+          ]
+        },
+        {
+          "title": "Resolution 1: Waking from the Mirage",
+          "items": [
+            "The investigators tumbled back onto their sleeping mats and blankets. No door closed behind them, leaving them uncertain whether the mirage had been imagined or real.",
+            "All three investigators survived. Each earned 7 XP. The recorded non-story victory display was 0.",
+            "The saved results for Ursula Downs, Preston Fairmont, and Marion Tavares each show 0 physical trauma and 0 mental trauma."
+          ]
+        },
+        {
+          "title": "Tekeli-li at Scenario End",
+          "items": [
+            "Ursula Downs: 1 resources and 1 action Tekeli-li.",
+            "Preston Fairmont: 1 horror and 1 asset Tekeli-li.",
+            "Marion Tavares: 1 horror, 1 damage, 1 action, and 1 clue Tekeli-li."
+          ]
+        },
+        {
+          "title": "Partner Status and Next Chapter",
+          "items": [
+            "Roald Ellsworth: 0 damage, 0 horror.",
+            "Dr. Mala Sinha: 0 damage, 0 horror.",
+            "Eliyah Ashevak: 0 damage, 1 horror.",
+            "Next chapter: Scenario IV: The Heart of Madness."
           ]
         }
       ]
@@ -969,25 +1085,17 @@
     {
       "title": "Scenario IV: The Heart of Madness",
       "statusChips": [
+        "Status: Pending",
+        "Section: Introduction"
+      ],
+      "notes": []
+    },
+    {
+      "title": "Scenario IV: The Heart of Madness, Part I",
+      "statusChips": [
         "Status: Pending"
       ],
-      "notes": [
-        {
-          "title": "Setup Notes",
-          "items": []
-        },
-        {
-          "title": "Scenario Results",
-          "items": [
-            "Parts played: TBD",
-            "Resolution: TBD",
-            "Victory Display: TBD",
-            "XP earned: TBD",
-            "Trauma: TBD",
-            "Campaign result: TBD"
-          ]
-        }
-      ]
+      "notes": []
     }
   ],
   "campaignLog": {
@@ -1013,7 +1121,8 @@
               "The team photographed the astronomical charts.",
               "The team found the hidden tunnel.",
               "The investigators scouted the forked passage.",
-              "The investigators chose to enter Fatal Mirage after Interlude III."
+              "The investigators chose to enter Fatal Mirage after Interlude III.",
+              "Danforth has confronted his demons; he is now Resolute (Fatal Mirage)."
             ]
           },
           {
@@ -1093,11 +1202,24 @@
         "notes": [
           {
             "title": "Memories Discovered",
-            "items": []
+            "items": [
+              "Base Camp",
+              "Elder Chamber",
+              "Coastal Waters",
+              "University Halls",
+              "Riverview Theatre",
+              "Cluttered Dormitory",
+              "Deck of the Theodosia"
+            ]
           },
           {
             "title": "Memories Banished",
-            "items": []
+            "items": [
+              "Airfield",
+              "Ottoman Front",
+              "Memory of an Unspeakable Evil",
+              "Dr. Kensler's Office"
+            ]
           }
         ]
       },
@@ -1189,8 +1311,14 @@
                 "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/eliyah_ashevak.png",
                 "status": "active",
                 "damage": 0,
-                "horror": 0
+                "horror": 1
               }
+            ]
+          },
+          {
+            "title": "Resolute Partner",
+            "items": [
+              "Danforth confronted his demons during Fatal Mirage and is now Resolute."
             ]
           }
         ]

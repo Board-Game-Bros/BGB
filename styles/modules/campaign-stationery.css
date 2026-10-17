@@ -167,6 +167,11 @@ html body .container .scenario-log + .scenario-log {
   html body .container :is(.status-chip, .meta-item)::before {
     border-image-width: 0 30px;
   }
+
+  /* Wrapped session names need room inside the label artwork's top/bottom trim. */
+  html body .container .linear-session-meta .meta-item + .meta-item {
+    padding-block: 2.5em;
+  }
 }
 
 /* The bottle straddles the top-right frame; the feather rises outside it. */
