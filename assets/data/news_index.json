@@ -5,6 +5,39 @@
   "items": [
     {
       "kicker": "Crowdfunding",
+      "date": "October 17, 2026",
+      "title": "The Danes - A Feast for Odin game",
+      "imageSrc": "/assets/news/the-danes-a-feast-for-odin.jpg",
+      "text": "Proud to be the 4,971st backer on Gamefound for The Danes - A Feast for Odin game.",
+      "detail": "Backed the new A Feast for Odin game from Feuerland, designed by Gernot Köpke and Uwe Rosenberg.",
+      "statLabel": "Backer",
+      "statValue": "4,971",
+      "tags": [
+        {
+          "label": "Gamefound",
+          "iconSrc": "/assets/news/gamefound-icon.png",
+          "href": "https://gamefound.com/",
+          "external": true
+        },
+        {
+          "label": "Feuerland",
+          "iconSrc": "/assets/news/feuerland-icon.png",
+          "href": "https://www.feuerland-spiele.de/",
+          "external": true
+        },
+        {
+          "label": "The Danes",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/450923/the-danes",
+          "external": true
+        }
+      ],
+      "href": "https://gamefound.com/en/projects/feuerland/the-danes---a-feast-for-odin-game",
+      "linkLabel": "View Campaign",
+      "external": true
+    },
+    {
+      "kicker": "Crowdfunding",
       "date": "September 30, 2026",
       "title": "Clank! — Cube of Holding and The Forgotten Vault",
       "imageSrc": "/assets/news/clank-cube-of-holding-forgotten-vault.jpg",
