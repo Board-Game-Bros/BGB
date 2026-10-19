@@ -956,7 +956,7 @@
       "variant": "session-meta",
       "metaItems": [
         "Date: 10/17/2026",
-        "Session: Scenario ??? + Scenario IV (The Heart of Madness) + Scenario IV (The Heart of Madness, Part I)"
+        "Session: Scenario ??? + Scenario IV (The Heart of Madness) + Scenario IV (The Heart of Madness, Part I) + Checkpoint III"
       ]
     },
     {
@@ -1077,13 +1077,175 @@
     {
       "title": "Scenario IV: The Heart of Madness",
       "statusChips": [
-        "Status: Pending",
-        "Section: Introduction"
+        "Status: Completed",
+        "Section: Introduction",
+        "Choice: Play Both Parts",
+        "Trauma: +1 Physical Each"
       ],
-      "notes": []
+      "notes": [
+        {
+          "title": "Beneath the City",
+          "items": [
+            "The expedition descended beneath the alien city, passing obsidian archways and carved halls. With Dr. Amy Kensler dead, despair took its toll: each investigator suffered 1 physical trauma.",
+            "Having scouted the forked passage, the investigators recognized the left-hand route and followed its airflow deeper underground."
+          ]
+        },
+        {
+          "title": "Five Glyphs",
+          "items": [
+            "Five strange glyphs marked the final archway. Beyond it lay a worked-stone corridor streaked with multicolored ichor.",
+            "Danforth explained that the city above was only the uppermost tip of a much larger civilization buried beneath the ice. His presence spared the group further ill effects.",
+            "The recovered Miasmic Crystal glowed and hummed near the ancient stonework, providing light without further ill effects."
+          ]
+        },
+        {
+          "title": "The Great Door",
+          "items": [
+            "The investigators reached an immense gateway bearing the same five glyphs, connected to mechanisms and channels. A hostile, churning miasma waited beyond it.",
+            "The investigators chose to stay and study the great door, playing both parts of The Heart of Madness. Proceed to Part I."
+          ]
+        },
+        {
+          "title": "Chaos Bag",
+          "items": [
+            "No chaos-bag changes were recorded during the introduction."
+          ]
+        }
+      ]
     },
     {
       "title": "Scenario IV: The Heart of Madness, Part I",
+      "statusChips": [
+        "Status: Completed",
+        "Outcome: All Resigned",
+        "Resolution: 2",
+        "XP: 3 Each"
+      ],
+      "notes": [
+        {
+          "title": "The Missing Seals",
+          "items": [
+            "Studying the great doorway and its branching passages, the investigators sought the missing pieces of the ancient mechanism. The five glyphs belonged to seals that could contain the entity beyond the gate."
+          ]
+        },
+        {
+          "title": "Partners",
+          "partnerAssignments": [
+            {
+              "investigator": {
+                "name": "Ursula Downs",
+                "role": "The Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/ursula_downs.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/ursula_downs_the_explorer.png"
+              },
+              "partner": {
+                "name": "Roald Ellsworth",
+                "role": "Intrepid Explorer",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/roald_ellsworth.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/roald_ellsworth_intrepid_explorer_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Preston Fairmont",
+                "role": "The Millionaire",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/preston_fairmont.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/preston_fairmont_the_millionaire.png"
+              },
+              "partner": {
+                "name": "Dr. Mala Sinha",
+                "role": "Daring Physician",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_mala_sinha.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/dr_mala_sinha_daring_physician_eoec_1.png"
+              }
+            },
+            {
+              "investigator": {
+                "name": "Marion Tavares",
+                "role": "The Trawler",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/marion_tavares.png",
+                "cardSrc": "/assets/boardgames/ahlcg_investigators/marion_tavares_the_trawler.png"
+              },
+              "partner": {
+                "name": "Danforth",
+                "role": "Brilliant Student · Resolute",
+                "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/danforth.png",
+                "cardSrc": "/assets/boardgames/ahlcg_cards/danforth_brilliant_student_resolute.png"
+              }
+            }
+          ]
+        },
+        {
+          "title": "Scenario Interlude: The Final Straw",
+          "items": [
+            "Dr. Mala Sinha was randomly selected as the victim. The miasma tempted her with a world free of death, pain, and suffering, reaching toward her.",
+            "Danforth interrupted with a passage from Poe about the boundary between life and death. Sinha recognized his familiar quotation, recovered her senses, and turned away. She survived; no expedition member was crossed off during this interlude."
+          ]
+        },
+        {
+          "title": "Chaos Bag",
+          "items": [
+            "No chaos-bag changes were made during setup on Standard difficulty or recorded during this scenario."
+          ]
+        },
+        {
+          "title": "Resolution 2: Through the Gate",
+          "items": [
+            "Ursula Downs, Preston Fairmont, and Marion Tavares all resigned. With no resolution reached during play, the investigators proceeded to Resolution 2.",
+            "Unable to find and place all five seals, the investigators retreated from the shoggoths toward the gate. The immense door burst open, and the miasma dragged them through.",
+            "Each investigator earned 3 XP in total. The resolution awards victory experience plus 1 XP per activated seal; the saved result did not show a separate victory-display breakdown."
+          ]
+        },
+        {
+          "title": "Partner Status and Next Chapter",
+          "items": [
+            "Roald Ellsworth: 0 damage, 0 horror.",
+            "Dr. Mala Sinha: 0 damage, 0 horror.",
+            "Danforth (Resolute): 0 damage, 0 horror.",
+            "Proceed to Checkpoint III: The Other Side."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Checkpoint III: The Other Side",
+      "statusChips": [
+        "Status: Completed",
+        "Choice: Take a Break",
+        "Seals Placed: 2",
+        "Seals Recovered: 2"
+      ],
+      "notes": [
+        {
+          "title": "On the Other Side",
+          "items": [
+            "The investigators awoke in a haze beyond the gate, uncertain how much time had passed. They chose to take a break, resting and gathering strength before continuing."
+          ]
+        },
+        {
+          "title": "Seals Placed",
+          "items": [
+            "Seal B token (B) — activated and placed at the great gate.",
+            "Seal C token (C) — activated and placed at the great gate."
+          ]
+        },
+        {
+          "title": "Seals Recovered",
+          "items": [
+            "Seal A token (A) — recovered and held by an investigator.",
+            "Seal E token (E) — recovered and held by an investigator."
+          ]
+        },
+        {
+          "title": "Next Chapter",
+          "items": [
+            "Continue with Scenario IV: The Heart of Madness, Part II after the break. Part II has not been played."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Scenario IV: The Heart of Madness, Part II",
       "statusChips": [
         "Status: Pending"
       ],
@@ -1114,7 +1276,12 @@
               "The team found the hidden tunnel.",
               "The investigators scouted the forked passage.",
               "The investigators chose to enter Fatal Mirage after Interlude III.",
-              "Danforth has confronted his demons; he is now Resolute (Fatal Mirage)."
+              "Danforth has confronted his demons; he is now Resolute (Fatal Mirage).",
+              "Each investigator suffered 1 physical trauma during the introduction to The Heart of Madness because Dr. Amy Kensler was no longer alive.",
+              "The investigators chose to study the great door and play both parts of The Heart of Madness.",
+              "Danforth saved Dr. Mala Sinha during The Final Straw.",
+              "All three investigators resigned in The Heart of Madness, Part I; Resolution 2 awarded 3 XP each.",
+              "At Checkpoint III, the investigators chose to take a break before The Heart of Madness, Part II."
             ]
           },
           {
@@ -1220,11 +1387,27 @@
         "notes": [
           {
             "title": "Seals Placed",
-            "items": []
+            "items": [
+              "Seal B token (B) — activated and placed at the great gate.",
+              "Seal C token (C) — activated and placed at the great gate."
+            ]
           },
           {
             "title": "Seals Recovered",
-            "items": []
+            "items": [
+              "Seal A token (A) — recovered and held by an investigator.",
+              "Seal E token (E) — recovered and held by an investigator."
+            ]
+          },
+          {
+            "title": "Seal Reference",
+            "items": [
+              "Seal A token (A)",
+              "Seal B token (B)",
+              "Seal C token (C)",
+              "Seal D token (D)",
+              "Seal E token (E)"
+            ]
           }
         ]
       },

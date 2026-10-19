@@ -16,30 +16,36 @@
     return node;
   }
 
-  const INLINE_CHAOS_TOKENS = [
+  const INLINE_ARKHAM_TOKENS = [
     { pattern: "elder thing", src: "/assets/icon/elder_thing_token.png", alt: "elder thing" },
     { pattern: "cultist", src: "/assets/icon/cultist_token.png", alt: "cultist" },
     { pattern: "frost", src: "/assets/icon/frost_token.png", alt: "frost" },
     { pattern: "skull", src: "/assets/icon/skull_token.png", alt: "skull" },
     { pattern: "tablet", src: "/assets/icon/tablet_token.png", alt: "tablet" },
+    ...["A", "B", "C", "D", "E"].map((letter) => ({
+      pattern: `seal ${letter}`,
+      src: `/assets/icon/seal_${letter.toLowerCase()}.svg`,
+      alt: `seal ${letter}`,
+    })),
   ];
-  const inlineChaosTokenPattern = new RegExp(
-    `(${INLINE_CHAOS_TOKENS.map((token) => token.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?=\\s+tokens?\\b)`,
+  const inlineArkhamTokenPattern = new RegExp(
+    `(${INLINE_ARKHAM_TOKENS.map((token) => token.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})(?=\\s+tokens?\\b)`,
     "gi"
   );
 
   function appendInlineArkhamText(node, text) {
     const source = String(text || "");
     if (!source) return;
-    const parts = source.split(inlineChaosTokenPattern);
+    const parts = source.split(inlineArkhamTokenPattern);
     parts.forEach((part) => {
       if (!part) return;
-      const token = INLINE_CHAOS_TOKENS.find((entry) => new RegExp(`^${entry.pattern}$`, "i").test(part));
+      const token = INLINE_ARKHAM_TOKENS.find((entry) => new RegExp(`^${entry.pattern}$`, "i").test(part));
       if (token) {
         const img = document.createElement("img");
         img.className = "inline-chaos-token";
         img.src = token.src;
         img.alt = token.alt;
+        img.title = token.alt;
         node.appendChild(img);
         return;
       }
