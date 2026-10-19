@@ -371,6 +371,13 @@
       };
       appendConditionIcons("damage", member && member.damage);
       appendConditionIcons("horror", member && member.horror);
+      if (member && member.resolute === true) {
+        const resolute = el("span", "campaign-expedition-status-label campaign-expedition-resolute", "✓");
+        resolute.setAttribute("role", "img");
+        resolute.setAttribute("aria-label", "Resolute");
+        resolute.title = `${name}: Resolute`;
+        state.appendChild(resolute);
+      }
       if (status === "mia" || status === "rescued") {
         const statusLabel = el("span", "campaign-expedition-status-label", "MIA");
         if (status === "rescued") statusLabel.classList.add("campaign-expedition-status-rescued");

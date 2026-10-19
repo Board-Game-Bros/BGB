@@ -1447,7 +1447,8 @@
                 "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/danforth.png",
                 "status": "rescued",
                 "damage": 0,
-                "horror": 0
+                "horror": 0,
+                "resolute": true
               },
               {
                 "name": "Roald Ellsworth",
