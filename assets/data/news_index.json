@@ -5,6 +5,39 @@
   "items": [
     {
       "kicker": "Crowdfunding",
+      "date": "October 21, 2026",
+      "title": "Arkham Horror Remastered - Vault Series",
+      "imageSrc": "/assets/news/arkham-horror-remastered.webp",
+      "text": "Proud to be the 1,078th backer on Gamefound for Arkham Horror Remastered - Vault Series.",
+      "detail": "Backed the first Vault Series campaign from Fantasy Flight Games, bringing back the classic 2005 Arkham Horror board game with new artwork, upgraded components, and clarified rules.",
+      "statLabel": "Backer",
+      "statValue": "1,078",
+      "tags": [
+        {
+          "label": "Gamefound",
+          "iconSrc": "/assets/news/gamefound-icon.png",
+          "href": "https://gamefound.com/",
+          "external": true
+        },
+        {
+          "label": "Fantasy Flight Games",
+          "iconSrc": "/assets/news/fantasy-flight-games-icon.webp",
+          "href": "https://www.fantasyflightgames.com/",
+          "external": true
+        },
+        {
+          "label": "Arkham Horror: Remastered",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/480156/arkham-horror-remastered",
+          "external": true
+        }
+      ],
+      "href": "https://gamefound.com/en/projects/asmodee/arkham-horror",
+      "linkLabel": "View Campaign",
+      "external": true
+    },
+    {
+      "kicker": "Crowdfunding",
       "date": "October 17, 2026",
       "title": "The Danes - A Feast for Odin game",
       "imageSrc": "/assets/news/the-danes-a-feast-for-odin.jpg",
@@ -34,6 +67,33 @@
       ],
       "href": "https://gamefound.com/en/projects/feuerland/the-danes---a-feast-for-odin-game",
       "linkLabel": "View Campaign",
+      "external": true
+    },
+    {
+      "kicker": "New Release",
+      "date": "October 16, 2026",
+      "title": "Traces to Nowhere — Scenario Pack",
+      "imageSrc": "/assets/news/traces-to-nowhere.webp",
+      "text": "Traces to Nowhere is now available for Arkham Horror: The Card Game, sending investigators into a new mystery of disappearances across Arkham.",
+      "detail": "Question suspects and evade the Abductor in a replayable scenario that changes with the culprit. Play it on its own or as a campaign side-story; an Arkham Horror: The Card Game core set is required.",
+      "statLabel": "Players",
+      "statValue": "1–4",
+      "tags": [
+        {
+          "label": "Fantasy Flight Games",
+          "iconSrc": "/assets/news/fantasy-flight-games-icon.webp",
+          "href": "https://www.fantasyflightgames.com/",
+          "external": true
+        },
+        {
+          "label": "Traces to Nowhere",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/476751/arkham-horror-the-card-game-traces-to-nowhere-scen",
+          "external": true
+        }
+      ],
+      "href": "https://www.fantasyflightgames.com/product/traces-to-nowhere/",
+      "linkLabel": "View Expansion",
       "external": true
     },
     {
