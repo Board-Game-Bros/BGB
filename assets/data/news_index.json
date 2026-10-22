@@ -235,8 +235,8 @@
       "imageSrc": "/assets/news/arkham-horror-children-of-blood.webp",
       "text": "One to four investigators face a vampiric mystery across three scenarios in this small campaign expansion for Arkham Horror: The Card Game.",
       "detail": "Track monsters through Arkham's streets, explore the caverns below, and infiltrate a Northside party. New blood tokens threaten to transform the investigators, while difficulty-dependent locations and encounters offer new challenges on repeat plays. Requires the Arkham Horror: The Card Game core set.",
-      "statLabel": "Scenarios",
-      "statValue": "3",
+      "statLabel": "Players",
+      "statValue": "1–4",
       "tags": [
         {
           "label": "Fantasy Flight Games",
@@ -262,8 +262,8 @@
       "imageSrc": "/assets/news/arkham-horror-chapter-two-core-set.webp",
       "text": "Chapter Two begins with a new core set, five mechanically new investigators, and the three-scenario Brethren of Ash campaign.",
       "detail": "Set in Arkham after a devastating calamity, the new core set offers a fresh starting point for new players and a new card pool for veterans. It replaces the 2021 Revised Core Set, while all player content remains compatible with previously released Arkham Horror: The Card Game products.",
-      "statLabel": "Investigators",
-      "statValue": "5",
+      "statLabel": "Players",
+      "statValue": "1–4",
       "tags": [
         {
           "label": "Fantasy Flight Games",
