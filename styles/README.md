@@ -56,7 +56,7 @@ This project now uses a page-entry + module architecture.
 ## Sword cursor
 
 - `base.css` defines `--cursor-sword` (default) and `--cursor-sword-hover` (clickable). Use `cursor: var(--cursor-sword-hover)` instead of `cursor: pointer`, and `var(--cursor-sword)` instead of `cursor: default`; keep `text`, `help` and `not-allowed` as system cursors.
-- `assets/icon/cursor/` holds 32px and 64px (@2x) PNGs with a faint gold glow baked in; the hover variant glows slightly brighter. The hotspot is the blade tip at `3 3`. `sword-source.png` is the full-size original artwork.
+- `assets/icon/cursor/` holds 64px and 128px (@2x) PNGs with a soft gold glow baked in; the hover variant glows slightly brighter. The hotspot is the blade tip at `6 6`. Browsers fall back to the system cursor for images over 32px when the cursor would extend past the viewport edge. `sword-source.png` is the full-size original artwork.
 
 ## Navigation banner
 

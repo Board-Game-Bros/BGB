@@ -18,8 +18,8 @@
   --radius-md: 14px;
   --radius-sm: 10px;
   /* Glowing sword cursor; hotspot sits on the blade tip */
-  --cursor-sword: image-set(url("/assets/icon/cursor/cursor-sword.png") 1x, url("/assets/icon/cursor/cursor-sword@2x.png") 2x) 3 3, auto;
-  --cursor-sword-hover: image-set(url("/assets/icon/cursor/cursor-sword-hover.png") 1x, url("/assets/icon/cursor/cursor-sword-hover@2x.png") 2x) 3 3, pointer;
+  --cursor-sword: image-set(url("/assets/icon/cursor/cursor-sword.png") 1x, url("/assets/icon/cursor/cursor-sword@2x.png") 2x) 6 6, auto;
+  --cursor-sword-hover: image-set(url("/assets/icon/cursor/cursor-sword-hover.png") 1x, url("/assets/icon/cursor/cursor-sword-hover@2x.png") 2x) 6 6, pointer;
 }
 
 *,
