@@ -1200,10 +1200,7 @@
         {
           "title": "Saved Investigator Results",
           "items": [
-            "Ursula Downs, Preston Fairmont, and Marion Tavares each finished with 1 physical trauma and 0 mental trauma, including the physical trauma suffered during the introduction.",
-            "Ursula Downs: 3 Tekeli-li remaining — Random Discard, Resources, and Action (1 each).",
-            "Preston Fairmont: 3 Tekeli-li remaining — Horror, Damage, and Asset (1 each).",
-            "Marion Tavares: no Tekeli-li remaining."
+            "Ursula Downs, Preston Fairmont, and Marion Tavares each finished with 1 physical trauma and 0 mental trauma, including the physical trauma suffered during the introduction."
           ]
         },
         {
@@ -1360,15 +1357,7 @@
           "items": [
             "Danforth (Resolute): 0 damage, 2 horror.",
             "Roald Ellsworth: 1 damage, 1 horror.",
-            "Dr. Mala Sinha: 2 damage, 1 horror."
-          ]
-        },
-        {
-          "title": "Saved Investigator Results",
-          "items": [
-            "Ursula Downs: 1 Tekeli-li remaining — Action (1).",
-            "Preston Fairmont: 2 Tekeli-li remaining — Horror and Damage (1 each).",
-            "Marion Tavares: no Tekeli-li remaining.",
+            "Dr. Mala Sinha: 2 damage, 1 horror.",
             "Proceed to the Epilogue."
           ]
         }
@@ -1593,7 +1582,7 @@
                 "avatarSrc": "/assets/boardgames/ahlcg_partner_avatars/dr_amy_kensler.png",
                 "status": "crossed-out",
                 "damage": 0,
-                "horror": 1
+                "horror": 0
               },
               {
                 "name": "Prof. William Dyer",
