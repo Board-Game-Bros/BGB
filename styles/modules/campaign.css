@@ -29,7 +29,7 @@
 }
 
 .campaign-subtitle-wrapper .campaign-subtitle {
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
 }
 
 .campaign-subtitle-link {

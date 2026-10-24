@@ -31,7 +31,7 @@ html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link, button, i
   text-shadow: 0 1px 0 rgba(255, 241, 202, 0.4);
   filter: var(--cartouche-shadow);
   transition: filter 150ms ease, transform 150ms ease;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
 }
 
 html body :is(nav a, .subnav a, .more-info-btn, .pill-btn, .back-link) {
@@ -74,7 +74,7 @@ html body button:is(.upgrade-btn-secondary, [data-action="cancel-edit"], .custom
   text-shadow: none;
 }
 
-html body button.customizable-inline-chip.is-inherited { cursor: default; }
+html body button.customizable-inline-chip.is-inherited { cursor: var(--cursor-sword); }
 
 html body button:is(.upgrade-btn-danger, .edit-card-remove, .tg-delete-session):not(:disabled) {
   color: var(--control-danger);
@@ -146,7 +146,7 @@ html body :is(button.trauma-value, input.trauma-input) {
 html body button.trauma-value {
   display: inline-block;
   min-width: 2.5em;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
   transition: color 150ms ease, filter 150ms ease;
 }
 
