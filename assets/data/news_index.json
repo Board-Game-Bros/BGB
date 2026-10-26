@@ -5,6 +5,39 @@
   "items": [
     {
       "kicker": "Crowdfunding",
+      "date": "October 26, 2026",
+      "title": "Lorenzo il Magnifico - A New Renaissance",
+      "imageSrc": "/assets/news/lorenzo-il-magnifico-a-new-renaissance.jpg",
+      "text": "Proud to be the 1,552nd backer on Gamefound for Lorenzo il Magnifico - A New Renaissance.",
+      "detail": "Backed the 10th anniversary campaign from Cranio Creations, celebrating Lorenzo il Magnifico with the Prima Lux and Maiestas editions, refreshed artwork, and deluxe upgrades.",
+      "statLabel": "Backer",
+      "statValue": "1,552",
+      "tags": [
+        {
+          "label": "Gamefound",
+          "iconSrc": "/assets/news/gamefound-icon.png",
+          "href": "https://gamefound.com/",
+          "external": true
+        },
+        {
+          "label": "Cranio Creations",
+          "iconSrc": "/assets/news/cranio-creations-icon.png",
+          "href": "https://craniocreations.it/",
+          "external": true
+        },
+        {
+          "label": "Lorenzo il Magnifico",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/203993/lorenzo-il-magnifico",
+          "external": true
+        }
+      ],
+      "href": "https://gamefound.com/en/projects/cranio-creations/lorenzo-il-magnifico-a-new-renaissance",
+      "linkLabel": "View Campaign",
+      "external": true
+    },
+    {
+      "kicker": "Crowdfunding",
       "date": "October 21, 2026",
       "title": "Arkham Horror Remastered - Vault Series",
       "imageSrc": "/assets/news/arkham-horror-remastered.webp",
