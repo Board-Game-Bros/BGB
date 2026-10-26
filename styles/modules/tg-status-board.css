@@ -55,7 +55,7 @@ html body .container .tg-status-board button.tg-status-slot {
   filter: none;
   box-shadow: none;
   transform: none;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
   transition: transform 150ms ease, filter 150ms ease;
 }
 
@@ -68,7 +68,7 @@ html body .container .tg-status-board button.tg-status-slot.is-owned {
 html body .container .tg-status-board button.tg-status-slot:disabled {
   opacity: 1;
   filter: none;
-  cursor: default;
+  cursor: var(--cursor-sword);
 }
 
 html body .container .tg-status-board button.tg-status-slot.is-owned:not([data-slot-label=""])::after {

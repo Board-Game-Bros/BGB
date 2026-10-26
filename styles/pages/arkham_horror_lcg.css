@@ -1,12 +1,12 @@
-@import url("../base.css?v=20261004torchfixed");
+@import url("../base.css?v=20261024sword");
 @import url("../modules/banner-title.css?v=20260924banner2");
 @import url("../modules/cards.css?v=20260923soft");
 @import url("../modules/investigator-cards.css?v=20260923soft");
-@import url("../modules/campaign.css?v=20260923soft");
+@import url("../modules/campaign.css?v=20261024sword");
 @import url("../modules/subnav.css?v=20260923soft");
 @import url("https://fonts.googleapis.com/css2?family=Eater&family=IM+Fell+English+SC&family=Uncial+Antiqua&display=swap");
 @import url("../modules/velvet-canvas.css?v=20260928parchment2");
-@import url("../modules/medieval-buttons.css?v=20261007numberframe");
+@import url("../modules/medieval-buttons.css?v=20261024sword");
 @import url("../modules/nav-banner.css?v=20260927torch1");
 @import url("../modules/card-depth.css?v=20260928depth2");
 @import url("../modules/shell-ornaments.css?v=20260928bgb3");
@@ -14,7 +14,7 @@
 @import url("../modules/campaign-stationery.css?v=20261017sessionlabels");
 @import url("../modules/card-highlight.css?v=20261005framehover");
 @import url("../modules/upgrade-ledger.css?v=20261005framehover");
-@import url("../modules/icon-seals.css?v=20261004crossseal");
+@import url("../modules/icon-seals.css?v=20261024sword");
 @import url("../modules/arkham-text-surfaces.css?v=20261005framehover2");
 @import url("../modules/expedition-stationery.css?v=20261005bluecloth");
 
@@ -219,7 +219,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   color: #352414;
   font: inherit;
   text-align: center;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
   overflow: visible;
 }
 
@@ -416,7 +416,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   color: #f4dfad;
   font: inherit;
   text-align: left;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
   overflow: visible;
 }
 
@@ -1423,7 +1423,7 @@ html body img.card-preview {
   padding: 3px 9px;
   font: inherit;
   font-size: 0.78rem;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
 }
 
 .customizable-inline-editor {
@@ -1484,7 +1484,7 @@ html body img.card-preview {
   height: 1.8rem;
   font: inherit;
   font-size: 0.82rem;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
 }
 
 .customizable-inline-chip.is-upgrade {
@@ -1495,7 +1495,7 @@ html body img.card-preview {
 .customizable-inline-chip.is-inherited {
   background: linear-gradient(180deg, rgba(189, 159, 113, 0.92) 0%, rgba(158, 124, 74, 0.9) 100%);
   color: #fff6de;
-  cursor: default;
+  cursor: var(--cursor-sword);
 }
 
 .customizable-popover {
@@ -1546,7 +1546,7 @@ html body img.card-preview {
   font: inherit;
   font-size: 1.5rem;
   line-height: 1;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
 }
 
 .customizable-overlay-group + .customizable-overlay-group {
@@ -1629,7 +1629,7 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
   font: inherit;
   font-size: 0.92rem;
   letter-spacing: 0.3px;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
   box-shadow:
     0 1px 0 rgba(58, 45, 26, 0.4),
     0 3px 8px rgba(0, 0, 0, 0.14);
@@ -1782,7 +1782,7 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
   font: inherit;
   font-size: 0.78rem;
   padding: 3px 8px;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
   align-self: flex-start;
   white-space: nowrap;
 }
@@ -1834,7 +1834,7 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
   background: transparent;
   font: inherit;
   text-align: left;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
 }
 
 .story-weakness-summary:hover {
@@ -1949,7 +1949,7 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
   color: inherit;
   background: linear-gradient(180deg, rgba(232, 205, 151, 0.7), rgba(193, 150, 81, 0.3));
   font: 20px Georgia, serif;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
   touch-action: manipulation;
   transition: background 120ms, box-shadow 120ms;
 }
@@ -1964,7 +1964,7 @@ body.deck-panel-mode .deck-list-grid .card-ref:hover .card-preview {
 
 .story-weakness-stepper button:disabled {
   opacity: 0.35;
-  cursor: default;
+  cursor: var(--cursor-sword);
 }
 
 .story-weakness-stepper button:focus-visible,
@@ -2016,7 +2016,7 @@ body.torch-mode .story-weakness-total {
   text-align: left;
   font: inherit;
   padding: 7px 10px;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
 }
 
 .card-autocomplete-item:last-child {

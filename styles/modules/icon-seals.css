@@ -30,7 +30,7 @@ html body .container button:is(.tg-inline-del, .draft-card-remove, .customizable
   box-shadow: none;
   filter: none;
   transform: none;
-  cursor: pointer;
+  cursor: var(--cursor-sword-hover);
   transition: filter 150ms ease;
 }
 

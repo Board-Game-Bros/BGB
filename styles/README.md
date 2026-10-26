@@ -53,6 +53,11 @@ This project now uses a page-entry + module architecture.
 - Light mode uses ivory with dark ink; torch mode uses `medieval_cartouche_button_dark.png` with cream ink. The two theme variants retain the same silhouette. Mobile navigation uses two columns to preserve the ornament instead of compressing it into pointed slivers. The previous angular bronze SVG assets remain available as earlier versions.
 - The fixed torch toggle uses generated lit and extinguished medallion art in `assets/icon/medieval-torch-lit.png` and `assets/icon/medieval-torch-unlit.png`; torch mode shows the unlit state and exposes an “Extinguish the torch” label.
 
+## Sword cursor
+
+- `base.css` defines `--cursor-sword` (default) and `--cursor-sword-hover` (clickable). Use `cursor: var(--cursor-sword-hover)` instead of `cursor: pointer`, and `var(--cursor-sword)` instead of `cursor: default`; keep `text`, `help` and `not-allowed` as system cursors.
+- `assets/icon/cursor/` holds 64px and 128px (@2x) PNGs with a soft gold glow baked in; the hover variant glows slightly brighter. The hotspot is the blade tip at `6 6`. Browsers fall back to the system cursor for images over 32px when the cursor would extend past the viewport edge. `sword-source.png` is the full-size original artwork.
+
 ## Navigation banner
 
 - `modules/nav-banner.css` hangs the sticky navigation as a cloth banner from a cast-bronze rod: `nav::before` is the generated damask cloth (acanthus embroidery, braided trim, bullion fringe and corner tassels), `nav::after` is the rod. The `nav` element itself is transparent.
