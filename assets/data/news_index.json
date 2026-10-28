@@ -5,6 +5,39 @@
   "items": [
     {
       "kicker": "Crowdfunding",
+      "date": "October 28, 2026",
+      "title": "Too Little Time",
+      "imageSrc": "/assets/news/too-little-time.png",
+      "text": "Proud to be the 3,590th backer on Gamefound for Too Little Time.",
+      "detail": "Backed the time-traveling boss battler from Chip Theory Games, set in the world of Too Many Bones. Explore Daelore's past, present, and future, with actions that carry over into subsequent plays.",
+      "statLabel": "Backer",
+      "statValue": "3,590",
+      "tags": [
+        {
+          "label": "Gamefound",
+          "iconSrc": "/assets/news/gamefound-icon.png",
+          "href": "https://gamefound.com/",
+          "external": true
+        },
+        {
+          "label": "Chip Theory Games",
+          "iconSrc": "/assets/news/chip-theory-games-icon.png",
+          "href": "https://chiptheorygames.com/",
+          "external": true
+        },
+        {
+          "label": "Too Little Time",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/479178/too-little-time",
+          "external": true
+        }
+      ],
+      "href": "https://gamefound.com/en/projects/chip-theory-games/too-little-time",
+      "linkLabel": "View Campaign",
+      "external": true
+    },
+    {
+      "kicker": "Crowdfunding",
       "date": "October 26, 2026",
       "title": "Lorenzo il Magnifico - A New Renaissance",
       "imageSrc": "/assets/news/lorenzo-il-magnifico-a-new-renaissance.jpg",
