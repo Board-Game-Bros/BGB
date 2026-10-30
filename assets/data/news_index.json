@@ -262,6 +262,31 @@
       "external": true
     },
     {
+      "kicker": "Industry News",
+      "date": "June 4, 2026",
+      "title": "Steamforged Games — Layoffs and Crowdfunding Concerns",
+      "imageSrc": "/assets/news/steamforged-warmachine.jpg",
+      "text": "BoardGameWire first reported Steamforged's confirmed layoffs and crowdfunding cutback on June 4. Sources estimated that around a third of staff were affected as the publisher shifted its focus to Warmachine; the company did not confirm the scale of the cuts.",
+      "detail": "An October 9 follow-up reported dwindling updates and unresolved refund requests across nine campaigns that raised £18.83 million and still had outstanding fulfilment. Some deliveries were overdue, while others were not yet due. The reports do not establish bankruptcy; September's compulsory strike-off proceedings were discontinued. Steamforged said it retained the resources needed to deliver its commitments.",
+      "statLabel": "Campaigns",
+      "statValue": "9",
+      "tags": [
+        {
+          "label": "Steamforged Games",
+          "href": "https://steamforged.com/",
+          "external": true
+        },
+        {
+          "label": "BoardGameWire · June 4 Report",
+          "href": "https://boardgamewire.com/index.php/2026/06/04/steamforged-confirms-redundancies-crowdfunding-cutback-amid-refocus-on-booming-warmachine/",
+          "external": true
+        }
+      ],
+      "href": "https://boardgamewire.com/index.php/2026/10/09/steamforged-crowdfunding-concerns-grow-as-updates-dry-up-refund-requests-go-unresolved/",
+      "linkLabel": "Read October 9 Follow-up",
+      "external": true
+    },
+    {
       "kicker": "Announcement",
       "date": "May 21, 2026",
       "title": "Children of Blood — Arkham Horror Campaign Expansion",
