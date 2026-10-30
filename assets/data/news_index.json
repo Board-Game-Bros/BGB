@@ -295,6 +295,33 @@
       "external": true
     },
     {
+      "kicker": "New Release",
+      "date": "July 31, 2026",
+      "title": "Welcome to Promise — Arkham Horror RPG Starter Set",
+      "imageSrc": "/assets/news/arkham-horror-welcome-to-promise.webp",
+      "text": "Welcome to Promise is now available for Arkham Horror: The Roleplaying Game, taking investigators into a supernatural mystery in the bayous of 1920s Louisiana.",
+      "detail": "Wake with clouded memories in a town you cannot escape. This standalone starter set teaches the Dynamic Pool System as you play, with a 64-page adventure, a rules appendix, five ready-to-play investigators, dice, maps, and tokens for one game master and up to five players.",
+      "statLabel": "Players",
+      "statValue": "2–6",
+      "tags": [
+        {
+          "label": "EDGE Studio",
+          "iconSrc": "/assets/news/edge-studio-icon.png",
+          "href": "https://www.edge-studio.net/",
+          "external": true
+        },
+        {
+          "label": "Welcome to Promise",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/rpgitem/469166/arkham-horror-the-roleplaying-game-welcome-to-prom",
+          "external": true
+        }
+      ],
+      "href": "https://www.edge-studio.net/welcome-to-promise-new-starter-set/",
+      "linkLabel": "Official Announcement",
+      "external": true
+    },
+    {
       "kicker": "Industry News",
       "date": "June 4, 2026",
       "title": "Steamforged Games — Layoffs and Crowdfunding Concerns",
