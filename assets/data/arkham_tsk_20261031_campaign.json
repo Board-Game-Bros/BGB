@@ -141,7 +141,7 @@
             "mental": 0
           },
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": ""
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e1\">\n        <p class=\"upgrade-entry-head\">After Prologue (+6 XP)</p>\n        <div class=\"upgrade-columns\" style=\"\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Sword Cane (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sword_cane.png\" alt=\"Sword Cane (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Winds of Power (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/winds_of_power_1.png\" alt=\"Winds of Power (1)\"></span></li><li><span class=\"card-ref\">Timeworn Brand (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/timeworn_brand_5.png\" alt=\"Timeworn Brand (5)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Prologue):\" data-entry-uid-link=\"e1\">Trauma (Prologue): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         },
         {
           "name": "Norman Withers",
@@ -155,7 +155,7 @@
             "mental": 0
           },
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": ""
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e2\">\n        <p class=\"upgrade-entry-head\">After Pprologue (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Guts (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guts.png\" alt=\"Guts (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Astronomical Atlas (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astronomical_atlas_3.png\" alt=\"Astronomical Atlas (3) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Pprologue):\" data-entry-uid-link=\"e2\">Trauma (Pprologue): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         },
         {
           "name": "William Yorick",
@@ -169,7 +169,7 @@
             "mental": 0
           },
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": ""
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e3\">\n        <p class=\"upgrade-entry-head\">After Prologue (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Prepared for the Worst<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png\" alt=\"Prepared for the Worst\"></span></li><li><span class=\"card-ref\">Enchanted Blade (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/enchanted_blade.png\" alt=\"Enchanted Blade (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Chainsaw (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/chainsaw_4.png\" alt=\"Chainsaw (4)\"></span></li><li><span class=\"card-ref\">Hatchet (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hatchet_1.png\" alt=\"Hatchet (1) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Prologue):\" data-entry-uid-link=\"e3\">Trauma (Prologue): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         }
       ]
     }
