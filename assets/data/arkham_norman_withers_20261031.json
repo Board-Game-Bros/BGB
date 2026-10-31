@@ -1,0 +1,281 @@
+{
+  "pageTitle": "Norman Withers - Deck Build (10/31/2026)",
+  "title": "Norman Withers Deck - 10/31/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/norman_withers_the_astronomer_1.png",
+    "imageAlt": "Norman Withers",
+    "heading": "Norman Withers",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "17 packs required",
+      "Class: Seeker",
+      "Built by Yan on 10/31/2026",
+      "Side Deck cards are alternatives and are not included in the starting deck."
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Livre d'Eibon \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/livre_deibon_hyperborean_grimoire.png",
+              "imageAlt": "Livre d'Eibon"
+            },
+            {
+              "qty": 1,
+              "name": "Occult Lexicon",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/occult_lexicon.png",
+              "imageAlt": "Occult Lexicon"
+            }
+          ],
+          "title": "Asset (8)",
+          "label": "Hand"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Arcane Enlightenment",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/arcane_enlightenment.png",
+              "imageAlt": "Arcane Enlightenment"
+            }
+          ],
+          "label": "Arcane"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "St. Hubert's Key",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/st_huberts_key_cleansing_fire.png",
+              "imageAlt": "St. Hubert's Key"
+            }
+          ],
+          "label": "Accessory"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Fine Clothes",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/fine_clothes.png",
+              "imageAlt": "Fine Clothes"
+            }
+          ],
+          "label": "Body"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Dr. Milan Christopher",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/dr_milan_christopher_professor_of_entomology.png",
+              "imageAlt": "Dr. Milan Christopher"
+            },
+            {
+              "qty": 2,
+              "name": "Research Librarian",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/research_librarian.png",
+              "imageAlt": "Research Librarian"
+            }
+          ],
+          "label": "Ally"
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "\"I've got a plan!\"",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/ive_got_a_plan.png",
+              "imageAlt": "\"I've got a plan!\""
+            },
+            {
+              "qty": 2,
+              "name": "Astounding Revelation",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/astounding_revelation.png",
+              "imageAlt": "Astounding Revelation"
+            },
+            {
+              "qty": 2,
+              "name": "Deny Existence",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/deny_existence.png",
+              "imageAlt": "Deny Existence"
+            },
+            {
+              "qty": 1,
+              "name": "Logical Reasoning",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/logical_reasoning.png",
+              "imageAlt": "Logical Reasoning"
+            },
+            {
+              "qty": 1,
+              "name": "Mind over Matter",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/mind_over_matter.png",
+              "imageAlt": "Mind over Matter"
+            },
+            {
+              "qty": 2,
+              "name": "Practice Makes Perfect",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/practice_makes_perfect.png",
+              "imageAlt": "Practice Makes Perfect"
+            },
+            {
+              "qty": 2,
+              "name": "Shortcut",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/shortcut.png",
+              "imageAlt": "Shortcut"
+            },
+            {
+              "qty": 2,
+              "name": "Written in the Stars",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/written_in_the_stars.png",
+              "imageAlt": "Written in the Stars"
+            }
+          ],
+          "title": "Event (13)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Deduction",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/deduction.png",
+              "imageAlt": "Deduction"
+            },
+            {
+              "qty": 1,
+              "name": "Enraptured",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/enraptured.png",
+              "imageAlt": "Enraptured"
+            },
+            {
+              "qty": 2,
+              "name": "Eureka!",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/eureka.png",
+              "imageAlt": "Eureka!"
+            },
+            {
+              "qty": 2,
+              "name": "Guts",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png",
+              "imageAlt": "Guts"
+            },
+            {
+              "qty": 2,
+              "name": "Perception",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/perception.png",
+              "imageAlt": "Perception"
+            },
+            {
+              "qty": 1,
+              "name": "Promise of Power",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/promise_of_power.png",
+              "imageAlt": "Promise of Power"
+            }
+          ],
+          "title": "Skill (10)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Random Basic Weakness \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Random Basic Weakness"
+            },
+            {
+              "qty": 1,
+              "name": "The Harbinger \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/the_harbinger.png",
+              "imageAlt": "The Harbinger"
+            }
+          ],
+          "title": "Treachery (2)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Burning the Midnight Oil",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/burning_the_midnight_oil.png",
+              "imageAlt": "Burning the Midnight Oil"
+            },
+            {
+              "qty": 1,
+              "name": "Crack the Case",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/crack_the_case.png",
+              "imageAlt": "Crack the Case"
+            },
+            {
+              "qty": 1,
+              "name": "Dream-Enhancing Serum",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/dream_enhancing_serum.png",
+              "imageAlt": "Dream-Enhancing Serum"
+            },
+            {
+              "qty": 1,
+              "name": "Fearless",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/fearless.png",
+              "imageAlt": "Fearless"
+            },
+            {
+              "qty": 1,
+              "name": "Inquiring Mind",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/inquiring_mind.png",
+              "imageAlt": "Inquiring Mind"
+            },
+            {
+              "qty": 1,
+              "name": "Plan of Action",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/plan_of_action.png",
+              "imageAlt": "Plan of Action"
+            },
+            {
+              "qty": 1,
+              "name": "Shrivelling",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/shrivelling.png",
+              "imageAlt": "Shrivelling"
+            },
+            {
+              "qty": 1,
+              "name": "Spectral Razor",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/spectral_razor.png",
+              "imageAlt": "Spectral Razor"
+            },
+            {
+              "qty": 1,
+              "name": "True Understanding",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/true_understanding.png",
+              "imageAlt": "True Understanding"
+            },
+            {
+              "qty": 1,
+              "name": "Vantage Point",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/vantage_point.png",
+              "imageAlt": "Vantage Point"
+            },
+            {
+              "qty": 1,
+              "name": "Working a Hunch",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/working_a_hunch.png",
+              "imageAlt": "Working a Hunch"
+            }
+          ],
+          "title": "Side Deck"
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Norman-Withers-DeckBuild-20261031-Yan.pdf",
+    "label": "Open Norman Deck PDF"
+  }
+}

@@ -1,0 +1,424 @@
+{
+  "pageTitle": "Akachi Onyele - Deck Build (10/31/2026)",
+  "title": "Akachi Onyele Deck - 10/31/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/akachi_onyele_the_shaman.png",
+    "imageAlt": "Akachi Onyele",
+    "heading": "Akachi Onyele",
+    "details": [
+      "30 cards (33 total)",
+      "0 experience required",
+      "11 packs required",
+      "Class: Mystic",
+      "Built by LL on 10/31/2026",
+      "Side Deck cards are alternatives and are not included in the starting deck."
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Sword Cane",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/sword_cane.png",
+              "imageAlt": "Sword Cane"
+            },
+            {
+              "qty": 1,
+              "name": "The Chthonian Stone",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/the_chthonian_stone_stygian_waymark.png",
+              "imageAlt": "The Chthonian Stone"
+            }
+          ],
+          "title": "Asset (19)",
+          "label": "Hand"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Azure Flame",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/azure_flame.png",
+              "imageAlt": "Azure Flame"
+            },
+            {
+              "qty": 2,
+              "name": "Second Sight",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/second_sight.png",
+              "imageAlt": "Second Sight"
+            },
+            {
+              "qty": 2,
+              "name": "Sixth Sense",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/sixth_sense.png",
+              "imageAlt": "Sixth Sense"
+            }
+          ],
+          "label": "Arcane"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Crystal Pendulum",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/crystal_pendulum.png",
+              "imageAlt": "Crystal Pendulum"
+            },
+            {
+              "qty": 1,
+              "name": "Hallowed Mirror",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/hallowed_mirror.png",
+              "imageAlt": "Hallowed Mirror"
+            }
+          ],
+          "label": "Accessory"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Heavy Furs",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/heavy_furs.png",
+              "imageAlt": "Heavy Furs"
+            }
+          ],
+          "label": "Body"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Familiar Spirit",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/familiar_spirit.png",
+              "imageAlt": "Familiar Spirit"
+            }
+          ],
+          "label": "Ally"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Spirit-Speaker \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/spirit_speaker_envoy_of_the_alusi.png",
+              "imageAlt": "Spirit-Speaker"
+            },
+            {
+              "qty": 2,
+              "name": "Spiritual Intuition",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/spiritual_intuition.png",
+              "imageAlt": "Spiritual Intuition"
+            }
+          ],
+          "label": "Other"
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Emergency Cache",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png",
+              "imageAlt": "Emergency Cache"
+            },
+            {
+              "qty": 2,
+              "name": "Read the Signs",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/read_the_signs.png",
+              "imageAlt": "Read the Signs"
+            },
+            {
+              "qty": 2,
+              "name": "Spectral Razor",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/spectral_razor.png",
+              "imageAlt": "Spectral Razor"
+            },
+            {
+              "qty": 2,
+              "name": "Ward of Protection",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/ward_of_protection.png",
+              "imageAlt": "Ward of Protection"
+            }
+          ],
+          "title": "Event (8)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Guts",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/guts.png",
+              "imageAlt": "Guts"
+            },
+            {
+              "qty": 2,
+              "name": "Unexpected Courage",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/unexpected_courage.png",
+              "imageAlt": "Unexpected Courage"
+            }
+          ],
+          "title": "Skill (4)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Angered Spirits \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/angered_spirits.png",
+              "imageAlt": "Angered Spirits"
+            },
+            {
+              "qty": 1,
+              "name": "Random Basic Weakness \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Random Basic Weakness"
+            }
+          ],
+          "title": "Treachery (2)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Arcane Experience (4)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/arcane_experience_4.png",
+              "imageAlt": "Arcane Experience (4)"
+            },
+            {
+              "qty": 2,
+              "name": "Arcane Studies (4)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/arcane_studies_4.png",
+              "imageAlt": "Arcane Studies (4)"
+            },
+            {
+              "qty": 2,
+              "name": "Banish (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/banish_1.png",
+              "imageAlt": "Banish (1)"
+            },
+            {
+              "qty": 2,
+              "name": "Binder's Jar (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/binders_jar_interdimensional_prison_1.png",
+              "imageAlt": "Binder's Jar (1)"
+            },
+            {
+              "qty": 2,
+              "name": "Book of Shadows (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/book_of_shadows_3.png",
+              "imageAlt": "Book of Shadows (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Book of Shadows (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/book_of_shadows_1.png",
+              "imageAlt": "Book of Shadows (1)"
+            },
+            {
+              "qty": 2,
+              "name": "Clarity of Mind (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/clarity_of_mind_3.png",
+              "imageAlt": "Clarity of Mind (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Counterspell (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/counterspell_2.png",
+              "imageAlt": "Counterspell (2)"
+            },
+            {
+              "qty": 2,
+              "name": "Crystalline Elder Sign (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/crystalline_elder_sign_3.png",
+              "imageAlt": "Crystalline Elder Sign (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Dayana Esperence (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/dayana_esperence_deals_with_devils_3.png",
+              "imageAlt": "Dayana Esperence (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Earthly Serenity (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/earthly_serenity_1.png",
+              "imageAlt": "Earthly Serenity (1)"
+            },
+            {
+              "qty": 2,
+              "name": "Earthly Serenity (4)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/earthly_serenity_4.png",
+              "imageAlt": "Earthly Serenity (4)"
+            },
+            {
+              "qty": 2,
+              "name": "Eldritch Whispers (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/eldritch_whispers_1.png",
+              "imageAlt": "Eldritch Whispers (1)"
+            },
+            {
+              "qty": 2,
+              "name": "Enraptured (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/enraptured_2.png",
+              "imageAlt": "Enraptured (2)"
+            },
+            {
+              "qty": 1,
+              "name": "Eye of Ghatanothoa (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/eye_of_ghatanothoa_artifact_of_the_dark_god_2.png",
+              "imageAlt": "Eye of Ghatanothoa (2)"
+            },
+            {
+              "qty": 2,
+              "name": "Four of Cups (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/four_of_cups_chalice_of_the_heart_1.png",
+              "imageAlt": "Four of Cups (1)"
+            },
+            {
+              "qty": 2,
+              "name": "Grotesque Statue (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/grotesque_statue_2.png",
+              "imageAlt": "Grotesque Statue (2)"
+            },
+            {
+              "qty": 2,
+              "name": "Grounded (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/grounded_3.png",
+              "imageAlt": "Grounded (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Jewel of Aureolus (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/jewel_of_aureolus_gift_of_the_homunculi_3.png",
+              "imageAlt": "Jewel of Aureolus (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Key of Ys (5)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/key_of_ys_let_the_storm_rage_5.png",
+              "imageAlt": "Key of Ys (5)"
+            },
+            {
+              "qty": 2,
+              "name": "Lost Arcana (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/lost_arcana_3.png",
+              "imageAlt": "Lost Arcana (3)"
+            },
+            {
+              "qty": 1,
+              "name": "Occult Reliquary (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/occult_reliquary_dubious_source_3.png",
+              "imageAlt": "Occult Reliquary (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Prophetic (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/prophetic_3.png",
+              "imageAlt": "Prophetic (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Read the Signs (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/read_the_signs_2.png",
+              "imageAlt": "Read the Signs (2)"
+            },
+            {
+              "qty": 2,
+              "name": "Recharge (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/recharge_2.png",
+              "imageAlt": "Recharge (2)"
+            },
+            {
+              "qty": 1,
+              "name": "Relic Hunter (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/relic_hunter_3.png",
+              "imageAlt": "Relic Hunter (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Sign Magick (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/sign_magick_3.png",
+              "imageAlt": "Sign Magick (3)"
+            },
+            {
+              "qty": 2,
+              "name": "Spectral Razor (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/spectral_razor_2.png",
+              "imageAlt": "Spectral Razor (2)"
+            },
+            {
+              "qty": 2,
+              "name": "Spirit Athame (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/spirit_athame_1.png",
+              "imageAlt": "Spirit Athame (1)"
+            },
+            {
+              "qty": 2,
+              "name": "Suggestion (4)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/suggestion_4.png",
+              "imageAlt": "Suggestion (4)"
+            },
+            {
+              "qty": 2,
+              "name": "Suggestion (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/suggestion_1.png",
+              "imageAlt": "Suggestion (1)"
+            },
+            {
+              "qty": 2,
+              "name": "Sword Cane (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/sword_cane_designed_by_the_council_of_polls_2.png",
+              "imageAlt": "Sword Cane (2)"
+            },
+            {
+              "qty": 2,
+              "name": "The Chthonian Stone (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/the_chthonian_stone_stygian_waymark_3.png",
+              "imageAlt": "The Chthonian Stone (3)"
+            },
+            {
+              "qty": 2,
+              "name": "The Hierophant \u2022 V (3)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/the_hierophant_v_your_true_master_awaits_3.png",
+              "imageAlt": "The Hierophant \u2022 V (3)"
+            },
+            {
+              "qty": 1,
+              "name": "The Red Clock (2)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/the_red_clock_broken_but_reliable_2.png",
+              "imageAlt": "The Red Clock (2)"
+            },
+            {
+              "qty": 2,
+              "name": "Timeworn Brand (5)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/timeworn_brand_5.png",
+              "imageAlt": "Timeworn Brand (5)"
+            },
+            {
+              "qty": 2,
+              "name": "True Magick (5)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/true_magick_reworking_reality_5.png",
+              "imageAlt": "True Magick (5)"
+            },
+            {
+              "qty": 2,
+              "name": "Winds of Power (1)",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/winds_of_power_1.png",
+              "imageAlt": "Winds of Power (1)"
+            }
+          ],
+          "title": "Side Deck"
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/Akachi-Onyele-DeckBuild-20261031-LL.pdf",
+    "label": "Open Akachi Deck PDF"
+  }
+}

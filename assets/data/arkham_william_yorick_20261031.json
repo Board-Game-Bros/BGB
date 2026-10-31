@@ -1,0 +1,190 @@
+{
+  "pageTitle": "William Yorick - Deck Build (10/31/2026)",
+  "title": "William Yorick Deck - 10/31/2026",
+  "overview": {
+    "imageSrc": "/assets/boardgames/ahlcg_investigators/william_yorick_the_gravedigger.png",
+    "imageAlt": "William Yorick",
+    "heading": "William Yorick",
+    "details": [
+      "30 cards (34 total)",
+      "0 experience required",
+      "12 packs required",
+      "Class: Survivor",
+      "Built by Shengbo on 10/31/2026"
+    ]
+  },
+  "deckColumns": [
+    {
+      "sections": [
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Runic Axe",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/runic_axe.png",
+              "imageAlt": "Runic Axe"
+            }
+          ],
+          "title": "Asset (10)",
+          "label": "Hand x2"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Cherished Keepsake",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/cherished_keepsake.png",
+              "imageAlt": "Cherished Keepsake"
+            }
+          ],
+          "label": "Accessory"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Guard Dog",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/guard_dog.png",
+              "imageAlt": "Guard Dog"
+            }
+          ],
+          "label": "Ally"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Enchanted Blade",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/enchanted_blade.png",
+              "imageAlt": "Enchanted Blade"
+            },
+            {
+              "qty": 2,
+              "name": "Schoffner's Catalogue",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/schoffners_catalogue.png",
+              "imageAlt": "Schoffner's Catalogue"
+            }
+          ],
+          "label": "Other"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Short Supply",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/short_supply.png",
+              "imageAlt": "Short Supply"
+            }
+          ],
+          "title": "Permanent (1)"
+        }
+      ]
+    },
+    {
+      "sections": [
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Act of Desperation",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/act_of_desperation.png",
+              "imageAlt": "Act of Desperation"
+            },
+            {
+              "qty": 1,
+              "name": "Bury Them Deep \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/bury_them_deep.png",
+              "imageAlt": "Bury Them Deep"
+            },
+            {
+              "qty": 2,
+              "name": "Emergency Cache",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/emergency_cache.png",
+              "imageAlt": "Emergency Cache"
+            },
+            {
+              "qty": 2,
+              "name": "Live and Learn",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/live_and_learn.png",
+              "imageAlt": "Live and Learn"
+            },
+            {
+              "qty": 2,
+              "name": "Lucky!",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/lucky.png",
+              "imageAlt": "Lucky!"
+            },
+            {
+              "qty": 2,
+              "name": "Prepared for the Worst",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png",
+              "imageAlt": "Prepared for the Worst"
+            }
+          ],
+          "title": "Event (11)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 2,
+              "name": "Daring",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/daring.png",
+              "imageAlt": "Daring"
+            },
+            {
+              "qty": 2,
+              "name": "Overpower",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/overpower.png",
+              "imageAlt": "Overpower"
+            },
+            {
+              "qty": 2,
+              "name": "Resourceful",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/resourceful.png",
+              "imageAlt": "Resourceful"
+            },
+            {
+              "qty": 2,
+              "name": "Take Heart",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/take_heart.png",
+              "imageAlt": "Take Heart"
+            },
+            {
+              "qty": 2,
+              "name": "Vicious Blow",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/vicious_blow.png",
+              "imageAlt": "Vicious Blow"
+            }
+          ],
+          "title": "Skill (10)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Random Basic Weakness \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/random_basic_weakness.png",
+              "imageAlt": "Random Basic Weakness"
+            }
+          ],
+          "title": "Treachery (1)"
+        },
+        {
+          "cards": [
+            {
+              "qty": 1,
+              "name": "Graveyard Ghouls \u2605",
+              "imageSrc": "/assets/boardgames/ahlcg_cards/graveyard_ghouls.png",
+              "imageAlt": "Graveyard Ghouls"
+            }
+          ],
+          "title": "Enemy (1)"
+        }
+      ]
+    }
+  ],
+  "pdf": {
+    "href": "/assets/Arkham_Horror_Decks/William-Yorick-DeckBuild-20261031-Shengbo.pdf",
+    "label": "Open William Deck PDF"
+  }
+}

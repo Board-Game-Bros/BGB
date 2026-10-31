@@ -1,0 +1,197 @@
+{
+  "pageTitle": "The Scarlet Keys Campaign - 10/31/2026",
+  "headerTitle": "The Scarlet Keys - 10/31/2026 Campaign",
+  "subnav": [
+    {
+      "href": "#story-notes",
+      "label": "Story Notes"
+    },
+    {
+      "href": "#campaign-log",
+      "label": "Campaign Log"
+    },
+    {
+      "href": "#upgrade-history",
+      "label": "Upgrade History"
+    }
+  ],
+  "linearStoryLayout": true,
+  "overview": {
+    "title": "Story Notes",
+    "statusChips": [
+      "Status: Ready to Begin",
+      "Players: 3",
+      "Recorded Decks: 3",
+      "Campaign Start: 10/31/2026"
+    ],
+    "metaItems": [
+      "Date: 10/31/2026",
+      "Session: Campaign Start"
+    ],
+    "sections": [
+      {
+        "title": "Run Structure",
+        "metaItems": [
+          "Cycle: The Scarlet Keys",
+          "Expansion: Campaign Expansion"
+        ],
+        "notes": [
+          {
+            "title": "Campaign Start",
+            "items": [
+              "Three starting decks are recorded. No scenario results have been recorded yet.",
+              "Record destinations, time passed, keys, and campaign decisions as the journey unfolds."
+            ]
+          }
+        ]
+      }
+    ],
+    "teamColumns": [
+      {
+        "title": "Investigators",
+        "items": [
+          "Akachi Onyele - LL",
+          "Norman Withers - Yan",
+          "William Yorick - Shengbo"
+        ],
+        "text": "Three 0 XP starting decks."
+      }
+    ]
+  },
+  "storyNotes": [
+    {
+      "title": "Campaign Start - 10/31/2026",
+      "statusChips": [
+        "Status: Ready to Begin"
+      ],
+      "notes": [
+        {
+          "title": "Opening Record",
+          "items": [
+            "Akachi Onyele (LL), Norman Withers (Yan), and William Yorick (Shengbo) begin The Scarlet Keys campaign.",
+            "Starting deck lists and original PDFs are available from the campaign index. Scenario progress is awaiting the first session record."
+          ]
+        }
+      ]
+    }
+  ],
+  "campaignLog": {
+    "title": "Campaign Log",
+    "sections": [
+      {
+        "title": "Campaign Notes",
+        "notes": [
+          {
+            "title": "Opening Record",
+            "items": [
+              "Campaign opened on 10/31/2026. No story choices or resolutions recorded yet."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Travel and Time",
+        "notes": [
+          {
+            "title": "Journey Record",
+            "items": [
+              "No destinations or time changes recorded yet."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Keys and Coterie",
+        "notes": [
+          {
+            "title": "Campaign Record",
+            "items": [
+              "No keys, relationships, or dossier updates recorded yet."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Chaos Bag Changes",
+        "notes": [
+          {
+            "title": "Token Record",
+            "items": [
+              "No chaos bag changes recorded yet."
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "upgradeHistoryTitle": "Deck Upgrade History",
+  "upgradeTracks": [
+    {
+      "title": "The Scarlet Keys",
+      "cards": [
+        {
+          "name": "Akachi Onyele",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/akachi_onyele_the_shaman.png",
+          "imageAlt": "Akachi Onyele",
+          "deckSource": "/assets/data/arkham_akachi_onyele_20261031.json",
+          "startingXp": 0,
+          "currentXp": "Current XP: 0",
+          "startingTrauma": {
+            "physical": 0,
+            "mental": 0
+          },
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
+          "upgradeHtml": ""
+        },
+        {
+          "name": "Norman Withers",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/norman_withers_the_astronomer_1.png",
+          "imageAlt": "Norman Withers",
+          "deckSource": "/assets/data/arkham_norman_withers_20261031.json",
+          "startingXp": 0,
+          "currentXp": "Current XP: 0",
+          "startingTrauma": {
+            "physical": 0,
+            "mental": 0
+          },
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
+          "upgradeHtml": ""
+        },
+        {
+          "name": "William Yorick",
+          "imageSrc": "/assets/boardgames/ahlcg_investigators/william_yorick_the_gravedigger.png",
+          "imageAlt": "William Yorick",
+          "deckSource": "/assets/data/arkham_william_yorick_20261031.json",
+          "startingXp": 0,
+          "currentXp": "Current XP: 0",
+          "startingTrauma": {
+            "physical": 0,
+            "mental": 0
+          },
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
+          "upgradeHtml": ""
+        }
+      ]
+    }
+  ],
+  "backHref": "/games/ahlcg/",
+  "backLabel": "Back to Arkham Horror LCG",
+  "upgradeManager": {
+    "editPassword": "bgbzhangyan2026",
+    "inactivityMs": 120000,
+    "remoteSync": {
+      "provider": "github",
+      "owner": "Board-Game-Bros",
+      "repo": "BGB",
+      "branch": "main",
+      "filePath": "assets/data/arkham_tsk_20261031_campaign.json"
+    },
+    "remoteSyncTokenStorageKey": "bgb_github_sync_token_v1",
+    "remoteSyncDebounceMs": 2800,
+    "storageKey": "ahlcg_tsk_20261031_upgrade_state_v1",
+    "campaignStartNote": {
+      "date": "10/31/2026",
+      "runName": "Scarlet Keys"
+    }
+  }
+}

@@ -173,6 +173,41 @@
           ]
         }
       ]
+    },
+    {
+      "title": "The Scarlet Keys Campaign",
+      "href": "https://www.fantasyflightgames.com/product/the-scarlet-keys-investigator-expansion/",
+      "hoverPreviewSrc": "/assets/boardgames/the_scarlet_keys.webp",
+      "hoverPreviewAlt": "The Scarlet Keys Campaign",
+      "sessions": [
+        {
+          "href": "/games/ahlcg/tsk_20261031/",
+          "label": "10/31/2026 Campaign",
+          "investigators": [
+            {
+              "href": "/games/ahlcg/tsk_akachi_onyele_20261031/",
+              "imageSrc": "/assets/boardgames/ahlcg_investigators/akachi_onyele_the_shaman.png",
+              "imageAlt": "Akachi Onyele",
+              "builderName": "Built by LL",
+              "buildDate": "Built: 10/31/2026 \u00b7 XP: 0"
+            },
+            {
+              "href": "/games/ahlcg/tsk_norman_withers_20261031/",
+              "imageSrc": "/assets/boardgames/ahlcg_investigators/norman_withers_the_astronomer_1.png",
+              "imageAlt": "Norman Withers",
+              "builderName": "Built by Yan",
+              "buildDate": "Built: 10/31/2026 \u00b7 XP: 0"
+            },
+            {
+              "href": "/games/ahlcg/tsk_william_yorick_20261031/",
+              "imageSrc": "/assets/boardgames/ahlcg_investigators/william_yorick_the_gravedigger.png",
+              "imageAlt": "William Yorick",
+              "builderName": "Built by Shengbo",
+              "buildDate": "Built: 10/31/2026 \u00b7 XP: 0"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
