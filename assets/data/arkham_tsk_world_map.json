@@ -1,0 +1,1060 @@
+{
+  "width": 1893,
+  "height": 988,
+  "imageSrc": "/assets/boardgames/ahlcg_world_map/map.svg",
+  "textureSrc": "/assets/boardgames/ahlcg_world_map/paper.jpeg",
+  "labels": [
+    {
+      "x": 35,
+      "y": 254,
+      "name": "to Tokyo",
+      "direction": "right",
+      "type": "connection",
+      "rotation": "-3deg"
+    },
+    {
+      "x": 251,
+      "y": 470,
+      "name": "to Manokwari",
+      "direction": "right",
+      "type": "connection",
+      "rotation": "7deg"
+    },
+    {
+      "x": 345,
+      "y": 751,
+      "name": "to Sydney",
+      "direction": "right",
+      "type": "connection",
+      "rotation": "21deg"
+    },
+    {
+      "x": 1820,
+      "y": 245,
+      "name": "to San Francisco",
+      "direction": "left",
+      "type": "connection",
+      "rotation": "6deg"
+    },
+    {
+      "x": 1729,
+      "y": 450,
+      "name": "to Quito",
+      "direction": "left",
+      "type": "connection",
+      "rotation": "-7deg"
+    },
+    {
+      "x": 1720,
+      "y": 681,
+      "name": "to Buenos Aires",
+      "direction": "right",
+      "type": "connection",
+      "rotation": "-1deg"
+    },
+    {
+      "x": 790,
+      "y": 480,
+      "name": "A T L A N T I C\n\n\n            O C E A N",
+      "direction": "left",
+      "type": "ocean",
+      "lang_position": {
+        "es": {
+          "x": 810,
+          "y": 480
+        }
+      }
+    },
+    {
+      "x": 1200,
+      "y": 520,
+      "name": "INDIAN OCEAN",
+      "direction": "center",
+      "type": "ocean"
+    },
+    {
+      "x": 1637,
+      "y": 377,
+      "name": "P A C I F I C\n\nO C E A N",
+      "direction": "center",
+      "type": "ocean"
+    },
+    {
+      "x": 189,
+      "y": 560,
+      "name": "P A C I F I C\n\nO C E A N",
+      "direction": "center",
+      "type": "ocean"
+    },
+    {
+      "x": 825,
+      "y": 48,
+      "name": "A R C T I C        O C E A N",
+      "direction": "center",
+      "type": "small_ocean"
+    },
+    {
+      "x": 1236,
+      "y": 800,
+      "name": "S    O    U    T    H    E    R    N\nO    C    E    A    N",
+      "direction": "center",
+      "type": "small_ocean"
+    },
+    {
+      "x": 860,
+      "y": 70,
+      "name": "GREENLAND\nSEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 730,
+      "y": 87,
+      "name": "DENMARK STRAIT",
+      "direction": "center",
+      "type": "sea",
+      "rotation": "-20deg"
+    },
+    {
+      "x": 620,
+      "y": 60,
+      "name": "BAFFIN\nBAY",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 680,
+      "y": 60,
+      "name": "GREENLAND",
+      "direction": "center",
+      "type": "country"
+    },
+    {
+      "x": 1035,
+      "y": 65,
+      "name": "BARENTS\nSEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1110,
+      "y": 60,
+      "name": "KARA\nSEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1520,
+      "y": 147,
+      "name": "OKHOTSK\nSEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1630,
+      "y": 140,
+      "name": "BERING\nSEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1540,
+      "y": 250,
+      "name": "JAPAN\nSEA",
+      "direction": "center",
+      "type": "sea",
+      "lang_position": {
+        "es": {
+          "x": 1538,
+          "y": 250
+        }
+      }
+    },
+    {
+      "x": 1480,
+      "y": 410,
+      "name": "SOUTH\nCHINA\nSEA",
+      "direction": "center",
+      "type": "sea",
+      "lang_position": {
+        "es": {
+          "x": 1465,
+          "y": 420
+        }
+      }
+    },
+    {
+      "x": 1328,
+      "y": 400,
+      "name": "BAY\nOF\nBENGAL",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1180,
+      "y": 390,
+      "name": "ARABIAN SEA",
+      "direction": "center",
+      "type": "sea",
+      "lang_position": {
+        "es": {
+          "x": 1190,
+          "y": 390
+        }
+      }
+    },
+    {
+      "x": 1050,
+      "y": 355,
+      "name": "RED SEA",
+      "rotation": "65deg",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 180,
+      "y": 145,
+      "name": "GULF OF ALASKA",
+      "direction": "right",
+      "type": "sea"
+    },
+    {
+      "x": 445,
+      "y": 410,
+      "name": "CARRIBEAN SEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 875,
+      "y": 155,
+      "name": "NORTH\nSEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 933,
+      "y": 280,
+      "name": "MEDITERRANEAN SEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1013,
+      "y": 223,
+      "name": "BLACK SEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 940,
+      "y": 715,
+      "name": "CAPE OF GOOD HOPE",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1035,
+      "y": 610,
+      "name": "MOZAMBIQUE CHANNEL",
+      "direction": "center",
+      "type": "sea",
+      "rotation": "-65deg"
+    },
+    {
+      "x": 550,
+      "y": 860,
+      "name": "DRAKE STRAIT",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1660,
+      "y": 580,
+      "name": "CORAL\nSEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 1680,
+      "y": 740,
+      "name": "TASMAN\nSEA",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 480,
+      "y": 132,
+      "name": "HUDSON\nBAY",
+      "direction": "center",
+      "type": "sea"
+    },
+    {
+      "x": 460,
+      "y": 570,
+      "name": "S O U T H\nA M E R I C A",
+      "direction": "center",
+      "type": "continent"
+    },
+    {
+      "x": 320,
+      "y": 448,
+      "name": "CENTRAL    \nAMERICA",
+      "direction": "right",
+      "type": "country"
+    },
+    {
+      "x": 270,
+      "y": 242,
+      "name": "N O R T H\nA M E R I C A",
+      "direction": "center",
+      "type": "continent"
+    },
+    {
+      "x": 890,
+      "y": 190,
+      "name": "EUROPE",
+      "direction": "center",
+      "type": "continent"
+    },
+    {
+      "x": 838,
+      "y": 370,
+      "name": "A  F  R  I  C  A",
+      "direction": "center",
+      "type": "continent"
+    },
+    {
+      "x": 1240,
+      "y": 195,
+      "name": "A    S    I    A",
+      "direction": "center",
+      "type": "continent"
+    },
+    {
+      "x": 1487,
+      "y": 660,
+      "name": "A U S T R A L I A",
+      "direction": "center",
+      "type": "continent"
+    },
+    {
+      "x": 920,
+      "y": 955,
+      "name": "A N T A R C T I C A",
+      "direction": "center",
+      "type": "continent"
+    }
+  ],
+  "locations": [
+    {
+      "id": "anchorage",
+      "x": 223,
+      "y": 116,
+      "name": "Anchorage",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "arkham_ma",
+        "san_francisco"
+      ],
+      "details": {
+        "region": {
+          "name": "Territory of Alaska"
+        },
+        "country": {
+          "name": "United States of America"
+        }
+      }
+    },
+    {
+      "id": "san_francisco",
+      "x": 245,
+      "y": 252,
+      "name": "San Francisco",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "anchorage",
+        "new_orleans",
+        "havana",
+        "tokyo"
+      ],
+      "details": {
+        "region": {
+          "name": "California"
+        },
+        "country": {
+          "name": "United States of America"
+        }
+      }
+    },
+    {
+      "id": "ybor_city",
+      "x": 435,
+      "y": 319,
+      "name": "Ybor City",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "new_orleans",
+        "arkham_ma",
+        "bermuda",
+        "san_juan",
+        "havana"
+      ],
+      "details": {
+        "region": {
+          "name": "Florida"
+        },
+        "country": {
+          "name": "United States of America"
+        }
+      }
+    },
+    {
+      "id": "bermuda",
+      "x": 538,
+      "y": 286,
+      "name": "Bermuda",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "arkham_ma",
+        "london",
+        "san_juan",
+        "ybor_city"
+      ],
+      "details": {
+        "region": {
+          "name": "British Overseas Territory"
+        }
+      }
+    },
+    {
+      "id": "san_juan",
+      "x": 509,
+      "y": 373,
+      "name": "San Juan",
+      "status": "locked",
+      "direction": "right",
+      "connections": [
+        "bermuda",
+        "ybor_city",
+        "havana",
+        "quito",
+        "rio_de_janiero",
+        "london",
+        "marrakesh"
+      ],
+      "details": {
+        "region": {
+          "name": "Commonwealth of Puerto Rico"
+        },
+        "country": {
+          "name": "United States of America"
+        }
+      }
+    },
+    {
+      "id": "new_orleans",
+      "x": 393,
+      "y": 296,
+      "name": "New Orleans",
+      "status": "side",
+      "direction": "left",
+      "connections": [
+        "san_francisco",
+        "ybor_city"
+      ],
+      "details": {
+        "region": {
+          "name": "Louisiana"
+        },
+        "country": {
+          "name": "United States of America"
+        }
+      }
+    },
+    {
+      "id": "havana",
+      "name": "Havana",
+      "x": 435,
+      "y": 350,
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "quito",
+        "san_francisco",
+        "san_juan",
+        "ybor_city"
+      ],
+      "details": {
+        "region": {
+          "name": "Republic of Cuba"
+        }
+      }
+    },
+    {
+      "id": "arkham_ma",
+      "x": 519,
+      "y": 228,
+      "name": "Arkham",
+      "status": "side",
+      "direction": "right",
+      "connections": [
+        "anchorage",
+        "bermuda",
+        "ybor_city",
+        "reykjavik"
+      ],
+      "details": {
+        "region": {
+          "name": "Massachusetts"
+        },
+        "country": {
+          "name": "United States of America"
+        }
+      }
+    },
+    {
+      "id": "quito",
+      "x": 431,
+      "y": 484,
+      "name": "Quito",
+      "status": "locked",
+      "direction": "right",
+      "connections": [
+        "manokwari",
+        "havana",
+        "san_juan",
+        "buenos_aires"
+      ],
+      "details": {
+        "region": {
+          "name": "Republic of Ecuador"
+        }
+      }
+    },
+    {
+      "id": "buenos_aires",
+      "x": 575,
+      "y": 708,
+      "name": "Buenos Aires",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "sydney",
+        "quito",
+        "rio_de_janiero"
+      ],
+      "details": {
+        "region": {
+          "name": "Argentine Republic"
+        }
+      }
+    },
+    {
+      "id": "rio_de_janiero",
+      "x": 645,
+      "y": 620,
+      "name": "Rio de Janeiro",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "san_juan",
+        "buenos_aires",
+        "lagos"
+      ],
+      "details": {
+        "region": {
+          "name": "Republic of the United States of Brazil"
+        }
+      }
+    },
+    {
+      "id": "lagos",
+      "x": 879,
+      "y": 447,
+      "name": "Lagos",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "marrakesh",
+        "rio_de_janiero",
+        "nairobi",
+        "cairo"
+      ],
+      "details": {
+        "region": {
+          "name": "Colony and Protectorate of Nigeria"
+        },
+        "country": {
+          "name": "British Empire"
+        }
+      }
+    },
+    {
+      "id": "nairobi",
+      "x": 1059,
+      "y": 481,
+      "name": "Nairobi",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "cairo",
+        "lagos",
+        "perth"
+      ],
+      "details": {
+        "region": {
+          "name": "East Africa Protectorate"
+        },
+        "country": {
+          "name": "British Empire"
+        }
+      }
+    },
+    {
+      "id": "alexandria",
+      "x": 1024,
+      "y": 287,
+      "name": "Alexandria",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "cairo",
+        "rome",
+        "istanbul"
+      ],
+      "details": {
+        "region": {
+          "name": "Kingdom of Egypt"
+        }
+      }
+    },
+    {
+      "id": "cairo",
+      "x": 1033,
+      "y": 313,
+      "name": "Cairo",
+      "status": "side",
+      "direction": "left",
+      "connections": [
+        "alexandria",
+        "lagos",
+        "nairobi",
+        "kabul",
+        "bombay"
+      ],
+      "details": {
+        "region": {
+          "name": "Kingdom of Egypt"
+        }
+      }
+    },
+    {
+      "id": "marrakesh",
+      "x": 823,
+      "y": 289,
+      "name": "Marrakesh",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "monte_carlo",
+        "rome",
+        "san_juan",
+        "lagos"
+      ],
+      "details": {
+        "region": {
+          "name": "French Protectorate of Morocco"
+        },
+        "country": {
+          "name": "French Empire"
+        }
+      }
+    },
+    {
+      "id": "reykjavik",
+      "x": 785,
+      "y": 92,
+      "name": "Reykjavik",
+      "status": "locked",
+      "direction": "right",
+      "connections": [
+        "arkham_ma",
+        "stockholm"
+      ],
+      "details": {
+        "region": {
+          "name": "Kingdom of Iceland"
+        },
+        "country": {
+          "name": "Associated State of Denmark"
+        }
+      }
+    },
+    {
+      "id": "london",
+      "x": 874,
+      "y": 170,
+      "name": "London",
+      "status": "locked",
+      "direction": "left",
+      "connections": [
+        "bermuda",
+        "san_juan",
+        "venice_it",
+        "monte_carlo",
+        "stockholm"
+      ],
+      "details": {
+        "region": {
+          "name": "England"
+        },
+        "country": {
+          "name": "United Kingdom"
+        }
+      }
+    },
+    {
+      "id": "stockholm",
+      "x": 958,
+      "y": 127,
+      "name": "Stockholm",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "london",
+        "reykjavik",
+        "moscow"
+      ],
+      "details": {
+        "region": {
+          "name": "Kingdom of Sweden"
+        }
+      }
+    },
+    {
+      "id": "venice_it",
+      "x": 931,
+      "y": 201,
+      "name": "Venice",
+      "status": "side",
+      "direction": "right",
+      "connections": [
+        "london",
+        "moscow",
+        "rome",
+        "istanbul"
+      ],
+      "details": {
+        "region": {
+          "name": "Kingdom of Italy"
+        }
+      }
+    },
+    {
+      "id": "monte_carlo",
+      "x": 906,
+      "y": 214,
+      "name": "Monte Carlo",
+      "direction": "left",
+      "status": "side",
+      "connections": [
+        "london",
+        "marrakesh",
+        "rome"
+      ],
+      "details": {
+        "region": {
+          "name": "Principality of Monaco"
+        }
+      }
+    },
+    {
+      "id": "rome",
+      "x": 939,
+      "y": 227,
+      "name": "Rome",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "monte_carlo",
+        "venice_it",
+        "marrakesh",
+        "alexandria",
+        "istanbul"
+      ],
+      "details": {
+        "region": {
+          "name": "Kingdom of Italy"
+        }
+      }
+    },
+    {
+      "id": "istanbul",
+      "x": 1013,
+      "y": 230,
+      "name": "Constantinople",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "alexandria",
+        "venice_it",
+        "moscow",
+        "kabul",
+        "rome"
+      ],
+      "details": {
+        "region": {
+          "name": "Republic of Turkey"
+        }
+      }
+    },
+    {
+      "id": "moscow",
+      "x": 1053,
+      "y": 138,
+      "name": "Moscow",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "istanbul",
+        "tunguska",
+        "kabul",
+        "stockholm",
+        "venice_it"
+      ],
+      "details": {
+        "region": {
+          "name": "Russian Soviet Federative Socialist Republic"
+        }
+      }
+    },
+    {
+      "id": "tunguska",
+      "x": 1359,
+      "y": 122,
+      "name": "Tunguska",
+      "status": "locked",
+      "direction": "right",
+      "connections": [
+        "kathmandu",
+        "kabul",
+        "moscow",
+        "shanghai"
+      ],
+      "details": {
+        "region": {
+          "name": "Russian Soviet Federative Socialist Republic"
+        }
+      }
+    },
+    {
+      "id": "kabul",
+      "x": 1228,
+      "y": 264,
+      "name": "Kabul",
+      "status": "locked",
+      "direction": "right",
+      "connections": [
+        "istanbul",
+        "moscow",
+        "tunguska",
+        "kathmandu",
+        "bombay",
+        "cairo"
+      ],
+      "details": {
+        "region": {
+          "name": "Kingdom of Afghanistan"
+        }
+      }
+    },
+    {
+      "id": "bombay",
+      "x": 1260,
+      "y": 371,
+      "name": "Bombay",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "kabul",
+        "kathmandu",
+        "kuala_lampur",
+        "cairo"
+      ],
+      "details": {
+        "region": {
+          "name": "India"
+        },
+        "country": {
+          "name": "British Empire"
+        }
+      }
+    },
+    {
+      "id": "kathmandu",
+      "x": 1323,
+      "y": 323,
+      "name": "Kathmandu",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "kabul",
+        "tunguska",
+        "bombay",
+        "kuala_lampur",
+        "shanghai"
+      ],
+      "details": {
+        "region": {
+          "name": "Kingdom of Nepal"
+        }
+      }
+    },
+    {
+      "id": "shanghai",
+      "x": 1507,
+      "y": 288,
+      "name": "Shanghai",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "kathmandu",
+        "tunguska",
+        "tokyo",
+        "hong_kong",
+        "manokwari"
+      ],
+      "details": {
+        "region": {
+          "name": "Republic of China"
+        }
+      }
+    },
+    {
+      "id": "hong_kong",
+      "x": 1474,
+      "y": 350,
+      "name": "Hong Kong",
+      "status": "locked",
+      "direction": "right",
+      "connections": [
+        "shanghai",
+        "kuala_lampur"
+      ],
+      "details": {
+        "region": {
+          "name": "Colony of the British Empire"
+        }
+      }
+    },
+    {
+      "id": "tokyo",
+      "x": 1590,
+      "y": 270,
+      "name": "Tokyo",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "san_francisco",
+        "shanghai"
+      ],
+      "details": {
+        "region": {
+          "name": "Empire of Japan"
+        }
+      }
+    },
+    {
+      "id": "kuala_lampur",
+      "x": 1421,
+      "y": 470,
+      "name": "Kuala Lampur",
+      "status": "locked",
+      "direction": "left",
+      "connections": [
+        "hong_kong",
+        "bombay",
+        "kathmandu",
+        "manokwari",
+        "perth"
+      ],
+      "details": {
+        "region": {
+          "name": "Federated Malay States"
+        },
+        "country": {
+          "name": "British Empire"
+        }
+      }
+    },
+    {
+      "id": "manokwari",
+      "x": 1599,
+      "y": 487,
+      "name": "Manokwari",
+      "status": "locked",
+      "direction": "left",
+      "connections": [
+        "kuala_lampur",
+        "sydney",
+        "quito",
+        "shanghai"
+      ],
+      "details": {
+        "region": {
+          "name": "Dutch East Indies"
+        },
+        "country": {
+          "name": "Dutch Empire"
+        }
+      }
+    },
+    {
+      "id": "perth",
+      "x": 1480,
+      "y": 684,
+      "name": "Perth",
+      "status": "standard",
+      "direction": "right",
+      "connections": [
+        "kuala_lampur",
+        "sydney",
+        "nairobi"
+      ],
+      "details": {
+        "region": {
+          "name": "Federation of Australia"
+        },
+        "country": {
+          "name": "Dominion in the British Empire"
+        }
+      }
+    },
+    {
+      "id": "sydney",
+      "x": 1661,
+      "y": 698,
+      "name": "Sydney",
+      "status": "standard",
+      "direction": "left",
+      "connections": [
+        "manokwari",
+        "buenos_aires",
+        "perth"
+      ],
+      "details": {
+        "region": {
+          "name": "Federation of Australia"
+        },
+        "country": {
+          "name": "Dominion in the British Empire"
+        }
+      }
+    }
+  ]
+}

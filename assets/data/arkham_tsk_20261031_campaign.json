@@ -3,8 +3,12 @@
   "headerTitle": "The Scarlet Keys - 10/31/2026 Campaign",
   "subnav": [
     {
+      "href": "#world-map",
+      "label": "World Map"
+    },
+    {
       "href": "#story-notes",
-      "label": "Story Notes"
+      "label": "Journey Notes"
     },
     {
       "href": "#campaign-log",
@@ -17,59 +21,134 @@
   ],
   "linearStoryLayout": true,
   "overview": {
-    "title": "Story Notes",
+    "title": "Journey Notes",
     "statusChips": [
-      "Status: Ready to Begin",
-      "Players: 3",
-      "Recorded Decks: 3",
-      "Campaign Start: 10/31/2026"
+      "Current: Venice",
+      "Time Passed: 6",
+      "Standard · 3 Investigators"
     ],
     "metaItems": [
-      "Date: 10/31/2026",
-      "Session: Campaign Start"
-    ],
-    "sections": [
-      {
-        "title": "Run Structure",
-        "metaItems": [
-          "Cycle: The Scarlet Keys",
-          "Expansion: Campaign Expansion"
-        ],
-        "notes": [
-          {
-            "title": "Campaign Start",
-            "items": [
-              "Three starting decks are recorded. No scenario results have been recorded yet.",
-              "Record destinations, time passed, keys, and campaign decisions as the journey unfolds."
-            ]
-          }
-        ]
-      }
-    ],
-    "teamColumns": [
-      {
-        "title": "Investigators",
-        "items": [
-          "Akachi Onyele - LL",
-          "Norman Withers - Yan",
-          "William Yorick - Shengbo"
-        ],
-        "text": "Three 0 XP starting decks."
-      }
+      "Akachi Onyele · LL",
+      "Norman Withers · Yan",
+      "William Yorick · Shengbo"
     ]
   },
   "storyNotes": [
     {
-      "title": "Campaign Start - 10/31/2026",
-      "statusChips": [
-        "Status: Ready to Begin"
-      ],
-      "notes": [
+      "variant": "session-meta",
+      "metaItems": [
+        "Session 1 · 10/31/2026",
+        "Riddles and Rain → The Foundation → Venice"
+      ]
+    },
+    {
+      "variant": "visit",
+      "id": "visit-london-1",
+      "eyebrow": "Visit 01 · London",
+      "title": "London, England",
+      "subtitle": "An invitation, a pursuit, and a new allegiance. Time passed: 0 → 2.",
+      "events": [
         {
-          "title": "Opening Record",
-          "items": [
-            "Akachi Onyele (LL), Norman Withers (Yan), and William Yorick (Shengbo) begin The Scarlet Keys campaign.",
-            "Starting deck lists and original PDFs are available from the campaign index. Scenario progress is awaiting the first session record."
+          "id": "riddles-and-rain",
+          "title": "Riddles and Rain",
+          "eventType": "Campaign Scenario · Prologue",
+          "statusChips": [
+            "Completed · Resolution 2",
+            "Lead: William Yorick"
+          ],
+          "notes": [
+            {
+              "title": "Story",
+              "text": "Since the winter of 1924, people and objects have vanished from Arkham—and even from memory. Similar reports around the world lead the investigators into an international mystery. After accepting Inspector Li Flint’s offer, the group follows the trail through Boston to London and encounters the Red-Gloved Man."
+            },
+            {
+              "title": "Choices",
+              "items": [
+                "William Yorick went alone to the meeting, as requested.",
+                "The investigators accepted Flint’s offer and agreed to report their findings to him."
+              ]
+            },
+            {
+              "title": "Consequences",
+              "items": [
+                "Resolution 2. All three investigators survived.",
+                "Victory display: 6. Akachi, Norman, and Yorick each earned 6 XP; no physical or mental trauma. The purchased upgrades are recorded below.",
+                "William Yorick became the bearer of The Eye of Ravens.",
+                "Campaign note: You haven’t seen the last of the Red-Gloved Man.",
+                "Time: +1 before the scenario and +1 after its resolution; total 2.",
+                "Chaos bag: remove 1 elder thing token; add 1 tablet token."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "the-foundation",
+          "title": "The Foundation",
+          "eventType": "Interlude",
+          "statusChips": [
+            "Completed",
+            "Departing from London"
+          ],
+          "notes": [
+            {
+              "title": "Story",
+              "text": "Commissioner Taylor questions the investigators. Flint introduces the Foundation and its work against the Coterie. The investigators become an independent cell and receive leads across the world."
+            },
+            {
+              "title": "Choices",
+              "items": [
+                "The cell did not tell Taylor about the disappearances.",
+                "The investigators embarked from London."
+              ]
+            },
+            {
+              "title": "Consequences",
+              "items": [
+                "Campaign note: The cell hid the truth from Taylor.",
+                "Chaos bag: remove 1 tablet token; add 1 elder thing token.",
+                "Time passed remains 2. No additional XP award is recorded."
+              ]
+            },
+            {
+              "title": "Leads received",
+              "items": [
+                "Shanghai: a woman with a red parasol and a secret cabal. Alexandria: beastly killings. Buenos Aires: high-profile burglaries and a possible key.",
+                "Nairobi: a sanctum. Anchorage: a prospector’s journal. Constantinople: a possible defector.",
+                "Kathmandu: a spirit resembling an operative. Marrakesh: a dangerous operative, tomb robberies, and overgrowth. Havana: smuggling."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "travel",
+      "title": "London → Venice",
+      "text": "Travel and side-story entry · time passed 2 → 6 (+4 combined)."
+    },
+    {
+      "variant": "visit",
+      "id": "visit-venice-1",
+      "eyebrow": "Visit 02 · Current Location",
+      "title": "Venice, Italy",
+      "subtitle": "A side-story stop on the world journey. Time passed: 6.",
+      "events": [
+        {
+          "title": "Carnevale of Horrors",
+          "eventType": "Side Story · Standalone Scenario Pack",
+          "statusChips": [
+            "Selected · Pending resolution",
+            "Session: 10/31/2026"
+          ],
+          "notes": [
+            {
+              "title": "Current record",
+              "text": "The cell has reached Venice and selected Carnevale of Horrors. ArkhamCards shows Continue; this record does not yet include a completed scenario, resolution, or rewards."
+            },
+            {
+              "title": "Time and entry",
+              "text": "The campaign log shows 6 time passed at this stop, compared with 2 after London. Travel and side-story entry are recorded together here; their individual costs are not separately recorded in the completed results. In this campaign, side-story entry uses time instead of the usual XP entry cost."
+            }
           ]
         }
       ]
@@ -82,9 +161,9 @@
         "title": "Campaign Notes",
         "notes": [
           {
-            "title": "Opening Record",
             "items": [
-              "Campaign opened on 10/31/2026. No story choices or resolutions recorded yet."
+              "You haven’t seen the last of the Red-Gloved Man.",
+              "The cell hid the truth from Taylor."
             ]
           }
         ]
@@ -93,21 +172,24 @@
         "title": "Travel and Time",
         "notes": [
           {
-            "title": "Journey Record",
             "items": [
-              "No destinations or time changes recorded yet."
+              "Current location: Venice. Previous stop: London.",
+              "Time passed: 6. Next printed threshold: 7 (α); no status report is recorded as resolved.",
+              "Carnevale of Horrors: selected, pending resolution."
             ]
           }
         ]
       },
       {
-        "title": "Keys and Coterie",
+        "title": "Keys and Bearers",
         "notes": [
           {
-            "title": "Campaign Record",
-            "items": [
-              "No keys, relationships, or dossier updates recorded yet."
-            ]
+            "keyCard": {
+              "name": "The Eye of Ravens",
+              "bearer": "William Yorick · Shengbo",
+              "imageSrc": "/assets/boardgames/ahlcg_world_map/eye_of_ravens.jpg"
+            },
+            "text": "Recovered in Riddles and Rain. The Eye of Ravens is carried as a campaign key; it is not a purchased deck upgrade. Expand to view the stable side."
           }
         ]
       },
@@ -115,9 +197,10 @@
         "title": "Chaos Bag Changes",
         "notes": [
           {
-            "title": "Token Record",
             "items": [
-              "No chaos bag changes recorded yet."
+              "Riddles and Rain: −1 elder thing token, +1 tablet token.",
+              "The Foundation: −1 tablet token, +1 elder thing token.",
+              "These two recorded swaps cancel out; there is no net change from these choices."
             ]
           }
         ]
@@ -141,7 +224,7 @@
             "mental": 0
           },
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e1\">\n        <p class=\"upgrade-entry-head\">After Prologue (+6 XP)</p>\n        <div class=\"upgrade-columns\" style=\"\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Sword Cane (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sword_cane.png\" alt=\"Sword Cane (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Winds of Power (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/winds_of_power_1.png\" alt=\"Winds of Power (1)\"></span></li><li><span class=\"card-ref\">Timeworn Brand (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/timeworn_brand_5.png\" alt=\"Timeworn Brand (5)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Prologue):\" data-entry-uid-link=\"e1\">Trauma (Prologue): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e1\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\" style=\"\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Sword Cane (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sword_cane.png\" alt=\"Sword Cane (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Winds of Power (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/winds_of_power_1.png\" alt=\"Winds of Power (1)\"></span></li><li><span class=\"card-ref\">Timeworn Brand (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/timeworn_brand_5.png\" alt=\"Timeworn Brand (5)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e1\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         },
         {
           "name": "Norman Withers",
@@ -155,7 +238,7 @@
             "mental": 0
           },
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e2\">\n        <p class=\"upgrade-entry-head\">After Pprologue (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Guts (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guts.png\" alt=\"Guts (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Astronomical Atlas (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astronomical_atlas_3.png\" alt=\"Astronomical Atlas (3) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Pprologue):\" data-entry-uid-link=\"e2\">Trauma (Pprologue): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e2\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Guts (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guts.png\" alt=\"Guts (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Astronomical Atlas (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astronomical_atlas_3.png\" alt=\"Astronomical Atlas (3) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e2\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         },
         {
           "name": "William Yorick",
@@ -169,7 +252,7 @@
             "mental": 0
           },
           "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e3\">\n        <p class=\"upgrade-entry-head\">After Prologue (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Prepared for the Worst<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png\" alt=\"Prepared for the Worst\"></span></li><li><span class=\"card-ref\">Enchanted Blade (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/enchanted_blade.png\" alt=\"Enchanted Blade (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Chainsaw (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/chainsaw_4.png\" alt=\"Chainsaw (4)\"></span></li><li><span class=\"card-ref\">Hatchet (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hatchet_1.png\" alt=\"Hatchet (1) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Prologue):\" data-entry-uid-link=\"e3\">Trauma (Prologue): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e3\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Prepared for the Worst<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png\" alt=\"Prepared for the Worst\"></span></li><li><span class=\"card-ref\">Enchanted Blade (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/enchanted_blade.png\" alt=\"Enchanted Blade (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Chainsaw (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/chainsaw_4.png\" alt=\"Chainsaw (4)\"></span></li><li><span class=\"card-ref\">Hatchet (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hatchet_1.png\" alt=\"Hatchet (1) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e3\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         }
       ]
     }
@@ -192,6 +275,57 @@
     "campaignStartNote": {
       "date": "10/31/2026",
       "runName": "Scarlet Keys"
+    }
+  },
+  "worldMap": {
+    "source": "/assets/data/arkham_tsk_world_map.json",
+    "currentLocation": "venice_it",
+    "currentLocationName": "Venice",
+    "timePassed": 6,
+    "sessionDate": "10/31/2026",
+    "visitedLocations": [
+      "london"
+    ],
+    "route": [
+      "london",
+      "venice_it"
+    ],
+    "locationNotes": {
+      "london": {
+        "anchor": "visit-london-1",
+        "text": "Riddles and Rain and The Foundation completed. The cell left London with the Eye of Ravens and new leads."
+      },
+      "venice_it": {
+        "anchor": "visit-venice-1",
+        "text": "Current stop. Carnevale of Horrors is selected and remains pending; no resolution has been recorded."
+      },
+      "shanghai": {
+        "text": "Foundation lead: a woman with a red parasol is linked to a secret cabal."
+      },
+      "alexandria": {
+        "text": "Foundation lead: a series of beastly killings."
+      },
+      "buenos_aires": {
+        "text": "Foundation lead: high-profile burglaries may be connected to a key."
+      },
+      "nairobi": {
+        "text": "Foundation lead: investigate a sanctum."
+      },
+      "anchorage": {
+        "text": "Foundation lead: a prospector’s journal mentions a possible key."
+      },
+      "istanbul": {
+        "text": "Foundation lead: a possible defector."
+      },
+      "kathmandu": {
+        "text": "Foundation lead: a spirit matching the description of a Coterie operative."
+      },
+      "marrakesh": {
+        "text": "Foundation lead: a dangerous operative, robbed tombs, and unusual overgrowth."
+      },
+      "havana": {
+        "text": "Foundation lead: a smuggling operation."
+      }
     }
   }
 }

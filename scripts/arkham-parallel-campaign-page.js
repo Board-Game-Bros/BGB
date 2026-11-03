@@ -456,6 +456,9 @@
     if (!note || typeof note !== "object") return;
     if (note.title) parent.appendChild(el("h4", "", String(note.title)));
     if (note.text) parent.appendChild(elWithInlineArkhamText("p", "", String(note.text)));
+    if (note.keyCard && window.BGBArkhamJourney) {
+      parent.appendChild(window.BGBArkhamJourney.renderKey(note.keyCard));
+    }
     if (Array.isArray(note.partnerPortraits) && note.partnerPortraits.length) {
       parent.appendChild(renderPartnerPortraits(note.partnerPortraits));
     }
@@ -475,12 +478,16 @@
   }
 
   function renderLinearStoryEntry(entry) {
+    if (window.BGBArkhamJourney && ["visit", "travel"].includes(entry.variant)) {
+      return window.BGBArkhamJourney.renderEntry(entry, renderLinearStoryEntry);
+    }
     if (String(entry.variant || "") === "session-meta") {
       const meta = el("div", "record-meta linear-session-meta");
       appendItems(meta, entry.metaItems, "meta-item");
       return meta;
     }
     const section = el("div", "scenario-log linear-story-entry");
+    if (entry.id) section.id = String(entry.id);
     section.appendChild(el("h3", "", String(entry.title || "")));
 
     if (Array.isArray(entry.statusChips) && entry.statusChips.length) {
@@ -711,6 +718,10 @@
       subnav.appendChild(link);
     });
     main.appendChild(subnav);
+
+    if (data.worldMap && window.BGBArkhamJourney) {
+      main.appendChild(await window.BGBArkhamJourney.renderMap(data.worldMap));
+    }
 
     const overview = data.overview || {};
     const overviewSection = el("section", "record-section");
