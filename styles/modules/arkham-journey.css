@@ -13,12 +13,13 @@
 .journey-route {stroke:#963e39;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
 .journey-city {cursor:pointer;--city:#315e81}
 .journey-city.status-side {--city:#236349}
-.journey-city.status-locked {--city:#a74b24}
+.journey-city.status-locked {--city:#706180}
 .journey-city.is-visited {--city:#665c53}
 .journey-city.is-current {--city:#9d292f}
-.journey-city circle:not(.journey-hit) {fill:var(--city);stroke:#fff4de;stroke-width:1.5}
-.journey-city.is-selected circle:not(.journey-hit) {stroke:#302c27;stroke-width:2.5}
+.journey-city circle:not(.journey-hit):not(.journey-current-ring) {fill:var(--city);stroke:#fff4de;stroke-width:1.5}
+.journey-city.is-selected circle:not(.journey-hit):not(.journey-current-ring) {stroke:#302c27;stroke-width:2.5}
 .journey-city text {font-family:Georgia,serif;fill:#222;stroke:#eee3cd;stroke-width:3;paint-order:stroke;stroke-linejoin:round;font-weight:600}
+.journey-city .journey-current-ring {fill:none;stroke:#9d292f;stroke-width:1.8;pointer-events:none}
 .journey-city.is-current text {fill:#8a1d26;font-weight:bold}
 .journey-hit {fill:transparent;stroke:none}
 .journey-geography {fill:#4b504b;font-family:Georgia,serif;opacity:.5;pointer-events:none}
@@ -26,9 +27,9 @@
 .journey-map-legend {display:flex;flex-wrap:wrap;gap:10px 18px;margin:14px 22px;font:13px/1.5 system-ui,sans-serif}
 .journey-map-legend span::before {content:'';display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:#315e81}
 .journey-map-legend .legend-side::before {background:#236349}
-.journey-map-legend .legend-locked::before {background:#a74b24}
+.journey-map-legend .legend-locked::before {background:#706180}
 .journey-map-legend .legend-visited::before {background:#665c53}
-.journey-map-legend .legend-current::before {background:#9d292f}
+.journey-map-legend .legend-current::before {background:#9d292f;outline:2px solid #9d292f;outline-offset:2px;margin-inline:3px 9px}
 .journey-city-select {display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 22px 18px;font:14px system-ui,sans-serif}
 .journey-city-select select {min-height:44px;max-width:100%;padding:8px 10px;border:1px solid #89735b;border-radius:4px;background:#fff8ed;color:#332e28;font:inherit}
 .journey-map-info {padding:20px 22px;border-top:1px solid #89735b66;background:#f7eedf}

@@ -126,6 +126,8 @@
     map.locations.forEach(p => {
       const state = p.id === config.currentLocation ? ' is-current' : visited.has(p.id) ? ' is-visited' : '';
       const group = svgNode('g', {class:`journey-city status-${p.status}${state}`, role:'button', tabindex:-1, 'aria-label':p.name, transform:`translate(${p.x} ${p.y})`});
+      const ring = p.id === config.currentLocation ? svgNode('circle', {r:11, class:'journey-current-ring'}) : null;
+      if (ring) group.append(ring);
       const circle = svgNode('circle', {r:5});
       const hit = svgNode('circle', {r:11, class:'journey-hit'});
       const text = svgNode('text', {'text-anchor': p.direction === 'left' ? 'end' : 'start', 'dominant-baseline':'middle'}, p.name);
@@ -133,7 +135,7 @@
       group.addEventListener('click', () => { if (!dragged) { showLocation(p.id); update(); } });
       group.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showLocation(p.id); } });
       svg.append(group);
-      markers.push({p, group, circle, hit, text});
+      markers.push({p, group, circle, ring, hit, text});
     });
     function update() {
       zoom = Math.min(5, Math.max(1, zoom));
@@ -141,11 +143,12 @@
       cx = Math.max(w/2, Math.min(W-w/2, cx));
       cy = Math.max(h/2, Math.min(H-h/2, cy));
       svg.setAttribute('viewBox', `${cx-w/2} ${cy-h/2} ${w} ${h}`);
-      markers.forEach(({p,circle,hit,text}) => {
+      markers.forEach(({p,circle,ring,hit,text}) => {
+        if (ring) ring.setAttribute('r', 11 / Math.sqrt(zoom));
         circle.setAttribute('r', 7 / Math.sqrt(zoom));
         hit.setAttribute('r', 17 / Math.sqrt(zoom));
         text.setAttribute('font-size', (compact ? 30 : 20) / Math.sqrt(zoom));
-        text.setAttribute('x', (p.direction === 'left' ? -11 : 11) / Math.sqrt(zoom));
+        text.setAttribute('x', (p.direction === 'left' ? -1 : 1) * (ring ? 16 : 11) / Math.sqrt(zoom));
         // At world scale keep a quiet overview; every city is available via the selector.
         text.style.display = zoom < 1.5 && !visited.has(p.id) && p.id !== selected ? 'none' : '';
       });
