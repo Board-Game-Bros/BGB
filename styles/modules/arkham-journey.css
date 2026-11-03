@@ -7,20 +7,22 @@
 /* Map controls share the brass trauma-number frame; 400px slices keep the leaf corners intact. */
 html body .container .journey-map-panel .journey-map-controls button {box-sizing:border-box;min-width:46px;min-height:46px;padding:10px 24px;border:1px solid transparent;border-image:url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-frame.png") 400 fill / 15px / 0 stretch;border-radius:0;background:transparent;color:#352618;-webkit-text-fill-color:currentColor;text-shadow:none;font:600 15px/1.2 Georgia,"IM Fell English SC",serif}
 html body .container .journey-map-panel .journey-map-controls button:disabled {opacity:.45;cursor:default}
-/* One surface: frame, paper and ink move together. No filter or shadow pass. */
+/* Keep the brass frame stationary; ink color provides hover and press feedback. */
 html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger) {
  filter:none;
  box-shadow:none;
- transform:translate3d(0,0,0);
- transition:transform 150ms ease;
+ transform:none;
+ transition:color 150ms ease;
 }
 html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):hover:not(:disabled) {
  filter:none;
- transform:translate3d(0,-1px,0);
+ transform:none;
+ color:#78262f;
 }
 html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):active:not(:disabled) {
  filter:none;
- transform:translate3d(0,1px,0);
+ transform:none;
+ color:#511921;
 }
 html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):disabled {transform:none}
 @media(prefers-reduced-motion:reduce) {
