@@ -768,6 +768,16 @@
       main.appendChild(overviewSection);
     }
 
+    if (data.nextSession && Array.isArray(data.nextSession.entries) && data.nextSession.entries.length) {
+      const plannedSection = el("section", "record-section");
+      plannedSection.id = "next-session";
+      plannedSection.appendChild(el("h2", "section-title", String(data.nextSession.title || "Next Session")));
+      const plannedCard = el("div", "record-card");
+      data.nextSession.entries.forEach((entry) => plannedCard.appendChild(renderLinearStoryEntry(entry || {})));
+      plannedSection.appendChild(plannedCard);
+      main.appendChild(plannedSection);
+    }
+
     if (useLinearStoryLayout) {
       renderCampaignLogSection(data.campaignLog || {}, main);
     } else {

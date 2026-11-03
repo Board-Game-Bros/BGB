@@ -11,6 +11,10 @@
       "label": "Journey Notes"
     },
     {
+      "href": "#next-session",
+      "label": "Next Session"
+    },
+    {
       "href": "#campaign-log",
       "label": "Campaign Log"
     },
@@ -24,7 +28,7 @@
     "title": "Journey Notes",
     "statusChips": [
       "Current: Venice",
-      "Time Passed: 6",
+      "Time Passed: 3",
       "Standard · 3 Investigators"
     ],
     "metaItems": [
@@ -124,34 +128,7 @@
     {
       "variant": "travel",
       "title": "London → Venice",
-      "text": "Travel and side-story entry · time passed 2 → 6 (+4 combined)."
-    },
-    {
-      "variant": "visit",
-      "id": "visit-venice-1",
-      "eyebrow": "Visit 02 · Current Location",
-      "title": "Venice, Italy",
-      "subtitle": "A side-story stop on the world journey. Time passed: 6.",
-      "events": [
-        {
-          "title": "Carnevale of Horrors",
-          "eventType": "Side Story · Standalone Scenario Pack",
-          "statusChips": [
-            "Selected · Pending resolution",
-            "Session: 10/31/2026"
-          ],
-          "notes": [
-            {
-              "title": "Current record",
-              "text": "The cell has reached Venice and selected Carnevale of Horrors. ArkhamCards shows Continue; this record does not yet include a completed scenario, resolution, or rewards."
-            },
-            {
-              "title": "Time and entry",
-              "text": "The campaign log shows 6 time passed at this stop, compared with 2 after London. Travel and side-story entry are recorded together here; their individual costs are not separately recorded in the completed results. In this campaign, side-story entry uses time instead of the usual XP entry cost."
-            }
-          ]
-        }
-      ]
+      "text": "Travel · time passed 2 → 3 (+1)."
     }
   ],
   "campaignLog": {
@@ -174,8 +151,8 @@
           {
             "items": [
               "Current location: Venice. Previous stop: London.",
-              "Time passed: 6. Next printed threshold: 7 (α); no status report is recorded as resolved.",
-              "Carnevale of Horrors: selected, pending resolution."
+              "Time passed: 3 (prologue 2 + travel 1). Next printed threshold: 7 (α); no status report has been resolved.",
+              "Carnevale of Horrors: planned for the next session; story and scenario not started. Its 3-time entry cost is not included in the current total."
             ]
           }
         ]
@@ -281,7 +258,7 @@
     "source": "/assets/data/arkham_tsk_world_map.json",
     "currentLocation": "venice_it",
     "currentLocationName": "Venice",
-    "timePassed": 6,
+    "timePassed": 3,
     "sessionDate": "10/31/2026",
     "visitedLocations": [
       "london"
@@ -297,7 +274,7 @@
       },
       "venice_it": {
         "anchor": "visit-venice-1",
-        "text": "Current stop. Carnevale of Horrors is selected and remains pending; no resolution has been recorded."
+        "text": "Current stop. Carnevale of Horrors is planned for the next session. Its story and scenario have not started; the 3-time entry cost has not yet been recorded."
       },
       "shanghai": {
         "text": "Foundation lead: a woman with a red parasol is linked to a secret cabal."
@@ -327,5 +304,36 @@
         "text": "Foundation lead: a smuggling operation."
       }
     }
+  },
+  "nextSession": {
+    "title": "Next Session",
+    "entries": [
+      {
+        "variant": "visit",
+        "id": "visit-venice-1",
+        "eyebrow": "Next Session · Planned Side Story",
+        "title": "Venice, Italy",
+        "subtitle": "Carnevale of Horrors is planned for a future session; the story and scenario have not started.",
+        "events": [
+          {
+            "title": "Carnevale of Horrors",
+            "eventType": "Side Story · Standalone Scenario Pack",
+            "statusChips": [
+              "Planned · Not started"
+            ],
+            "notes": [
+              {
+                "title": "Next session",
+                "text": "The cell chose Venice and Carnevale of Horrors for the next session. The side-story narrative and scenario have not started."
+              },
+              {
+                "title": "Time and entry",
+                "text": "Time passed: 3 — 2 from the prologue and 1 for the journey from London to Venice. The additional 3-time side-story entry cost will be recorded when the group actually begins Carnevale of Horrors. No entry XP is spent."
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

@@ -3,10 +3,10 @@
 .journey-map-panel * {text-shadow:none}
 .journey-map-stats {display:flex;flex-wrap:wrap;gap:12px 28px;padding:18px 22px;background:#332e28;color:#f8ecd5;font-size:1rem;letter-spacing:.04em}
 .journey-map-disclosure>summary {padding:14px 22px;font-size:1.1rem;cursor:pointer;border-bottom:1px solid #89735b55}
-.journey-map-controls {display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px 10px}
-.journey-map-controls button {background:#f8f1e4;color:#332e28;border:1px solid #8b785c;border-radius:5px;min-width:44px;min-height:44px;padding:8px 14px;font:inherit;cursor:pointer}
-.journey-map-controls button:disabled {opacity:.4;cursor:default}
-.journey-map-controls button:hover:not(:disabled) {background:#ded0b7}
+.journey-map-controls {display:flex;gap:10px 14px;flex-wrap:wrap;padding:14px 18px}
+/* Map controls share the brass trauma-number frame; 400px slices keep the leaf corners intact. */
+html body .container .journey-map-panel .journey-map-controls button {box-sizing:border-box;min-width:46px;min-height:46px;padding:10px 24px;border:1px solid transparent;border-image:url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-frame.png") 400 fill / 15px / 0 stretch;border-radius:0;background:transparent;color:#352618;-webkit-text-fill-color:currentColor;text-shadow:none;font:600 15px/1.2 Georgia,"IM Fell English SC",serif}
+html body .container .journey-map-panel .journey-map-controls button:disabled {opacity:.45;cursor:default}
 .journey-map-canvas {display:block;width:100%;aspect-ratio:1893/988;background:#d9cfba;touch-action:none;cursor:grab;overflow:hidden}
 .journey-map-canvas:active {cursor:grabbing}
 .journey-map-canvas:focus-visible {outline:3px solid #963e39;outline-offset:-3px}
@@ -31,7 +31,17 @@
 .journey-map-legend .legend-visited::before {background:#665c53}
 .journey-map-legend .legend-current::before {background:#9d292f;outline:2px solid #9d292f;outline-offset:2px;margin-inline:3px 9px}
 .journey-city-select {display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 22px 18px;font:14px system-ui,sans-serif}
-.journey-city-select select {min-height:44px;max-width:100%;padding:8px 10px;border:1px solid #89735b;border-radius:4px;background:#fff8ed;color:#332e28;font:inherit}
+/* Same brass frame as the map buttons; the arrow flips while the list is open. */
+html body .container .journey-map-panel .journey-city-trigger {position:relative;box-sizing:border-box;min-width:180px;min-height:46px;padding:10px 42px 10px 22px;border:1px solid transparent;border-image:url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-frame.png") 400 fill / 15px / 0 stretch;border-radius:0;background:transparent;color:#352618;-webkit-text-fill-color:currentColor;text-shadow:none;text-align:left;font:600 15px/1.2 Georgia,"IM Fell English SC",serif}
+.journey-city-trigger::after {content:"";position:absolute;right:18px;top:50%;width:12px;height:8px;margin-top:-4px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2378262f' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;transition:transform 150ms ease}
+.journey-city-trigger[aria-expanded="true"]::after {transform:rotate(180deg)}
+html body .container .journey-map-panel .journey-city-trigger:focus-visible {outline:2px solid #b8863c;outline-offset:2px}
+html body .journey-city-list {position:fixed;z-index:1000;box-sizing:border-box;margin:0;padding:4px;list-style:none;overflow-y:auto;overscroll-behavior:contain;background:#f7eedf;border:1px solid #b8863c;border-radius:6px;box-shadow:0 10px 28px #1a0f0855;font:15px/1.3 Georgia,serif}
+html body .journey-city-list[hidden] {display:none}
+html body .journey-city-list li {padding:8px 12px 8px 28px;border-radius:4px;color:#352618;cursor:pointer;white-space:nowrap;position:relative}
+html body .journey-city-list li:hover,html body .journey-city-list li:focus {background:#e6d4b0;outline:none}
+html body .journey-city-list li[aria-selected="true"] {color:#78262f;font-weight:700}
+html body .journey-city-list li[aria-selected="true"]::before {content:"✓";position:absolute;left:10px}
 .journey-map-info {padding:20px 22px;border-top:1px solid #89735b66;background:#f7eedf}
 .journey-map-info h3 {margin:0 0 6px;font-size:1.5rem;color:#73292d}
 .journey-map-info p {margin:10px 0;font:15px/1.6 Georgia,serif}
@@ -52,8 +62,8 @@
 .journey-key img {display:block;width:280px;max-width:100%;height:auto;border-radius:12px;margin:12px 0}
 @media(max-width:600px) {
  .journey-map-stats {gap:8px;font-size:.88rem;padding:14px;flex-direction:column}
- .journey-map-controls {padding:10px}
- .journey-map-controls button {padding:6px 10px;font-size:.9rem}
+ .journey-map-controls {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:10px;gap:8px}
+ html body .container .journey-map-panel .journey-map-controls button {min-width:0;padding:10px 14px;font-size:.9rem}
  .journey-map-canvas {aspect-ratio:1.3}
  .journey-map-info {padding:16px}
  .journey-event {padding:14px 12px!important}
@@ -61,13 +71,13 @@
  .journey-map-hint,.journey-map-source,.journey-map-legend {margin-inline:14px}
  .journey-city-select {padding-inline:14px}
 }
-/* The site's ornamental button and parchment text rules have high specificity. */
+/* Keep parchment text legible against the map panel in both themes. */
 html body .container .journey-map-panel p {color:#4e453a;-webkit-text-fill-color:currentColor;text-shadow:none}
-html body .container .journey-map-controls button {border:1px solid #8b785c;border-image:none;border-radius:5px;background:#f8f1e4;color:#332e28;-webkit-text-fill-color:currentColor;text-shadow:none;filter:none;box-shadow:none;font:14px/1.3 system-ui,sans-serif}
-html body .container .journey-map-controls button:hover:not(:disabled) {background:#ded0b7;filter:none}
 html body .container .journey-map-panel .journey-map-source {color:#655b4d}
 .journey-visit {scroll-margin-top:210px}
 html body .container .journey-visit-heading p {color:#4e453a;-webkit-text-fill-color:currentColor;text-shadow:none}
 @media(max-width:600px) {.journey-visit {scroll-margin-top:220px}}
 .journey-map {scroll-margin-top:210px}
 html body.torch-mode .container .journey-visit-heading p {color:#e8d8b9}
+
+body[data-journey="true"] #next-session {scroll-margin-top:210px}

@@ -28,7 +28,7 @@
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
         "/scripts/ahlcg-upgrade-manager.js?v=20261005storycolor",
-        "/scripts/arkham-parallel-campaign-page.js?v=20261102mapcontrast",
+        "/scripts/arkham-parallel-campaign-page.js?v=20261102nextsession",
       ],
     },
   };
@@ -64,9 +64,9 @@
       if (document.body.dataset.journey === "true") {
         const journeyStyle = document.createElement("link");
         journeyStyle.rel = "stylesheet";
-        journeyStyle.href = "/styles/modules/arkham-journey.css?v=20261102mapcontrast";
+        journeyStyle.href = "/styles/modules/arkham-journey.css?v=20261102citypicker";
         document.head.appendChild(journeyStyle);
-        await loadScript("/scripts/arkham-journey.js?v=20261102mapcontrast");
+        await loadScript("/scripts/arkham-journey.js?v=20261102citypicker");
       }
       for (const src of config.scripts) {
         await loadScript(src);

@@ -99,18 +99,100 @@
     let selected = config.currentLocation;
     const info = node('div', 'journey-map-info');
     info.setAttribute('aria-live', 'polite');
-    const label = node('label', 'journey-city-select', 'Explore a location');
-    const select = node('select');
-    select.setAttribute('aria-label', 'Explore a location');
-    [...map.locations].sort((a,b) => a.name.localeCompare(b.name)).forEach(p => {
-      const option = node('option', '', `${p.name}${p.id === config.currentLocation ? ' · Current' : visited.has(p.id) ? ' · Visited' : ''}`);
-      option.value = p.id;
-      select.append(option);
+    // Custom listbox: native macOS menus centre the checked item over the control
+    // instead of dropping from it. The list lives on <body> so the panel's overflow can't clip it.
+    const label = node('div', 'journey-city-select');
+    const labelText = node('span', '', 'Explore a location');
+    labelText.id = 'journey-city-label';
+    const trigger = node('button', 'journey-city-trigger');
+    trigger.type = 'button';
+    trigger.id = 'journey-city-trigger';
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-controls', 'journey-city-list');
+    trigger.setAttribute('aria-labelledby', 'journey-city-label journey-city-trigger');
+    const list = node('ul', 'journey-city-list');
+    list.id = 'journey-city-list';
+    list.setAttribute('role', 'listbox');
+    list.setAttribute('aria-labelledby', 'journey-city-label');
+    list.hidden = true;
+    const options = [...map.locations].sort((a,b) => a.name.localeCompare(b.name)).map(p => {
+      const option = node('li', '', `${p.name}${p.id === config.currentLocation ? ' · Current' : visited.has(p.id) ? ' · Visited' : ''}`);
+      option.dataset.id = p.id;
+      option.setAttribute('role', 'option');
+      option.tabIndex = -1;
+      list.append(option);
+      return option;
     });
-    label.append(select);
+    label.append(labelText, trigger);
+    document.body.append(list);
+    function placeList() {
+      const r = trigger.getBoundingClientRect(), gap = 4, margin = 8;
+      const below = innerHeight - r.bottom - gap - margin, above = r.top - gap - margin;
+      const up = below < Math.min(list.scrollHeight, 320) && above > below;
+      list.style.maxHeight = `${Math.min(320, up ? above : below)}px`;
+      list.style.minWidth = `${r.width}px`;
+      list.style.left = `${Math.max(margin, Math.min(r.left, innerWidth - list.offsetWidth - margin))}px`;
+      list.style.top = `${up ? r.top - gap - list.offsetHeight : r.bottom + gap}px`;
+      list.classList.toggle('is-above', up);
+    }
+    const onScroll = e => { if (e.target !== list) placeList(); };
+    const onOutside = e => { if (!list.contains(e.target) && !trigger.contains(e.target)) closeList(false); };
+    function openList() {
+      list.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      placeList();
+      const current = options.find(o => o.dataset.id === selected) || options[0];
+      current.focus({preventScroll: true});
+      current.scrollIntoView({block: 'nearest'});
+      addEventListener('resize', placeList);
+      addEventListener('scroll', onScroll, true);
+      document.addEventListener('pointerdown', onOutside);
+    }
+    function closeList(refocus = true) {
+      if (list.hidden) return;
+      list.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      removeEventListener('resize', placeList);
+      removeEventListener('scroll', onScroll, true);
+      document.removeEventListener('pointerdown', onOutside);
+      if (refocus) trigger.focus();
+    }
+    function chooseLocation(id) {
+      closeList();
+      const p = locations.get(id);
+      showLocation(p.id); cx = p.x; cy = p.y; zoom = Math.max(zoom, focusZoom); update();
+    }
+    trigger.addEventListener('click', () => list.hidden ? openList() : closeList());
+    trigger.addEventListener('keydown', e => {
+      if (!['ArrowDown', 'ArrowUp'].includes(e.key)) return;
+      e.preventDefault(); openList();
+    });
+    let typed = '', typedAt = 0;
+    list.addEventListener('click', e => { const o = e.target.closest('[role=option]'); if (o) chooseLocation(o.dataset.id); });
+    list.addEventListener('keydown', e => {
+      const i = options.indexOf(document.activeElement);
+      let next = null;
+      if (e.key === 'ArrowDown') next = options[Math.min(options.length - 1, i + 1)];
+      else if (e.key === 'ArrowUp') next = options[Math.max(0, i - 1)];
+      else if (e.key === 'Home') next = options[0];
+      else if (e.key === 'End') next = options[options.length - 1];
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (i >= 0) chooseLocation(options[i].dataset.id); return; }
+      else if (e.key === 'Escape' || e.key === 'Tab') { e.preventDefault(); closeList(); return; }
+      else if (e.key.length === 1 && !e.metaKey && !e.ctrlKey) {
+        typed = (Date.now() - typedAt < 600 ? typed : '') + e.key.toLowerCase();
+        typedAt = Date.now();
+        next = options.find(o => o.textContent.toLowerCase().startsWith(typed));
+      }
+      if (!next) return;
+      e.preventDefault();
+      next.focus({preventScroll: true});
+      next.scrollIntoView({block: 'nearest'});
+    });
     function showLocation(id) {
       selected = id;
-      select.value = id;
+      options.forEach(o => o.setAttribute('aria-selected', String(o.dataset.id === id)));
+      trigger.textContent = options.find(o => o.dataset.id === id)?.textContent || '';
       const p = locations.get(id);
       const note = (config.locationNotes || {})[id];
       const status = id === config.currentLocation ? 'Current location' : visited.has(id) ? 'Visited' : p.status === 'side' ? 'Side story destination' : p.status === 'locked' ? 'Requires a campaign record' : 'Unvisited destination';
@@ -159,10 +241,6 @@
     const zoomOut = addButton('−', () => { zoom /= 1.35; update(); }, 'Zoom out');
     addButton('World', () => { zoom = 1; cx = W/2; cy = H/2; update(); });
     addButton('Current location', () => { zoom = focusZoom; cx = current.x; cy = current.y; showLocation(current.id); update(); });
-    select.addEventListener('change', () => {
-      const p = locations.get(select.value);
-      showLocation(p.id); cx = p.x; cy = p.y; zoom = Math.max(zoom, focusZoom); update();
-    });
     let drag = null, dragged = false;
     const pointers = new Map();
     let pinch = null;
