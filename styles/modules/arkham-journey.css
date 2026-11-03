@@ -7,11 +7,26 @@
 /* Map controls share the brass trauma-number frame; 400px slices keep the leaf corners intact. */
 html body .container .journey-map-panel .journey-map-controls button {box-sizing:border-box;min-width:46px;min-height:46px;padding:10px 24px;border:1px solid transparent;border-image:url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-frame.png") 400 fill / 15px / 0 stretch;border-radius:0;background:transparent;color:#352618;-webkit-text-fill-color:currentColor;text-shadow:none;font:600 15px/1.2 Georgia,"IM Fell English SC",serif}
 html body .container .journey-map-panel .journey-map-controls button:disabled {opacity:.45;cursor:default}
-/* Every state uses the same filter-function list, otherwise the browser snaps the
-   glow instantly while the lift still glides (filter lists only interpolate when they match). */
-html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger) {filter:brightness(1) var(--cartouche-shadow)}
-html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):hover:not(:disabled) {filter:brightness(1.1) var(--cartouche-shadow)}
-html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):active:not(:disabled) {filter:brightness(.94) drop-shadow(0 1px 1px rgba(24,15,8,.3)) drop-shadow(0 0 0 rgba(24,15,8,0))}
+/* One surface: frame, paper and ink move together. No filter or shadow pass. */
+html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger) {
+ filter:none;
+ box-shadow:none;
+ transform:translate3d(0,0,0);
+ transition:transform 150ms ease;
+}
+html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):hover:not(:disabled) {
+ filter:none;
+ transform:translate3d(0,-1px,0);
+}
+html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):active:not(:disabled) {
+ filter:none;
+ transform:translate3d(0,1px,0);
+}
+html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):disabled {transform:none}
+@media(prefers-reduced-motion:reduce) {
+ html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger),
+ html body .container .journey-map-panel .journey-city-trigger::after {transition:none}
+}
 .journey-map-canvas {display:block;width:100%;aspect-ratio:1893/988;background:#d9cfba;touch-action:none;cursor:grab;overflow:hidden}
 .journey-map-canvas:active {cursor:grabbing}
 .journey-map-canvas:focus-visible {outline:3px solid #963e39;outline-offset:-3px}
