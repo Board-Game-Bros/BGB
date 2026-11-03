@@ -7,22 +7,22 @@
 /* Map controls share the brass trauma-number frame; 400px slices keep the leaf corners intact. */
 html body .container .journey-map-panel .journey-map-controls button {box-sizing:border-box;min-width:46px;min-height:46px;padding:10px 24px;border:1px solid transparent;border-image:url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-frame.png") 400 fill / 15px / 0 stretch;border-radius:0;background:transparent;color:#352618;-webkit-text-fill-color:currentColor;text-shadow:none;font:600 15px/1.2 Georgia,"IM Fell English SC",serif}
 html body .container .journey-map-panel .journey-map-controls button:disabled {opacity:.45;cursor:default}
-/* Keep the brass frame stationary; a soft gold glow and ink color provide feedback. */
+/* Light the existing surface with a diffuse glow; no extra outline or movement. */
 html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger) {
- filter:none;
- box-shadow:0 0 0 1px transparent, 0 0 12px transparent;
+ filter:brightness(1);
+ box-shadow:0 0 8px 0 transparent, 0 0 18px -2px transparent;
  transform:none;
- transition:color 150ms ease, box-shadow 150ms ease;
+ transition:color 150ms ease, filter 150ms ease, box-shadow 150ms ease;
 }
 html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):is(:hover, :focus-visible):not(:disabled) {
- filter:none;
- box-shadow:0 0 0 1px rgba(210,164,66,.55), 0 0 12px rgba(210,164,66,.42);
+ filter:brightness(1.1);
+ box-shadow:0 0 8px 0 rgba(230,179,69,.45), 0 0 18px -2px rgba(230,179,69,.35);
  transform:none;
  color:#78262f;
 }
 html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):active:not(:disabled) {
- filter:none;
- box-shadow:0 0 0 1px rgba(210,164,66,.4), 0 0 6px rgba(210,164,66,.28);
+ filter:brightness(1.04);
+ box-shadow:0 0 8px 0 rgba(230,179,69,.25), 0 0 18px -2px rgba(230,179,69,.18);
  transform:none;
  color:#511921;
 }
