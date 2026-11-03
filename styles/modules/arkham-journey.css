@@ -7,6 +7,11 @@
 /* Map controls share the brass trauma-number frame; 400px slices keep the leaf corners intact. */
 html body .container .journey-map-panel .journey-map-controls button {box-sizing:border-box;min-width:46px;min-height:46px;padding:10px 24px;border:1px solid transparent;border-image:url("../../assets/boardgames/ahlcg_campaign_ui/trauma-number-frame.png") 400 fill / 15px / 0 stretch;border-radius:0;background:transparent;color:#352618;-webkit-text-fill-color:currentColor;text-shadow:none;font:600 15px/1.2 Georgia,"IM Fell English SC",serif}
 html body .container .journey-map-panel .journey-map-controls button:disabled {opacity:.45;cursor:default}
+/* Every state uses the same filter-function list, otherwise the browser snaps the
+   glow instantly while the lift still glides (filter lists only interpolate when they match). */
+html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger) {filter:brightness(1) var(--cartouche-shadow)}
+html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):hover:not(:disabled) {filter:brightness(1.1) var(--cartouche-shadow)}
+html body .container .journey-map-panel :is(.journey-map-controls button, .journey-city-trigger):active:not(:disabled) {filter:brightness(.94) drop-shadow(0 1px 1px rgba(24,15,8,.3)) drop-shadow(0 0 0 rgba(24,15,8,0))}
 .journey-map-canvas {display:block;width:100%;aspect-ratio:1893/988;background:#d9cfba;touch-action:none;cursor:grab;overflow:hidden}
 .journey-map-canvas:active {cursor:grabbing}
 .journey-map-canvas:focus-visible {outline:3px solid #963e39;outline-offset:-3px}
@@ -38,6 +43,12 @@ html body .container .journey-map-panel .journey-city-trigger {position:relative
 html body .container .journey-map-panel .journey-city-trigger:focus-visible {outline:2px solid #b8863c;outline-offset:2px}
 html body .journey-city-list {position:fixed;z-index:1000;box-sizing:border-box;margin:0;padding:4px;list-style:none;overflow-y:auto;overscroll-behavior:contain;background:#f7eedf;border:1px solid #b8863c;border-radius:6px;box-shadow:0 10px 28px #1a0f0855;font:15px/1.3 Georgia,serif}
 html body .journey-city-list[hidden] {display:none}
+/* Keep the scrollbar inside the rounded parchment instead of the square system track. */
+html body .journey-city-list::-webkit-scrollbar {width:12px}
+html body .journey-city-list::-webkit-scrollbar-track {background:transparent;margin:6px 0}
+html body .journey-city-list::-webkit-scrollbar-thumb {background:#c9a86a;background-clip:padding-box;border:4px solid transparent;border-radius:6px}
+html body .journey-city-list::-webkit-scrollbar-thumb:hover {background-color:#a8803f}
+@supports not selector(::-webkit-scrollbar) {html body .journey-city-list {scrollbar-width:thin;scrollbar-color:#c9a86a transparent}}
 html body .journey-city-list li {padding:8px 12px 8px 28px;border-radius:4px;color:#352618;cursor:pointer;white-space:nowrap;position:relative}
 html body .journey-city-list li:hover,html body .journey-city-list li:focus {background:#e6d4b0;outline:none}
 html body .journey-city-list li[aria-selected="true"] {color:#78262f;font-weight:700}

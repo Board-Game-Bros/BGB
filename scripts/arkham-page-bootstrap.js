@@ -64,7 +64,7 @@
       if (document.body.dataset.journey === "true") {
         const journeyStyle = document.createElement("link");
         journeyStyle.rel = "stylesheet";
-        journeyStyle.href = "/styles/modules/arkham-journey.css?v=20261102citypicker";
+        journeyStyle.href = "/styles/modules/arkham-journey.css?v=20261102listscroll";
         document.head.appendChild(journeyStyle);
         await loadScript("/scripts/arkham-journey.js?v=20261102citypicker");
       }
