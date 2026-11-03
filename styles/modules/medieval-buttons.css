@@ -300,6 +300,9 @@ html body button.torch-btn {
   border-image: none;
   border-radius: 0;
   background: none;
+  /* The transparent corners must show the page without a square blur panel. */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   box-shadow: none;
   filter: drop-shadow(0 5px 8px rgba(30, 19, 8, 0.3));
   transition: transform 180ms ease, filter 180ms ease;

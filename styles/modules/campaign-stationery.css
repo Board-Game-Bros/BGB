@@ -1,7 +1,7 @@
 /* All ornament and material detail comes from ImageGen artwork.
    CSS only sizes the raster slices and lays live text over them. */
 /* Open gilt underline distinguishes chapter headings from framed content. */
-html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title) {
+html body .container :is(.scenario-log > :is(h3, .journey-event-title), .track-header > h3, .track-upgrade-title) {
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
@@ -19,12 +19,12 @@ html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-
   text-shadow: 0 1px 0 rgba(255, 247, 222, 0.4);
 }
 
-html body.torch-mode .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title) {
+html body.torch-mode .container :is(.scenario-log > :is(h3, .journey-event-title), .track-header > h3, .track-upgrade-title) {
   color: #e6c98f;
   text-shadow: 0 2px 2px rgba(12, 18, 15, 0.6);
 }
 
-html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title)::before {
+html body .container :is(.scenario-log > :is(h3, .journey-event-title), .track-header > h3, .track-upgrade-title)::before {
   content: "";
   position: absolute;
   inset: auto 0 0;
@@ -36,12 +36,12 @@ html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-
 }
 
 @media (max-width: 600px) {
-  html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title) {
+  html body .container :is(.scenario-log > :is(h3, .journey-event-title), .track-header > h3, .track-upgrade-title) {
     padding: 4px 4px 32px;
     font-size: clamp(1.2rem, 5vw, 1.7rem);
   }
 
-  html body .container :is(.scenario-log > h3, .track-header > h3, .track-upgrade-title)::before {
+  html body .container :is(.scenario-log > :is(h3, .journey-event-title), .track-header > h3, .track-upgrade-title)::before {
     height: 28px;
   }
 }
@@ -126,13 +126,13 @@ html body .container .story-note::after {
   z-index: -1;
 }
 
-html body .container .story-note h4 {
+html body .container .story-note :is(h4, h5) {
   margin: 26px 0 10px;
   color: var(--archive-ink);
   line-height: 1.5;
 }
 
-html body .container .story-note h4:first-child {
+html body .container .story-note :is(h4, h5):first-child {
   margin-top: 0;
 }
 
@@ -141,7 +141,7 @@ html body .container .story-note :is(p, li) {
 }
 
 html body .container .story-note,
-html body .container .story-note :is(p, li, h4, strong, span) {
+html body .container .story-note :is(p, li, h4, h5, strong, span) {
   text-shadow: none;
 }
 

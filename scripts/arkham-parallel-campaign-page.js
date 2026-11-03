@@ -733,9 +733,11 @@
     appendItems(campaignStatus, overview.statusChips, "status-chip");
     overviewCard.appendChild(campaignStatus);
 
-    const meta = el("div", "record-meta");
-    appendItems(meta, overview.metaItems, "meta-item");
-    overviewCard.appendChild(meta);
+    if (Array.isArray(overview.metaItems) && overview.metaItems.length) {
+      const meta = el("div", "record-meta");
+      appendItems(meta, overview.metaItems, "meta-item");
+      overviewCard.appendChild(meta);
+    }
 
     const useLinearStoryLayout = Boolean(data.linearStoryLayout);
     if (Array.isArray(data.storyNotes) && data.storyNotes.length) {

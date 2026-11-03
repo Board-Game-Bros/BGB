@@ -1,4 +1,4 @@
-@import url("../base.css?v=20261024sword");
+@import url("../base.css?v=20261103torchclear");
 @import url("../modules/banner-title.css?v=20260924banner2");
 @import url("../modules/cards.css?v=20260923soft");
 @import url("../modules/investigator-cards.css?v=20260923soft");
@@ -6,12 +6,12 @@
 @import url("../modules/subnav.css?v=20260923soft");
 @import url("https://fonts.googleapis.com/css2?family=Eater&family=IM+Fell+English+SC&family=Uncial+Antiqua&display=swap");
 @import url("../modules/velvet-canvas.css?v=20260928parchment2");
-@import url("../modules/medieval-buttons.css?v=20261024sword");
+@import url("../modules/medieval-buttons.css?v=20261103torchclear");
 @import url("../modules/nav-banner.css?v=20260927torch1");
 @import url("../modules/card-depth.css?v=20260928depth2");
 @import url("../modules/shell-ornaments.css?v=20260928bgb3");
 @import url("../modules/card-surfaces.css?v=20260929surfaces2");
-@import url("../modules/campaign-stationery.css?v=20261017sessionlabels");
+@import url("../modules/campaign-stationery.css?v=20261103journeylabels");
 @import url("../modules/card-highlight.css?v=20261005framehover");
 @import url("../modules/upgrade-ledger.css?v=20261005framehover");
 @import url("../modules/icon-seals.css?v=20261024sword");
@@ -50,7 +50,7 @@ nav a,
   font-family: "IM Fell English SC", serif;
 }
 
-.scenario-log h3,
+.scenario-log :is(h3, .journey-event-title),
 .upgrade-card h3 {
   font-family: "Eater", serif;
   font-weight: 400;
@@ -120,7 +120,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   border-top: 1px solid rgba(58, 45, 26, 0.2);
 }
 
-.scenario-log h3 {
+.scenario-log :is(h3, .journey-event-title) {
   margin: 0 0 10px;
   font-size: clamp(1.8rem, 2.7vw, 2.4rem);
   color: #8f111b;
@@ -165,7 +165,7 @@ body.torch-mode #campaigns .campaign-subtitle {
   border: 0;
 }
 
-.story-note h4 {
+.story-note :is(h4, h5) {
   margin: 0 0 6px;
   font-family: "Eater", serif;
   font-weight: 400;
@@ -2162,7 +2162,7 @@ body.torch-mode .record-card * {
     0 0 12px rgba(255, 188, 92, 0.28);
 }
 
-body.torch-mode .scenario-log h3 {
+body.torch-mode .scenario-log :is(h3, .journey-event-title) {
   color: #ff5b64;
   text-shadow:
     0 0 6px rgba(255, 112, 120, 0.55),

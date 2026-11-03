@@ -32,7 +32,9 @@
     visit.id = entry.id;
     visit.tabIndex = -1;
     const heading = node('div', 'journey-visit-heading');
-    heading.append(node('span', 'journey-eyebrow', entry.eyebrow || 'Location'), node('h3', '', entry.title));
+    const meta = node('div', 'record-meta');
+    meta.append(node('span', 'meta-item', entry.eyebrow || 'Location'));
+    heading.append(meta, node('h3', '', entry.title));
     if (entry.subtitle) heading.append(node('p', '', entry.subtitle));
     visit.append(heading);
     (entry.events || []).forEach(event => {
@@ -42,7 +44,9 @@
       const title = block.querySelector('h3');
       if (title) title.replaceWith(node('h4', 'journey-event-title', title.textContent));
       block.querySelectorAll('.story-note h4').forEach(h => h.replaceWith(node('h5', '', h.textContent)));
-      block.prepend(node('span', 'journey-event-type', event.eventType || 'Location Story'));
+      const status = block.querySelector('.campaign-status') || node('div', 'campaign-status');
+      status.prepend(node('span', 'status-chip', `Type: ${event.eventType || 'Location Story'}`));
+      if (!status.parentNode) block.querySelector('.journey-event-title').after(status);
       visit.append(block);
     });
     return visit;

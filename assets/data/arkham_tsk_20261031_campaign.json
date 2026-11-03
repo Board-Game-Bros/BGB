@@ -29,20 +29,16 @@
     "statusChips": [
       "Current: Venice",
       "Time Passed: 3",
-      "Standard · 3 Investigators"
-    ],
-    "metaItems": [
-      "Akachi Onyele · LL",
-      "Norman Withers · Yan",
-      "William Yorick · Shengbo"
+      "Difficulty: Standard",
+      "Players: 3"
     ]
   },
   "storyNotes": [
     {
       "variant": "session-meta",
       "metaItems": [
-        "Session 1 · 10/31/2026",
-        "Riddles and Rain → The Foundation → Venice"
+        "Date: 10/31/2026",
+        "Session: 1 · Riddles and Rain → The Foundation → Venice"
       ]
     },
     {
@@ -57,7 +53,8 @@
           "title": "Riddles and Rain",
           "eventType": "Campaign Scenario · Prologue",
           "statusChips": [
-            "Completed · Resolution 2",
+            "Status: Completed",
+            "Resolution: 2",
             "Lead: William Yorick"
           ],
           "notes": [
@@ -90,8 +87,8 @@
           "title": "The Foundation",
           "eventType": "Interlude",
           "statusChips": [
-            "Completed",
-            "Departing from London"
+            "Status: Completed",
+            "Departure: London"
           ],
           "notes": [
             {
@@ -319,7 +316,7 @@
             "title": "Carnevale of Horrors",
             "eventType": "Side Story · Standalone Scenario Pack",
             "statusChips": [
-              "Planned · Not started"
+              "Status: Planned · Not started"
             ],
             "notes": [
               {

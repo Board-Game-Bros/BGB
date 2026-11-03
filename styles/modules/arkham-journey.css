@@ -77,10 +77,7 @@ html body .journey-city-list li[aria-selected="true"]::before {content:"✓";pos
 .journey-visit-heading {border-bottom:2px solid #9a4545;padding:0 0 14px}
 .journey-visit-heading h3 {font-size:1.8rem;margin:4px 0!important}
 .journey-visit-heading p {margin:6px 0 0;font-style:italic}
-.journey-eyebrow,.journey-event-type {font:12px/1.5 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase}
 .journey-event {margin:18px 0!important;padding:18px 22px!important;border-left:3px solid #947d5f!important;border-radius:0 8px 8px 0}
-.journey-event .journey-event-title {font-size:1.4rem;margin:7px 0 12px}
-.journey-event .story-note h5 {font:600 1rem/1.5 Georgia,serif;margin:16px 0 6px}
 .journey-travel {display:flex;flex-wrap:wrap;gap:8px 22px;border-block:1px dashed #957c5b;padding:18px 6px;margin:28px 0;font-size:1rem}
 .journey-travel strong::before {content:'↳ ';color:#a24d4d}
 .journey-key {margin:12px 0}

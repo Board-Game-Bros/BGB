@@ -361,7 +361,6 @@ footer::before {
   background: rgba(49, 34, 17, 0.78);
   border: 0;
   border-radius: 50%;
-  backdrop-filter: blur(4px);
   padding: 7px;
   cursor: var(--cursor-sword-hover);
   z-index: 9999;

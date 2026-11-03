@@ -28,7 +28,7 @@
         "/scripts/shared-edit-sync-gate.js?v=20260228a",
         "/scripts/shared-local-state-envelope.js?v=20260306a",
         "/scripts/ahlcg-upgrade-manager.js?v=20261005storycolor",
-        "/scripts/arkham-parallel-campaign-page.js?v=20261102nextsession",
+        "/scripts/arkham-parallel-campaign-page.js?v=20261103journeylabels",
       ],
     },
   };
@@ -41,7 +41,7 @@
 
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
-  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20261024sword";
+  stylesheet.href = "/styles/pages/arkham_horror_lcg.css?v=20261103journeylabels";
   document.head.appendChild(stylesheet);
 
   const root = document.createElement("div");
@@ -64,9 +64,9 @@
       if (document.body.dataset.journey === "true") {
         const journeyStyle = document.createElement("link");
         journeyStyle.rel = "stylesheet";
-        journeyStyle.href = "/styles/modules/arkham-journey.css?v=20261103unifiedhover";
+        journeyStyle.href = "/styles/modules/arkham-journey.css?v=20261103journeylabels";
         document.head.appendChild(journeyStyle);
-        await loadScript("/scripts/arkham-journey.js?v=20261102citypicker");
+        await loadScript("/scripts/arkham-journey.js?v=20261103journeylabels");
       }
       for (const src of config.scripts) {
         await loadScript(src);
