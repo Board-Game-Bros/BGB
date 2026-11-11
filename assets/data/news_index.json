@@ -5,6 +5,39 @@
   "items": [
     {
       "kicker": "Crowdfunding",
+      "date": "November 11, 2026",
+      "title": "Marco Polo Deluxe Master Set",
+      "imageSrc": "/assets/news/marco-polo-deluxe-master-set.png",
+      "text": "Proud to be the 1,344th backer on Gamefound for Marco Polo Deluxe Master Set.",
+      "detail": "Backed the deluxe collection from Board&Dice, bringing together The Voyages of Marco Polo, Marco Polo II: In the Service of the Khan, and the Agents of Venice expansion with refreshed artwork and upgraded components.",
+      "statLabel": "Backer",
+      "statValue": "1,344",
+      "tags": [
+        {
+          "label": "Gamefound",
+          "iconSrc": "/assets/news/gamefound-icon.png",
+          "href": "https://gamefound.com/",
+          "external": true
+        },
+        {
+          "label": "Board&Dice",
+          "iconSrc": "/assets/news/board-and-dice-icon.svg",
+          "href": "https://boardanddice.com/",
+          "external": true
+        },
+        {
+          "label": "Marco Polo: Deluxe Master Set",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/464685/marco-polo-deluxe-master-set",
+          "external": true
+        }
+      ],
+      "href": "https://gamefound.com/en/projects/board-and-dice/marco-polo-deluxe-master-set",
+      "linkLabel": "View Campaign",
+      "external": true
+    },
+    {
+      "kicker": "Crowdfunding",
       "date": "October 28, 2026",
       "title": "Too Little Time",
       "imageSrc": "/assets/news/too-little-time.png",
