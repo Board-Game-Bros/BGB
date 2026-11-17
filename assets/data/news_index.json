@@ -4,6 +4,39 @@
   "layout": "news",
   "items": [
     {
+      "kicker": "Upcoming Event",
+      "date": "November 17, 2026",
+      "title": "Riftbound at Convergence Fest — Las Vegas",
+      "imageSrc": "/assets/news/riftbound-convergence-fest-las-vegas.jpg",
+      "text": "Convergence Fest brings Riftbound and Teamfight Tactics together at the Las Vegas Convention Center on December 11–13, 2026.",
+      "detail": "The weekend features the Riftbound North American Regional Championship alongside the TFT Vegas Open, with casual play, competitive side events, a shared prize wall, developer panels, card trading, and Artist Alley.",
+      "statLabel": "December 2026",
+      "statValue": "11–13",
+      "tags": [
+        {
+          "label": "Riot Games",
+          "iconSrc": "/assets/news/riot-games-icon.png",
+          "href": "https://www.riotgames.com/en",
+          "external": true
+        },
+        {
+          "label": "Riftbound NA Championship",
+          "iconSrc": "/assets/news/riftbound-icon.svg",
+          "href": "https://playriftbound.com/en-us/news/organizedplay/north-american-regional-championship-info/",
+          "external": true
+        },
+        {
+          "label": "Riftbound",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/436560/riftbound-the-league-of-legends-trading-card-game",
+          "external": true
+        }
+      ],
+      "href": "https://teamfighttactics.leagueoflegends.com/en-us/news/announcements/celebrate-tft-and-riftbound-at-convergence-fest/",
+      "linkLabel": "Official Announcement",
+      "external": true
+    },
+    {
       "kicker": "Crowdfunding",
       "date": "November 11, 2026",
       "title": "Marco Polo Deluxe Master Set",
