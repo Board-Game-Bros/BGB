@@ -27,8 +27,8 @@
   "overview": {
     "title": "Journey Notes",
     "statusChips": [
-      "Current: Venice",
-      "Time Passed: 3",
+      "Next destination: Alexandria",
+      "Time Passed: 11",
       "Difficulty: Standard",
       "Players: 3"
     ]
@@ -126,6 +126,134 @@
       "variant": "travel",
       "title": "London → Venice",
       "text": "Travel · time passed 2 → 3 (+1)."
+    },
+    {
+      "variant": "session-meta",
+      "metaItems": [
+        "Date: 11/22/2026",
+        "Session: 2 · Carnevale of Horrors → Dealings in the Dark"
+      ]
+    },
+    {
+      "variant": "visit",
+      "id": "visit-venice-1",
+      "eyebrow": "Visit 02 · Venice",
+      "title": "Venice, Italy",
+      "subtitle": "The Carnevale ends in devastation. Time passed: 3 → 6.",
+      "events": [
+        {
+          "title": "Carnevale of Horrors",
+          "eventType": "Side Story · Standalone Scenario Pack",
+          "statusChips": [
+            "Status: Completed",
+            "Resolution: None",
+            "Lead: William Yorick"
+          ],
+          "notes": [
+            {
+              "title": "Story",
+              "text": "A masked killer’s trail leads the investigators to Venice during the Carnevale. They wake battered and drenched aboard a gondola; wrecked boats fill the canals and blood stains the streets. Many were sacrificed to Cnidathqua during the Carnevale."
+            },
+            {
+              "title": "Consequences",
+              "items": [
+                "No resolution was reached. Victory display: 5; each investigator earned 5 XP.",
+                "William Yorick and Norman Withers each suffered 1 physical trauma. Akachi Onyele suffered 1 mental trauma.",
+                "After the required reveler transfer, one or two Innocent Revelers remained beneath the act deck; no further rewards were granted.",
+                "The side story cost 3 time instead of entry XP: time passed 3 → 6. The cell then embarked for Istanbul."
+              ]
+            },
+            {
+              "title": "Story awards",
+              "items": [
+                "William Yorick received Bauta; Norman Withers received Pantalone; Akachi Onyele received Medico Della Peste.",
+                "Each mask is a free story award and does not count toward its investigator’s deck size. The cards are recorded in the existing Carnevale upgrade window below."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "travel",
+      "title": "Venice → Istanbul",
+      "text": "Travel · time passed 6 → 7 (+1). Status Report Alpha is reached on arrival."
+    },
+    {
+      "variant": "visit",
+      "id": "visit-istanbul-1",
+      "eyebrow": "Visit 03 · Istanbul",
+      "title": "Istanbul, Turkey",
+      "subtitle": "A false promise, a sealed talisman, and a broken alliance. Time passed: 7 → 10.",
+      "events": [
+        {
+          "title": "Status Report Alpha (α)",
+          "eventType": "Status Report",
+          "statusChips": [
+            "Status: Resolved",
+            "Time Passed: 7"
+          ],
+          "notes": [
+            {
+              "title": "Report",
+              "text": "The Foundation receives more reports of disappearances as the cell’s journey continues."
+            },
+            {
+              "title": "Chaos bag",
+              "items": [
+                "Add 1 cultist token to the chaos bag."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Dealings in the Dark",
+          "eventType": "Campaign Scenario",
+          "statusChips": [
+            "Status: Completed",
+            "Resolution: 1 → 3 → 5",
+            "Lead: William Yorick"
+          ],
+          "notes": [
+            {
+              "title": "Story",
+              "text": "The cell meets museum curator Ece Şahin, reveals the Eye of Ravens, and learns of a talisman sought by a murderous cult. Ece helps them recover it, but the investigators never intend to honor their promise to entrust it to her. After escaping the city, they seal the talisman and end the unnatural eclipse. Their refusal to surrender it leaves Ece angry and distrustful."
+            },
+            {
+              "title": "Choices",
+              "items": [
+                "The cell promised to find the talisman and place it in Ece’s care, while secretly intending to keep it. Campaign note: The cell is deceiving Ece.",
+                "Chaos bag, before the scenario: remove 1 tablet token and add 1 elder thing token. No substitute XP was awarded.",
+                "Ece accompanied the cell during this scenario. She was not awarded as a permanent deck card."
+              ]
+            },
+            {
+              "title": "Consequences",
+              "items": [
+                "Resolution 1 continued through Resolution 3 to Resolution 5. All three investigators survived.",
+                "Victory display: 5; each investigator earned 5 XP. No additional trauma was recorded; the Carnevale trauma remains.",
+                "Norman Withers became the bearer of The Twisted Antiprism.",
+                "Campaign note: Ece does not trust the cell.",
+                "Mark 3 time: 7 → 10, triggering Status Report Epsilon."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Status Report Epsilon (ε)",
+          "eventType": "Status Report",
+          "statusChips": [
+            "Status: Resolved",
+            "Time Passed: 10"
+          ],
+          "notes": [
+            {
+              "title": "Report",
+              "text": "The investigators realize they are being followed. For the rest of the campaign, scenario setup adds one random Red Coterie enemy matching a “haven’t seen the last of” campaign record. The current matching record names the Red-Gloved Man."
+            }
+          ]
+        }
+      ]
     }
   ],
   "campaignLog": {
@@ -137,7 +265,10 @@
           {
             "items": [
               "You haven’t seen the last of the Red-Gloved Man.",
-              "The cell hid the truth from Taylor."
+              "The cell hid the truth from Taylor.",
+              "Many were sacrificed to Cnidathqua during the Carnevale.",
+              "The cell is deceiving Ece.",
+              "Ece does not trust the cell."
             ]
           }
         ]
@@ -146,10 +277,12 @@
         "title": "Travel and Time",
         "notes": [
           {
+            "title": "Journey",
             "items": [
-              "Current location: Venice. Previous stop: London.",
-              "Time passed: 3 (prologue 2 + travel 1). Next printed threshold: 7 (α); no status report has been resolved.",
-              "Carnevale of Horrors: planned for the next session; story and scenario not started. Its 3-time entry cost is not included in the current total."
+              "London → Venice → Istanbul. Time passed at the end of Dealings in the Dark: 10.",
+              "Time: prologue 2 + London–Venice travel 1 + Carnevale entry 3 + Venice–Istanbul travel 1 + Dealings in the Dark 3.",
+              "Status Report Alpha resolved at time 7; Status Report Epsilon resolved at time 10.",
+              "Next destination: Alexandria. Current recorded time is 11, compared with 10 at the end of Istanbul. Dogs of War was selected in advance; its story and scenario have not started."
             ]
           }
         ]
@@ -164,6 +297,14 @@
               "imageSrc": "/assets/boardgames/ahlcg_world_map/eye_of_ravens.jpg"
             },
             "text": "Recovered in Riddles and Rain. The Eye of Ravens is carried as a campaign key; it is not a purchased deck upgrade. Expand to view the stable side."
+          },
+          {
+            "keyCard": {
+              "name": "The Twisted Antiprism",
+              "bearer": "Norman Withers",
+              "imageSrc": "/assets/boardgames/ahlcg_world_map/the_twisted_antiprism.png"
+            },
+            "text": "Recovered in Dealings in the Dark. A campaign key carried by Norman, not a purchased deck upgrade. Expand to view the stable side."
           }
         ]
       },
@@ -174,7 +315,34 @@
             "items": [
               "Riddles and Rain: −1 elder thing token, +1 tablet token.",
               "The Foundation: −1 tablet token, +1 elder thing token.",
-              "These two recorded swaps cancel out; there is no net change from these choices."
+              "The two London swaps canceled out; there was no net change before leaving London.",
+              "Status Report Alpha: +1 cultist token.",
+              "Dealings in the Dark, deceiving Ece: remove 1 tablet token and add 1 elder thing token, as recorded in the scenario results."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Story Assets and Investigator Status",
+        "notes": [
+          {
+            "title": "Carnevale rewards",
+            "items": [
+              "William Yorick: Bauta; 1 physical trauma, 0 mental trauma.",
+              "Norman Withers: Pantalone; 1 physical trauma, 0 mental trauma.",
+              "Akachi Onyele: Medico Della Peste; 0 physical trauma, 1 mental trauma.",
+              "The three masks cost no XP and do not count toward deck size. Each investigator earned 5 XP in Carnevale and 5 XP in Dealings in the Dark."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Ongoing Status Reports",
+        "notes": [
+          {
+            "title": "Status Report Epsilon",
+            "items": [
+              "At future scenario setup, add one random Red Coterie enemy whose name matches a “haven’t seen the last of” record. Current match: the Red-Gloved Man."
             ]
           }
         ]
@@ -192,13 +360,13 @@
           "imageAlt": "Akachi Onyele",
           "deckSource": "/assets/data/arkham_akachi_onyele_20261031.json",
           "startingXp": 0,
-          "currentXp": "Current XP: 0",
+          "currentXp": "Current XP: 5",
           "startingTrauma": {
             "physical": 0,
             "mental": 0
           },
-          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e1\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\" style=\"\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\" role=\"list\"><li><span class=\"card-ref\">Sword Cane (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sword_cane.png\" alt=\"Sword Cane (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\" role=\"list\"><li><span class=\"card-ref\">Winds of Power (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/winds_of_power_1.png\" alt=\"Winds of Power (1)\"></span></li><li><span class=\"card-ref\">Timeworn Brand (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/timeworn_brand_5.png\" alt=\"Timeworn Brand (5)\" style=\"\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e1\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e6\">\n        <p class=\"upgrade-entry-head\">After side story (Carnevale of Horrors) (+5 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Read the Signs<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/read_the_signs.png\" alt=\"Read the Signs\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Timeworn Brand (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/timeworn_brand_5.png\" alt=\"Timeworn Brand (5)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (side story (Carnevale of Horrors)):\" data-entry-uid-link=\"e6\">Trauma (side story (Carnevale of Horrors)): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
+          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 1.",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e1\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\" style=\"\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\" role=\"list\"><li><span class=\"card-ref\">Sword Cane (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/sword_cane.png\" alt=\"Sword Cane (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\" role=\"list\"><li><span class=\"card-ref\">Winds of Power (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/winds_of_power_1.png\" alt=\"Winds of Power (1)\"></span></li><li><span class=\"card-ref\">Timeworn Brand (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/timeworn_brand_5.png\" alt=\"Timeworn Brand (5)\" style=\"\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e1\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e6\">\n        <p class=\"upgrade-entry-head\">After side story (Carnevale of Horrors) (+5 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Read the Signs<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/read_the_signs.png\" alt=\"Read the Signs\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Timeworn Brand (5)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/timeworn_brand_5.png\" alt=\"Timeworn Brand (5)\"></span></li><li><span class=\"card-ref\">Medico Della Peste (Story)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/medico_della_peste.png\" alt=\"Medico Della Peste\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"1\" data-trauma-label=\"Trauma (side story (Carnevale of Horrors)):\" data-entry-uid-link=\"e6\">Trauma (side story (Carnevale of Horrors)): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">1</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e7\"><p class=\"upgrade-entry-head\">After Dealings in the Dark (+5 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Dealings in the Dark):\" data-entry-uid-link=\"e7\">Trauma (Dealings in the Dark): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         },
         {
           "name": "Norman Withers",
@@ -206,13 +374,13 @@
           "imageAlt": "Norman Withers",
           "deckSource": "/assets/data/arkham_norman_withers_20261031.json",
           "startingXp": 0,
-          "currentXp": "Current XP: 0",
+          "currentXp": "Current XP: 5",
           "startingTrauma": {
             "physical": 0,
             "mental": 0
           },
-          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e2\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\" role=\"list\"><li><span class=\"card-ref\">Guts (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guts.png\" alt=\"Guts (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\" role=\"list\"><li><span class=\"card-ref\">Astronomical Atlas (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astronomical_atlas_3.png\" alt=\"Astronomical Atlas (3) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e2\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e4\">\n        <p class=\"upgrade-entry-head\">After side story (Carnevale of Horrors) (+5 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Astounding Revelation<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astounding_revelation.png\" alt=\"Astounding Revelation\"></span></li><li><span class=\"card-ref\">Fine Clothes<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fine_clothes.png\" alt=\"Fine Clothes\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Divination (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/divination_4.png\" alt=\"Divination (4)\"></span></li><li><span class=\"card-ref\">Ghastly Possession (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/ghastly_possession_1.png\" alt=\"Ghastly Possession (1)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (side story (Carnevale of Horrors)):\" data-entry-uid-link=\"e4\">Trauma (side story (Carnevale of Horrors)): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
+          "currentTraumaStatus": "Current Trauma Status: Physical 1, Mental 0.",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e2\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\" role=\"list\"><li><span class=\"card-ref\">Guts (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guts.png\" alt=\"Guts (x2)\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\" role=\"list\"><li><span class=\"card-ref\">Astronomical Atlas (3) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astronomical_atlas_3.png\" alt=\"Astronomical Atlas (3) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e2\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e4\">\n        <p class=\"upgrade-entry-head\">After side story (Carnevale of Horrors) (+5 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Astounding Revelation<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/astounding_revelation.png\" alt=\"Astounding Revelation\"></span></li><li><span class=\"card-ref\">Fine Clothes<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/fine_clothes.png\" alt=\"Fine Clothes\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Divination (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/divination_4.png\" alt=\"Divination (4)\"></span></li><li><span class=\"card-ref\">Ghastly Possession (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/ghastly_possession_1.png\" alt=\"Ghastly Possession (1)\"></span></li><li><span class=\"card-ref\">Pantalone (Story)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/pantalone.png\" alt=\"Pantalone\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"1\" data-mental=\"0\" data-trauma-label=\"Trauma (side story (Carnevale of Horrors)):\" data-entry-uid-link=\"e4\">Trauma (side story (Carnevale of Horrors)): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">1</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e8\"><p class=\"upgrade-entry-head\">After Dealings in the Dark (+5 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Dealings in the Dark):\" data-entry-uid-link=\"e8\">Trauma (Dealings in the Dark): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         },
         {
           "name": "William Yorick",
@@ -220,13 +388,13 @@
           "imageAlt": "William Yorick",
           "deckSource": "/assets/data/arkham_william_yorick_20261031.json",
           "startingXp": 0,
-          "currentXp": "Current XP: 0",
+          "currentXp": "Current XP: 5",
           "startingTrauma": {
             "physical": 0,
             "mental": 0
           },
-          "currentTraumaStatus": "Current Trauma Status: Physical 0, Mental 0.",
-          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e3\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\" role=\"list\"><li><span class=\"card-ref\">Prepared for the Worst<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png\" alt=\"Prepared for the Worst\"></span></li><li><span class=\"card-ref\">Enchanted Blade (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/enchanted_blade.png\" alt=\"Enchanted Blade (x2)\" style=\"\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\" role=\"list\"><li><span class=\"card-ref\">Chainsaw (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/chainsaw_4.png\" alt=\"Chainsaw (4)\"></span></li><li><span class=\"card-ref\">Hatchet (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hatchet_1.png\" alt=\"Hatchet (1) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e3\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e5\">\n        <p class=\"upgrade-entry-head\">After side story (Carnevale of Horrors) (+5 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Guard Dog (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guard_dog.png\" alt=\"Guard Dog (x2)\"></span></li><li><span class=\"card-ref\">Prepared for the Worst<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png\" alt=\"Prepared for the Worst\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Guard Dog (2) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guard_dog_2.png\" alt=\"Guard Dog (2) (x2)\"></span></li><li><span class=\"card-ref\">Miss Doyle: Cat General of Ulthar (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/miss_doyle_cat_general_of_ulthar_1.png\" alt=\"Miss Doyle: Cat General of Ulthar (1)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (side story (Carnevale of Horrors)):\" data-entry-uid-link=\"e5\">Trauma (side story (Carnevale of Horrors)): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
+          "currentTraumaStatus": "Current Trauma Status: Physical 1, Mental 0.",
+          "upgradeHtml": "<p class=\"campaign-start-note\">Campaign Start (10/31/2026): Base deck recorded for the Scarlet Keys run.</p><div class=\"upgrade-entry\" data-entry-uid=\"e3\">\n        <p class=\"upgrade-entry-head\">After Riddles and Rain (+6 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\" role=\"list\"><li><span class=\"card-ref\">Prepared for the Worst<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png\" alt=\"Prepared for the Worst\"></span></li><li><span class=\"card-ref\">Enchanted Blade (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/enchanted_blade.png\" alt=\"Enchanted Blade (x2)\" style=\"\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\" role=\"list\"><li><span class=\"card-ref\">Chainsaw (4)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/chainsaw_4.png\" alt=\"Chainsaw (4)\"></span></li><li><span class=\"card-ref\">Hatchet (1) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/hatchet_1.png\" alt=\"Hatchet (1) (x2)\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Riddles and Rain):\" data-entry-uid-link=\"e3\">Trauma (Riddles and Rain): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e5\">\n        <p class=\"upgrade-entry-head\">After side story (Carnevale of Horrors) (+5 XP)</p>\n        <div class=\"upgrade-columns\">\n          <div class=\"upgrade-col\">\n            <h4>Removed</h4>\n            <ul class=\"card-list\" data-list=\"removed\"><li><span class=\"card-ref\">Guard Dog (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guard_dog.png\" alt=\"Guard Dog (x2)\"></span></li><li><span class=\"card-ref\">Prepared for the Worst<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/prepared_for_the_worst.png\" alt=\"Prepared for the Worst\"></span></li></ul>\n          </div>\n          <div class=\"upgrade-col\">\n            <h4>Added</h4>\n            <ul class=\"card-list\" data-list=\"added\"><li><span class=\"card-ref\">Guard Dog (2) (x2)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/guard_dog_2.png\" alt=\"Guard Dog (2) (x2)\"></span></li><li><span class=\"card-ref\">Miss Doyle: Cat General of Ulthar (1)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/miss_doyle_cat_general_of_ulthar_1.png\" alt=\"Miss Doyle: Cat General of Ulthar (1)\"></span></li><li><span class=\"card-ref\">Bauta (Story)<img class=\"card-preview\" src=\"/assets/boardgames/ahlcg_cards/bauta.png\" alt=\"Bauta\"></span></li></ul>\n          </div>\n        </div>\n        \n      </div><p class=\"scenario-trauma\" data-physical=\"1\" data-mental=\"0\" data-trauma-label=\"Trauma (side story (Carnevale of Horrors)):\" data-entry-uid-link=\"e5\">Trauma (side story (Carnevale of Horrors)): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">1</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p><div class=\"upgrade-entry\" data-entry-uid=\"e9\"><p class=\"upgrade-entry-head\">After Dealings in the Dark (+5 XP)</p><div class=\"upgrade-columns\"><div class=\"upgrade-col\"><h4>Removed</h4><ul class=\"card-list\" data-list=\"removed\"></ul></div><div class=\"upgrade-col\"><h4>Added</h4><ul class=\"card-list\" data-list=\"added\"></ul></div></div></div><p class=\"scenario-trauma\" data-physical=\"0\" data-mental=\"0\" data-trauma-label=\"Trauma (Dealings in the Dark):\" data-entry-uid-link=\"e9\">Trauma (Dealings in the Dark): Physical <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"physical\">0</button>, Mental <button type=\"button\" class=\"trauma-value\" data-trauma-field=\"mental\">0</button>.</p>"
         }
       ]
     }
@@ -253,16 +421,20 @@
   },
   "worldMap": {
     "source": "/assets/data/arkham_tsk_world_map.json",
-    "currentLocation": "venice_it",
-    "currentLocationName": "Venice",
-    "timePassed": 3,
-    "sessionDate": "10/31/2026",
+    "currentLocation": "alexandria",
+    "currentLocationName": "Alexandria",
+    "timePassed": 11,
+    "sessionDate": "11/22/2026",
     "visitedLocations": [
-      "london"
+      "london",
+      "venice_it",
+      "istanbul"
     ],
     "route": [
       "london",
-      "venice_it"
+      "venice_it",
+      "istanbul",
+      "alexandria"
     ],
     "locationNotes": {
       "london": {
@@ -271,13 +443,14 @@
       },
       "venice_it": {
         "anchor": "visit-venice-1",
-        "text": "Current stop. Carnevale of Horrors is planned for the next session. Its story and scenario have not started; the 3-time entry cost has not yet been recorded."
+        "text": "Carnevale of Horrors completed on November 22. No resolution; three masks awarded. Time passed 3 → 6."
       },
       "shanghai": {
         "text": "Foundation lead: a woman with a red parasol is linked to a secret cabal."
       },
       "alexandria": {
-        "text": "Foundation lead: a series of beastly killings."
+        "anchor": "visit-alexandria-1",
+        "text": "Next destination. Dogs of War was selected in advance; its story and scenario have not started. Current recorded time: 11."
       },
       "buenos_aires": {
         "text": "Foundation lead: high-profile burglaries may be connected to a key."
@@ -289,7 +462,8 @@
         "text": "Foundation lead: a prospector’s journal mentions a possible key."
       },
       "istanbul": {
-        "text": "Foundation lead: a possible defector."
+        "anchor": "visit-istanbul-1",
+        "text": "Dealings in the Dark completed on November 22. Norman bears The Twisted Antiprism; Ece does not trust the cell. Time passed 7 → 10."
       },
       "kathmandu": {
         "text": "Foundation lead: a spirit matching the description of a Coterie operative."
@@ -307,25 +481,25 @@
     "entries": [
       {
         "variant": "visit",
-        "id": "visit-venice-1",
-        "eyebrow": "Next Session · Planned Side Story",
-        "title": "Venice, Italy",
-        "subtitle": "Carnevale of Horrors is planned for a future session; the story and scenario have not started.",
+        "id": "visit-alexandria-1",
+        "eyebrow": "Next Session · Planned Campaign Scenario",
+        "title": "Alexandria, Egypt",
+        "subtitle": "Dogs of War is planned for the next session; the story and scenario have not started.",
         "events": [
           {
-            "title": "Carnevale of Horrors",
-            "eventType": "Side Story · Standalone Scenario Pack",
+            "title": "Dogs of War",
+            "eventType": "Campaign Scenario",
             "statusChips": [
               "Status: Planned · Not started"
             ],
             "notes": [
               {
                 "title": "Next session",
-                "text": "The cell chose Venice and Carnevale of Horrors for the next session. The side-story narrative and scenario have not started."
+                "text": "The cell selected Alexandria and Dogs of War in advance. The opening story and scenario have not begun."
               },
               {
-                "title": "Time and entry",
-                "text": "Time passed: 3 — 2 from the prologue and 1 for the journey from London to Venice. The additional 3-time side-story entry cost will be recorded when the group actually begins Carnevale of Horrors. No entry XP is spent."
+                "title": "Time",
+                "text": "Current recorded time: 11. The completed Istanbul chapter ended at time 10; the next destination remains outside the dated session above."
               }
             ]
           }
