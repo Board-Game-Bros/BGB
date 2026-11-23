@@ -84,7 +84,7 @@
               "title": "Recovered key",
               "keyCard": {
                 "name": "The Eye of Ravens",
-                "bearer": "William Yorick · Shengbo",
+                "bearer": "William Yorick",
                 "imageSrc": "/assets/boardgames/ahlcg_world_map/eye_of_ravens.jpg"
               }
             }
@@ -309,7 +309,7 @@
           {
             "keyCard": {
               "name": "The Eye of Ravens",
-              "bearer": "William Yorick · Shengbo",
+              "bearer": "William Yorick",
               "imageSrc": "/assets/boardgames/ahlcg_world_map/eye_of_ravens.jpg"
             },
             "text": "Recovered in Riddles and Rain. The Eye of Ravens is carried as a campaign key; it is not a purchased deck upgrade. Expand to view the stable side."
@@ -498,7 +498,7 @@
       {
         "variant": "visit",
         "id": "visit-alexandria-1",
-        "eyebrow": "Next Session · Planned Campaign Scenario",
+        "eyebrow": "Visit 04 · Alexandria",
         "title": "Alexandria, Egypt",
         "subtitle": "Dogs of War is planned for the next session; the story and scenario have not started.",
         "events": [
