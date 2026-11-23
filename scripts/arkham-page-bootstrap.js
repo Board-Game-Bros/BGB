@@ -66,7 +66,7 @@
         journeyStyle.rel = "stylesheet";
         journeyStyle.href = "/styles/modules/arkham-journey.css?v=20261103softglow";
         document.head.appendChild(journeyStyle);
-        await loadScript("/scripts/arkham-journey.js?v=20261103journeylabels");
+        await loadScript("/scripts/arkham-journey.js?v=20261123keypreview");
       }
       for (const src of config.scripts) {
         await loadScript(src);

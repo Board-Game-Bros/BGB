@@ -14,7 +14,13 @@
   };
   function renderKey(card) {
     const details = node('details', 'journey-key');
-    details.append(node('summary', '', `${card.name} · ${card.bearer}`));
+    const summary = node('summary', '', `${card.name} · ${card.bearer} · `);
+    const action = node('span', 'journey-key-action', 'View card');
+    summary.append(action);
+    details.append(summary);
+    details.addEventListener('toggle', () => {
+      action.textContent = details.open ? 'Hide card' : 'View card';
+    });
     const img = node('img');
     img.src = card.imageSrc;
     img.alt = `${card.name}, stable side`;

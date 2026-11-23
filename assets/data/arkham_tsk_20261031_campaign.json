@@ -79,6 +79,14 @@
                 "Time: +1 before the scenario and +1 after its resolution; total 2.",
                 "Chaos bag: remove 1 elder thing token; add 1 tablet token."
               ]
+            },
+            {
+              "title": "Recovered key",
+              "keyCard": {
+                "name": "The Eye of Ravens",
+                "bearer": "William Yorick · Shengbo",
+                "imageSrc": "/assets/boardgames/ahlcg_world_map/eye_of_ravens.jpg"
+              }
             }
           ]
         },
@@ -236,6 +244,14 @@
                 "Campaign note: Ece does not trust the cell.",
                 "Mark 3 time: 7 → 10, triggering Status Report Epsilon."
               ]
+            },
+            {
+              "title": "Recovered key",
+              "keyCard": {
+                "name": "The Twisted Antiprism",
+                "bearer": "Norman Withers",
+                "imageSrc": "/assets/boardgames/ahlcg_world_map/the_twisted_antiprism.png"
+              }
             }
           ]
         },
