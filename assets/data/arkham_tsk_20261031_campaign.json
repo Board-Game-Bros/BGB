@@ -139,7 +139,7 @@
       "variant": "session-meta",
       "metaItems": [
         "Date: 11/22/2026",
-        "Session: 2 · Carnevale of Horrors → Dealings in the Dark"
+        "Session: 2 · Carnevale of Horrors → Dealings in the Dark → Alexandria"
       ]
     },
     {
@@ -498,7 +498,7 @@
       {
         "variant": "visit",
         "id": "visit-alexandria-1",
-        "eyebrow": "Visit 04 · Alexandria",
+        "eyebrow": "Next Session · Planned Campaign Scenario",
         "title": "Alexandria, Egypt",
         "subtitle": "Dogs of War is planned for the next session; the story and scenario have not started.",
         "events": [
