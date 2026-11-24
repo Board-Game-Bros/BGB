@@ -714,7 +714,7 @@
           definition,
           context.inheritedIds || [],
           context.addedIds || [],
-          { mode: "static", showTitle: false, showLegend: false, fields: context.fields || {} }
+          { mode: "editor", showTitle: true, showLegend: true, fields: context.fields || {} }
         ));
         return wrap;
       }
@@ -1052,19 +1052,19 @@
 
       const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
-      const margin = 18;
-      const gap = 16;
+      const margin = 8;
+      const gap = 10;
       const navigation = document.querySelector("body > nav");
       const navRect = navigation ? navigation.getBoundingClientRect() : null;
       // Keep the title and close control below the sticky navigation.
       const topInset = navRect && navRect.top <= 0 && navRect.bottom > 0
         ? Math.max(margin, Math.min(navRect.bottom + gap, viewportHeight - margin - 80))
         : margin;
-      const preferredWidth = Math.min(560, Math.max(280, viewportWidth - (margin * 2)));
+      const preferredWidth = Math.min(760, viewportWidth - (margin * 2));
       const maxPanelHeight = Math.max(80, viewportHeight - topInset - margin);
 
       panel.style.width = `${Math.round(preferredWidth)}px`;
-      panel.style.maxWidth = `${Math.round(Math.max(280, viewportWidth - (margin * 2)))}px`;
+      panel.style.maxWidth = `${Math.round(Math.max(0, viewportWidth - (margin * 2)))}px`;
       panel.style.maxHeight = `${Math.round(maxPanelHeight)}px`;
 
       const buttonRect = button.getBoundingClientRect();
@@ -1118,6 +1118,17 @@
 
       const panel = document.createElement("div");
       panel.className = "customizable-inline-editor customizable-popover";
+      const layout = document.createElement("div");
+      layout.className = "customizable-sheet-layout";
+      const image = document.createElement("img");
+      image.className = "customizable-preview-image";
+      image.src = findExactImage(name) || findMatchingImage(name) || inferImagePath(name);
+      image.alt = name;
+      layout.appendChild(image);
+      const sheet = document.createElement("div");
+      sheet.className = "customizable-preview-panel";
+      layout.appendChild(sheet);
+      panel.appendChild(layout);
 
       const closeBtn = document.createElement("button");
       closeBtn.type = "button";
@@ -1129,18 +1140,13 @@
 
       const title = document.createElement("h4");
       title.className = "customizable-overlay-title";
-      title.textContent = `${name} Checkboxes`;
-      panel.appendChild(title);
-
-      const intro = document.createElement("p");
-      intro.className = "customizable-inline-intro";
-      intro.textContent = "Select upgrade checkboxes for this scenario. Existing checkboxes are locked and do not spend XP.";
-      panel.appendChild(intro);
+      title.textContent = "Customization Sheet";
+      sheet.appendChild(title);
 
       const legend = document.createElement("p");
       legend.className = "customizable-preview-legend";
       legend.innerHTML = '<span class="legend-chip is-inherited">Existing</span><span class="legend-chip is-upgrade">This Upgrade</span>';
-      panel.appendChild(legend);
+      sheet.appendChild(legend);
 
       const baseFields = getCustomizableDefinitionFields(definition);
       if (baseFields.length) {
@@ -1158,7 +1164,7 @@
           fieldGrid.appendChild(createCustomizableFieldInput(row, field).wrap);
         });
         fieldPanel.appendChild(fieldGrid);
-        panel.appendChild(fieldPanel);
+        sheet.appendChild(fieldPanel);
       }
 
       (definition.groups || []).forEach((group) => {
@@ -1168,16 +1174,17 @@
         countsByGroup[group.id] = seededAddedCount;
 
         const groupWrap = document.createElement("div");
-        groupWrap.className = "customizable-inline-group customizable-overlay-group";
+        groupWrap.className = "customizable-group customizable-inline-group";
 
         const head = document.createElement("div");
-        head.className = "customizable-inline-head";
-        const label = document.createElement("strong");
+        head.className = "customizable-group-head";
+        const label = document.createElement("span");
+        label.className = "customizable-group-label";
         label.textContent = String(group.label || "").replace(/\.$/, "");
         head.appendChild(label);
 
         const chips = document.createElement("div");
-        chips.className = "customizable-inline-chips";
+        chips.className = "customizable-group-boxes";
         ids.forEach((id, idx) => {
           const chip = document.createElement("button");
           chip.type = "button";
@@ -1189,6 +1196,8 @@
           } else if (idx < inheritedCount + countsByGroup[group.id]) {
             chip.classList.add("is-upgrade");
           }
+          chip.setAttribute("aria-pressed", String(idx < inheritedCount + countsByGroup[group.id]));
+          chip.setAttribute("aria-label", `${String(group.label || "").replace(/\.$/, "")}: ${getCustomizableGroupBoxLabel(group, idx)}`);
           chip.addEventListener("click", () => {
             const clickedCount = idx + 1 - inheritedCount;
             countsByGroup[group.id] = countsByGroup[group.id] === clickedCount ? 0 : clickedCount;
@@ -1196,9 +1205,11 @@
             refreshCustomizableRowsInList(listEl, row.closest(".upgrade-entry"));
             refreshCurrentXp();
             const nextSeedAddedIds = getCustomizableUpgradeIdsForRow(row);
+            const scrollTop = panel.scrollTop;
             closeCustomizableEditor();
             attachCustomizableEditor(row, anchorButton || row.querySelector(".customizable-edit-btn"), {
               seedAddedIds: nextSeedAddedIds,
+              scrollTop,
             });
           });
           chips.appendChild(chip);
@@ -1208,7 +1219,7 @@
 
         if (group.text) {
           const text = document.createElement("p");
-          text.className = "customizable-inline-text";
+          text.className = "customizable-group-text";
           window.AHLCG_CUSTOMIZABLE_STATE_UTILS.appendRulesText(text, group.text);
           groupWrap.appendChild(text);
         }
@@ -1224,7 +1235,7 @@
           groupWrap.appendChild(groupFieldGrid);
         }
 
-        panel.appendChild(groupWrap);
+        sheet.appendChild(groupWrap);
       });
 
       row.appendChild(panel);
@@ -1232,10 +1243,10 @@
       activeCustomizableEditor = panel;
       activeCustomizableEditorRow = row;
       activeCustomizableEditorAnchor = anchorButton || row.querySelector(".customizable-edit-btn");
-      panel.scrollTop = 0;
+      panel.scrollTop = Number(opts.scrollTop) || 0;
       positionCustomizableEditor();
       window.requestAnimationFrame(() => {
-        panel.scrollTop = 0;
+        panel.scrollTop = Number(opts.scrollTop) || 0;
         positionCustomizableEditor();
       });
       customizableEditorOutsideHandler = (event) => {
@@ -1420,6 +1431,8 @@
         const addedIds = upgradeIds;
         enhanceCustomizableRow(row, inheritedIds, addedIds);
       });
+      // Editing and saving rebuild card references; bind their viewport clamping too.
+      bindPreviewFallbacks(listEl);
     }
 
     function serializeCardRow(row) {
@@ -4442,8 +4455,6 @@
 
     function bindPreviewFallbacks(container) {
       const root = container || document;
-      const previewMargin = 8;
-      const previewGap = 10;
 
       function getActiveCardRef() {
         return window.__bgbActiveCardRef || null;
@@ -4491,108 +4502,12 @@
 
       function forceShowCardPreview(preview) {
         if (!preview) return;
-        preview.style.setProperty("display", "block", "important");
+        preview.style.setProperty("display", preview.classList.contains("customizable-preview") ? "flex" : "block", "important");
         preview.style.setProperty("visibility", "visible", "important");
       }
 
       function clampCardPreviewPosition(cardRef) {
-        if (!cardRef) return;
-        const preview = cardRef.querySelector(".card-preview");
-        if (!preview) return;
-        // Ensure measurable box on first hover frame.
-        forceShowCardPreview(preview);
-        preview.style.removeProperty("width");
-        preview.style.removeProperty("height");
-        preview.style.removeProperty("max-width");
-        preview.style.removeProperty("max-height");
-        preview.style.removeProperty("overflow");
-        preview.style.removeProperty("position");
-        preview.style.removeProperty("left");
-        preview.style.removeProperty("right");
-        preview.style.removeProperty("top");
-        preview.style.removeProperty("bottom");
-        preview.style.removeProperty("transform");
-        preview.style.removeProperty("z-index");
-
-        const rect = preview.getBoundingClientRect();
-        const width = rect.width || 0;
-        const height = rect.height || 0;
-        if (!width || !height) {
-          if (preview instanceof HTMLImageElement && !preview.complete && preview.dataset.viewportLoadBound !== "1") {
-            preview.dataset.viewportLoadBound = "1";
-            preview.addEventListener("load", () => {
-              delete preview.dataset.viewportLoadBound;
-              if (getActiveCardRef() === cardRef) {
-                window.requestAnimationFrame(() => clampCardPreviewPosition(cardRef));
-              }
-            }, { once: true });
-          }
-          return;
-        }
-
-        const visualViewport = window.visualViewport;
-        const viewportLeft = visualViewport ? visualViewport.offsetLeft : 0;
-        const viewportTop = visualViewport ? visualViewport.offsetTop : 0;
-        const viewportWidth = visualViewport?.width || document.documentElement.clientWidth || window.innerWidth || 0;
-        const viewportHeight = visualViewport?.height || document.documentElement.clientHeight || window.innerHeight || 0;
-        if (!viewportWidth || !viewportHeight) return;
-        const viewportRight = viewportLeft + viewportWidth;
-        const viewportBottom = viewportTop + viewportHeight;
-        const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
-        const maxHeight = Math.max(160, viewportHeight - (previewMargin * 2));
-        const overflowLeft = rect.left < (viewportLeft + previewMargin);
-        const overflowRight = rect.right > (viewportRight - previewMargin);
-        const overflowTop = rect.top < (viewportTop + previewMargin);
-        const overflowBottom = rect.bottom > (viewportBottom - previewMargin);
-        if (!(overflowLeft || overflowRight || overflowTop || overflowBottom)) {
-          // Keep default CSS hover behavior when within viewport.
-          preview.style.removeProperty("display");
-          preview.style.removeProperty("visibility");
-          return;
-        }
-
-        const clamp = (value, min, max) => {
-          if (max < min) return min;
-          return Math.min(Math.max(value, min), max);
-        };
-
-        let displayWidth = width;
-        let displayHeight = height;
-        if (preview.tagName === "IMG") {
-          const scale = Math.min(1, maxWidth / width, maxHeight / height);
-          displayWidth = Math.round(width * scale);
-          displayHeight = Math.round(height * scale);
-          preview.style.width = displayWidth + "px";
-          preview.style.height = displayHeight + "px";
-          preview.style.maxWidth = "none";
-          preview.style.maxHeight = "none";
-          preview.style.overflow = "visible";
-        } else {
-          preview.style.maxWidth = maxWidth + "px";
-          preview.style.maxHeight = maxHeight + "px";
-          preview.style.overflow = "auto";
-        }
-
-        const anchor = cardRef.getBoundingClientRect();
-        let left = anchor.left + (anchor.width / 2) - (displayWidth / 2);
-        left = clamp(left, viewportLeft + previewMargin, viewportRight - displayWidth - previewMargin);
-
-        let top = anchor.top - previewGap - displayHeight;
-        if (top < (viewportTop + previewMargin)) {
-          top = anchor.bottom + previewGap;
-        }
-        top = clamp(top, viewportTop + previewMargin, viewportBottom - displayHeight - previewMargin);
-
-        // Torch-mode body filters change the containing block of fixed previews.
-        // Ledger references are positioned anchors; use local offsets here.
-        const inUpgradeLedger = !!cardRef.closest("#upgrade-history");
-        preview.style.position = inUpgradeLedger ? "absolute" : "fixed";
-        preview.style.left = Math.round(inUpgradeLedger ? left - anchor.left : left) + "px";
-        preview.style.top = Math.round(inUpgradeLedger ? top - anchor.top : top) + "px";
-        preview.style.right = "auto";
-        preview.style.bottom = "auto";
-        preview.style.transform = "none";
-        preview.style.zIndex = "2147483647";
+        window.BGB?.positionCardRefPreview?.(cardRef);
       }
 
       function refreshActivePreview() {
@@ -4624,6 +4539,9 @@
       }
 
       root.querySelectorAll(".card-ref").forEach((cardRef) => {
+        if (cardRef.querySelector(".customizable-preview") && !cardRef.hasAttribute("tabindex")) {
+          cardRef.tabIndex = 0;
+        }
         cardRef.classList.toggle("story-card-ref", isStoryCardName(getCardNameFromRef(cardRef)));
         if (cardRef.__bgbViewportPreviewBound === true) return;
         if (cardRef.__bgbPreviewBound === true) return;

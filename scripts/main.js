@@ -182,10 +182,125 @@ const resetHoverPreviewStyles = (previewEl) => {
   previewEl.style.zIndex = "";
 };
 
-const bindCardRefViewportPreviews = (root = document) => {
-  const scope = root && typeof root.querySelectorAll === "function" ? root : document;
+const positionCardRefPreview = (cardRef) => {
+  if (!cardRef) return;
+  const preview = cardRef.querySelector(".card-preview");
+  if (!preview) return;
+  // Customization images can finish loading after the sheet first opens.
+  const images = preview instanceof HTMLImageElement ? [preview] : preview.querySelectorAll("img");
+  images.forEach((image) => {
+    if (image.complete || image.__bgbViewportLoadBound) return;
+    image.__bgbViewportLoadBound = true;
+    image.addEventListener("load", () => {
+      if (cardRef.isConnected && cardRef.matches(":hover, :focus-within")) {
+        window.requestAnimationFrame(() => positionCardRefPreview(cardRef));
+      }
+    }, { once: true });
+  });
   const previewMargin = 8;
   const previewGap = 10;
+  const scrollTop = preview.scrollTop;
+  // Ensure measurable box on first hover frame.
+  preview.style.setProperty("display", preview.classList.contains("customizable-preview") ? "flex" : "block", "important");
+  preview.style.setProperty("visibility", "visible", "important");
+  preview.style.removeProperty("width");
+  preview.style.removeProperty("height");
+  preview.style.removeProperty("max-width");
+  preview.style.removeProperty("max-height");
+  preview.style.removeProperty("overflow");
+  preview.style.removeProperty("position");
+  preview.style.removeProperty("left");
+  preview.style.removeProperty("right");
+  preview.style.removeProperty("top");
+  preview.style.removeProperty("bottom");
+  preview.style.removeProperty("transform");
+  preview.style.removeProperty("z-index");
+
+  const rect = preview.getBoundingClientRect();
+  const width = rect.width || 0;
+  const height = preview instanceof HTMLImageElement && preview.naturalWidth
+    ? width * preview.naturalHeight / preview.naturalWidth
+    : rect.height || 0;
+  if (!width || !height) return;
+
+  const visualViewport = window.visualViewport;
+  const viewportLeft = visualViewport ? visualViewport.offsetLeft : 0;
+  const viewportTop = visualViewport ? visualViewport.offsetTop : 0;
+  const viewportWidth = visualViewport?.width || document.documentElement.clientWidth || window.innerWidth || 0;
+  const viewportHeight = visualViewport?.height || document.documentElement.clientHeight || window.innerHeight || 0;
+  if (!viewportWidth || !viewportHeight) return;
+  const viewportRight = viewportLeft + viewportWidth;
+  const viewportBottom = viewportTop + viewportHeight;
+  const navRect = document.querySelector("body > nav")?.getBoundingClientRect();
+  const contentTop = navRect
+    && navRect.top <= viewportTop && navRect.bottom > viewportTop
+    ? Math.min(navRect.bottom, viewportBottom - 160 - previewMargin * 2)
+    : viewportTop;
+  const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
+  const maxHeight = Math.max(160, viewportBottom - contentTop - (previewMargin * 2));
+  const overflowLeft = rect.left < (viewportLeft + previewMargin);
+  const overflowRight = rect.right > (viewportRight - previewMargin);
+  const overflowTop = rect.top < (contentTop + previewMargin);
+  const overflowBottom = rect.bottom > (viewportBottom - previewMargin);
+  if (!(overflowLeft || overflowRight || overflowTop || overflowBottom) && Math.abs(height - rect.height) < 1) {
+    // Keep default CSS hover behavior when within viewport.
+    preview.style.removeProperty("display");
+    preview.style.removeProperty("visibility");
+    return;
+  }
+
+  const clamp = (value, min, max) => {
+    if (max < min) return min;
+    return Math.min(Math.max(value, min), max);
+  };
+
+  let displayWidth = width;
+  let displayHeight = height;
+  if (preview.tagName === "IMG") {
+    const scale = Math.min(1, maxWidth / width, maxHeight / height);
+    displayWidth = Math.round(width * scale);
+    displayHeight = Math.round(height * scale);
+    preview.style.width = displayWidth + "px";
+    preview.style.height = displayHeight + "px";
+    preview.style.maxWidth = "none";
+    preview.style.maxHeight = "none";
+    preview.style.overflow = "visible";
+  } else {
+    preview.style.maxWidth = maxWidth + "px";
+    preview.style.maxHeight = maxHeight + "px";
+    preview.style.overflow = "auto";
+    const constrainedRect = preview.getBoundingClientRect();
+    displayWidth = constrainedRect.width;
+    displayHeight = constrainedRect.height;
+  }
+
+  const anchor = cardRef.getBoundingClientRect();
+  let left = anchor.left + (anchor.width / 2) - (displayWidth / 2);
+  left = clamp(left, viewportLeft + previewMargin, viewportRight - displayWidth - previewMargin);
+
+  let top = anchor.top - previewGap - displayHeight;
+  if (top < (contentTop + previewMargin)) {
+    top = anchor.bottom + previewGap;
+  }
+  top = clamp(top, contentTop + previewMargin, viewportBottom - displayHeight - previewMargin);
+
+  // Measure the actual containing block, including wrapped inline anchors,
+  // borders, and torch-mode filters, before converting viewport coordinates.
+  preview.style.position = "absolute";
+  preview.style.left = "0px";
+  preview.style.top = "0px";
+  preview.style.right = "auto";
+  preview.style.bottom = "auto";
+  preview.style.transform = "none";
+  const origin = preview.getBoundingClientRect();
+  preview.style.left = Math.round(left - origin.left) + "px";
+  preview.style.top = Math.round(top - origin.top) + "px";
+  preview.style.zIndex = "2147483647";
+  preview.scrollTop = scrollTop;
+};
+
+const bindCardRefViewportPreviews = (root = document) => {
+  const scope = root && typeof root.querySelectorAll === "function" ? root : document;
   let activeCardRef = null;
 
   const isInteractive = (cardRef) => {
@@ -208,105 +323,11 @@ const bindCardRefViewportPreviews = (root = document) => {
 
   const forceShow = (preview) => {
     if (!preview) return;
-    preview.style.setProperty("display", "block", "important");
+    preview.style.setProperty("display", preview.classList.contains("customizable-preview") ? "flex" : "block", "important");
     preview.style.setProperty("visibility", "visible", "important");
   };
 
-  const clampPreview = (cardRef) => {
-    if (!cardRef) return;
-    const preview = cardRef.querySelector(".card-preview");
-    if (!preview) return;
-
-    forceShow(preview);
-    resetHoverPreviewStyles(preview);
-
-    const rect = preview.getBoundingClientRect();
-    const width = rect.width || 0;
-    const height = rect.height || 0;
-    if (!width || !height) {
-      if (preview instanceof HTMLImageElement && !preview.complete && preview.dataset.viewportLoadBound !== "1") {
-        preview.dataset.viewportLoadBound = "1";
-        preview.addEventListener("load", () => {
-          delete preview.dataset.viewportLoadBound;
-          if (activeCardRef === cardRef) window.requestAnimationFrame(() => clampPreview(cardRef));
-        }, { once: true });
-      }
-      return;
-    }
-
-    const visualViewport = window.visualViewport;
-    const viewportLeft = visualViewport ? visualViewport.offsetLeft : 0;
-    const viewportTop = visualViewport ? visualViewport.offsetTop : 0;
-    const viewportWidth = visualViewport?.width || document.documentElement.clientWidth || window.innerWidth || 0;
-    const viewportHeight = visualViewport?.height || document.documentElement.clientHeight || window.innerHeight || 0;
-    if (!viewportWidth || !viewportHeight) return;
-    const viewportRight = viewportLeft + viewportWidth;
-    const viewportBottom = viewportTop + viewportHeight;
-    const maxWidth = Math.max(160, viewportWidth - (previewMargin * 2));
-    const maxHeight = Math.max(160, viewportHeight - (previewMargin * 2));
-    const overflowLeft = rect.left < (viewportLeft + previewMargin);
-    const overflowRight = rect.right > (viewportRight - previewMargin);
-    const overflowTop = rect.top < (viewportTop + previewMargin);
-    const overflowBottom = rect.bottom > (viewportBottom - previewMargin);
-    if (!(overflowLeft || overflowRight || overflowTop || overflowBottom)) {
-      preview.style.removeProperty("display");
-      preview.style.removeProperty("visibility");
-      return;
-    }
-
-    const clamp = (value, min, max) => {
-      if (max < min) return min;
-      return Math.min(Math.max(value, min), max);
-    };
-
-    let displayWidth = width;
-    let displayHeight = height;
-    if (preview.tagName === "IMG") {
-      const scale = Math.min(1, maxWidth / width, maxHeight / height);
-      displayWidth = Math.round(width * scale);
-      displayHeight = Math.round(height * scale);
-      preview.style.width = `${displayWidth}px`;
-      preview.style.height = `${displayHeight}px`;
-      preview.style.maxWidth = "none";
-      preview.style.maxHeight = "none";
-      preview.style.overflow = "visible";
-    } else {
-      preview.style.maxWidth = `${maxWidth}px`;
-      preview.style.maxHeight = `${maxHeight}px`;
-      preview.style.overflow = "auto";
-    }
-
-    const anchor = cardRef.getBoundingClientRect();
-    let left = anchor.left + (anchor.width / 2) - (displayWidth / 2);
-    left = clamp(left, viewportLeft + previewMargin, viewportRight - displayWidth - previewMargin);
-
-    let top = anchor.top - previewGap - displayHeight;
-    if (top < (viewportTop + previewMargin)) {
-      top = anchor.bottom + previewGap;
-    }
-    top = clamp(top, viewportTop + previewMargin, viewportBottom - displayHeight - previewMargin);
-
-    // Keep partner and upgrade previews anchored to their portrait while
-    // converting the clamped viewport position into a local offset.
-    if (cardRef.classList.contains("campaign-partner") || cardRef.closest("#upgrade-history")) {
-      preview.style.position = "absolute";
-      preview.style.left = `${Math.round(left - anchor.left)}px`;
-      preview.style.top = `${Math.round(top - anchor.top)}px`;
-      preview.style.right = "auto";
-      preview.style.bottom = "auto";
-      preview.style.transform = "none";
-      preview.style.zIndex = "2147483647";
-      return;
-    }
-
-    preview.style.position = "fixed";
-    preview.style.left = `${Math.round(left)}px`;
-    preview.style.top = `${Math.round(top)}px`;
-    preview.style.right = "auto";
-    preview.style.bottom = "auto";
-    preview.style.transform = "none";
-    preview.style.zIndex = "2147483647";
-  };
+  const clampPreview = positionCardRefPreview;
 
   const refreshActive = () => {
     if (!activeCardRef) return;
@@ -335,6 +356,9 @@ const bindCardRefViewportPreviews = (root = document) => {
   }
 
   scope.querySelectorAll(".card-ref").forEach((cardRef) => {
+    if (cardRef.querySelector(".customizable-preview") && !cardRef.hasAttribute("tabindex")) {
+      cardRef.tabIndex = 0;
+    }
     if (cardRef.__bgbViewportPreviewBound === true) return;
     cardRef.__bgbViewportPreviewBound = true;
 
@@ -553,4 +577,5 @@ window.BGB = {
   setupHoverImagePreview,
   resetHoverPreviewStyles,
   bindCardRefViewportPreviews,
+  positionCardRefPreview,
 };

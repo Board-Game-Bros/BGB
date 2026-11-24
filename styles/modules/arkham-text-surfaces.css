@@ -158,3 +158,37 @@ html .card-autocomplete-item:is(:hover, .is-active) {
     border-image-width: 18px;
   }
 }
+
+/* A customization sheet is one surface: no frames around individual rules. */
+html body .container :is(.customizable-preview-panel, .customizable-field-panel, .customizable-group-head, .customizable-inline-head, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value),
+html body .container #upgrade-history :is(.customizable-group-text, .customizable-inline-text, .customizable-field-preview-value) {
+  border: 0;
+  border-image: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  outline: none;
+  color: var(--annotation-ink);
+}
+html body .container :is(.customizable-group-text, .customizable-inline-text, .customizable-field-preview-value),
+html body .container #upgrade-history :is(.customizable-group-text, .customizable-inline-text, .customizable-field-preview-value) {
+  padding: 0;
+}
+html body .container :is(.customizable-group-text, .customizable-inline-text, .customizable-field-preview-value)::before {
+  content: none;
+}
+html body .container .customizable-preview-panel {
+  padding: 10px 12px;
+}
+html body .container .customizable-group + .customizable-group {
+  border-top: 1px solid color-mix(in srgb, var(--annotation-ink) 22%, transparent);
+}
+html body .container .customizable-popover .customizable-overlay-title {
+  margin-right: calc(var(--icon-seal-size) + 12px);
+}
+
+/* Rule text stays flat even under the site's generic card-hover highlight. */
+html body .container :is(.customizable-preview-panel, .customizable-field-panel, .customizable-group-text, .customizable-inline-text, .customizable-field-preview-value):hover {
+  outline: none !important;
+  box-shadow: none !important;
+}

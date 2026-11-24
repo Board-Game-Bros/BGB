@@ -6,7 +6,7 @@
 @import url("../modules/subnav.css?v=20260923soft");
 @import url("https://fonts.googleapis.com/css2?family=Eater&family=IM+Fell+English+SC&family=Uncial+Antiqua&display=swap");
 @import url("../modules/velvet-canvas.css?v=20260928parchment2");
-@import url("../modules/medieval-buttons.css?v=20261103torchclear");
+@import url("../modules/medieval-buttons.css?v=20261123custompreview");
 @import url("../modules/nav-banner.css?v=20260927torch1");
 @import url("../modules/card-depth.css?v=20260928depth2");
 @import url("../modules/shell-ornaments.css?v=20260928bgb3");
@@ -15,7 +15,7 @@
 @import url("../modules/card-highlight.css?v=20261005framehover");
 @import url("../modules/upgrade-ledger.css?v=20261005framehover");
 @import url("../modules/icon-seals.css?v=20261024sword");
-@import url("../modules/arkham-text-surfaces.css?v=20261005framehover2");
+@import url("../modules/arkham-text-surfaces.css?v=20261123custompreview");
 @import url("../modules/expedition-stationery.css?v=20261005bluecloth");
 
 /* Page: arkham_horror_lcg.html */
@@ -23,6 +23,18 @@
 html body .container:has(.card-ref:is(:hover, :focus-within)),
 html body .container > :has(.card-ref:is(:hover, :focus-within)) {
   z-index: 1;
+}
+
+/* Large reading sheets must clear floating controls and adjacent ledger columns. */
+html body .container:has(.card-ref:is(:hover, :focus-within) .customizable-preview, .customizable-popover) {
+  z-index: 10000;
+}
+html body:has(.card-ref:is(:hover, :focus-within) .customizable-preview, .customizable-popover) > nav {
+  z-index: 10001;
+}
+html body .container > :has(.customizable-popover),
+html body #upgrade-history .upgrade-card:has(.customizable-popover) {
+  z-index: 10;
 }
 
 body {
@@ -1167,7 +1179,8 @@ html body img.card-preview {
   clip-path: inset(0 round 16px);
 }
 
-.customizable-preview {
+.customizable-preview,
+.customizable-sheet-layout {
   box-sizing: border-box;
   width: min(760px, calc(100vw - 16px));
   max-width: min(760px, calc(100vw - 16px));
@@ -1184,6 +1197,16 @@ html body img.card-preview {
   scrollbar-gutter: stable;
 }
 
+.customizable-sheet-layout {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  background: none;
+}
+
 .customizable-preview-image {
   display: block;
   flex: 0 0 auto;
@@ -1197,6 +1220,7 @@ html body img.card-preview {
 }
 
 .customizable-preview-panel {
+  box-sizing: border-box;
   flex: 1 1 0;
   min-width: 0;
   padding: 10px 12px;
@@ -1223,8 +1247,13 @@ html body img.card-preview {
   margin: 0 0 10px;
 }
 
-.legend-chip,
-.customizable-box {
+html body .container :is(.legend-chip, .customizable-box, .customizable-inline-chip) {
+  box-sizing: border-box;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  -webkit-text-fill-color: currentColor;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1238,14 +1267,12 @@ html body img.card-preview {
   font-size: 0.82rem;
 }
 
-.legend-chip.is-inherited,
-.customizable-box.is-inherited {
+html body .container :is(.legend-chip, .customizable-box, .customizable-inline-chip).is-inherited {
   background: linear-gradient(180deg, rgba(189, 159, 113, 0.92) 0%, rgba(158, 124, 74, 0.9) 100%);
   color: #fff6de;
 }
 
-.legend-chip.is-upgrade,
-.customizable-box.is-upgrade {
+html body .container :is(.legend-chip, .customizable-box, .customizable-inline-chip).is-upgrade {
   background: linear-gradient(180deg, rgba(145, 27, 38, 0.94) 0%, rgba(111, 17, 27, 0.92) 100%);
   color: #fff3df;
   box-shadow: 0 0 10px rgba(143, 17, 27, 0.22);
@@ -1448,6 +1475,7 @@ html body img.card-preview {
 
 .customizable-inline-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
@@ -1474,28 +1502,25 @@ html body img.card-preview {
   color: #fff2d6 !important;
 }
 
-.customizable-inline-chip {
+html body button.customizable-inline-chip {
   appearance: none;
-  border: 1px solid rgba(90, 68, 39, 0.4);
-  background: rgba(255, 248, 233, 0.78);
-  color: #4a3420;
-  border-radius: 999px;
-  width: 1.8rem;
-  height: 1.8rem;
-  font: inherit;
-  font-size: 0.82rem;
+  flex: 0 0 auto;
+  width: auto;
+  border-image: none;
+  font-family: inherit;
+  line-height: 1;
+  text-shadow: none;
   cursor: var(--cursor-sword-hover);
 }
 
-.customizable-inline-chip.is-upgrade {
-  background: linear-gradient(180deg, rgba(145, 27, 38, 0.94) 0%, rgba(111, 17, 27, 0.92) 100%);
-  color: #fff3df;
+html body button.customizable-inline-chip:focus-visible {
+  outline: 2px solid #78262f;
+  outline-offset: 2px;
 }
 
-.customizable-inline-chip.is-inherited {
-  background: linear-gradient(180deg, rgba(189, 159, 113, 0.92) 0%, rgba(158, 124, 74, 0.9) 100%);
-  color: #fff6de;
-  cursor: var(--cursor-sword);
+html body button.customizable-inline-chip:disabled {
+  opacity: 1;
+  filter: none;
 }
 
 .customizable-popover {
@@ -1503,8 +1528,8 @@ html body img.card-preview {
   left: 18px;
   top: 18px;
   transform: none;
-  width: 560px;
-  max-width: calc(100vw - 36px);
+  width: 760px;
+  max-width: calc(100vw - 16px);
   overflow: auto;
   overflow-anchor: none;
   scroll-behavior: auto;
@@ -1512,7 +1537,7 @@ html body img.card-preview {
   scrollbar-gutter: stable;
   z-index: 70;
   box-sizing: border-box;
-  padding: 18px 18px 16px;
+  padding: 12px;
   border: 0;
   border-radius: 18px;
   background:
@@ -1530,7 +1555,7 @@ html body img.card-preview {
 .customizable-overlay-title {
   margin: 0 calc(var(--icon-seal-size) + 12px) 10px 0;
   font-family: "Uncial Antiqua", serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #4a2a18;
   text-shadow: none;
 }
@@ -2056,7 +2081,8 @@ body.torch-mode .story-weakness-total {
 }
 
 @media (max-width: 980px) {
-  .customizable-preview {
+  .customizable-preview,
+  .customizable-sheet-layout {
     flex-direction: column;
   }
 

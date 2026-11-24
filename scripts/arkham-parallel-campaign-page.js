@@ -202,8 +202,10 @@
       const ref = elWithInlineArkhamText("span", "card-ref story-note-inline-card-ref", String(config.text || ""));
       const syncPreview = () => {
         const existing = ref.querySelector(".card-preview");
-        if (existing) existing.remove();
         const preview = buildCurrentCustomizablePreview(config.card, config.investigator, config.stateId, config.checkedIds);
+        // Keep the live scroller when entering it; replace only changed state.
+        if (existing && preview && existing.innerHTML === preview.innerHTML) return;
+        if (existing) existing.remove();
         if (preview) ref.appendChild(preview);
       };
       ref.addEventListener("mouseenter", syncPreview);
