@@ -183,7 +183,11 @@
       });
       head.appendChild(boxes);
       row.appendChild(head);
-      if (group.text) row.appendChild(el("p", "customizable-group-text", String(group.text)));
+      if (group.text) {
+        const text = el("p", "customizable-group-text");
+        customizableStateUtils.appendRulesText(text, group.text);
+        row.appendChild(text);
+      }
       panel.appendChild(row);
     });
 
@@ -419,7 +423,11 @@
       });
       head.appendChild(boxes);
       row.appendChild(head);
-      if (group.text) row.appendChild(el("p", "customizable-group-text", String(group.text)));
+      if (group.text) {
+        const text = el("p", "customizable-group-text");
+        customizableStateUtils.appendRulesText(text, group.text);
+        row.appendChild(text);
+      }
       list.appendChild(row);
     });
     wrap.appendChild(list);

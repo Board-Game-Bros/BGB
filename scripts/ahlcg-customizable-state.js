@@ -1,4 +1,30 @@
 (() => {
+  function appendRulesText(parent, value) {
+    const parts = String(value || "").split(/(\[\[[^\]]+\]\]|<\/?(?:i|b)>)/gi);
+    const stack = [{ node: parent, tag: "" }];
+    parts.forEach((part) => {
+      const current = stack[stack.length - 1].node;
+      if (/^\[\[[\s\S]*\]\]$/.test(part)) {
+        const trait = document.createElement("strong");
+        const emphasis = document.createElement("em");
+        emphasis.textContent = part.slice(2, -2);
+        trait.appendChild(emphasis);
+        current.appendChild(trait);
+      } else if (/^<(i|b)>$/i.test(part)) {
+        const tag = part.slice(1, -1).toLowerCase();
+        const node = document.createElement(tag === "i" ? "em" : "strong");
+        current.appendChild(node);
+        stack.push({ node, tag });
+      } else if (/^<\/(i|b)>$/i.test(part)) {
+        if (stack.length > 1 && stack[stack.length - 1].tag === part.slice(2, -1).toLowerCase()) {
+          stack.pop();
+        }
+      } else {
+        current.appendChild(document.createTextNode(part));
+      }
+    });
+  }
+
   function normalizeCatalogKey(text) {
     return String(text || "")
       .toLowerCase()
@@ -158,6 +184,7 @@
   }
 
   window.AHLCG_CUSTOMIZABLE_STATE_UTILS = {
+    appendRulesText,
     normalizeCatalogKey,
     uniqueIds,
     getCustomizableDefinition,

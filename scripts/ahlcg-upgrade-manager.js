@@ -677,7 +677,7 @@
         if (group.text) {
           const text = document.createElement("p");
           text.className = "customizable-group-text";
-          text.textContent = String(group.text);
+          window.AHLCG_CUSTOMIZABLE_STATE_UTILS.appendRulesText(text, group.text);
           row.appendChild(text);
         }
         if (groupActive) {
@@ -1209,7 +1209,7 @@
         if (group.text) {
           const text = document.createElement("p");
           text.className = "customizable-inline-text";
-          text.textContent = String(group.text);
+          window.AHLCG_CUSTOMIZABLE_STATE_UTILS.appendRulesText(text, group.text);
           groupWrap.appendChild(text);
         }
 
