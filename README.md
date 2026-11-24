@@ -245,6 +245,8 @@ Upgrade-history data should stay structural, not presentation-heavy:
 - `data-customizable-upgrade-ids` must represent only boxes purchased in that upgrade step. Do not repeat inherited boxes there.
 - Runtime logic will sanitize `data-customizable-upgrade-ids` by removing ids already present in `data-customizable-inherited-ids` and any ids not valid for that customizable card, so bad persisted local state does not overcharge XP.
 - Do not store pre-rendered customizable preview panels or customizable summary HTML in JSON.
+- `Existing` is derived from campaign-start boxes, earlier purchases, and free/story boxes recorded in the source ledger. `This Upgrade` contains only this entry's purchases. Effective/snapshot IDs are derived totals, never evidence that a canceled purchase was inherited. Saving an earlier edit refreshes later entries in order.
+- Run `node scripts/audit-ahlcg-customizable.cjs` with Playwright available and a local server to check cancellation, partial upgrades, inherited/free boxes, XP, save/reload, and recovery from stale browser snapshots. Set `BGB_BASE_URL` or `PLAYWRIGHT_MODULE` when needed.
 
 Website maintenance rule:
 

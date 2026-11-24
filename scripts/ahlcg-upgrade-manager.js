@@ -111,6 +111,8 @@
       },
     ].filter((rule) => rule.cardKey && rule.nameOnly && rule.freeLevel0Cards > 0);
     const customizableBaselineState = normalizeCustomizableBaselineState(customizableInitialSource);
+    // Authored free/story boxes are distinct from derived, editable snapshots.
+    const customizableSourceGrants = new Map();
 
     let activeUndo = null;
     let saveTimer = null;
@@ -1353,6 +1355,36 @@
       ensureCustomizableActionButton(row);
     }
 
+    function customizableGrantKey(card, entry, cardKey) {
+      return JSON.stringify([normalizeText(getUpgradeCardName(card)), ensureEntryUid(entry), cardKey]);
+    }
+
+    function getCustomizableSourceGrants(card, entry, cardKey) {
+      return customizableSourceGrants.get(customizableGrantKey(card, entry, cardKey)) || [];
+    }
+
+    function captureCustomizableSourceGrants() {
+      // Run before restoring local state. Only authored records can introduce free
+      // boxes; stale browser snapshots must never turn canceled purchases into grants.
+      document.querySelectorAll(".upgrade-card").forEach((card) => {
+        card.querySelectorAll(".upgrade-entry").forEach((entry) => {
+          const before = buildCustomizableStateBeforeEntry(card, entry);
+          const list = getEntryList(entry, "customized");
+          Array.from(list ? list.children : []).forEach((row) => {
+            const key = getCatalogKey(getRowCardName(row));
+            const paid = new Set(getCustomizableUpgradeIdsForRow(row));
+            const previous = new Set(before[key] || []);
+            const recorded = uniqueIds(getCustomizableSnapshotIdsForRow(row).concat(
+              parseCustomizableIdList(row.dataset.customizableInheritedIds),
+              parseCustomizableIdList(row.dataset.customizableEffectiveIds)
+            ));
+            customizableSourceGrants.set(customizableGrantKey(card, entry, key),
+              recorded.filter((id) => !paid.has(id) && !previous.has(id)));
+          });
+        });
+      });
+    }
+
     function buildCustomizableStateBeforeEntry(card, targetEntry) {
       const investigatorName = getUpgradeCardName(card);
       const initial = {};
@@ -1370,12 +1402,10 @@
             const name = getRowCardName(row);
             if (!isCustomizableCardName(name)) return;
             const key = getCatalogKey(name);
-            const snapshotIds = getCustomizableSnapshotIdsForRow(row);
-            if (snapshotIds.length) {
-              initial[key] = snapshotIds;
-            } else {
-              initial[key] = uniqueIds((initial[key] || []).concat(getCustomizableUpgradeIdsForRow(row)));
-            }
+            initial[key] = uniqueIds((initial[key] || []).concat(
+              getCustomizableSourceGrants(card, entry, key),
+              getCustomizableUpgradeIdsForRow(row)
+            ));
           });
         }
         const addedList = getEntryList(entry, "added");
@@ -1423,11 +1453,9 @@
         if (!isCustomizableCardName(name)) return;
         const key = getCatalogKey(name);
         const upgradeIds = mode === "customized" ? getCustomizableUpgradeIdsForRow(row) : [];
-        const snapshotIds = mode === "customized" ? getCustomizableSnapshotIdsForRow(row) : [];
-        const upgradeSet = new Set(upgradeIds);
-        const inheritedIds = snapshotIds.length
-          ? uniqueIds(snapshotIds.filter((id) => !upgradeSet.has(id)))
-          : uniqueIds(stateBefore[key] || []);
+        const inheritedIds = uniqueIds((stateBefore[key] || []).concat(
+          getCustomizableSourceGrants(card, entry || listEl.closest(".upgrade-entry"), key)
+        ));
         const addedIds = upgradeIds;
         enhanceCustomizableRow(row, inheritedIds, addedIds);
       });
@@ -4347,7 +4375,11 @@
     }
 
     function syncDerivedUpgradeState() {
-      document.querySelectorAll(".upgrade-entry").forEach(renderStoryWeaknessStatus);
+      // Earlier edits change what later entries inherit; refresh in ledger order.
+      document.querySelectorAll(".upgrade-entry").forEach((entry) => {
+        refreshCustomizableRowsInList(getEntryList(entry, "customized"), entry);
+        renderStoryWeaknessStatus(entry);
+      });
       normalizeScenarioTraumaRows();
       scheduleSaveUpgradeState();
       refreshCurrentXp();
@@ -5155,6 +5187,7 @@
     }, { passive: true });
 
     ensureCampaignStartNotes();
+    captureCustomizableSourceGrants();
     try {
       sourceStateHashAtLoad = githubSync && typeof githubSync.quickHash === "function"
         ? githubSync.quickHash(JSON.stringify(buildCurrentUpgradeState()))
