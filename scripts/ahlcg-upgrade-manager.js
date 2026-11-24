@@ -1641,7 +1641,15 @@
     function buildCustomizableHoldingsBeforeEntry(card, targetEntry) {
       const holdings = new Map();
       const investigatorName = getUpgradeCardName(card);
+      // Starting-deck copies exist even before their first checkbox upgrade.
+      getInitialDeckRowsForCard(card).forEach((row) => {
+        const info = getInventoryCardInfo(row);
+        if (isCustomizableCardName(info.name)) {
+          addCustomizableHolding(holdings, info.name, info.qty);
+        }
+      });
       getCustomizableBaselineKeySet(investigatorName).forEach((key) => {
+        if (holdings.has(key)) return;
         holdings.set(key, {
           key,
           name: getCustomizableDisplayNameByKey(key),
