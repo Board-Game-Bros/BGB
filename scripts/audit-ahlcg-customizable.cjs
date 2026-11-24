@@ -69,9 +69,65 @@ async function xp(page) {
   return entry(page, 'e9').locator('xpath=ancestor::*[contains(@class,"upgrade-card")]').locator('.xp-line').textContent();
 }
 
+async function checkRefreshDuringEdit(browser, slug, uid, width) {
+  const page = await openPage(browser, slug, width);
+  const target = row(page, uid);
+  const committed = await target.evaluate(x => ({ ...x.dataset }));
+  const card = entry(page, uid).locator('xpath=ancestor::*[contains(@class,"upgrade-card")]');
+  const originalXp = await card.locator('.xp-line').textContent();
+  await page.getByRole('button', { name: 'Edit Page', exact: true }).click();
+  await edit(page, uid);
+  await page.locator('.customizable-popover .customizable-inline-chip:not(:disabled)').first().click();
+  // Force the exact unload-save path before its debounce can run.
+  const saved = await page.evaluate(key => {
+    window.dispatchEvent(new Event('beforeunload'));
+    return JSON.parse(localStorage.getItem(key));
+  }, page.storageKey);
+  assert(!Object.values(saved.state).some(html => /class="(?:upgrade-columns|customized-section|entry-actions)"[^>]*style="[^"]*display:\s*none/.test(html)), 'Persisted an editor-only hidden display layer');
+  const client = await page.context().newCDPSession(page);
+  await Promise.all([
+    page.waitForNavigation(),
+    client.send('Page.reload', { ignoreCache: true }),
+  ]);
+  await page.getByRole('button', { name: 'Edit Page', exact: true }).waitFor();
+  assert(await target.isVisible(), `${slug}: customized card disappeared after forced reload`);
+  assert(await entry(page, uid).locator(':scope > .upgrade-columns').isVisible());
+  assert.deepEqual(await target.evaluate(x => ({ ...x.dataset })), committed, 'Unconfirmed edits changed committed state');
+  assert.equal(await card.locator('.xp-line').textContent(), originalXp);
+
+  // Old browser snapshots already contain display:none. Seed one on the next
+  // document load, after beforeunload has finished, so this really tests recovery.
+  const corrupted = await page.evaluate(({ saved, uid }) => {
+    for (const name of Object.keys(saved.state)) {
+      const wrap = document.createElement('div');
+      wrap.innerHTML = saved.state[name];
+      const entry = wrap.querySelector(`[data-entry-uid="${uid}"]`);
+      if (!entry) continue;
+      for (const child of entry.children) {
+        if (child.matches('.upgrade-columns, .customized-section, .entry-actions')) child.style.display = 'none';
+      }
+      saved.state[name] = wrap.innerHTML;
+    }
+    return saved;
+  }, { saved, uid });
+  await page.addInitScript(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: page.storageKey, value: corrupted });
+  await page.reload();
+  await page.getByRole('button', { name: 'Edit Page', exact: true }).waitFor();
+  assert(await target.isVisible(), `${slug}: old hidden snapshot not repaired`);
+  assert(await entry(page, uid).locator(':scope > .upgrade-columns').isVisible());
+  assert.deepEqual(await target.evaluate(x => ({ ...x.dataset })), committed);
+  assert.equal(await card.locator('.xp-line').textContent(), originalXp);
+  assert.deepEqual(page.errors, []);
+  console.log(`${slug} ${width}px: immediate forced refresh and old hidden-cache recovery passed`);
+  await page.close();
+}
+
 (async () => {
   const browser = await chromium.launch();
   try {
+    for (const [slug, uid] of [['tde_20260503', 'e20'], ['tsk_20261031', 'e9'], ['tic_20260606', 'e18']]) {
+      for (const width of [1440, 390]) await checkRefreshDuringEdit(browser, slug, uid, width);
+    }
     for (const width of [1440, 390]) {
       const page = await openPage(browser, 'tsk_20261031', width);
       const originalXp = await xp(page);
@@ -118,7 +174,7 @@ async function xp(page) {
       await page.waitForFunction(key => !!localStorage.getItem(key), page.storageKey);
       await page.waitForTimeout(200); // local-save debounce
       // Reproduce the old persisted corruption without changing repository data.
-      await page.evaluate(({ key, hunt, elders }) => {
+      const staleCheckboxes = await page.evaluate(({ key, hunt, elders }) => {
         const envelope = JSON.parse(localStorage.getItem(key));
         const name = Object.keys(envelope.state).find(x => x.includes('William Yorick'));
         const container = document.createElement('div');
@@ -128,8 +184,10 @@ async function xp(page) {
         row.dataset.customizableSnapshotIds = `${hunt},${elders}`;
         row.dataset.customizableEffectiveIds = `${hunt},${elders}`;
         envelope.state[name] = container.innerHTML;
-        localStorage.setItem(key, JSON.stringify(envelope));
+        return envelope;
       }, { key: page.storageKey, hunt, elders });
+      await page.addInitScript(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)),
+        { key: page.storageKey, value: staleCheckboxes });
       await page.reload();
       await row(page, 'e9').waitFor();
       await assertState(page, 'e9', [], [elders]);

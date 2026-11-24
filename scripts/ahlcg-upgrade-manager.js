@@ -1822,6 +1822,8 @@
       if (!entry) return;
       if (entry.classList.contains("upgrade-entry-draft")) return;
       if (entry.querySelector(".upgrade-entry-editor")) return;
+      // Recover older snapshots that persisted the editor's hidden display layer.
+      clearEntryDisplayStyles(entry);
       const removedList = getEntryList(entry, "removed");
       const addedList = getEntryList(entry, "added");
       const customizedList = getEntryList(entry, "customized");
@@ -3418,7 +3420,7 @@
       return !requireEditPassword || editUnlocked;
     }
 
-    function restoreEntryDisplayLayer(entry) {
+    function clearEntryDisplayStyles(entry) {
       if (!entry) return;
       const directChildren = Array.from(entry.children || []);
       const displayColumns = directChildren.find((node) => node.classList && node.classList.contains("upgrade-columns")) || null;
@@ -3427,6 +3429,11 @@
       if (displayColumns) displayColumns.style.removeProperty("display");
       if (displayCustomized) displayCustomized.style.removeProperty("display");
       if (displayActions) displayActions.style.removeProperty("display");
+    }
+
+    function restoreEntryDisplayLayer(entry) {
+      if (!entry) return;
+      clearEntryDisplayStyles(entry);
       renderStoryWeaknessStatus(entry);
     }
 
@@ -4031,6 +4038,9 @@
       clone.querySelectorAll(".upgrade-toolbar, .undo-toast, .upgrade-entry-editor, .upgrade-entry-draft, .customizable-inline-editor, .customizable-popover").forEach((node) => {
         node.remove();
       });
+      // The editor is a temporary copy. Persist the committed display layer as
+      // visible, including when beforeunload saves during an unfinished edit.
+      clone.querySelectorAll(".upgrade-entry").forEach(clearEntryDisplayStyles);
       // Keep the saved ledger's existing entry/trauma sibling format.
       clone.querySelectorAll(".upgrade-entry > .scenario-trauma").forEach((row) => {
         const entry = row.parentNode;
