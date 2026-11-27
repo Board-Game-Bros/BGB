@@ -4,6 +4,33 @@
   "layout": "news",
   "items": [
     {
+      "kicker": "Expansion Preview",
+      "date": "November 19, 2026",
+      "title": "Power of the Dreamlands — Arkham Horror Deckbuilding Expansion",
+      "imageSrc": "/assets/news/arkham-horror-power-of-the-dreamlands.webp",
+      "text": "Fantasy Flight Games previews the first Deckbuilding Expansion for Arkham Horror: The Card Game, bringing 147 new player cards inspired by the Dreamlands. Expected in February 2027.",
+      "detail": "The new dreaming keyword lets cards manifest over time, trading patience for resource savings. Each of the five classes draws on a different Dreamlands city. This player-card expansion adds no investigators or scenarios and requires an Arkham Horror: The Card Game core set.",
+      "statLabel": "Player Cards",
+      "statValue": "147",
+      "tags": [
+        {
+          "label": "Fantasy Flight Games",
+          "iconSrc": "/assets/news/fantasy-flight-games-icon.webp",
+          "href": "https://www.fantasyflightgames.com/",
+          "external": true
+        },
+        {
+          "label": "Arkham Horror: The Card Game",
+          "iconSrc": "/assets/news/boardgamegeek-icon.png",
+          "href": "https://boardgamegeek.com/boardgame/463126/arkham-horror-the-card-game",
+          "external": true
+        }
+      ],
+      "href": "https://www.fantasyflightgames.com/power-of-the-dreamlands/",
+      "linkLabel": "Official Preview",
+      "external": true
+    },
+    {
       "kicker": "Upcoming Event",
       "date": "November 17, 2026",
       "title": "Riftbound at Convergence Fest — Las Vegas",
